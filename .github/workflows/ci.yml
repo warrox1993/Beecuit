@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-test-build:
+    name: Lint · Typecheck · Test · Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      SKIP_ENV_VALIDATION: "true"
+      DATABASE_URL: "postgres://placeholder:placeholder@localhost:5432/placeholder"
+      AUTH_SECRET: "ci-placeholder-secret-at-least-32-characters-long"
+      AUTH_RESEND_KEY: "re_placeholder_ci_key"
+      AUTH_EMAIL_FROM: "BeeCuit <onboarding@resend.dev>"
+      NEXT_PUBLIC_APP_URL: "http://localhost:3000"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Format check
+        run: pnpm format:check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Unit tests (without DB)
+        run: pnpm vitest run tests/unit/sanity.test.ts
+
+      - name: Build
+        run: pnpm build
