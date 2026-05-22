@@ -1,7 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
-import { routing } from "@/i18n/routing";
+import { Link, routing } from "@/i18n/routing";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
