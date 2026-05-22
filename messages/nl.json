@@ -1,0 +1,34 @@
+{
+  "home": {
+    "title": "BeeCuit",
+    "tagline": "Ambachtelijke koekjes uit Luik",
+    "cta": "Ontdek onze dozen",
+    "languageSwitcher": "Taal wijzigen"
+  },
+  "nav": {
+    "home": "Home",
+    "biscuits": "Koekjes",
+    "coffrets": "Dozen",
+    "compose": "Stel je doos samen",
+    "subscription": "Abonnement",
+    "business": "Bedrijven",
+    "journal": "Journal",
+    "account": "Mijn account",
+    "signIn": "Inloggen",
+    "signOut": "Uitloggen"
+  },
+  "auth": {
+    "signInTitle": "Inloggen bij BeeCuit",
+    "signInDescription": "Ontvang een loginlink per e-mail — geen wachtwoord nodig.",
+    "emailLabel": "E-mailadres",
+    "emailPlaceholder": "jouw@email.com",
+    "submit": "Stuur de link",
+    "checkEmail": "Controleer je inbox — een link wacht op je",
+    "back": "Terug"
+  },
+  "account": {
+    "title": "Mijn account",
+    "welcome": "Hallo {name}",
+    "loggedInAs": "Ingelogd als {email}"
+  }
+}

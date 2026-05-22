@@ -1,0 +1,34 @@
+{
+  "home": {
+    "title": "BeeCuit",
+    "tagline": "Biscuits artisanaux de Liège",
+    "cta": "Découvrir nos coffrets",
+    "languageSwitcher": "Changer de langue"
+  },
+  "nav": {
+    "home": "Accueil",
+    "biscuits": "Biscuits",
+    "coffrets": "Coffrets",
+    "compose": "Composer mon coffret",
+    "subscription": "Abonnement",
+    "business": "Entreprises",
+    "journal": "Journal",
+    "account": "Mon compte",
+    "signIn": "Se connecter",
+    "signOut": "Se déconnecter"
+  },
+  "auth": {
+    "signInTitle": "Se connecter à BeeCuit",
+    "signInDescription": "Reçois un lien de connexion par email — pas de mot de passe.",
+    "emailLabel": "Adresse email",
+    "emailPlaceholder": "ton@email.com",
+    "submit": "Envoyer le lien",
+    "checkEmail": "Vérifie ta boîte email — un lien t'attend",
+    "back": "Retour"
+  },
+  "account": {
+    "title": "Mon compte",
+    "welcome": "Bonjour {name}",
+    "loggedInAs": "Connecté en tant que {email}"
+  }
+}

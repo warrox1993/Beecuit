@@ -1,0 +1,34 @@
+{
+  "home": {
+    "title": "BeeCuit",
+    "tagline": "Artisan biscuits from Liège",
+    "cta": "Discover our boxes",
+    "languageSwitcher": "Change language"
+  },
+  "nav": {
+    "home": "Home",
+    "biscuits": "Biscuits",
+    "coffrets": "Boxes",
+    "compose": "Compose your box",
+    "subscription": "Subscription",
+    "business": "Business",
+    "journal": "Journal",
+    "account": "My account",
+    "signIn": "Sign in",
+    "signOut": "Sign out"
+  },
+  "auth": {
+    "signInTitle": "Sign in to BeeCuit",
+    "signInDescription": "Receive a sign-in link by email — no password needed.",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "your@email.com",
+    "submit": "Send link",
+    "checkEmail": "Check your inbox — a link is waiting",
+    "back": "Back"
+  },
+  "account": {
+    "title": "My account",
+    "welcome": "Hello {name}",
+    "loggedInAs": "Signed in as {email}"
+  }
+}

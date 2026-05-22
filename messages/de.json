@@ -1,0 +1,34 @@
+{
+  "home": {
+    "title": "BeeCuit",
+    "tagline": "Handwerkliche Kekse aus Lüttich",
+    "cta": "Entdecke unsere Boxen",
+    "languageSwitcher": "Sprache wechseln"
+  },
+  "nav": {
+    "home": "Startseite",
+    "biscuits": "Kekse",
+    "coffrets": "Boxen",
+    "compose": "Box zusammenstellen",
+    "subscription": "Abonnement",
+    "business": "Unternehmen",
+    "journal": "Journal",
+    "account": "Mein Konto",
+    "signIn": "Anmelden",
+    "signOut": "Abmelden"
+  },
+  "auth": {
+    "signInTitle": "Bei BeeCuit anmelden",
+    "signInDescription": "Erhalte einen Login-Link per E-Mail — kein Passwort nötig.",
+    "emailLabel": "E-Mail-Adresse",
+    "emailPlaceholder": "deine@email.com",
+    "submit": "Link senden",
+    "checkEmail": "Prüfe deinen Posteingang — ein Link wartet auf dich",
+    "back": "Zurück"
+  },
+  "account": {
+    "title": "Mein Konto",
+    "welcome": "Hallo {name}",
+    "loggedInAs": "Angemeldet als {email}"
+  }
+}
