@@ -1,0 +1,11 @@
+node_modules
+.next
+dist
+out
+public
+pnpm-lock.yaml
+*.md
+drizzle
+playwright-report
+test-results
+.vercel
