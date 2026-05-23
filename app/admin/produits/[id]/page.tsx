@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
-import { products, productTranslations, categories, categoryTranslations } from "@/lib/db/schema";
+import { products, productTranslations, categories, categoryTranslations, productImages } from "@/lib/db/schema";
 import { and, eq } from "drizzle-orm";
 import { ProductForm } from "@/components/admin/ProductForm";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 import type { LocaleTranslations } from "@/components/admin/ProductTranslationTabs";
 
 export const dynamic = "force-dynamic";
@@ -12,6 +13,7 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
   const [prod] = await db.select().from(products).where(eq(products.id, id)).limit(1);
   if (!prod) notFound();
   const trans = await db.select().from(productTranslations).where(eq(productTranslations.productId, id));
+  const imgs = await db.select().from(productImages).where(eq(productImages.productId, id)).orderBy(productImages.sortOrder);
   const cats = await db
     .select({ id: categories.id, slug: categories.slug, nameFr: categoryTranslations.name })
     .from(categories)
@@ -32,6 +34,10 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
   return (
     <div>
       <h1 className="text-honey font-display mb-6 text-3xl">Édition produit</h1>
+      <section className="mb-6 rounded-lg border border-warm-brown/10 bg-white p-4">
+        <h2 className="font-display text-warm-brown mb-2 text-lg">Images</h2>
+        <ImageUploader productId={prod.id} images={imgs.map((i) => ({ id: i.id, url: i.url, isPrimary: i.isPrimary }))} />
+      </section>
       <ProductForm
         initial={{
           id: prod.id, sku: prod.sku, categoryId: prod.categoryId, basePriceCents: prod.basePriceCents,
