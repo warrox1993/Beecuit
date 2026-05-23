@@ -1,2 +1,1 @@
-// Barrel export — populated in Tasks 10-12.
-export {};
+export * from "./schemas/auth";
