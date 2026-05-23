@@ -30,5 +30,20 @@
     "title": "Mijn account",
     "welcome": "Hallo {name}",
     "loggedInAs": "Ingelogd als {email}"
+  },
+  "footer": {
+    "tagline": "Belgische ambachtelijke koekjes, met liefde gebakken in Luik.",
+    "copyright": "© {year} BeeCuit — Alle rechten voorbehouden"
+  },
+  "cart": {
+    "label": "Winkelmandje",
+    "empty": "Je winkelmandje is leeg",
+    "viewCart": "Bekijk mijn winkelmandje",
+    "checkout": "Afrekenen",
+    "remove": "Verwijderen",
+    "quantity": "Aantal",
+    "subtotal": "Subtotaal",
+    "shipping": "Verzending",
+    "total": "Totaal"
   }
 }

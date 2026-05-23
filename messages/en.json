@@ -30,5 +30,20 @@
     "title": "My account",
     "welcome": "Hello {name}",
     "loggedInAs": "Signed in as {email}"
+  },
+  "footer": {
+    "tagline": "Belgian artisan biscuits, baked with love in Liège.",
+    "copyright": "© {year} BeeCuit — All rights reserved"
+  },
+  "cart": {
+    "label": "Cart",
+    "empty": "Your cart is empty",
+    "viewCart": "View my cart",
+    "checkout": "Checkout",
+    "remove": "Remove",
+    "quantity": "Quantity",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "total": "Total"
   }
 }

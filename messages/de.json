@@ -30,5 +30,20 @@
     "title": "Mein Konto",
     "welcome": "Hallo {name}",
     "loggedInAs": "Angemeldet als {email}"
+  },
+  "footer": {
+    "tagline": "Belgische handwerkliche Kekse, mit Liebe in Lüttich gebacken.",
+    "copyright": "© {year} BeeCuit — Alle Rechte vorbehalten"
+  },
+  "cart": {
+    "label": "Warenkorb",
+    "empty": "Dein Warenkorb ist leer",
+    "viewCart": "Warenkorb anzeigen",
+    "checkout": "Zur Kasse",
+    "remove": "Entfernen",
+    "quantity": "Anzahl",
+    "subtotal": "Zwischensumme",
+    "shipping": "Versand",
+    "total": "Gesamt"
   }
 }

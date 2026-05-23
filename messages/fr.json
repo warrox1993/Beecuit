@@ -30,5 +30,20 @@
     "title": "Mon compte",
     "welcome": "Bonjour {name}",
     "loggedInAs": "Connecté en tant que {email}"
+  },
+  "footer": {
+    "tagline": "Biscuits artisanaux belges, faits avec amour à Liège.",
+    "copyright": "© {year} BeeCuit — Tous droits réservés"
+  },
+  "cart": {
+    "label": "Panier",
+    "empty": "Ton panier est vide",
+    "viewCart": "Voir mon panier",
+    "checkout": "Passer commande",
+    "remove": "Retirer",
+    "quantity": "Quantité",
+    "subtotal": "Sous-total",
+    "shipping": "Livraison",
+    "total": "Total"
   }
 }
