@@ -1,0 +1,140 @@
+"use client";
+import { useState, useTransition } from "react";
+import { Button } from "@/components/ui/button";
+import { createCheckoutSession } from "@/lib/actions/checkout.actions";
+
+type SimpleAddress = {
+  firstName: string; lastName: string; line1: string; line2?: string;
+  postalCode: string; city: string; country: string; phone?: string; label?: string;
+};
+
+export function CheckoutForm({
+  defaultEmail,
+  locale,
+}: {
+  defaultEmail: string;
+  locale: "fr" | "nl" | "de" | "en";
+}) {
+  const [email, setEmail] = useState(defaultEmail);
+  const [newsletterOptIn, setNewsletter] = useState(false);
+  const [billingSameAsShipping, setSame] = useState(true);
+  const [ship, setShip] = useState<SimpleAddress>({
+    firstName: "", lastName: "", line1: "", postalCode: "", city: "", country: "BE",
+  });
+  const [bill, setBill] = useState<SimpleAddress>({
+    firstName: "", lastName: "", line1: "", postalCode: "", city: "", country: "BE",
+  });
+  const [pending, start] = useTransition();
+  const [err, setErr] = useState<string | null>(null);
+
+  function input<K extends keyof SimpleAddress>(target: SimpleAddress, set: (a: SimpleAddress) => void, key: K, required = true) {
+    return (
+      <input
+        type="text"
+        required={required}
+        value={target[key] ?? ""}
+        onChange={(e) => set({ ...target, [key]: e.target.value })}
+        placeholder={String(key)}
+        className="border-warm-brown/20 w-full rounded-md border bg-white px-3 py-2 text-sm"
+      />
+    );
+  }
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        setErr(null);
+        start(async () => {
+          try {
+            await createCheckoutSession(
+              {
+                email,
+                newsletterOptIn,
+                shippingAddress: ship,
+                billingSameAsShipping,
+                billingAddress: billingSameAsShipping ? undefined : bill,
+                shippingMethod: "bpost_express_24h",
+              },
+              locale,
+            );
+          } catch (e2) {
+            setErr((e2 as Error).message);
+          }
+        });
+      }}
+      className="space-y-8"
+    >
+      <fieldset className="space-y-3">
+        <legend className="text-warm-brown font-display text-lg">Contact</legend>
+        <input
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="border-warm-brown/20 w-full rounded-md border bg-white px-3 py-2 text-sm"
+          placeholder="email@exemple.com"
+        />
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" checked={newsletterOptIn} onChange={(e) => setNewsletter(e.target.checked)} />
+          M&apos;abonner à la newsletter BeeCuit
+        </label>
+      </fieldset>
+
+      <fieldset className="space-y-3">
+        <legend className="text-warm-brown font-display text-lg">Adresse de livraison</legend>
+        <div className="grid grid-cols-2 gap-3">
+          {input(ship, setShip, "firstName")}
+          {input(ship, setShip, "lastName")}
+        </div>
+        {input(ship, setShip, "line1")}
+        {input(ship, setShip, "line2", false)}
+        <div className="grid grid-cols-2 gap-3">
+          {input(ship, setShip, "postalCode")}
+          {input(ship, setShip, "city")}
+        </div>
+        {input(ship, setShip, "phone", false)}
+      </fieldset>
+
+      <fieldset className="space-y-3">
+        <legend className="text-warm-brown font-display text-lg">Adresse de facturation</legend>
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" checked={billingSameAsShipping} onChange={(e) => setSame(e.target.checked)} />
+          Identique à l&apos;adresse de livraison
+        </label>
+        {!billingSameAsShipping && (
+          <>
+            <div className="grid grid-cols-2 gap-3">
+              {input(bill, setBill, "firstName")}
+              {input(bill, setBill, "lastName")}
+            </div>
+            {input(bill, setBill, "line1")}
+            {input(bill, setBill, "line2", false)}
+            <div className="grid grid-cols-2 gap-3">
+              {input(bill, setBill, "postalCode")}
+              {input(bill, setBill, "city")}
+            </div>
+          </>
+        )}
+      </fieldset>
+
+      <fieldset>
+        <legend className="text-warm-brown font-display text-lg">Livraison</legend>
+        <label className="border-warm-brown/20 mt-2 flex items-center gap-3 rounded-md border bg-white p-3 text-sm">
+          <input type="radio" checked readOnly />
+          <span>bpost Express 24h — tarif calculé selon poids</span>
+        </label>
+      </fieldset>
+
+      {err && <p className="text-terracotta text-sm">{err}</p>}
+
+      <Button
+        type="submit"
+        disabled={pending}
+        className="bg-honey text-cream hover:bg-honey-dark w-full"
+      >
+        {pending ? "Redirection vers Stripe..." : "Payer avec Stripe"}
+      </Button>
+    </form>
+  );
+}
