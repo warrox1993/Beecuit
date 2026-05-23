@@ -2,7 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { getProductBySlug, type Locale } from "@/lib/queries/catalog";
 import { ProductImages } from "@/components/shop/ProductImages";
-import { Button } from "@/components/ui/button";
+import { AddToCartButton } from "@/components/shop/AddToCartButton";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -39,13 +39,7 @@ export default async function ProductPage({
         <h1 className="text-honey font-display text-4xl">{product.name}</h1>
         <p className="text-warm-brown text-lg">{product.shortDescription}</p>
         <p className="text-honey-dark font-mono text-3xl">{priceEur} €</p>
-        {isOut ? (
-          <Button disabled className="w-full">{t("outOfStock")}</Button>
-        ) : (
-          <Button disabled className="bg-honey text-cream hover:bg-honey-dark w-full">
-            {t("addToCart")}
-          </Button>
-        )}
+        <AddToCartButton productId={product.id} label={t("addToCart")} outOfStock={isOut} />
         <div className="text-warm-brown/80 prose-sm space-y-4 pt-6 leading-relaxed">
           <p>{product.longDescription}</p>
         </div>
