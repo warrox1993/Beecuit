@@ -5,7 +5,6 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  typedRoutes: true,
 };
 
 export default withNextIntl(nextConfig);
