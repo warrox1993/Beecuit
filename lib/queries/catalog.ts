@@ -50,6 +50,7 @@ export async function listProductsForLocale(locale: Locale, categorySlug?: strin
       primaryImageUrl: sql<
         string | null
       >`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
+      categoryName: sql<string | null>`(SELECT name FROM category_translations WHERE category_id = ${products.categoryId} AND locale = ${locale} LIMIT 1)`,
     })
     .from(products)
     .innerJoin(
