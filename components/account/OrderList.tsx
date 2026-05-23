@@ -19,7 +19,7 @@ const STATUS_LABEL: Record<string, { label: string; color: string }> = {
 
 export function OrderList({ rows }: { rows: Row[] }) {
   if (rows.length === 0) {
-    return <p className="text-warm-brown/70">Tu n'as pas encore passé de commande.</p>;
+    return <p className="text-warm-brown/70">Tu n&apos;as pas encore passé de commande.</p>;
   }
   return (
     <ul className="divide-warm-brown/10 divide-y">

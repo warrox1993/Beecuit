@@ -3,7 +3,7 @@ import { listActiveCategoriesForLocale, listProductsForLocale, type Locale } fro
 import { CategoryFilter } from "@/components/shop/CategoryFilter";
 import { ProductGrid } from "@/components/shop/ProductGrid";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function CatalogPage({
   params,

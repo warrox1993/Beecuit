@@ -22,7 +22,7 @@ async function getActiveCartId(): Promise<string> {
   let token = store.get(COOKIE)?.value;
   if (!token) {
     token = uuid();
-    store.set(COOKIE, token, { httpOnly: true, sameSite: "lax", secure: true, path: "/", maxAge: 60 * 60 * 24 * 30 });
+    store.set(COOKIE, token, { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", path: "/", maxAge: 60 * 60 * 24 * 30 });
   }
   const cart = await getOrCreateCartForSessionToken(token);
   return cart.id;
