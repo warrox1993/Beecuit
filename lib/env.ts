@@ -10,7 +10,7 @@ export const env = createEnv({
     AUTH_EMAIL_FROM: z.string().min(1),
     STRIPE_SECRET_KEY: z.string().startsWith("sk_"),
     STRIPE_PUBLISHABLE_KEY: z.string().startsWith("pk_"),
-    STRIPE_WEBHOOK_SECRET: z.string().min(1),
+    STRIPE_WEBHOOK_SECRET: z.string().startsWith("whsec_"),
     STRIPE_TAX_RATE_ID: z.string().startsWith("txr_"),
     BLOB_READ_WRITE_TOKEN: z.string().startsWith("vercel_blob_rw_"),
   },

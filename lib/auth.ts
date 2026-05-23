@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Resend from "next-auth/providers/resend";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/lib/db";
-import { users, accounts, sessions, verificationTokens } from "@/lib/db/schema";
+import { accounts, sessions, users, verificationTokens } from "@/lib/db/schema";
 import { env } from "@/lib/env";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -65,11 +65,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async session({ session, user }) {
       if (session.user && user) {
         session.user.id = user.id;
-        const { db } = await import("@/lib/db");
-        const { users } = await import("@/lib/db/schema");
-        const { eq } = await import("drizzle-orm");
-        const [u] = await db.select({ role: users.role }).from(users).where(eq(users.id, user.id)).limit(1);
-        session.user.role = u?.role ?? "customer";
+        // With DB sessions, `user` is the AdapterUser row — role is already on it.
+        // See next-auth.d.ts which augments AdapterUser to include `role`.
+        session.user.role = (user as { role?: "customer" | "b2b" | "admin" }).role ?? "customer";
       }
       return session;
     },
