@@ -106,6 +106,14 @@
     "addToCart": "Toevoegen aan winkelmandje",
     "from": "vanaf",
     "pageEyebrow": "ONZE CATALOGUS",
-    "pageProse": "Ontdek de BeeCuit-selectie, gebakken in Luik."
+    "pageProse": "Ontdek de BeeCuit-selectie, gebakken in Luik.",
+    "trustDelivery": "Levering binnen 24u Bpost",
+    "trustOrigin": "Gebakken in Luik",
+    "trustNatural": "Zonder bewaarmiddelen",
+    "ingredientsTitle": "Ingrediënten",
+    "allergensTitle": "Allergenen",
+    "nutritionTitle": "Voedingswaarden /100 g",
+    "storyTitle": "Het verhaal van dit koekje",
+    "relatedTitle": "Ook te ontdekken"
   }
 }

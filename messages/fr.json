@@ -106,6 +106,14 @@
     "addToCart": "Ajouter au panier",
     "from": "à partir de",
     "pageEyebrow": "NOTRE CATALOGUE",
-    "pageProse": "Découvre la sélection BeeCuit, cuite à Liège."
+    "pageProse": "Découvre la sélection BeeCuit, cuite à Liège.",
+    "trustDelivery": "Livré en 24h Bpost",
+    "trustOrigin": "Cuit à Liège",
+    "trustNatural": "Sans conservateur",
+    "ingredientsTitle": "Ingrédients",
+    "allergensTitle": "Allergènes",
+    "nutritionTitle": "Valeurs nutritionnelles /100 g",
+    "storyTitle": "L'histoire de ce biscuit",
+    "relatedTitle": "À découvrir aussi"
   }
 }

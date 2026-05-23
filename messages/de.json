@@ -106,6 +106,14 @@
     "addToCart": "In den Warenkorb",
     "from": "ab",
     "pageEyebrow": "UNSER KATALOG",
-    "pageProse": "Entdecke die BeeCuit-Auswahl, gebacken in Lüttich."
+    "pageProse": "Entdecke die BeeCuit-Auswahl, gebacken in Lüttich.",
+    "trustDelivery": "Lieferung in 24h per Bpost",
+    "trustOrigin": "Gebacken in Lüttich",
+    "trustNatural": "Ohne Konservierungsstoffe",
+    "ingredientsTitle": "Zutaten",
+    "allergensTitle": "Allergene",
+    "nutritionTitle": "Nährwerte /100 g",
+    "storyTitle": "Die Geschichte dieses Kekses",
+    "relatedTitle": "Auch zu entdecken"
   }
 }

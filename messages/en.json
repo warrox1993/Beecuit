@@ -106,6 +106,14 @@
     "addToCart": "Add to cart",
     "from": "from",
     "pageEyebrow": "OUR CATALOG",
-    "pageProse": "Discover the BeeCuit selection, baked in Liège."
+    "pageProse": "Discover the BeeCuit selection, baked in Liège.",
+    "trustDelivery": "Delivered in 24h via Bpost",
+    "trustOrigin": "Baked in Liège",
+    "trustNatural": "No preservatives",
+    "ingredientsTitle": "Ingredients",
+    "allergensTitle": "Allergens",
+    "nutritionTitle": "Nutritional facts /100 g",
+    "storyTitle": "The story of this biscuit",
+    "relatedTitle": "Also worth discovering"
   }
 }

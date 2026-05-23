@@ -148,3 +148,59 @@ export async function getProductBySlug(locale: Locale, slug: string) {
     .orderBy(productImages.sortOrder);
   return { ...row, images };
 }
+
+export async function listRelatedProducts(productId: string, locale: Locale, limit = 4) {
+  const [src] = await db
+    .select({ categoryId: products.categoryId })
+    .from(products)
+    .where(eq(products.id, productId))
+    .limit(1);
+
+  if (!src?.categoryId) {
+    return db
+      .select({
+        id: products.id,
+        sku: products.sku,
+        basePriceCents: products.basePriceCents,
+        stockQuantity: products.stockQuantity,
+        name: productTranslations.name,
+        slug: productTranslations.slug,
+        primaryImageUrl: sql<string | null>`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
+        categoryName: sql<string | null>`(SELECT name FROM category_translations WHERE category_id = ${products.categoryId} AND locale = ${locale} LIMIT 1)`,
+      })
+      .from(products)
+      .innerJoin(
+        productTranslations,
+        and(eq(productTranslations.productId, products.id), eq(productTranslations.locale, locale)),
+      )
+      .where(and(eq(products.isActive, true), sql`${products.id} != ${productId}`))
+      .orderBy(products.createdAt)
+      .limit(limit);
+  }
+
+  return db
+    .select({
+      id: products.id,
+      sku: products.sku,
+      basePriceCents: products.basePriceCents,
+      stockQuantity: products.stockQuantity,
+      name: productTranslations.name,
+      slug: productTranslations.slug,
+      primaryImageUrl: sql<string | null>`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
+      categoryName: sql<string | null>`(SELECT name FROM category_translations WHERE category_id = ${products.categoryId} AND locale = ${locale} LIMIT 1)`,
+    })
+    .from(products)
+    .innerJoin(
+      productTranslations,
+      and(eq(productTranslations.productId, products.id), eq(productTranslations.locale, locale)),
+    )
+    .where(
+      and(
+        eq(products.isActive, true),
+        eq(products.categoryId, src.categoryId),
+        sql`${products.id} != ${productId}`,
+      ),
+    )
+    .orderBy(products.createdAt)
+    .limit(limit);
+}
