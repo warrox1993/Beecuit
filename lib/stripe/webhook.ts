@@ -3,6 +3,8 @@ import type Stripe from "stripe";
 import { eq, sql } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { orders, orderItems, products, stripeWebhookEvents } from "@/lib/db/schema";
+import { sendEmail } from "@/lib/email/client";
+import { OrderConfirmation } from "@/lib/email/templates/OrderConfirmation";
 
 export async function handleCheckoutCompleted(event: Stripe.CheckoutSessionCompletedEvent) {
   const session = event.data.object;
@@ -50,5 +52,26 @@ export async function handleCheckoutCompleted(event: Stripe.CheckoutSessionCompl
       .update(products)
       .set({ stockQuantity: sql`GREATEST(${products.stockQuantity} - ${item.quantity}, 0)` })
       .where(eq(products.id, item.productId));
+  }
+
+  const recipient = order.guestEmail ?? (typeof session.customer_details?.email === "string" ? session.customer_details.email : null);
+  if (recipient) {
+    try {
+      await sendEmail({
+        to: recipient,
+        subject: `Ta commande BeeCuit #${order.orderNumber} est confirmée`,
+        react: OrderConfirmation({
+          orderNumber: order.orderNumber,
+          totalCents: order.totalCents,
+          items: items.map((i) => ({
+            name: i.productNameSnapshot,
+            quantity: i.quantity,
+            lineTotalCents: i.lineTotalCents,
+          })),
+        }),
+      });
+    } catch (e) {
+      console.error("[webhook] email send failed", e);
+    }
   }
 }
