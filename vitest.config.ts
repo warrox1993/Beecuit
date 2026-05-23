@@ -9,7 +9,11 @@ export default defineConfig({
   plugins: [react()],
   test: {
     environment: "node",
-    include: ["tests/unit/**/*.test.ts", "tests/unit/**/*.test.tsx"],
+    include: [
+      "tests/unit/**/*.test.ts",
+      "tests/unit/**/*.test.tsx",
+      "tests/integration/**/*.test.ts",
+    ],
     globals: true,
     coverage: {
       reporter: ["text", "html"],
@@ -17,6 +21,9 @@ export default defineConfig({
     },
   },
   resolve: {
-    alias: { "@": path.resolve(__dirname, ".") },
+    alias: {
+      "@": path.resolve(__dirname, "."),
+      "server-only": path.resolve(__dirname, "tests/__mocks__/server-only.ts"),
+    },
   },
 });
