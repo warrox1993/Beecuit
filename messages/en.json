@@ -36,7 +36,32 @@
   },
   "footer": {
     "tagline": "Belgian artisan biscuits, baked with love in Liège.",
-    "copyright": "© {year} BeeCuit — All rights reserved"
+    "copyright": "© {year} BeeCuit — All rights reserved",
+    "address": "Rue de la Maison 12 · 4000 Liège",
+    "hours": "Wed-Sat, 10am-6pm",
+    "columnShop": "Shop",
+    "columnHouse": "Maison",
+    "columnHelp": "Help & legal",
+    "newsletterTitle": "Stay in the loop",
+    "newsletterTagline": "Plus 10 % off your first order.",
+    "madeWith": "Made with ♥ in Liège",
+    "links": {
+      "biscuits": "Biscuits",
+      "coffrets": "Boxes",
+      "abonnement": "Subscription",
+      "giftCards": "Gift cards",
+      "story": "Our story",
+      "journal": "Journal",
+      "contact": "Contact us",
+      "b2b": "Business",
+      "faq": "FAQ",
+      "shipping": "Shipping",
+      "returns": "Returns",
+      "terms": "Terms & conditions",
+      "legal": "Legal notice",
+      "privacy": "Privacy policy",
+      "cookies": "Cookies"
+    }
   },
   "cart": {
     "label": "Cart",

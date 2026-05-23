@@ -36,7 +36,32 @@
   },
   "footer": {
     "tagline": "Belgische handwerkliche Kekse, mit Liebe in Lüttich gebacken.",
-    "copyright": "© {year} BeeCuit — Alle Rechte vorbehalten"
+    "copyright": "© {year} BeeCuit — Alle Rechte vorbehalten",
+    "address": "Rue de la Maison 12 · 4000 Lüttich",
+    "hours": "Mi-Sa, 10-18 Uhr",
+    "columnShop": "Shop",
+    "columnHouse": "Maison",
+    "columnHelp": "Hilfe & Rechtliches",
+    "newsletterTitle": "Erhalte unsere Neuigkeiten",
+    "newsletterTagline": "Und -10 % auf deine erste Bestellung.",
+    "madeWith": "Mit ♥ in Lüttich gemacht",
+    "links": {
+      "biscuits": "Kekse",
+      "coffrets": "Boxen",
+      "abonnement": "Abonnement",
+      "giftCards": "Geschenkgutscheine",
+      "story": "Unsere Geschichte",
+      "journal": "Journal",
+      "contact": "Kontakt",
+      "b2b": "Unternehmen",
+      "faq": "FAQ",
+      "shipping": "Versand",
+      "returns": "Rücksendungen",
+      "terms": "AGB",
+      "legal": "Impressum",
+      "privacy": "Datenschutz",
+      "cookies": "Cookies"
+    }
   },
   "cart": {
     "label": "Warenkorb",

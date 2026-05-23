@@ -36,7 +36,32 @@
   },
   "footer": {
     "tagline": "Belgische ambachtelijke koekjes, met liefde gebakken in Luik.",
-    "copyright": "© {year} BeeCuit — Alle rechten voorbehouden"
+    "copyright": "© {year} BeeCuit — Alle rechten voorbehouden",
+    "address": "Rue de la Maison 12 · 4000 Luik",
+    "hours": "Woe-zat, 10u-18u",
+    "columnShop": "Winkel",
+    "columnHouse": "Maison",
+    "columnHelp": "Hulp & juridisch",
+    "newsletterTitle": "Ontvang onze nieuwigheden",
+    "newsletterTagline": "En -10 % op je eerste bestelling.",
+    "madeWith": "Gemaakt met ♥ in Luik",
+    "links": {
+      "biscuits": "Koekjes",
+      "coffrets": "Dozen",
+      "abonnement": "Abonnement",
+      "giftCards": "Cadeaubonnen",
+      "story": "Ons verhaal",
+      "journal": "Journal",
+      "contact": "Contacteer ons",
+      "b2b": "Bedrijven",
+      "faq": "FAQ",
+      "shipping": "Verzending",
+      "returns": "Retours",
+      "terms": "Algemene voorwaarden",
+      "legal": "Juridische vermeldingen",
+      "privacy": "Privacybeleid",
+      "cookies": "Cookies"
+    }
   },
   "cart": {
     "label": "Winkelmandje",
