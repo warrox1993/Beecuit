@@ -15,6 +15,13 @@
       "when": 1779522206047,
       "tag": "0001_familiar_blacklash",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1779522245195,
+      "tag": "0002_low_spencer_smythe",
+      "breakpoints": true
     }
   ]
 }

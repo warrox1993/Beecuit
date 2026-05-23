@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { db } from "@/lib/db";
-import { users, products } from "@/lib/db/schema";
+import { users, products, orders } from "@/lib/db/schema";
 
 describe("db connection", () => {
   it("can query users table (should be empty)", async () => {
@@ -12,6 +12,13 @@ describe("db connection", () => {
 describe("products table", () => {
   it("is queryable", async () => {
     const rows = await db.select().from(products).limit(1);
+    expect(Array.isArray(rows)).toBe(true);
+  });
+});
+
+describe("orders table", () => {
+  it("is queryable", async () => {
+    const rows = await db.select().from(orders).limit(1);
     expect(Array.isArray(rows)).toBe(true);
   });
 });
