@@ -45,5 +45,13 @@
     "subtotal": "Subtotaal",
     "shipping": "Verzending",
     "total": "Totaal"
+  },
+  "catalog": {
+    "title": "Onze koekjes",
+    "intro": "Ontdek de BeeCuit-selectie, al onze koekjes gebakken in Luik.",
+    "filterAll": "Alle",
+    "outOfStock": "Uitverkocht",
+    "addToCart": "Toevoegen aan winkelmandje",
+    "from": "vanaf"
   }
 }

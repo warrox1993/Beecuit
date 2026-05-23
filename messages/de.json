@@ -45,5 +45,13 @@
     "subtotal": "Zwischensumme",
     "shipping": "Versand",
     "total": "Gesamt"
+  },
+  "catalog": {
+    "title": "Unsere Kekse",
+    "intro": "Entdecke die BeeCuit-Auswahl, alle unsere Kekse gebacken in Lüttich.",
+    "filterAll": "Alle",
+    "outOfStock": "Ausverkauft",
+    "addToCart": "In den Warenkorb",
+    "from": "ab"
   }
 }

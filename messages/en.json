@@ -45,5 +45,13 @@
     "subtotal": "Subtotal",
     "shipping": "Shipping",
     "total": "Total"
+  },
+  "catalog": {
+    "title": "Our biscuits",
+    "intro": "Discover the BeeCuit selection, all our biscuits baked in Liège.",
+    "filterAll": "All",
+    "outOfStock": "Sold out",
+    "addToCart": "Add to cart",
+    "from": "from"
   }
 }

@@ -45,5 +45,13 @@
     "subtotal": "Sous-total",
     "shipping": "Livraison",
     "total": "Total"
+  },
+  "catalog": {
+    "title": "Nos biscuits",
+    "intro": "Découvre la sélection BeeCuit, tous nos biscuits cuits à Liège.",
+    "filterAll": "Tous",
+    "outOfStock": "Épuisé",
+    "addToCart": "Ajouter au panier",
+    "from": "à partir de"
   }
 }
