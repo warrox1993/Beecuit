@@ -98,6 +98,23 @@
     "shipping": "Verzending",
     "total": "Totaal"
   },
+  "comingSoon": {
+    "eyebrow": "BINNENKORT",
+    "backHome": "Terug naar huis",
+    "when": "Beschikbaar",
+    "pages": {
+      "coffrets": { "title": "Stel je doos samen", "description": "Kies je favoriete koekjes, wij stellen voor jou een doos samen in een herbruikbare bijenwas verpakking.", "when": "Lente 2026" },
+      "abonnement": { "title": "Maandelijks BeeCuit-abonnement", "description": "Ontvang elke maand een verrassingsbox met koekjes, samengesteld door ons. Mini, Klassiek of Familie — jij kiest.", "when": "Lente 2026" },
+      "journal": { "title": "Journal van het huis", "description": "Recepten, vakmanschap, bijenverhalen. Alles wat er in en buiten de keuken gebeurt, één artikel per maand.", "when": "Zomer 2026" },
+      "notreHistoire": { "title": "Ons verhaal", "description": "Wie er achter BeeCuit zit, waarom dit project, hoe we werken. Een oprechte pagina over Belgisch vakmanschap.", "when": "Zomer 2026" },
+      "contact": { "title": "Contacteer ons", "description": "Een woordje, een vraag, een speciale bestelling? We antwoorden snel.", "when": "Lente 2026" },
+      "entreprises": { "title": "BeeCuit voor bedrijven", "description": "Cadeaudozen voor klanten of medewerkers, met of zonder uw logo. Persoonlijke offertes.", "when": "Zomer 2026" },
+      "cgv": { "title": "Algemene verkoopvoorwaarden", "description": "De BeeCuit-verkoopvoorwaarden van toepassing op bestellingen geplaatst via deze site.", "when": "Bij de eerste bestelling" },
+      "mentionsLegales": { "title": "Juridische vermeldingen", "description": "Identiteit van de site-uitgever, hosting, consumentenbemiddeling.", "when": "Bij de eerste bestelling" },
+      "confidentialite": { "title": "Privacybeleid", "description": "Hoe wij je persoonsgegevens verwerken, conform de AVG.", "when": "Bij de eerste bestelling" },
+      "cookies": { "title": "Cookiebeleid", "description": "Welke cookies wij gebruiken en waarom, en hoe je ze kunt weigeren.", "when": "Bij de eerste bestelling" }
+    }
+  },
   "catalog": {
     "title": "Onze koekjes",
     "intro": "Ontdek de BeeCuit-selectie, al onze koekjes gebakken in Luik.",

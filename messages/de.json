@@ -98,6 +98,23 @@
     "shipping": "Versand",
     "total": "Gesamt"
   },
+  "comingSoon": {
+    "eyebrow": "DEMNÄCHST",
+    "backHome": "Zurück zur Startseite",
+    "when": "Verfügbar",
+    "pages": {
+      "coffrets": { "title": "Stelle deine Box zusammen", "description": "Wähle deine Lieblingskekse, wir stellen für dich eine Box in einer recycelbaren Bienenwachsverpackung zusammen.", "when": "Frühjahr 2026" },
+      "abonnement": { "title": "Monatliches BeeCuit-Abonnement", "description": "Erhalte jeden Monat eine Überraschungsbox mit Keksen, zusammengestellt von uns. Mini, Klassisch oder Familie — du entscheidest.", "when": "Frühjahr 2026" },
+      "journal": { "title": "Journal des Hauses", "description": "Rezepte, Handwerk, Bienengeschichten. Alles was in und außerhalb der Küche passiert, ein Artikel pro Monat.", "when": "Sommer 2026" },
+      "notreHistoire": { "title": "Unsere Geschichte", "description": "Wer hinter BeeCuit steckt, warum dieses Projekt, wie wir arbeiten. Eine aufrichtige Seite über belgisches Handwerk.", "when": "Sommer 2026" },
+      "contact": { "title": "Kontakt", "description": "Ein Wort, eine Frage, eine Sonderbestellung? Wir antworten schnell.", "when": "Frühjahr 2026" },
+      "entreprises": { "title": "BeeCuit für Unternehmen", "description": "Geschenkboxen für Kunden oder Mitarbeiter, mit oder ohne Ihr Logo. Persönliche Angebote.", "when": "Sommer 2026" },
+      "cgv": { "title": "Allgemeine Geschäftsbedingungen", "description": "Die BeeCuit-AGB für über diese Website aufgegebene Bestellungen.", "when": "Bei der ersten Bestellung" },
+      "mentionsLegales": { "title": "Impressum", "description": "Identität des Site-Herausgebers, Hosting, Verbraucherschlichtung.", "when": "Bei der ersten Bestellung" },
+      "confidentialite": { "title": "Datenschutzerklärung", "description": "Wie wir deine personenbezogenen Daten verarbeiten, DSGVO-konform.", "when": "Bei der ersten Bestellung" },
+      "cookies": { "title": "Cookie-Richtlinie", "description": "Welche Cookies wir verwenden und warum, und wie du sie ablehnen kannst.", "when": "Bei der ersten Bestellung" }
+    }
+  },
   "catalog": {
     "title": "Unsere Kekse",
     "intro": "Entdecke die BeeCuit-Auswahl, alle unsere Kekse gebacken in Lüttich.",
