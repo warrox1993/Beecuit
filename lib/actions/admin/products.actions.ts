@@ -105,6 +105,9 @@ export async function updateProduct(raw: unknown) {
 
 export async function deleteProduct(id: string) {
   await requireAdmin();
-  await db.update(products).set({ isActive: false, updatedAt: new Date() }).where(eq(products.id, id));
+  await db
+    .update(products)
+    .set({ isActive: false, updatedAt: new Date() })
+    .where(eq(products.id, id));
   revalidatePath("/admin/produits");
 }

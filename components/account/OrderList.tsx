@@ -27,10 +27,15 @@ export function OrderList({ rows }: { rows: Row[] }) {
         const s = STATUS_LABEL[r.status] ?? { label: r.status, color: "" };
         return (
           <li key={r.orderNumber} className="py-3">
-            <Link href={`/compte/commandes/${r.orderNumber}`} className="flex items-center justify-between hover:underline">
+            <Link
+              href={`/compte/commandes/${r.orderNumber}`}
+              className="flex items-center justify-between hover:underline"
+            >
               <div>
                 <p className="text-warm-brown text-sm font-medium">#{r.orderNumber}</p>
-                <p className="text-warm-brown/60 text-xs">{r.createdAt.toLocaleDateString("fr-BE")}</p>
+                <p className="text-warm-brown/60 text-xs">
+                  {r.createdAt.toLocaleDateString("fr-BE")}
+                </p>
               </div>
               <span className={`rounded-full px-3 py-1 text-xs ${s.color}`}>{s.label}</span>
               <span className="font-mono text-sm">{(r.totalCents / 100).toFixed(2)} €</span>

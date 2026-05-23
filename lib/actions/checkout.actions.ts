@@ -84,7 +84,9 @@ export async function createCheckoutSession(rawInput: unknown, locale: "fr" | "n
       currency: "EUR",
       locale,
       shippingAddressSnapshot: input.shippingAddress,
-      billingAddressSnapshot: input.billingSameAsShipping ? input.shippingAddress : input.billingAddress!,
+      billingAddressSnapshot: input.billingSameAsShipping
+        ? input.shippingAddress
+        : input.billingAddress!,
       shippingMethod: "bpost_express_24h",
     })
     .returning();
@@ -116,10 +118,7 @@ export async function createCheckoutSession(rawInput: unknown, locale: "fr" | "n
     appBaseUrl: env.NEXT_PUBLIC_APP_URL,
   });
 
-  await db
-    .update(orders)
-    .set({ stripeSessionId: stripeSession.id })
-    .where(eq(orders.id, order.id));
+  await db.update(orders).set({ stripeSessionId: stripeSession.id }).where(eq(orders.id, order.id));
 
   redirect(stripeSession.url!);
 }

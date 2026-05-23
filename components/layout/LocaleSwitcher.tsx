@@ -9,8 +9,10 @@ export function LocaleSwitcher({ currentLocale }: { currentLocale: string }) {
           key={l}
           href="/"
           locale={l}
-          className={`uppercase tracking-wide ${
-            l === currentLocale ? "text-honey-dark font-bold underline" : "text-warm-brown hover:text-honey-dark"
+          className={`tracking-wide uppercase ${
+            l === currentLocale
+              ? "text-honey-dark font-bold underline"
+              : "text-warm-brown hover:text-honey-dark"
           }`}
         >
           {l}

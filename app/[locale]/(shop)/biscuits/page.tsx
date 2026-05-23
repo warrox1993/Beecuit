@@ -1,5 +1,9 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { listActiveCategoriesForLocale, listProductsForLocale, type Locale } from "@/lib/queries/catalog";
+import {
+  listActiveCategoriesForLocale,
+  listProductsForLocale,
+  type Locale,
+} from "@/lib/queries/catalog";
 import { CategoryFilter } from "@/components/shop/CategoryFilter";
 import { ProductGrid } from "@/components/shop/ProductGrid";
 

@@ -3,8 +3,12 @@ import { sql } from "drizzle-orm";
 import { users } from "./auth";
 
 export const addresses = pgTable("addresses", {
-  id: text("id").primaryKey().default(sql`gen_random_uuid()`),
-  userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  id: text("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
   label: text("label"),
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),

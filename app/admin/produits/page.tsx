@@ -17,7 +17,9 @@ export default async function AdminProductsPage() {
       isActive: products.isActive,
       nameFr: productTranslations.name,
       categorySlug: categories.slug,
-      primaryImageUrl: sql<string | null>`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
+      primaryImageUrl: sql<
+        string | null
+      >`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
     })
     .from(products)
     .leftJoin(
@@ -35,7 +37,7 @@ export default async function AdminProductsPage() {
           <Button className="bg-honey text-cream hover:bg-honey-dark">+ Nouveau produit</Button>
         </Link>
       </div>
-      <div className="mt-6 rounded-lg border border-warm-brown/10 bg-white p-4">
+      <div className="border-warm-brown/10 mt-6 rounded-lg border bg-white p-4">
         <ProductTable rows={rows} />
       </div>
     </div>

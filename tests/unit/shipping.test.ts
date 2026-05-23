@@ -2,9 +2,27 @@ import { describe, it, expect } from "vitest";
 import { pickShippingRate, type ShippingRate } from "@/lib/shipping/bpost";
 
 const rates: ShippingRate[] = [
-  { method: "bpost_express_24h", country: "BE", weightGramsMax: 1000, priceCents: 550, freeShippingThresholdCents: 5000 },
-  { method: "bpost_express_24h", country: "BE", weightGramsMax: 2000, priceCents: 750, freeShippingThresholdCents: 5000 },
-  { method: "bpost_express_24h", country: "BE", weightGramsMax: 5000, priceCents: 1200, freeShippingThresholdCents: 5000 },
+  {
+    method: "bpost_express_24h",
+    country: "BE",
+    weightGramsMax: 1000,
+    priceCents: 550,
+    freeShippingThresholdCents: 5000,
+  },
+  {
+    method: "bpost_express_24h",
+    country: "BE",
+    weightGramsMax: 2000,
+    priceCents: 750,
+    freeShippingThresholdCents: 5000,
+  },
+  {
+    method: "bpost_express_24h",
+    country: "BE",
+    weightGramsMax: 5000,
+    priceCents: 1200,
+    freeShippingThresholdCents: 5000,
+  },
 ];
 
 describe("pickShippingRate", () => {

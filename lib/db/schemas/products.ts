@@ -4,7 +4,9 @@ import { sql } from "drizzle-orm";
 export const productType = pgEnum("product_type", ["biscuit", "coffret", "subscription_plan"]);
 
 export const products = pgTable("products", {
-  id: text("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: text("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   type: productType("type").notNull(),
   sku: text("sku").notNull().unique(),
   categoryId: text("category_id"),

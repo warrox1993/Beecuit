@@ -1,8 +1,12 @@
 import { db } from "@/lib/db";
 import {
-  categories, categoryTranslations,
-  products, productTranslations, productImages,
-  shippingRates, users,
+  categories,
+  categoryTranslations,
+  products,
+  productTranslations,
+  productImages,
+  shippingRates,
+  users,
 } from "@/lib/db/schema";
 import { CATEGORIES, PRODUCTS, SHIPPING_RATES, ADMIN_EMAIL } from "./data";
 import { toSlug } from "@/lib/slug";
@@ -99,7 +103,10 @@ async function seedProducts() {
         });
     }
 
-    const existing = await db.select().from(productImages).where(sql`${productImages.productId} = ${prod.id}`);
+    const existing = await db
+      .select()
+      .from(productImages)
+      .where(sql`${productImages.productId} = ${prod.id}`);
     if (existing.length === 0) {
       for (let i = 0; i < p.imageCount; i++) {
         await db.insert(productImages).values({
@@ -125,7 +132,9 @@ async function promoteAdmin() {
     .update(users)
     .set({ role: "admin" })
     .where(sql`${users.email} = ${ADMIN_EMAIL}`);
-  console.log(`If ${ADMIN_EMAIL} has not yet signed in via magic link, no row was updated — sign in first, then re-run pnpm seed.`);
+  console.log(
+    `If ${ADMIN_EMAIL} has not yet signed in via magic link, no row was updated — sign in first, then re-run pnpm seed.`,
+  );
 }
 
 async function main() {

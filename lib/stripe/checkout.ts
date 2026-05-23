@@ -53,7 +53,14 @@ export async function createStripeCheckoutSession(args: {
   return stripe.checkout.sessions.create({
     mode: "payment",
     payment_method_types: ["card", "bancontact"],
-    locale: args.locale === "en" ? "en" : args.locale === "nl" ? "nl" : args.locale === "de" ? "de" : "fr",
+    locale:
+      args.locale === "en"
+        ? "en"
+        : args.locale === "nl"
+          ? "nl"
+          : args.locale === "de"
+            ? "de"
+            : "fr",
     customer_email: args.email,
     line_items: productLineItems,
     success_url: `${args.appBaseUrl}/${args.locale}/commande-confirmee/${args.orderNumber}`,

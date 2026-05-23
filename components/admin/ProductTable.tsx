@@ -29,7 +29,7 @@ export function ProductTable({ rows }: { rows: Row[] }) {
           <th></th>
         </tr>
       </thead>
-      <tbody className="divide-y divide-warm-brown/10">
+      <tbody className="divide-warm-brown/10 divide-y">
         {rows.map((r) => {
           const lowStock = r.stockQuantity < 5;
           const out = r.stockQuantity === 0;
@@ -40,7 +40,7 @@ export function ProductTable({ rows }: { rows: Row[] }) {
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={r.primaryImageUrl} alt="" className="h-12 w-12 rounded object-cover" />
                 ) : (
-                  <div className="h-12 w-12 rounded bg-soft-rose" />
+                  <div className="bg-soft-rose h-12 w-12 rounded" />
                 )}
               </td>
               <td className="font-mono text-xs">{r.sku}</td>
@@ -50,7 +50,9 @@ export function ProductTable({ rows }: { rows: Row[] }) {
               <td className="text-right">{r.stockQuantity}</td>
               <td>{r.isActive ? "Actif" : "Inactif"}</td>
               <td className="text-right">
-                <Link href={`/admin/produits/${r.id}`} className="text-honey-dark hover:underline">Éditer</Link>
+                <Link href={`/admin/produits/${r.id}`} className="text-honey-dark hover:underline">
+                  Éditer
+                </Link>
               </td>
             </tr>
           );

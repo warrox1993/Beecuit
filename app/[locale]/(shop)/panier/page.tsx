@@ -38,7 +38,9 @@ export default async function CartPage({ params }: { params: Promise<{ locale: s
         <h1 className="text-honey font-display mb-4 text-4xl">{t("label")}</h1>
         <p className="text-warm-brown/70 mb-8">{t("empty")}</p>
         <Link href="/biscuits">
-          <Button className="bg-honey text-cream hover:bg-honey-dark">Découvrir nos biscuits</Button>
+          <Button className="bg-honey text-cream hover:bg-honey-dark">
+            Découvrir nos biscuits
+          </Button>
         </Link>
       </section>
     );
@@ -67,7 +69,9 @@ export default async function CartPage({ params }: { params: Promise<{ locale: s
         <span className="text-warm-brown text-lg">{t("subtotal")}</span>
         <span className="text-honey-dark font-mono text-2xl">{subtotalEur} €</span>
       </div>
-      <p className="text-warm-brown/60 mt-2 text-right text-xs">Livraison et TVA calculées au checkout</p>
+      <p className="text-warm-brown/60 mt-2 text-right text-xs">
+        Livraison et TVA calculées au checkout
+      </p>
       <div className="mt-8 flex justify-between gap-4">
         <Link href="/biscuits" className="text-warm-brown text-sm underline">
           Continuer mes achats

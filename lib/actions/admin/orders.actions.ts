@@ -13,12 +13,19 @@ async function requireAdmin() {
   if (session?.user?.role !== "admin") throw new Error("Forbidden");
 }
 
-const MarkShipped = z.object({ orderNumber: z.string().min(1), trackingNumber: z.string().min(1).max(100) });
+const MarkShipped = z.object({
+  orderNumber: z.string().min(1),
+  trackingNumber: z.string().min(1).max(100),
+});
 
 export async function markAsShipped(raw: unknown) {
   await requireAdmin();
   const { orderNumber, trackingNumber } = MarkShipped.parse(raw);
-  const [order] = await db.select().from(orders).where(eq(orders.orderNumber, orderNumber)).limit(1);
+  const [order] = await db
+    .select()
+    .from(orders)
+    .where(eq(orders.orderNumber, orderNumber))
+    .limit(1);
   if (!order) throw new Error("Order not found");
   await db
     .update(orders)

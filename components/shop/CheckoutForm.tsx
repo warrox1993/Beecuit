@@ -4,8 +4,15 @@ import { Button } from "@/components/ui/button";
 import { createCheckoutSession } from "@/lib/actions/checkout.actions";
 
 type SimpleAddress = {
-  firstName: string; lastName: string; line1: string; line2?: string;
-  postalCode: string; city: string; country: string; phone?: string; label?: string;
+  firstName: string;
+  lastName: string;
+  line1: string;
+  line2?: string;
+  postalCode: string;
+  city: string;
+  country: string;
+  phone?: string;
+  label?: string;
 };
 
 export function CheckoutForm({
@@ -19,15 +26,30 @@ export function CheckoutForm({
   const [newsletterOptIn, setNewsletter] = useState(false);
   const [billingSameAsShipping, setSame] = useState(true);
   const [ship, setShip] = useState<SimpleAddress>({
-    firstName: "", lastName: "", line1: "", postalCode: "", city: "", country: "BE",
+    firstName: "",
+    lastName: "",
+    line1: "",
+    postalCode: "",
+    city: "",
+    country: "BE",
   });
   const [bill, setBill] = useState<SimpleAddress>({
-    firstName: "", lastName: "", line1: "", postalCode: "", city: "", country: "BE",
+    firstName: "",
+    lastName: "",
+    line1: "",
+    postalCode: "",
+    city: "",
+    country: "BE",
   });
   const [pending, start] = useTransition();
   const [err, setErr] = useState<string | null>(null);
 
-  function input<K extends keyof SimpleAddress>(target: SimpleAddress, set: (a: SimpleAddress) => void, key: K, required = true) {
+  function input<K extends keyof SimpleAddress>(
+    target: SimpleAddress,
+    set: (a: SimpleAddress) => void,
+    key: K,
+    required = true,
+  ) {
     return (
       <input
         type="text"
@@ -76,7 +98,11 @@ export function CheckoutForm({
           placeholder="email@exemple.com"
         />
         <label className="flex items-center gap-2 text-sm">
-          <input type="checkbox" checked={newsletterOptIn} onChange={(e) => setNewsletter(e.target.checked)} />
+          <input
+            type="checkbox"
+            checked={newsletterOptIn}
+            onChange={(e) => setNewsletter(e.target.checked)}
+          />
           M&apos;abonner à la newsletter BeeCuit
         </label>
       </fieldset>
@@ -99,7 +125,11 @@ export function CheckoutForm({
       <fieldset className="space-y-3">
         <legend className="text-warm-brown font-display text-lg">Adresse de facturation</legend>
         <label className="flex items-center gap-2 text-sm">
-          <input type="checkbox" checked={billingSameAsShipping} onChange={(e) => setSame(e.target.checked)} />
+          <input
+            type="checkbox"
+            checked={billingSameAsShipping}
+            onChange={(e) => setSame(e.target.checked)}
+          />
           Identique à l&apos;adresse de livraison
         </label>
         {!billingSameAsShipping && (

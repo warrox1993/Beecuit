@@ -51,19 +51,38 @@ export default async function ProductPage({
           <details className="border-warm-brown/20 border-t pt-4">
             <summary className="cursor-pointer text-sm font-medium">Allergènes</summary>
             <ul className="text-warm-brown/80 mt-2 list-disc pl-5 text-sm">
-              {product.allergens.map((a) => <li key={a}>{a}</li>)}
+              {product.allergens.map((a) => (
+                <li key={a}>{a}</li>
+              ))}
             </ul>
           </details>
         )}
         <details className="border-warm-brown/20 border-t pt-4">
-          <summary className="cursor-pointer text-sm font-medium">Valeurs nutritionnelles /100 g</summary>
+          <summary className="cursor-pointer text-sm font-medium">
+            Valeurs nutritionnelles /100 g
+          </summary>
           <table className="text-warm-brown/80 mt-2 w-full text-sm">
             <tbody>
-              <tr><td>Énergie</td><td className="text-right">{product.nutritionalFactsPer100g.energy_kcal} kcal</td></tr>
-              <tr><td>Matières grasses</td><td className="text-right">{product.nutritionalFactsPer100g.fat_g} g</td></tr>
-              <tr><td>Glucides</td><td className="text-right">{product.nutritionalFactsPer100g.carbs_g} g</td></tr>
-              <tr><td>Protéines</td><td className="text-right">{product.nutritionalFactsPer100g.protein_g} g</td></tr>
-              <tr><td>Sel</td><td className="text-right">{product.nutritionalFactsPer100g.salt_g} g</td></tr>
+              <tr>
+                <td>Énergie</td>
+                <td className="text-right">{product.nutritionalFactsPer100g.energy_kcal} kcal</td>
+              </tr>
+              <tr>
+                <td>Matières grasses</td>
+                <td className="text-right">{product.nutritionalFactsPer100g.fat_g} g</td>
+              </tr>
+              <tr>
+                <td>Glucides</td>
+                <td className="text-right">{product.nutritionalFactsPer100g.carbs_g} g</td>
+              </tr>
+              <tr>
+                <td>Protéines</td>
+                <td className="text-right">{product.nutritionalFactsPer100g.protein_g} g</td>
+              </tr>
+              <tr>
+                <td>Sel</td>
+                <td className="text-right">{product.nutritionalFactsPer100g.salt_g} g</td>
+              </tr>
             </tbody>
           </table>
         </details>

@@ -23,14 +23,18 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     <div className="flex min-h-screen">
       <AdminSidebar />
       <div className="flex-1">
-        <header className="flex items-center justify-between border-b border-warm-brown/10 bg-white px-6 py-3">
-          <span className={`rounded px-2 py-0.5 text-xs font-bold ${ENV_BADGE === "PROD" ? "bg-red-100 text-red-700" : "bg-yellow-100 text-yellow-700"}`}>
+        <header className="border-warm-brown/10 flex items-center justify-between border-b bg-white px-6 py-3">
+          <span
+            className={`rounded px-2 py-0.5 text-xs font-bold ${ENV_BADGE === "PROD" ? "bg-red-100 text-red-700" : "bg-yellow-100 text-yellow-700"}`}
+          >
             {ENV_BADGE}
           </span>
           <div className="flex items-center gap-3">
-            <span className="text-sm text-warm-brown/70">{session.user.email}</span>
+            <span className="text-warm-brown/70 text-sm">{session.user.email}</span>
             <form action={handleSignOut}>
-              <Button type="submit" variant="outline" size="sm">Sign out</Button>
+              <Button type="submit" variant="outline" size="sm">
+                Sign out
+              </Button>
             </form>
           </div>
         </header>

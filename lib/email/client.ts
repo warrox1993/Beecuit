@@ -5,11 +5,7 @@ import { env } from "@/lib/env";
 
 const resend = new Resend(env.AUTH_RESEND_KEY);
 
-export async function sendEmail(args: {
-  to: string;
-  subject: string;
-  react: React.ReactElement;
-}) {
+export async function sendEmail(args: { to: string; subject: string; react: React.ReactElement }) {
   const { error } = await resend.emails.send({
     from: env.AUTH_EMAIL_FROM,
     to: args.to,

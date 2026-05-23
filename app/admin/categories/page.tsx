@@ -1,13 +1,13 @@
 import { db } from "@/lib/db";
-import { categories, categoryTranslations, products } from "@/lib/db/schema";
-import { eq, sql } from "drizzle-orm";
+import { categories, categoryTranslations } from "@/lib/db/schema";
+import { sql } from "drizzle-orm";
 import { CategoryListClient } from "@/components/admin/CategoryListClient";
 
 export const dynamic = "force-dynamic";
 
-const LOCALES = ["fr", "nl", "de", "en"] as const;
+type Locale = "fr" | "nl" | "de" | "en";
 type Trans = { name: string; description: string };
-type LT = Record<"fr" | "nl" | "de" | "en", Trans>;
+type LT = Record<Locale, Trans>;
 
 export default async function AdminCategoriesPage() {
   const cats = await db
@@ -25,13 +25,15 @@ export default async function AdminCategoriesPage() {
   const byCategory = new Map<string, LT>();
   for (const c of cats) {
     byCategory.set(c.id, {
-      fr: { name: "", description: "" }, nl: { name: "", description: "" },
-      de: { name: "", description: "" }, en: { name: "", description: "" },
+      fr: { name: "", description: "" },
+      nl: { name: "", description: "" },
+      de: { name: "", description: "" },
+      en: { name: "", description: "" },
     });
   }
   for (const t of trans) {
     const lt = byCategory.get(t.categoryId);
-    if (lt) lt[t.locale as (typeof LOCALES)[number]] = { name: t.name, description: t.description ?? "" };
+    if (lt) lt[t.locale as Locale] = { name: t.name, description: t.description ?? "" };
   }
 
   const rows = cats.map((c) => ({

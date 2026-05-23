@@ -16,7 +16,10 @@ export async function uploadImage(productId: string, formData: FormData) {
   const file = formData.get("file");
   if (!(file instanceof File)) throw new Error("file required");
   const url = await uploadProductImage(productId, file);
-  const existing = await db.select().from(productImages).where(eq(productImages.productId, productId));
+  const existing = await db
+    .select()
+    .from(productImages)
+    .where(eq(productImages.productId, productId));
   await db.insert(productImages).values({
     productId,
     url,
@@ -35,7 +38,13 @@ export async function deleteImage(imageId: string, productId: string) {
 
 export async function setPrimaryImage(imageId: string, productId: string) {
   await requireAdmin();
-  await db.update(productImages).set({ isPrimary: false }).where(eq(productImages.productId, productId));
-  await db.update(productImages).set({ isPrimary: true }).where(and(eq(productImages.id, imageId), eq(productImages.productId, productId)));
+  await db
+    .update(productImages)
+    .set({ isPrimary: false })
+    .where(eq(productImages.productId, productId));
+  await db
+    .update(productImages)
+    .set({ isPrimary: true })
+    .where(and(eq(productImages.id, imageId), eq(productImages.productId, productId)));
   revalidatePath(`/admin/produits/${productId}`);
 }

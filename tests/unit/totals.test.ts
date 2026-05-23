@@ -15,7 +15,10 @@ describe("extractVatInclusive", () => {
 describe("computeOrderTotals", () => {
   it("sums lines + shipping with VAT inclusive 6 %", () => {
     const t = computeOrderTotals({
-      lines: [{ unitPriceCents: 690, quantity: 2 }, { unitPriceCents: 850, quantity: 1 }],
+      lines: [
+        { unitPriceCents: 690, quantity: 2 },
+        { unitPriceCents: 850, quantity: 1 },
+      ],
       shippingCents: 550,
       vatPercentInclusive: 6,
     });

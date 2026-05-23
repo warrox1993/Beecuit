@@ -17,7 +17,10 @@ export async function createAddress(raw: unknown) {
   const userId = await requireUserId();
   const data = AddressSchema.parse(raw);
   if (data.isDefaultShipping) {
-    await db.update(addresses).set({ isDefaultShipping: false }).where(eq(addresses.userId, userId));
+    await db
+      .update(addresses)
+      .set({ isDefaultShipping: false })
+      .where(eq(addresses.userId, userId));
   }
   if (data.isDefaultBilling) {
     await db.update(addresses).set({ isDefaultBilling: false }).where(eq(addresses.userId, userId));
@@ -31,7 +34,10 @@ export async function updateAddress(raw: unknown) {
   const data = AddressSchema.parse(raw);
   if (!data.id) throw new Error("id required for update");
   if (data.isDefaultShipping) {
-    await db.update(addresses).set({ isDefaultShipping: false }).where(eq(addresses.userId, userId));
+    await db
+      .update(addresses)
+      .set({ isDefaultShipping: false })
+      .where(eq(addresses.userId, userId));
   }
   if (data.isDefaultBilling) {
     await db.update(addresses).set({ isDefaultBilling: false }).where(eq(addresses.userId, userId));

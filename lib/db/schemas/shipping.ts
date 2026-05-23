@@ -2,7 +2,9 @@ import { pgTable, text, integer } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
 export const shippingRates = pgTable("shipping_rates", {
-  id: text("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: text("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   method: text("method").notNull(),
   country: text("country").notNull().default("BE"),
   weightGramsMax: integer("weight_grams_max").notNull(),

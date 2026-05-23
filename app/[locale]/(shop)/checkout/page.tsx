@@ -41,10 +41,17 @@ export default async function CheckoutPage({ params }: { params: Promise<{ local
     <section className="mx-auto grid max-w-6xl gap-10 px-6 py-12 md:grid-cols-[1fr_360px]">
       <div>
         <h1 className="text-honey font-display mb-8 text-4xl">Checkout</h1>
-        <CheckoutForm defaultEmail={session?.user?.email ?? ""} locale={locale as "fr" | "nl" | "de" | "en"} />
+        <CheckoutForm
+          defaultEmail={session?.user?.email ?? ""}
+          locale={locale as "fr" | "nl" | "de" | "en"}
+        />
       </div>
       <OrderSummary
-        lines={items.map((i) => ({ name: i.name, unitPriceCents: i.unitPriceCents, quantity: i.quantity }))}
+        lines={items.map((i) => ({
+          name: i.name,
+          unitPriceCents: i.unitPriceCents,
+          quantity: i.quantity,
+        }))}
         shippingCents={totals.shippingCents}
         totalCents={totals.totalCents}
         vatCents={totals.vatCents}

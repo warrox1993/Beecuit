@@ -7,7 +7,13 @@ export default async function NewProductPage() {
   const cats = await db
     .select({ id: categories.id, slug: categories.slug, nameFr: categoryTranslations.name })
     .from(categories)
-    .innerJoin(categoryTranslations, and(eq(categoryTranslations.categoryId, categories.id), eq(categoryTranslations.locale, "fr")))
+    .innerJoin(
+      categoryTranslations,
+      and(
+        eq(categoryTranslations.categoryId, categories.id),
+        eq(categoryTranslations.locale, "fr"),
+      ),
+    )
     .where(eq(categories.isActive, true))
     .orderBy(categories.sortOrder);
   return (

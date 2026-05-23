@@ -15,7 +15,9 @@ import { sql, eq } from "drizzle-orm";
 // Minimal inline schema — avoids importing the full app schema chain
 const productType = pgEnum("product_type", ["biscuit", "coffret", "subscription_plan"]);
 const products = pgTable("products", {
-  id: text("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: text("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   type: productType("type").notNull(),
   sku: text("sku").notNull().unique(),
   categoryId: text("category_id"),
@@ -31,7 +33,8 @@ const products = pgTable("products", {
 
 function getDb() {
   const url = process.env.DATABASE_URL;
-  if (!url) throw new Error("DATABASE_URL is not set — run via: pnpm dotenv -e .env.local -- pnpm e2e");
+  if (!url)
+    throw new Error("DATABASE_URL is not set — run via: pnpm dotenv -e .env.local -- pnpm e2e");
   const sqlClient = neon(url);
   return drizzle(sqlClient);
 }

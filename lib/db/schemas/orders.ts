@@ -3,11 +3,19 @@ import { sql } from "drizzle-orm";
 import { users } from "./auth";
 
 export const orderStatus = pgEnum("order_status", [
-  "pending", "paid", "preparing", "shipped", "delivered", "cancelled", "refunded",
+  "pending",
+  "paid",
+  "preparing",
+  "shipped",
+  "delivered",
+  "cancelled",
+  "refunded",
 ]);
 
 export const orders = pgTable("orders", {
-  id: text("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: text("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   orderNumber: text("order_number").notNull().unique(),
   userId: text("user_id").references(() => users.id, { onDelete: "set null" }),
   guestEmail: text("guest_email"),

@@ -10,7 +10,11 @@ const Nutri = z.object({
 
 const Translation = z.object({
   name: z.string().min(1).max(200),
-  slug: z.string().min(1).max(200).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+  slug: z
+    .string()
+    .min(1)
+    .max(200)
+    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   shortDescription: z.string().min(1).max(160),
   longDescription: z.string().min(1).max(2000),
   ingredients: z.string().min(1).max(2000),
@@ -22,7 +26,11 @@ const Translation = z.object({
 
 export const ProductSchema = z.object({
   id: z.string().optional(),
-  sku: z.string().min(1).max(50).regex(/^[A-Z0-9-]+$/),
+  sku: z
+    .string()
+    .min(1)
+    .max(50)
+    .regex(/^[A-Z0-9-]+$/),
   categoryId: z.string().nullable().optional(),
   basePriceCents: z.number().int().positive(),
   weightGrams: z.number().int().positive(),

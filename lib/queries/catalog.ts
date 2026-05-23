@@ -1,8 +1,11 @@
 import "server-only";
 import { db } from "@/lib/db";
 import {
-  products, productTranslations, productImages,
-  categories, categoryTranslations,
+  products,
+  productTranslations,
+  productImages,
+  categories,
+  categoryTranslations,
 } from "@/lib/db/schema";
 import { and, eq, sql } from "drizzle-orm";
 
@@ -18,7 +21,10 @@ export async function listActiveCategoriesForLocale(locale: Locale) {
     .from(categories)
     .innerJoin(
       categoryTranslations,
-      and(eq(categoryTranslations.categoryId, categories.id), eq(categoryTranslations.locale, locale)),
+      and(
+        eq(categoryTranslations.categoryId, categories.id),
+        eq(categoryTranslations.locale, locale),
+      ),
     )
     .where(eq(categories.isActive, true))
     .orderBy(categories.sortOrder);
@@ -41,7 +47,9 @@ export async function listProductsForLocale(locale: Locale, categorySlug?: strin
       name: productTranslations.name,
       slug: productTranslations.slug,
       shortDescription: productTranslations.shortDescription,
-      primaryImageUrl: sql<string | null>`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
+      primaryImageUrl: sql<
+        string | null
+      >`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
     })
     .from(products)
     .innerJoin(

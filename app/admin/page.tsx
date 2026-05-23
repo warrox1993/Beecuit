@@ -20,7 +20,7 @@ export default async function AdminDashboard() {
     .from(orders);
 
   const Card = ({ label, value }: { label: string; value: number }) => (
-    <div className="rounded-lg border border-warm-brown/10 bg-white p-4">
+    <div className="border-warm-brown/10 rounded-lg border bg-white p-4">
       <p className="text-warm-brown/60 text-xs">{label}</p>
       <p className="text-honey-dark mt-1 font-mono text-2xl">{value}</p>
     </div>

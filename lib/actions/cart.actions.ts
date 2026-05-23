@@ -22,7 +22,13 @@ async function getActiveCartId(): Promise<string> {
   let token = store.get(COOKIE)?.value;
   if (!token) {
     token = uuid();
-    store.set(COOKIE, token, { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", path: "/", maxAge: 60 * 60 * 24 * 30 });
+    store.set(COOKIE, token, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 30,
+    });
   }
   const cart = await getOrCreateCartForSessionToken(token);
   return cart.id;
@@ -41,7 +47,9 @@ export async function addToCart(rawInput: unknown) {
     .values({ cartId, productId: input.productId, quantity: input.quantity })
     .onConflictDoUpdate({
       target: [cartItems.cartId, cartItems.productId],
-      set: { quantity: sql`LEAST(${cartItems.quantity} + ${input.quantity}, ${prod.stockQuantity})` },
+      set: {
+        quantity: sql`LEAST(${cartItems.quantity} + ${input.quantity}, ${prod.stockQuantity})`,
+      },
     });
 
   await db.update(carts).set({ updatedAt: new Date() }).where(eq(carts.id, cartId));

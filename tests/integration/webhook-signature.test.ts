@@ -24,7 +24,7 @@ describe("webhook signature", () => {
       data: { object: {} },
     });
     expect(() =>
-      stripe.webhooks.constructEvent(payload, "bogus", env.STRIPE_WEBHOOK_SECRET)
+      stripe.webhooks.constructEvent(payload, "bogus", env.STRIPE_WEBHOOK_SECRET),
     ).toThrow();
   });
 });

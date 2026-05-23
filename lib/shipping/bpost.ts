@@ -14,7 +14,10 @@ export function pickShippingRate(
   const sorted = [...rates].sort((a, b) => a.weightGramsMax - b.weightGramsMax);
   const match = sorted.find((r) => r.weightGramsMax >= weightGrams);
   if (!match) return null;
-  if (match.freeShippingThresholdCents !== null && subtotalCents >= match.freeShippingThresholdCents) {
+  if (
+    match.freeShippingThresholdCents !== null &&
+    subtotalCents >= match.freeShippingThresholdCents
+  ) {
     return { ...match, priceCents: 0 };
   }
   return match;

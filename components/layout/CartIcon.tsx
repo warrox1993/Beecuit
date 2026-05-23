@@ -9,13 +9,21 @@ async function getCartItemCount(): Promise<number> {
   const session = await auth();
   let cartId: string | null = null;
   if (session?.user?.id) {
-    const [c] = await db.select({ id: carts.id }).from(carts).where(eq(carts.userId, session.user.id)).limit(1);
+    const [c] = await db
+      .select({ id: carts.id })
+      .from(carts)
+      .where(eq(carts.userId, session.user.id))
+      .limit(1);
     cartId = c?.id ?? null;
   } else {
     const store = await cookies();
     const token = store.get("cart_session_token")?.value;
     if (token) {
-      const [c] = await db.select({ id: carts.id }).from(carts).where(eq(carts.sessionToken, token)).limit(1);
+      const [c] = await db
+        .select({ id: carts.id })
+        .from(carts)
+        .where(eq(carts.sessionToken, token))
+        .limit(1);
       cartId = c?.id ?? null;
     }
   }
@@ -30,7 +38,11 @@ async function getCartItemCount(): Promise<number> {
 export async function CartIcon() {
   const count = await getCartItemCount();
   return (
-    <Link href="/panier" aria-label="Panier" className="relative text-warm-brown hover:text-honey-dark">
+    <Link
+      href="/panier"
+      aria-label="Panier"
+      className="text-warm-brown hover:text-honey-dark relative"
+    >
       <span>🛒</span>
       {count > 0 && (
         <span className="bg-honey text-cream absolute -top-2 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[10px] font-bold">

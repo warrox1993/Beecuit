@@ -19,13 +19,21 @@ const STATUS_LABEL: Record<string, { label: string; color: string }> = {
 };
 
 export function OrderTable({ rows }: { rows: Row[] }) {
-  if (rows.length === 0) return <p className="text-warm-brown/60">Aucune commande pour le moment.</p>;
+  if (rows.length === 0)
+    return <p className="text-warm-brown/60">Aucune commande pour le moment.</p>;
   return (
     <table className="w-full text-sm">
       <thead className="text-warm-brown/60 text-left text-xs uppercase">
-        <tr><th className="py-2">N°</th><th>Date</th><th>Email</th><th className="text-right">Total</th><th>Statut</th><th></th></tr>
+        <tr>
+          <th className="py-2">N°</th>
+          <th>Date</th>
+          <th>Email</th>
+          <th className="text-right">Total</th>
+          <th>Statut</th>
+          <th></th>
+        </tr>
       </thead>
-      <tbody className="divide-y divide-warm-brown/10">
+      <tbody className="divide-warm-brown/10 divide-y">
         {rows.map((r) => {
           const s = STATUS_LABEL[r.status] ?? { label: r.status, color: "" };
           return (
@@ -34,8 +42,17 @@ export function OrderTable({ rows }: { rows: Row[] }) {
               <td>{r.createdAt.toLocaleDateString("fr-BE")}</td>
               <td className="text-warm-brown/70">{r.guestEmail ?? "—"}</td>
               <td className="text-right font-mono">{(r.totalCents / 100).toFixed(2)} €</td>
-              <td><span className={`rounded-full px-2 py-0.5 text-xs ${s.color}`}>{s.label}</span></td>
-              <td className="text-right"><Link href={`/admin/commandes/${r.orderNumber}`} className="text-honey-dark hover:underline">Voir</Link></td>
+              <td>
+                <span className={`rounded-full px-2 py-0.5 text-xs ${s.color}`}>{s.label}</span>
+              </td>
+              <td className="text-right">
+                <Link
+                  href={`/admin/commandes/${r.orderNumber}`}
+                  className="text-honey-dark hover:underline"
+                >
+                  Voir
+                </Link>
+              </td>
             </tr>
           );
         })}

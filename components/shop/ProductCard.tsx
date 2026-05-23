@@ -16,9 +16,9 @@ export function ProductCard(p: Props) {
   return (
     <Link
       href={`/biscuits/${p.slug}`}
-      className={`group block overflow-hidden rounded-lg border border-warm-brown/10 bg-white shadow-sm transition hover:shadow-md ${isOut ? "opacity-60" : ""}`}
+      className={`group border-warm-brown/10 block overflow-hidden rounded-lg border bg-white shadow-sm transition hover:shadow-md ${isOut ? "opacity-60" : ""}`}
     >
-      <div className="aspect-square bg-soft-rose">
+      <div className="bg-soft-rose aspect-square">
         {p.primaryImageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={p.primaryImageUrl} alt={p.name} className="h-full w-full object-cover" />

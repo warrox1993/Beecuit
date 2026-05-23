@@ -20,7 +20,7 @@ export default async function AdminOrdersPage() {
   return (
     <div>
       <h1 className="text-honey font-display mb-6 text-3xl">Commandes</h1>
-      <div className="mt-6 rounded-lg border border-warm-brown/10 bg-white p-4">
+      <div className="border-warm-brown/10 mt-6 rounded-lg border bg-white p-4">
         <OrderTable rows={rows} />
       </div>
     </div>

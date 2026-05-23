@@ -32,24 +32,48 @@ export function AddressList({ addresses }: { addresses: Addr[] }) {
             <AddressForm initial={a} onDone={() => setEditing(null)} />
           </div>
         ) : (
-          <div key={a.id} className="border-warm-brown/10 flex justify-between rounded-lg border p-4">
+          <div
+            key={a.id}
+            className="border-warm-brown/10 flex justify-between rounded-lg border p-4"
+          >
             <div>
               {a.label && <p className="text-warm-brown text-sm font-medium">{a.label}</p>}
-              <p className="text-warm-brown">{a.firstName} {a.lastName}</p>
-              <p className="text-warm-brown/80 text-sm">{a.line1}{a.line2 ? `, ${a.line2}` : ""}</p>
-              <p className="text-warm-brown/80 text-sm">{a.postalCode} {a.city} ({a.country})</p>
+              <p className="text-warm-brown">
+                {a.firstName} {a.lastName}
+              </p>
+              <p className="text-warm-brown/80 text-sm">
+                {a.line1}
+                {a.line2 ? `, ${a.line2}` : ""}
+              </p>
+              <p className="text-warm-brown/80 text-sm">
+                {a.postalCode} {a.city} ({a.country})
+              </p>
               {a.phone && <p className="text-warm-brown/60 text-xs">{a.phone}</p>}
               <div className="mt-2 flex gap-2 text-xs">
-                {a.isDefaultShipping && <span className="bg-honey/20 text-honey-dark rounded px-2 py-0.5">Livraison par défaut</span>}
-                {a.isDefaultBilling && <span className="bg-honey/20 text-honey-dark rounded px-2 py-0.5">Facturation par défaut</span>}
+                {a.isDefaultShipping && (
+                  <span className="bg-honey/20 text-honey-dark rounded px-2 py-0.5">
+                    Livraison par défaut
+                  </span>
+                )}
+                {a.isDefaultBilling && (
+                  <span className="bg-honey/20 text-honey-dark rounded px-2 py-0.5">
+                    Facturation par défaut
+                  </span>
+                )}
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <Button variant="outline" onClick={() => setEditing(a.id)}>Éditer</Button>
+              <Button variant="outline" onClick={() => setEditing(a.id)}>
+                Éditer
+              </Button>
               <Button
                 variant="outline"
                 disabled={pending}
-                onClick={() => start(async () => { await deleteAddress(a.id); })}
+                onClick={() =>
+                  start(async () => {
+                    await deleteAddress(a.id);
+                  })
+                }
               >
                 Supprimer
               </Button>
@@ -62,7 +86,10 @@ export function AddressList({ addresses }: { addresses: Addr[] }) {
           <AddressForm onDone={() => setCreating(false)} />
         </div>
       ) : (
-        <Button onClick={() => setCreating(true)} className="bg-honey text-cream hover:bg-honey-dark">
+        <Button
+          onClick={() => setCreating(true)}
+          className="bg-honey text-cream hover:bg-honey-dark"
+        >
           + Ajouter une adresse
         </Button>
       )}

@@ -79,7 +79,11 @@ export function AddressForm({ initial = {}, onDone }: { initial?: Initial; onDon
         Adresse de facturation par défaut
       </label>
       <div className="flex gap-2 pt-2">
-        <Button type="submit" disabled={pending} className="bg-honey text-cream hover:bg-honey-dark">
+        <Button
+          type="submit"
+          disabled={pending}
+          className="bg-honey text-cream hover:bg-honey-dark"
+        >
           {isEdit ? "Mettre à jour" : "Ajouter"}
         </Button>
         <Button type="button" variant="outline" onClick={onDone}>

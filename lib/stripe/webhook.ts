@@ -54,7 +54,9 @@ export async function handleCheckoutCompleted(event: Stripe.CheckoutSessionCompl
       .where(eq(products.id, item.productId));
   }
 
-  const recipient = order.guestEmail ?? (typeof session.customer_details?.email === "string" ? session.customer_details.email : null);
+  const recipient =
+    order.guestEmail ??
+    (typeof session.customer_details?.email === "string" ? session.customer_details.email : null);
   if (recipient) {
     try {
       await sendEmail({

@@ -5,7 +5,11 @@ import { and, eq, sql } from "drizzle-orm";
 import type { Locale } from "./catalog";
 
 export async function getOrCreateCartForSessionToken(sessionToken: string) {
-  const [existing] = await db.select().from(carts).where(eq(carts.sessionToken, sessionToken)).limit(1);
+  const [existing] = await db
+    .select()
+    .from(carts)
+    .where(eq(carts.sessionToken, sessionToken))
+    .limit(1);
   if (existing) return existing;
   const [created] = await db.insert(carts).values({ sessionToken }).returning();
   if (!created) throw new Error("Failed to create cart");
@@ -31,7 +35,9 @@ export async function getCartContents(cartId: string, locale: Locale) {
       weightGrams: products.weightGrams,
       name: productTranslations.name,
       slug: productTranslations.slug,
-      primaryImageUrl: sql<string | null>`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
+      primaryImageUrl: sql<
+        string | null
+      >`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
     })
     .from(cartItems)
     .innerJoin(products, eq(cartItems.productId, products.id))

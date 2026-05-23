@@ -46,7 +46,9 @@ export function CartItemRow({
         className="border-warm-brown/20 rounded border bg-white px-2 py-1 text-sm"
       >
         {Array.from({ length: Math.min(stockQuantity, 10) }, (_, i) => i + 1).map((n) => (
-          <option key={n} value={n}>{n}</option>
+          <option key={n} value={n}>
+            {n}
+          </option>
         ))}
       </select>
       <p className="text-honey-dark w-16 text-right font-mono text-sm">{subtotalEur} €</p>

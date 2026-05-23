@@ -10,8 +10,10 @@ const items = [
 
 export function AdminSidebar() {
   return (
-    <aside className="w-56 shrink-0 border-r border-warm-brown/10 bg-cream p-4">
-      <Link href="/admin" className="text-honey font-display block text-2xl">BeeCuit admin</Link>
+    <aside className="border-warm-brown/10 bg-cream w-56 shrink-0 border-r p-4">
+      <Link href="/admin" className="text-honey font-display block text-2xl">
+        BeeCuit admin
+      </Link>
       <nav className="mt-6 text-sm">
         <ul className="space-y-1">
           {items.map((i) => (

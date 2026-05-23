@@ -15,7 +15,9 @@ export function OrderConfirmation({
     <Html>
       <Head />
       <Body style={{ backgroundColor: "#FBF6EE", fontFamily: "system-ui" }}>
-        <Container style={{ maxWidth: 480, margin: "0 auto", padding: "32px 24px", color: "#4A332A" }}>
+        <Container
+          style={{ maxWidth: 480, margin: "0 auto", padding: "32px 24px", color: "#4A332A" }}
+        >
           <Heading style={{ color: "#E4A11B", fontSize: 28, margin: 0 }}>BeeCuit</Heading>
           <Text>Merci ! Ta commande #{orderNumber} est confirmée.</Text>
           <Section>
