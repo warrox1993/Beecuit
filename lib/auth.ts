@@ -61,4 +61,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     verifyRequest: "/fr/sign-in?check=email",
   },
   trustHost: true,
+  callbacks: {
+    async session({ session, user }) {
+      if (session.user && user) {
+        session.user.id = user.id;
+        const { db } = await import("@/lib/db");
+        const { users } = await import("@/lib/db/schema");
+        const { eq } = await import("drizzle-orm");
+        const [u] = await db.select({ role: users.role }).from(users).where(eq(users.id, user.id)).limit(1);
+        session.user.role = u?.role ?? "customer";
+      }
+      return session;
+    },
+  },
 });
