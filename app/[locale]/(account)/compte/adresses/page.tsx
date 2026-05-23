@@ -5,6 +5,8 @@ import { addresses } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { AddressList } from "@/components/account/AddressList";
 import { setRequestLocale } from "next-intl/server";
+import { Eyebrow } from "@/components/ui-primitives/Eyebrow";
+import { Heading } from "@/components/ui-primitives/Heading";
 
 export default async function AddressesPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -14,7 +16,8 @@ export default async function AddressesPage({ params }: { params: Promise<{ loca
   const rows = await db.select().from(addresses).where(eq(addresses.userId, session!.user!.id!));
   return (
     <section>
-      <h1 className="text-honey font-display mb-6 text-3xl">Mes adresses</h1>
+      <Eyebrow>MON COMPTE</Eyebrow>
+      <Heading as="h1" size="h1" className="mt-3 mb-8">Mes adresses</Heading>
       <AddressList addresses={rows} />
     </section>
   );

@@ -5,6 +5,8 @@ import { db } from "@/lib/db";
 import { orders } from "@/lib/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { OrderList } from "@/components/account/OrderList";
+import { Eyebrow } from "@/components/ui-primitives/Eyebrow";
+import { Heading } from "@/components/ui-primitives/Heading";
 
 export default async function MyOrdersPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -23,7 +25,8 @@ export default async function MyOrdersPage({ params }: { params: Promise<{ local
     .orderBy(desc(orders.createdAt));
   return (
     <section>
-      <h1 className="text-honey font-display mb-6 text-3xl">Mes commandes</h1>
+      <Eyebrow>MON COMPTE</Eyebrow>
+      <Heading as="h1" size="h1" className="mt-3 mb-8">Mes commandes</Heading>
       <OrderList rows={rows} />
     </section>
   );
