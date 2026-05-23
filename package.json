@@ -19,7 +19,8 @@
     "db:generate": "dotenv -e .env.local -- drizzle-kit generate",
     "db:migrate": "dotenv -e .env.local -- drizzle-kit migrate",
     "db:push": "dotenv -e .env.local -- drizzle-kit push",
-    "db:studio": "dotenv -e .env.local -- drizzle-kit studio"
+    "db:studio": "dotenv -e .env.local -- drizzle-kit studio",
+    "seed": "dotenv -e .env.local -- tsx scripts/seed/index.ts"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.11.2",
