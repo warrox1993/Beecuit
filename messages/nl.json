@@ -10,12 +10,15 @@
     "biscuits": "Koekjes",
     "coffrets": "Dozen",
     "compose": "Stel je doos samen",
+    "abonnement": "Abonnement",
     "subscription": "Abonnement",
     "business": "Bedrijven",
     "journal": "Journal",
     "account": "Mijn account",
     "signIn": "Inloggen",
-    "signOut": "Uitloggen"
+    "signOut": "Uitloggen",
+    "comingSoon": "Binnenkort beschikbaar",
+    "menu": "Menu"
   },
   "auth": {
     "signInTitle": "Inloggen bij BeeCuit",

@@ -10,12 +10,15 @@
     "biscuits": "Kekse",
     "coffrets": "Boxen",
     "compose": "Box zusammenstellen",
+    "abonnement": "Abonnement",
     "subscription": "Abonnement",
     "business": "Unternehmen",
     "journal": "Journal",
     "account": "Mein Konto",
     "signIn": "Anmelden",
-    "signOut": "Abmelden"
+    "signOut": "Abmelden",
+    "comingSoon": "Bald verfügbar",
+    "menu": "Menü"
   },
   "auth": {
     "signInTitle": "Bei BeeCuit anmelden",
