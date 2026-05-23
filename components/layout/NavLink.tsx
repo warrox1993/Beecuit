@@ -20,8 +20,8 @@ export function NavLink({
       href={href as Parameters<typeof Link>[0]["href"]}
       className={cn(
         "text-sm font-medium tracking-wide transition-colors",
-        isActive ? "text-honey-dark" : "text-warm-brown hover:text-honey-dark",
         comingSoon && "text-warm-brown/50 hover:text-warm-brown/70",
+        isActive ? "text-honey-dark" : "text-warm-brown hover:text-honey-dark",
         className,
       )}
       aria-current={isActive ? "page" : undefined}

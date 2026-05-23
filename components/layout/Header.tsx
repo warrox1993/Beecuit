@@ -27,6 +27,7 @@ export async function Header({ locale }: { locale: string }) {
             <NavLink href="/journal" comingSoon>
               {t("journal")}
             </NavLink>
+            <NavLink href="/compte">{t("account")}</NavLink>
           </nav>
           <div className="flex items-center gap-5">
             <div className="hidden md:block">
