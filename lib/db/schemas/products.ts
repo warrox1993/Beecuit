@@ -1,21 +1,12 @@
-import {
-  pgTable,
-  text,
-  integer,
-  timestamp,
-  boolean,
-  pgEnum,
-} from "drizzle-orm/pg-core";
+import { pgTable, text, integer, timestamp, boolean, pgEnum } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
-export const productType = pgEnum("product_type", [
-  "biscuit",
-  "coffret",
-  "subscription_plan",
-]);
+export const productType = pgEnum("product_type", ["biscuit", "coffret", "subscription_plan"]);
 
 export const products = pgTable("products", {
-  id: text("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: text("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   type: productType("type").notNull(),
   slug: text("slug").notNull().unique(),
   sku: text("sku").notNull().unique(),

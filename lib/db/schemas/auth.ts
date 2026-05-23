@@ -13,7 +13,9 @@ export const userRole = pgEnum("user_role", ["customer", "b2b", "admin"]);
 export const locale = pgEnum("locale", ["fr", "nl", "de", "en"]);
 
 export const users = pgTable("users", {
-  id: text("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: text("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   name: text("name"),
   email: text("email").notNull().unique(),
   emailVerified: timestamp("email_verified", { mode: "date" }),
