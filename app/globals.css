@@ -31,9 +31,9 @@
   --color-surface-elev: #ffffff;
   --color-ink: var(--color-warm-brown);
   --color-ink-muted: rgb(74 51 42 / 0.7);
-  --color-border: rgb(74 51 42 / 0.1);
-  --color-accent: var(--color-honey);
-  --color-accent-strong: var(--color-honey-dark);
+  --color-brand-border: rgb(74 51 42 / 0.1);
+  --color-brand-accent: var(--color-honey);
+  --color-brand-accent-strong: var(--color-honey-dark);
 }
 
 @layer base {

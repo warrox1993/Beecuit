@@ -1,4 +1,5 @@
 import { Fraunces, Inter } from "next/font/google";
+import { getLocale } from "next-intl/server";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -17,9 +18,10 @@ const inter = Inter({
   display: "swap",
 });
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const locale = await getLocale();
   return (
-    <html className={`${fraunces.variable} ${inter.variable}`}>
+    <html lang={locale} className={`${fraunces.variable} ${inter.variable}`}>
       <body>{children}</body>
     </html>
   );
