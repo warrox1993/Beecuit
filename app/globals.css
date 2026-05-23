@@ -16,8 +16,8 @@
   --color-leaf: #708b58;
 
   /* — Typography — */
-  --font-display: "Fraunces", ui-serif, Georgia, serif;
-  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces, "Fraunces"), ui-serif, Georgia, serif;
+  --font-body: var(--font-inter, "Inter"), ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   /* — Radius & shadows — */
@@ -25,6 +25,15 @@
   --radius: 0.625rem;
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
+
+  /* — Semantic color tokens — */
+  --color-surface: var(--color-cream);
+  --color-surface-elev: #ffffff;
+  --color-ink: var(--color-warm-brown);
+  --color-ink-muted: rgb(74 51 42 / 0.7);
+  --color-border: rgb(74 51 42 / 0.1);
+  --color-accent: var(--color-honey);
+  --color-accent-strong: var(--color-honey-dark);
 }
 
 @layer base {
