@@ -10,6 +10,10 @@ import { calculateShipping } from "@/lib/actions/checkout.actions";
 import { computeOrderTotals } from "@/lib/totals";
 import { CheckoutForm } from "@/components/shop/CheckoutForm";
 import { OrderSummary } from "@/components/shop/OrderSummary";
+import { Container } from "@/components/ui-primitives/Container";
+import { Section } from "@/components/ui-primitives/Section";
+import { Eyebrow } from "@/components/ui-primitives/Eyebrow";
+import { Heading } from "@/components/ui-primitives/Heading";
 
 export const dynamic = "force-dynamic";
 
@@ -38,24 +42,22 @@ export default async function CheckoutPage({ params }: { params: Promise<{ local
   });
 
   return (
-    <section className="mx-auto grid max-w-6xl gap-10 px-6 py-12 md:grid-cols-[1fr_360px]">
-      <div>
-        <h1 className="text-honey font-display mb-8 text-4xl">Checkout</h1>
-        <CheckoutForm
-          defaultEmail={session?.user?.email ?? ""}
-          locale={locale as "fr" | "nl" | "de" | "en"}
-        />
-      </div>
-      <OrderSummary
-        lines={items.map((i) => ({
-          name: i.name,
-          unitPriceCents: i.unitPriceCents,
-          quantity: i.quantity,
-        }))}
-        shippingCents={totals.shippingCents}
-        totalCents={totals.totalCents}
-        vatCents={totals.vatCents}
-      />
-    </section>
+    <Section py="md">
+      <Container>
+        <Eyebrow>PAIEMENT</Eyebrow>
+        <Heading as="h1" size="h1" className="mt-3 mb-10">Finalise ta commande</Heading>
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_360px]">
+          <div>
+            <CheckoutForm defaultEmail={session?.user?.email ?? ""} locale={locale as "fr" | "nl" | "de" | "en"} />
+          </div>
+          <OrderSummary
+            lines={items.map((i) => ({ name: i.name, unitPriceCents: i.unitPriceCents, quantity: i.quantity }))}
+            shippingCents={totals.shippingCents}
+            totalCents={totals.totalCents}
+            vatCents={totals.vatCents}
+          />
+        </div>
+      </Container>
+    </Section>
   );
 }

@@ -2,6 +2,7 @@
 import { useTransition } from "react";
 import { updateQuantity, removeFromCart } from "@/lib/actions/cart.actions";
 import { useRouter } from "@/i18n/navigation";
+import { X } from "lucide-react";
 
 export function CartItemRow({
   cartItemId,
@@ -23,15 +24,17 @@ export function CartItemRow({
   const subtotalEur = ((unitPriceCents * quantity) / 100).toFixed(2);
 
   return (
-    <div className="flex items-center gap-3 py-3">
-      <div className="bg-soft-rose h-16 w-16 overflow-hidden rounded">
-        {primaryImageUrl && (
+    <div className="flex items-center gap-4 py-4">
+      <div className="bg-cookie/30 h-20 w-20 shrink-0 overflow-hidden rounded-full">
+        {primaryImageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={primaryImageUrl} alt={name} className="h-full w-full object-cover" />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center text-2xl opacity-30">🍪</div>
         )}
       </div>
       <div className="flex-1">
-        <p className="text-warm-brown text-sm font-medium">{name}</p>
+        <p className="text-warm-brown font-display text-base">{name}</p>
         <p className="text-warm-brown/60 text-xs">{(unitPriceCents / 100).toFixed(2)} €</p>
       </div>
       <select
@@ -43,15 +46,13 @@ export function CartItemRow({
             router.refresh();
           })
         }
-        className="border-warm-brown/20 rounded border bg-white px-2 py-1 text-sm"
+        className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 rounded border bg-white px-2 py-1 text-sm focus:outline-none focus:ring-2"
       >
         {Array.from({ length: Math.min(stockQuantity, 10) }, (_, i) => i + 1).map((n) => (
-          <option key={n} value={n}>
-            {n}
-          </option>
+          <option key={n} value={n}>{n}</option>
         ))}
       </select>
-      <p className="text-honey-dark w-16 text-right font-mono text-sm">{subtotalEur} €</p>
+      <p className="text-honey-dark w-20 text-right font-display text-base">{subtotalEur} €</p>
       <button
         onClick={() =>
           startTransition(async () => {
@@ -60,10 +61,10 @@ export function CartItemRow({
           })
         }
         disabled={pending}
-        className="text-terracotta/70 hover:text-terracotta px-2 text-lg"
+        className="text-warm-brown/40 hover:text-terracotta transition-colors"
         aria-label="Retirer"
       >
-        ×
+        <X className="h-4 w-4" />
       </button>
     </div>
   );

@@ -9,6 +9,10 @@ import { eq } from "drizzle-orm";
 import { getCartContents } from "@/lib/queries/cart";
 import type { Locale } from "@/lib/queries/catalog";
 import { CartItemRow } from "@/components/shop/CartItemRow";
+import { Container } from "@/components/ui-primitives/Container";
+import { Section } from "@/components/ui-primitives/Section";
+import { Eyebrow } from "@/components/ui-primitives/Eyebrow";
+import { Heading } from "@/components/ui-primitives/Heading";
 
 export const dynamic = "force-dynamic";
 
@@ -34,15 +38,16 @@ export default async function CartPage({ params }: { params: Promise<{ locale: s
 
   if (items.length === 0) {
     return (
-      <section className="mx-auto max-w-3xl px-6 py-16 text-center">
-        <h1 className="text-honey font-display mb-4 text-4xl">{t("label")}</h1>
-        <p className="text-warm-brown/70 mb-8">{t("empty")}</p>
-        <Link href="/biscuits">
-          <Button className="bg-honey text-cream hover:bg-honey-dark">
-            Découvrir nos biscuits
-          </Button>
-        </Link>
-      </section>
+      <Section py="lg">
+        <Container variant="narrow" className="text-center">
+          <Eyebrow>MON PANIER</Eyebrow>
+          <Heading as="h1" size="h1" className="mt-3">{t("label")}</Heading>
+          <p className="text-warm-brown/70 mt-6 mb-8">{t("empty")}</p>
+          <Link href="/biscuits">
+            <Button className="bg-honey text-cream hover:bg-honey-dark px-6 py-6 text-base">Découvrir nos biscuits →</Button>
+          </Link>
+        </Container>
+      </Section>
     );
   }
 
@@ -50,36 +55,37 @@ export default async function CartPage({ params }: { params: Promise<{ locale: s
   const subtotalEur = (subtotalCents / 100).toFixed(2);
 
   return (
-    <section className="mx-auto max-w-3xl px-6 py-12">
-      <h1 className="text-honey font-display mb-8 text-4xl">{t("label")}</h1>
-      <div className="divide-warm-brown/10 divide-y">
-        {items.map((i) => (
-          <CartItemRow
-            key={i.cartItemId}
-            cartItemId={i.cartItemId}
-            name={i.name}
-            unitPriceCents={i.unitPriceCents}
-            quantity={i.quantity}
-            stockQuantity={i.stockQuantity}
-            primaryImageUrl={i.primaryImageUrl}
-          />
-        ))}
-      </div>
-      <div className="border-warm-brown/10 mt-6 flex items-center justify-between border-t pt-6">
-        <span className="text-warm-brown text-lg">{t("subtotal")}</span>
-        <span className="text-honey-dark font-mono text-2xl">{subtotalEur} €</span>
-      </div>
-      <p className="text-warm-brown/60 mt-2 text-right text-xs">
-        Livraison et TVA calculées au checkout
-      </p>
-      <div className="mt-8 flex justify-between gap-4">
-        <Link href="/biscuits" className="text-warm-brown text-sm underline">
-          Continuer mes achats
-        </Link>
-        <Link href="/checkout">
-          <Button className="bg-honey text-cream hover:bg-honey-dark">{t("checkout")}</Button>
-        </Link>
-      </div>
-    </section>
+    <Section py="md">
+      <Container variant="narrow">
+        <Eyebrow>MON PANIER</Eyebrow>
+        <Heading as="h1" size="h1" className="mt-3 mb-8">{t("label")}</Heading>
+        <div className="border-warm-brown/10 divide-warm-brown/10 divide-y rounded-xl border bg-white px-6">
+          {items.map((i) => (
+            <CartItemRow
+              key={i.cartItemId}
+              cartItemId={i.cartItemId}
+              name={i.name}
+              unitPriceCents={i.unitPriceCents}
+              quantity={i.quantity}
+              stockQuantity={i.stockQuantity}
+              primaryImageUrl={i.primaryImageUrl}
+            />
+          ))}
+        </div>
+        <div className="mt-8 flex items-center justify-between">
+          <span className="text-warm-brown font-display text-xl">{t("subtotal")}</span>
+          <span className="text-honey-dark font-display text-3xl">{subtotalEur} €</span>
+        </div>
+        <p className="text-warm-brown/60 mt-1 text-right text-xs">Livraison et TVA calculées au checkout</p>
+        <div className="mt-10 flex items-center justify-between gap-4">
+          <Link href="/biscuits" className="text-warm-brown hover:text-honey-dark text-sm font-medium underline underline-offset-4">
+            ← Continuer mes achats
+          </Link>
+          <Link href="/checkout">
+            <Button className="bg-honey text-cream hover:bg-honey-dark px-6 py-6 text-base">{t("checkout")} →</Button>
+          </Link>
+        </div>
+      </Container>
+    </Section>
   );
 }
