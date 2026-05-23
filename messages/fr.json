@@ -3,7 +3,13 @@
     "title": "BeeCuit",
     "tagline": "Biscuits artisanaux de Liège",
     "cta": "Découvrir nos coffrets",
-    "languageSwitcher": "Changer de langue"
+    "languageSwitcher": "Changer de langue",
+    "heroEyebrow": "MAISON BEECUIT — LIÈGE",
+    "heroTitle": "Le biscuit belge,",
+    "heroTitleAccent": "fait à la main.",
+    "heroProse": "Spéculoos cuits doucement, sablés au beurre frais belge, macarons à la noisette du Piémont. Tout est fait à Liège, en petites quantités, pour préserver le goût.",
+    "heroCtaPrimary": "Découvrir nos biscuits",
+    "heroCtaSecondary": "Notre histoire"
   },
   "nav": {
     "home": "Accueil",

@@ -3,7 +3,13 @@
     "title": "BeeCuit",
     "tagline": "Artisan biscuits from Liège",
     "cta": "Discover our boxes",
-    "languageSwitcher": "Change language"
+    "languageSwitcher": "Change language",
+    "heroEyebrow": "BEECUIT — LIÈGE",
+    "heroTitle": "The Belgian biscuit,",
+    "heroTitleAccent": "handmade.",
+    "heroProse": "Spéculoos baked slowly, shortbreads with fresh Belgian butter, macarons with hazelnuts from Piedmont. Everything is made in Liège, in small quantities, to preserve the taste.",
+    "heroCtaPrimary": "Discover our biscuits",
+    "heroCtaSecondary": "Our story"
   },
   "nav": {
     "home": "Home",

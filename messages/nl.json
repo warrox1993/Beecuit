@@ -3,7 +3,13 @@
     "title": "BeeCuit",
     "tagline": "Ambachtelijke koekjes uit Luik",
     "cta": "Ontdek onze dozen",
-    "languageSwitcher": "Taal wijzigen"
+    "languageSwitcher": "Taal wijzigen",
+    "heroEyebrow": "BEECUIT — LUIK",
+    "heroTitle": "Het Belgische koekje,",
+    "heroTitleAccent": "met de hand gemaakt.",
+    "heroProse": "Zacht gebakken speculoos, zandkoekjes met Belgische verse boter, macarons met hazelnoten uit Piemonte. Alles wordt in Luik gemaakt, in kleine hoeveelheden, om de smaak te behouden.",
+    "heroCtaPrimary": "Ontdek onze koekjes",
+    "heroCtaSecondary": "Ons verhaal"
   },
   "nav": {
     "home": "Home",

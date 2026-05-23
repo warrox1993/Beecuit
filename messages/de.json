@@ -3,7 +3,13 @@
     "title": "BeeCuit",
     "tagline": "Handwerkliche Kekse aus Lüttich",
     "cta": "Entdecke unsere Boxen",
-    "languageSwitcher": "Sprache wechseln"
+    "languageSwitcher": "Sprache wechseln",
+    "heroEyebrow": "BEECUIT — LÜTTICH",
+    "heroTitle": "Das belgische Gebäck,",
+    "heroTitleAccent": "von Hand gemacht.",
+    "heroProse": "Sanft gebackene Spekulatius, Sandgebäck mit belgischer frischer Butter, Macarons mit Haselnüssen aus dem Piemont. Alles wird in Lüttich gemacht, in kleinen Mengen, um den Geschmack zu bewahren.",
+    "heroCtaPrimary": "Unsere Kekse entdecken",
+    "heroCtaSecondary": "Unsere Geschichte"
   },
   "nav": {
     "home": "Startseite",
