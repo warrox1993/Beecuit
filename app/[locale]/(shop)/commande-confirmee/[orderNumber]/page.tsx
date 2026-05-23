@@ -20,7 +20,11 @@ export default async function ConfirmationPage({
 }) {
   const { locale, orderNumber } = await params;
   setRequestLocale(locale);
-  const [order] = await db.select().from(orders).where(eq(orders.orderNumber, orderNumber)).limit(1);
+  const [order] = await db
+    .select()
+    .from(orders)
+    .where(eq(orders.orderNumber, orderNumber))
+    .limit(1);
   if (!order) notFound();
   const items = await db.select().from(orderItems).where(eq(orderItems.orderId, order.id));
 
@@ -45,7 +49,9 @@ export default async function ConfirmationPage({
           <ul className="divide-warm-brown/10 divide-y">
             {items.map((i) => (
               <li key={i.id} className="flex justify-between py-3 text-sm">
-                <span className="text-warm-brown">{i.productNameSnapshot} × {i.quantity}</span>
+                <span className="text-warm-brown">
+                  {i.productNameSnapshot} × {i.quantity}
+                </span>
                 <span className="text-warm-brown font-mono">{eur(i.lineTotalCents)} €</span>
               </li>
             ))}
@@ -56,8 +62,16 @@ export default async function ConfirmationPage({
           </div>
         </div>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
-          <Link href="/biscuits"><Button className="bg-honey text-cream hover:bg-honey-dark px-6 py-6 text-base">Continuer mes achats</Button></Link>
-          <Link href="/compte/commandes"><Button variant="outline" className="px-6 py-6 text-base">Voir mes commandes</Button></Link>
+          <Link href="/biscuits">
+            <Button className="bg-honey text-cream hover:bg-honey-dark px-6 py-6 text-base">
+              Continuer mes achats
+            </Button>
+          </Link>
+          <Link href="/compte/commandes">
+            <Button variant="outline" className="px-6 py-6 text-base">
+              Voir mes commandes
+            </Button>
+          </Link>
         </div>
       </Container>
     </Section>

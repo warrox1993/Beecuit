@@ -20,13 +20,24 @@ export default async function SignInPage({
 
   if (check === "email") {
     return (
-      <section className="min-h-[80vh] bg-cream flex items-center justify-center py-12">
+      <section className="bg-cream flex min-h-[80vh] items-center justify-center py-12">
         <Container variant="narrow" className="max-w-md text-center">
-          <Link href="/" className="text-honey font-display mb-12 inline-block text-3xl">BeeCuit</Link>
+          <Link href="/" className="text-honey font-display mb-12 inline-block text-3xl">
+            BeeCuit
+          </Link>
           <div className="border-warm-brown/10 rounded-2xl border bg-white p-8 shadow-sm">
-            <div className="bg-honey/10 mx-auto flex h-16 w-16 items-center justify-center rounded-full text-3xl">📬</div>
-            <Heading as="h2" size="h3" className="mt-6">{t("checkEmail")}</Heading>
-            <Link href="/" className="text-warm-brown hover:text-honey-dark mt-6 inline-block text-sm underline">{t("back")}</Link>
+            <div className="bg-honey/10 mx-auto flex h-16 w-16 items-center justify-center rounded-full text-3xl">
+              📬
+            </div>
+            <Heading as="h2" size="h3" className="mt-6">
+              {t("checkEmail")}
+            </Heading>
+            <Link
+              href="/"
+              className="text-warm-brown hover:text-honey-dark mt-6 inline-block text-sm underline"
+            >
+              {t("back")}
+            </Link>
           </div>
         </Container>
       </section>
@@ -40,11 +51,15 @@ export default async function SignInPage({
   }
 
   return (
-    <section className="min-h-[80vh] bg-cream flex items-center justify-center py-12">
+    <section className="bg-cream flex min-h-[80vh] items-center justify-center py-12">
       <Container variant="narrow" className="max-w-md">
-        <Link href="/" className="text-honey font-display mb-12 block text-center text-3xl">BeeCuit</Link>
+        <Link href="/" className="text-honey font-display mb-12 block text-center text-3xl">
+          BeeCuit
+        </Link>
         <div className="border-warm-brown/10 rounded-2xl border bg-white p-8 shadow-sm">
-          <Heading as="h2" size="h3">{t("signInTitle")}</Heading>
+          <Heading as="h2" size="h3">
+            {t("signInTitle")}
+          </Heading>
           <Prose className="mt-3">{t("signInDescription")}</Prose>
           <form action={handleSignIn} className="mt-6 space-y-4">
             <label className="block">
@@ -54,10 +69,13 @@ export default async function SignInPage({
                 name="email"
                 required
                 placeholder={t("emailPlaceholder")}
-                className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 mt-2 block w-full rounded-md border bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2"
+                className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 mt-2 block w-full rounded-md border bg-white px-4 py-3 text-sm focus:ring-2 focus:outline-none"
               />
             </label>
-            <Button type="submit" className="bg-honey text-cream hover:bg-honey-dark w-full py-6 text-base">
+            <Button
+              type="submit"
+              className="bg-honey text-cream hover:bg-honey-dark w-full py-6 text-base"
+            >
               {t("submit")} →
             </Button>
           </form>

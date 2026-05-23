@@ -28,7 +28,7 @@ export function ProductImages({ images, name }: { images: Img[]; name: string })
             <button
               key={img.url}
               onClick={() => setActive(i)}
-              className={`bg-cookie/30 aspect-square overflow-hidden rounded-lg transition-all ${i === active ? "ring-2 ring-honey ring-offset-2" : "opacity-70 hover:opacity-100"}`}
+              className={`bg-cookie/30 aspect-square overflow-hidden rounded-lg transition-all ${i === active ? "ring-honey ring-2 ring-offset-2" : "opacity-70 hover:opacity-100"}`}
               aria-label={`Image ${i + 1}`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}

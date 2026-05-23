@@ -30,19 +30,26 @@ export async function FeaturedProducts({ locale }: { locale: string }) {
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                   />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center text-7xl opacity-30">🍪</div>
+                  <div className="flex h-full w-full items-center justify-center text-7xl opacity-30">
+                    🍪
+                  </div>
                 )}
               </div>
               <div className="mt-4 space-y-1">
                 {p.categoryName && <Eyebrow>{p.categoryName}</Eyebrow>}
                 <p className="text-warm-brown font-display text-xl">{p.name}</p>
-                <p className="text-honey-dark font-display text-lg">{(p.basePriceCents / 100).toFixed(2)} €</p>
+                <p className="text-honey-dark font-display text-lg">
+                  {(p.basePriceCents / 100).toFixed(2)} €
+                </p>
               </div>
             </Link>
           ))}
         </div>
         <div className="mt-12 text-center">
-          <Link href="/biscuits" className="text-warm-brown hover:text-honey-dark text-sm font-medium underline underline-offset-4">
+          <Link
+            href="/biscuits"
+            className="text-warm-brown hover:text-honey-dark text-sm font-medium underline underline-offset-4"
+          >
             {t("featuredCta")} →
           </Link>
         </div>

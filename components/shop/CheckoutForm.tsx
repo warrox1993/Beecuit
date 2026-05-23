@@ -44,7 +44,12 @@ export function CheckoutForm({
   const [pending, start] = useTransition();
   const [err, setErr] = useState<string | null>(null);
 
-  function input<K extends keyof SimpleAddress>(target: SimpleAddress, set: (a: SimpleAddress) => void, key: K, required = true) {
+  function input<K extends keyof SimpleAddress>(
+    target: SimpleAddress,
+    set: (a: SimpleAddress) => void,
+    key: K,
+    required = true,
+  ) {
     return (
       <input
         type="text"
@@ -52,7 +57,7 @@ export function CheckoutForm({
         value={target[key] ?? ""}
         onChange={(e) => set({ ...target, [key]: e.target.value })}
         placeholder={String(key)}
-        className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 w-full rounded-md border bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2"
+        className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 w-full rounded-md border bg-white px-4 py-3 text-sm focus:ring-2 focus:outline-none"
       />
     );
   }
@@ -83,23 +88,31 @@ export function CheckoutForm({
       className="space-y-10"
     >
       <fieldset className="space-y-4">
-        <legend className="text-honey-dark mb-4 text-xs font-semibold uppercase tracking-[0.1em]">CONTACT</legend>
+        <legend className="text-honey-dark mb-4 text-xs font-semibold tracking-[0.1em] uppercase">
+          CONTACT
+        </legend>
         <input
           type="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 w-full rounded-md border bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2"
+          className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 w-full rounded-md border bg-white px-4 py-3 text-sm focus:ring-2 focus:outline-none"
           placeholder="email@exemple.com"
         />
         <label className="text-warm-brown/80 flex items-center gap-2 text-sm">
-          <input type="checkbox" checked={newsletterOptIn} onChange={(e) => setNewsletter(e.target.checked)} />
+          <input
+            type="checkbox"
+            checked={newsletterOptIn}
+            onChange={(e) => setNewsletter(e.target.checked)}
+          />
           M&apos;abonner à la newsletter BeeCuit
         </label>
       </fieldset>
 
       <fieldset className="border-warm-brown/10 space-y-4 border-t pt-8">
-        <legend className="text-honey-dark mb-4 text-xs font-semibold uppercase tracking-[0.1em]">ADRESSE DE LIVRAISON</legend>
+        <legend className="text-honey-dark mb-4 text-xs font-semibold tracking-[0.1em] uppercase">
+          ADRESSE DE LIVRAISON
+        </legend>
         <div className="grid grid-cols-2 gap-3">
           {input(ship, setShip, "firstName")}
           {input(ship, setShip, "lastName")}
@@ -114,9 +127,15 @@ export function CheckoutForm({
       </fieldset>
 
       <fieldset className="border-warm-brown/10 space-y-4 border-t pt-8">
-        <legend className="text-honey-dark mb-4 text-xs font-semibold uppercase tracking-[0.1em]">ADRESSE DE FACTURATION</legend>
+        <legend className="text-honey-dark mb-4 text-xs font-semibold tracking-[0.1em] uppercase">
+          ADRESSE DE FACTURATION
+        </legend>
         <label className="text-warm-brown/80 flex items-center gap-2 text-sm">
-          <input type="checkbox" checked={billingSameAsShipping} onChange={(e) => setSame(e.target.checked)} />
+          <input
+            type="checkbox"
+            checked={billingSameAsShipping}
+            onChange={(e) => setSame(e.target.checked)}
+          />
           Identique à l&apos;adresse de livraison
         </label>
         {!billingSameAsShipping && (
@@ -136,7 +155,9 @@ export function CheckoutForm({
       </fieldset>
 
       <fieldset className="border-warm-brown/10 border-t pt-8">
-        <legend className="text-honey-dark mb-4 text-xs font-semibold uppercase tracking-[0.1em]">LIVRAISON</legend>
+        <legend className="text-honey-dark mb-4 text-xs font-semibold tracking-[0.1em] uppercase">
+          LIVRAISON
+        </legend>
         <label className="border-warm-brown/20 flex items-center gap-3 rounded-md border bg-white p-4 text-sm">
           <input type="radio" checked readOnly />
           <span className="text-warm-brown">bpost Express 24h — tarif calculé selon poids</span>

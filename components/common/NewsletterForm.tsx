@@ -28,7 +28,7 @@ export function NewsletterForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="ton@email.com"
-          className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 flex-1 rounded-md border bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2"
+          className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 flex-1 rounded-md border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
         />
         <Button
           type="submit"
@@ -38,9 +38,7 @@ export function NewsletterForm() {
           {pending ? "..." : "S'inscrire"}
         </Button>
       </div>
-      {msg && (
-        <p className={`text-xs ${msg.ok ? "text-leaf" : "text-terracotta"}`}>{msg.text}</p>
-      )}
+      {msg && <p className={`text-xs ${msg.ok ? "text-leaf" : "text-terracotta"}`}>{msg.text}</p>}
     </form>
   );
 }

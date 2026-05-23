@@ -17,7 +17,7 @@ export function CategoryFilter({
   const base = "/biscuits";
   if (variant === "sidebar") {
     return (
-      <aside className="w-56 shrink-0 hidden md:block">
+      <aside className="hidden w-56 shrink-0 md:block">
         <nav className="space-y-1">
           <Link
             href={base}

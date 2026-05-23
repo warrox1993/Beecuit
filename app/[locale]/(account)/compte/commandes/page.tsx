@@ -26,7 +26,9 @@ export default async function MyOrdersPage({ params }: { params: Promise<{ local
   return (
     <section>
       <Eyebrow>MON COMPTE</Eyebrow>
-      <Heading as="h1" size="h1" className="mt-3 mb-8">Mes commandes</Heading>
+      <Heading as="h1" size="h1" className="mt-3 mb-8">
+        Mes commandes
+      </Heading>
       <OrderList rows={rows} />
     </section>
   );

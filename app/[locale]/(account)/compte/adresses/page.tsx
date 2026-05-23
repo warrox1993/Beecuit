@@ -17,7 +17,9 @@ export default async function AddressesPage({ params }: { params: Promise<{ loca
   return (
     <section>
       <Eyebrow>MON COMPTE</Eyebrow>
-      <Heading as="h1" size="h1" className="mt-3 mb-8">Mes adresses</Heading>
+      <Heading as="h1" size="h1" className="mt-3 mb-8">
+        Mes adresses
+      </Heading>
       <AddressList addresses={rows} />
     </section>
   );

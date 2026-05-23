@@ -13,13 +13,20 @@ export async function StoryTeaser() {
       <Container>
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
           <div className="bg-cookie/40 aspect-square w-full overflow-hidden rounded-2xl">
-            <div className="flex h-full w-full items-center justify-center text-9xl opacity-30">👩‍🍳</div>
+            <div className="flex h-full w-full items-center justify-center text-9xl opacity-30">
+              👩‍🍳
+            </div>
           </div>
           <div className="space-y-6">
             <Eyebrow>{t("storyEyebrow")}</Eyebrow>
-            <Heading as="h2" size="h2">{t("storyTitle")}</Heading>
+            <Heading as="h2" size="h2">
+              {t("storyTitle")}
+            </Heading>
             <Prose>{t("storyProse")}</Prose>
-            <Link href="/notre-histoire" className="text-warm-brown hover:text-honey-dark inline-block text-sm font-medium underline underline-offset-4">
+            <Link
+              href="/notre-histoire"
+              className="text-warm-brown hover:text-honey-dark inline-block text-sm font-medium underline underline-offset-4"
+            >
               {t("storyCta")} →
             </Link>
           </div>

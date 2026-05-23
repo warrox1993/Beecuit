@@ -12,7 +12,9 @@ export async function CoffretsTeaser() {
     <Section py="lg">
       <Container variant="narrow" className="text-center">
         <Eyebrow>{t("coffretsEyebrow")}</Eyebrow>
-        <Heading as="h2" size="h2" className="mt-3">{t("coffretsTitle")}</Heading>
+        <Heading as="h2" size="h2" className="mt-3">
+          {t("coffretsTitle")}
+        </Heading>
         <Prose className="mx-auto mt-4">{t("coffretsProse")}</Prose>
         <Button
           disabled
@@ -23,7 +25,7 @@ export async function CoffretsTeaser() {
         <div className="mt-12 flex justify-center">
           <div className="relative h-32 w-40 [transform:rotateX(15deg)_rotateY(-25deg)] [transform-style:preserve-3d]">
             <div className="bg-cookie border-warm-brown/20 absolute inset-0 rounded border shadow-lg" />
-            <div className="bg-honey/80 absolute -top-2 inset-x-0 h-4 origin-bottom rounded-t [transform:rotateX(60deg)]" />
+            <div className="bg-honey/80 absolute inset-x-0 -top-2 h-4 origin-bottom [transform:rotateX(60deg)] rounded-t" />
           </div>
         </div>
       </Container>

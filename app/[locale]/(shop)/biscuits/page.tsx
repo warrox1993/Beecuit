@@ -4,7 +4,11 @@ import { Section } from "@/components/ui-primitives/Section";
 import { Eyebrow } from "@/components/ui-primitives/Eyebrow";
 import { Heading } from "@/components/ui-primitives/Heading";
 import { Prose } from "@/components/ui-primitives/Prose";
-import { listActiveCategoriesForLocale, listProductsForLocale, type Locale } from "@/lib/queries/catalog";
+import {
+  listActiveCategoriesForLocale,
+  listProductsForLocale,
+  type Locale,
+} from "@/lib/queries/catalog";
 import { CategoryFilter } from "@/components/shop/CategoryFilter";
 import { ProductCard } from "@/components/shop/ProductCard";
 
@@ -32,7 +36,9 @@ export default async function CatalogPage({
       <Section py="md" bg="surface-elev">
         <Container>
           <Eyebrow>{t("pageEyebrow")}</Eyebrow>
-          <Heading as="h1" size="h1" className="mt-3">{t("title")}</Heading>
+          <Heading as="h1" size="h1" className="mt-3">
+            {t("title")}
+          </Heading>
           <Prose className="mt-4">{t("pageProse")}</Prose>
         </Container>
       </Section>

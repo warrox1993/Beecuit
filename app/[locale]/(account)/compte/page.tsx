@@ -24,11 +24,11 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
   return (
     <section>
       <Eyebrow>MON COMPTE</Eyebrow>
-      <Heading as="h1" size="h1" className="mt-3 mb-8">{t("title")}</Heading>
+      <Heading as="h1" size="h1" className="mt-3 mb-8">
+        {t("title")}
+      </Heading>
       <div className="border-warm-brown/10 rounded-xl border bg-white p-6">
-        <Prose>
-          {t("welcome", { name: session!.user!.name ?? session!.user!.email ?? "" })}
-        </Prose>
+        <Prose>{t("welcome", { name: session!.user!.name ?? session!.user!.email ?? "" })}</Prose>
         <p className="text-warm-brown/70 mt-2 text-sm">
           {t("loggedInAs", { email: session!.user!.email ?? "" })}
         </p>

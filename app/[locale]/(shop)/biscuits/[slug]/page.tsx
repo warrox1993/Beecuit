@@ -47,32 +47,59 @@ export default async function ProductPage({
             <ProductImages images={product.images} name={product.name} />
             <div className="space-y-6 md:sticky md:top-28 md:self-start">
               <Eyebrow>BISCUITS</Eyebrow>
-              <Heading as="h1" size="h1">{product.name}</Heading>
+              <Heading as="h1" size="h1">
+                {product.name}
+              </Heading>
               <Prose>{product.shortDescription}</Prose>
               <p className="text-honey-dark font-display text-3xl">{priceEur} €</p>
               <AddToCartButton productId={product.id} label={t("addToCart")} outOfStock={isOut} />
               <TrustIndicators />
               <details className="border-warm-brown/10 border-t pt-4">
-                <summary className="text-warm-brown cursor-pointer text-sm font-medium">{t("ingredientsTitle")}</summary>
+                <summary className="text-warm-brown cursor-pointer text-sm font-medium">
+                  {t("ingredientsTitle")}
+                </summary>
                 <p className="text-warm-brown/80 mt-3 text-sm">{product.ingredients}</p>
               </details>
               {product.allergens.length > 0 && (
                 <details className="border-warm-brown/10 border-t pt-4">
-                  <summary className="text-warm-brown cursor-pointer text-sm font-medium">{t("allergensTitle")}</summary>
+                  <summary className="text-warm-brown cursor-pointer text-sm font-medium">
+                    {t("allergensTitle")}
+                  </summary>
                   <ul className="text-warm-brown/80 mt-3 list-disc pl-5 text-sm">
-                    {product.allergens.map((a) => <li key={a}>{a}</li>)}
+                    {product.allergens.map((a) => (
+                      <li key={a}>{a}</li>
+                    ))}
                   </ul>
                 </details>
               )}
               <details className="border-warm-brown/10 border-t pt-4">
-                <summary className="text-warm-brown cursor-pointer text-sm font-medium">{t("nutritionTitle")}</summary>
+                <summary className="text-warm-brown cursor-pointer text-sm font-medium">
+                  {t("nutritionTitle")}
+                </summary>
                 <table className="text-warm-brown/80 mt-3 w-full text-sm">
                   <tbody>
-                    <tr><td>Énergie</td><td className="text-right">{product.nutritionalFactsPer100g.energy_kcal} kcal</td></tr>
-                    <tr><td>Matières grasses</td><td className="text-right">{product.nutritionalFactsPer100g.fat_g} g</td></tr>
-                    <tr><td>Glucides</td><td className="text-right">{product.nutritionalFactsPer100g.carbs_g} g</td></tr>
-                    <tr><td>Protéines</td><td className="text-right">{product.nutritionalFactsPer100g.protein_g} g</td></tr>
-                    <tr><td>Sel</td><td className="text-right">{product.nutritionalFactsPer100g.salt_g} g</td></tr>
+                    <tr>
+                      <td>Énergie</td>
+                      <td className="text-right">
+                        {product.nutritionalFactsPer100g.energy_kcal} kcal
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Matières grasses</td>
+                      <td className="text-right">{product.nutritionalFactsPer100g.fat_g} g</td>
+                    </tr>
+                    <tr>
+                      <td>Glucides</td>
+                      <td className="text-right">{product.nutritionalFactsPer100g.carbs_g} g</td>
+                    </tr>
+                    <tr>
+                      <td>Protéines</td>
+                      <td className="text-right">{product.nutritionalFactsPer100g.protein_g} g</td>
+                    </tr>
+                    <tr>
+                      <td>Sel</td>
+                      <td className="text-right">{product.nutritionalFactsPer100g.salt_g} g</td>
+                    </tr>
                   </tbody>
                 </table>
               </details>
@@ -82,7 +109,9 @@ export default async function ProductPage({
       </Section>
       <Section py="lg" bg="surface-elev">
         <Container variant="narrow">
-          <Heading as="h2" size="h2" className="mb-6">{t("storyTitle")}</Heading>
+          <Heading as="h2" size="h2" className="mb-6">
+            {t("storyTitle")}
+          </Heading>
           <Prose>{product.longDescription}</Prose>
         </Container>
       </Section>

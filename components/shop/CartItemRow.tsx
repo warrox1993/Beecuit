@@ -30,7 +30,9 @@ export function CartItemRow({
           // eslint-disable-next-line @next/next/no-img-element
           <img src={primaryImageUrl} alt={name} className="h-full w-full object-cover" />
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-2xl opacity-30">🍪</div>
+          <div className="flex h-full w-full items-center justify-center text-2xl opacity-30">
+            🍪
+          </div>
         )}
       </div>
       <div className="flex-1">
@@ -46,13 +48,15 @@ export function CartItemRow({
             router.refresh();
           })
         }
-        className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 rounded border bg-white px-2 py-1 text-sm focus:outline-none focus:ring-2"
+        className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 rounded border bg-white px-2 py-1 text-sm focus:ring-2 focus:outline-none"
       >
         {Array.from({ length: Math.min(stockQuantity, 10) }, (_, i) => i + 1).map((n) => (
-          <option key={n} value={n}>{n}</option>
+          <option key={n} value={n}>
+            {n}
+          </option>
         ))}
       </select>
-      <p className="text-honey-dark w-20 text-right font-display text-base">{subtotalEur} €</p>
+      <p className="text-honey-dark font-display w-20 text-right text-base">{subtotalEur} €</p>
       <button
         onClick={() =>
           startTransition(async () => {

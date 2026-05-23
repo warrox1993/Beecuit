@@ -1,13 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Menu } from "lucide-react";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-  SheetTitle,
-  SheetHeader,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from "@/components/ui/sheet";
 import { NavLink } from "./NavLink";
 import { useTranslations } from "next-intl";
 

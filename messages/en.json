@@ -103,16 +103,56 @@
     "backHome": "Back to home",
     "when": "Available",
     "pages": {
-      "coffrets": { "title": "Compose your box", "description": "Pick your favourite biscuits and we'll assemble a box for you in recyclable beeswax packaging.", "when": "Spring 2026" },
-      "abonnement": { "title": "Monthly BeeCuit subscription", "description": "Receive a surprise biscuit box every month, curated by us. Mini, Classic or Family — your choice.", "when": "Spring 2026" },
-      "journal": { "title": "House journal", "description": "Recipes, craft, bee stories. Everything happening in and out of the kitchen, one article a month.", "when": "Summer 2026" },
-      "notreHistoire": { "title": "Our story", "description": "Who is behind BeeCuit, why this project, how we work. A sincere page about Belgian craftsmanship.", "when": "Summer 2026" },
-      "contact": { "title": "Get in touch", "description": "A word, a question, a special order? We reply quickly.", "when": "Spring 2026" },
-      "entreprises": { "title": "BeeCuit for business", "description": "Gift boxes for clients or colleagues, with or without your logo. Custom quotes.", "when": "Summer 2026" },
-      "cgv": { "title": "Terms and conditions", "description": "BeeCuit's terms and conditions applicable to orders placed on this site.", "when": "At first order" },
-      "mentionsLegales": { "title": "Legal notice", "description": "Site publisher identity, hosting, consumer mediation.", "when": "At first order" },
-      "confidentialite": { "title": "Privacy policy", "description": "How we handle your personal data, GDPR compliant.", "when": "At first order" },
-      "cookies": { "title": "Cookie policy", "description": "Which cookies we use and why, and how to refuse them.", "when": "At first order" }
+      "coffrets": {
+        "title": "Compose your box",
+        "description": "Pick your favourite biscuits and we'll assemble a box for you in recyclable beeswax packaging.",
+        "when": "Spring 2026"
+      },
+      "abonnement": {
+        "title": "Monthly BeeCuit subscription",
+        "description": "Receive a surprise biscuit box every month, curated by us. Mini, Classic or Family — your choice.",
+        "when": "Spring 2026"
+      },
+      "journal": {
+        "title": "House journal",
+        "description": "Recipes, craft, bee stories. Everything happening in and out of the kitchen, one article a month.",
+        "when": "Summer 2026"
+      },
+      "notreHistoire": {
+        "title": "Our story",
+        "description": "Who is behind BeeCuit, why this project, how we work. A sincere page about Belgian craftsmanship.",
+        "when": "Summer 2026"
+      },
+      "contact": {
+        "title": "Get in touch",
+        "description": "A word, a question, a special order? We reply quickly.",
+        "when": "Spring 2026"
+      },
+      "entreprises": {
+        "title": "BeeCuit for business",
+        "description": "Gift boxes for clients or colleagues, with or without your logo. Custom quotes.",
+        "when": "Summer 2026"
+      },
+      "cgv": {
+        "title": "Terms and conditions",
+        "description": "BeeCuit's terms and conditions applicable to orders placed on this site.",
+        "when": "At first order"
+      },
+      "mentionsLegales": {
+        "title": "Legal notice",
+        "description": "Site publisher identity, hosting, consumer mediation.",
+        "when": "At first order"
+      },
+      "confidentialite": {
+        "title": "Privacy policy",
+        "description": "How we handle your personal data, GDPR compliant.",
+        "when": "At first order"
+      },
+      "cookies": {
+        "title": "Cookie policy",
+        "description": "Which cookies we use and why, and how to refuse them.",
+        "when": "At first order"
+      }
     }
   },
   "catalog": {

@@ -28,7 +28,9 @@ export default async function OrderDetailPage({
   return (
     <section>
       <Eyebrow>COMMANDE</Eyebrow>
-      <Heading as="h1" size="h1" className="mt-3 mb-8">#{order.orderNumber}</Heading>
+      <Heading as="h1" size="h1" className="mt-3 mb-8">
+        #{order.orderNumber}
+      </Heading>
       <OrderDetailCard
         orderNumber={order.orderNumber}
         status={order.status}

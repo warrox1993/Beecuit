@@ -1,7 +1,12 @@
 "use client";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 
 const LABELS: Record<string, string> = { fr: "FR", nl: "NL", de: "DE", en: "EN" };

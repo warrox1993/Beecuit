@@ -103,16 +103,56 @@
     "backHome": "Retour à l'accueil",
     "when": "Disponible",
     "pages": {
-      "coffrets": { "title": "Composez votre coffret", "description": "Choisis tes biscuits préférés, on assemble pour toi un coffret offert dans un emballage cire d'abeille recyclable.", "when": "Printemps 2026" },
-      "abonnement": { "title": "Abonnement mensuel BeeCuit", "description": "Reçois chaque mois une box de biscuits surprise, composée par nos soins. Mini, Classique ou Famille — à toi de choisir.", "when": "Printemps 2026" },
-      "journal": { "title": "Journal de la maison", "description": "Recettes, savoir-faire, histoires d'abeilles. Tout ce qui se passe en cuisine et hors cuisine, à raison d'un article par mois.", "when": "Été 2026" },
-      "notreHistoire": { "title": "Notre histoire", "description": "Qui est derrière BeeCuit, pourquoi ce projet, comment on travaille. Une page sincère qui parle d'artisanat belge.", "when": "Été 2026" },
-      "contact": { "title": "Nous contacter", "description": "Un mot, une question, une commande spéciale ? On répond rapidement.", "when": "Printemps 2026" },
-      "entreprises": { "title": "BeeCuit pour entreprises", "description": "Coffrets cadeaux pour clients ou collaborateurs, avec ou sans gravure de votre logo. Devis personnalisés.", "when": "Été 2026" },
-      "cgv": { "title": "Conditions générales de vente", "description": "Les CGV BeeCuit applicables aux commandes passées sur ce site.", "when": "À la première commande" },
-      "mentionsLegales": { "title": "Mentions légales", "description": "Identité de l'éditeur du site, hébergement, médiateur consommation.", "when": "À la première commande" },
-      "confidentialite": { "title": "Politique de confidentialité", "description": "Comment nous traitons tes données personnelles, conforme RGPD.", "when": "À la première commande" },
-      "cookies": { "title": "Politique des cookies", "description": "Quels cookies nous utilisons et pourquoi, et comment les refuser.", "when": "À la première commande" }
+      "coffrets": {
+        "title": "Composez votre coffret",
+        "description": "Choisis tes biscuits préférés, on assemble pour toi un coffret offert dans un emballage cire d'abeille recyclable.",
+        "when": "Printemps 2026"
+      },
+      "abonnement": {
+        "title": "Abonnement mensuel BeeCuit",
+        "description": "Reçois chaque mois une box de biscuits surprise, composée par nos soins. Mini, Classique ou Famille — à toi de choisir.",
+        "when": "Printemps 2026"
+      },
+      "journal": {
+        "title": "Journal de la maison",
+        "description": "Recettes, savoir-faire, histoires d'abeilles. Tout ce qui se passe en cuisine et hors cuisine, à raison d'un article par mois.",
+        "when": "Été 2026"
+      },
+      "notreHistoire": {
+        "title": "Notre histoire",
+        "description": "Qui est derrière BeeCuit, pourquoi ce projet, comment on travaille. Une page sincère qui parle d'artisanat belge.",
+        "when": "Été 2026"
+      },
+      "contact": {
+        "title": "Nous contacter",
+        "description": "Un mot, une question, une commande spéciale ? On répond rapidement.",
+        "when": "Printemps 2026"
+      },
+      "entreprises": {
+        "title": "BeeCuit pour entreprises",
+        "description": "Coffrets cadeaux pour clients ou collaborateurs, avec ou sans gravure de votre logo. Devis personnalisés.",
+        "when": "Été 2026"
+      },
+      "cgv": {
+        "title": "Conditions générales de vente",
+        "description": "Les CGV BeeCuit applicables aux commandes passées sur ce site.",
+        "when": "À la première commande"
+      },
+      "mentionsLegales": {
+        "title": "Mentions légales",
+        "description": "Identité de l'éditeur du site, hébergement, médiateur consommation.",
+        "when": "À la première commande"
+      },
+      "confidentialite": {
+        "title": "Politique de confidentialité",
+        "description": "Comment nous traitons tes données personnelles, conforme RGPD.",
+        "when": "À la première commande"
+      },
+      "cookies": {
+        "title": "Politique des cookies",
+        "description": "Quels cookies nous utilisons et pourquoi, et comment les refuser.",
+        "when": "À la première commande"
+      }
     }
   },
   "catalog": {

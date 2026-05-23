@@ -50,7 +50,9 @@ export async function listProductsForLocale(locale: Locale, categorySlug?: strin
       primaryImageUrl: sql<
         string | null
       >`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
-      categoryName: sql<string | null>`(SELECT name FROM category_translations WHERE category_id = ${products.categoryId} AND locale = ${locale} LIMIT 1)`,
+      categoryName: sql<
+        string | null
+      >`(SELECT name FROM category_translations WHERE category_id = ${products.categoryId} AND locale = ${locale} LIMIT 1)`,
     })
     .from(products)
     .innerJoin(
@@ -73,8 +75,12 @@ export async function listFeaturedProducts(locale: Locale, limit = 3) {
       name: productTranslations.name,
       slug: productTranslations.slug,
       shortDescription: productTranslations.shortDescription,
-      primaryImageUrl: sql<string | null>`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
-      categoryName: sql<string | null>`(SELECT name FROM category_translations WHERE category_id = ${products.categoryId} AND locale = ${locale} LIMIT 1)`,
+      primaryImageUrl: sql<
+        string | null
+      >`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
+      categoryName: sql<
+        string | null
+      >`(SELECT name FROM category_translations WHERE category_id = ${products.categoryId} AND locale = ${locale} LIMIT 1)`,
     })
     .from(products)
     .innerJoin(
@@ -96,8 +102,12 @@ export async function listFeaturedProducts(locale: Locale, limit = 3) {
       name: productTranslations.name,
       slug: productTranslations.slug,
       shortDescription: productTranslations.shortDescription,
-      primaryImageUrl: sql<string | null>`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
-      categoryName: sql<string | null>`(SELECT name FROM category_translations WHERE category_id = ${products.categoryId} AND locale = ${locale} LIMIT 1)`,
+      primaryImageUrl: sql<
+        string | null
+      >`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
+      categoryName: sql<
+        string | null
+      >`(SELECT name FROM category_translations WHERE category_id = ${products.categoryId} AND locale = ${locale} LIMIT 1)`,
     })
     .from(products)
     .innerJoin(
@@ -165,8 +175,12 @@ export async function listRelatedProducts(productId: string, locale: Locale, lim
         stockQuantity: products.stockQuantity,
         name: productTranslations.name,
         slug: productTranslations.slug,
-        primaryImageUrl: sql<string | null>`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
-        categoryName: sql<string | null>`(SELECT name FROM category_translations WHERE category_id = ${products.categoryId} AND locale = ${locale} LIMIT 1)`,
+        primaryImageUrl: sql<
+          string | null
+        >`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
+        categoryName: sql<
+          string | null
+        >`(SELECT name FROM category_translations WHERE category_id = ${products.categoryId} AND locale = ${locale} LIMIT 1)`,
       })
       .from(products)
       .innerJoin(
@@ -186,8 +200,12 @@ export async function listRelatedProducts(productId: string, locale: Locale, lim
       stockQuantity: products.stockQuantity,
       name: productTranslations.name,
       slug: productTranslations.slug,
-      primaryImageUrl: sql<string | null>`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
-      categoryName: sql<string | null>`(SELECT name FROM category_translations WHERE category_id = ${products.categoryId} AND locale = ${locale} LIMIT 1)`,
+      primaryImageUrl: sql<
+        string | null
+      >`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
+      categoryName: sql<
+        string | null
+      >`(SELECT name FROM category_translations WHERE category_id = ${products.categoryId} AND locale = ${locale} LIMIT 1)`,
     })
     .from(products)
     .innerJoin(

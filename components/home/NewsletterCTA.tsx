@@ -10,7 +10,9 @@ export async function NewsletterCTA() {
     <Section py="lg" bg="cookie">
       <Container variant="narrow" className="text-center">
         <Heading as="h2" size="h2">
-          {t("newsletterTitle")} <em className="text-honey-dark not-italic font-display">{t("newsletterAccent")}</em> {t("newsletterTaglineSuffix")}
+          {t("newsletterTitle")}{" "}
+          <em className="text-honey-dark font-display not-italic">{t("newsletterAccent")}</em>{" "}
+          {t("newsletterTaglineSuffix")}
         </Heading>
         <div className="mx-auto mt-8 max-w-md">
           <NewsletterForm />

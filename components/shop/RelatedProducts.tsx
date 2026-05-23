@@ -18,7 +18,9 @@ export async function RelatedProducts({
   return (
     <Section py="lg" bg="surface-elev">
       <Container>
-        <Heading as="h2" size="h2" className="mb-10">{t("relatedTitle")}</Heading>
+        <Heading as="h2" size="h2" className="mb-10">
+          {t("relatedTitle")}
+        </Heading>
         <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
           {products.map((p) => (
             <ProductCard

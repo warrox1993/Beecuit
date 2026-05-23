@@ -41,10 +41,14 @@ export default async function CartPage({ params }: { params: Promise<{ locale: s
       <Section py="lg">
         <Container variant="narrow" className="text-center">
           <Eyebrow>MON PANIER</Eyebrow>
-          <Heading as="h1" size="h1" className="mt-3">{t("label")}</Heading>
+          <Heading as="h1" size="h1" className="mt-3">
+            {t("label")}
+          </Heading>
           <p className="text-warm-brown/70 mt-6 mb-8">{t("empty")}</p>
           <Link href="/biscuits">
-            <Button className="bg-honey text-cream hover:bg-honey-dark px-6 py-6 text-base">Découvrir nos biscuits →</Button>
+            <Button className="bg-honey text-cream hover:bg-honey-dark px-6 py-6 text-base">
+              Découvrir nos biscuits →
+            </Button>
           </Link>
         </Container>
       </Section>
@@ -58,7 +62,9 @@ export default async function CartPage({ params }: { params: Promise<{ locale: s
     <Section py="md">
       <Container variant="narrow">
         <Eyebrow>MON PANIER</Eyebrow>
-        <Heading as="h1" size="h1" className="mt-3 mb-8">{t("label")}</Heading>
+        <Heading as="h1" size="h1" className="mt-3 mb-8">
+          {t("label")}
+        </Heading>
         <div className="border-warm-brown/10 divide-warm-brown/10 divide-y rounded-xl border bg-white px-6">
           {items.map((i) => (
             <CartItemRow
@@ -76,13 +82,20 @@ export default async function CartPage({ params }: { params: Promise<{ locale: s
           <span className="text-warm-brown font-display text-xl">{t("subtotal")}</span>
           <span className="text-honey-dark font-display text-3xl">{subtotalEur} €</span>
         </div>
-        <p className="text-warm-brown/60 mt-1 text-right text-xs">Livraison et TVA calculées au checkout</p>
+        <p className="text-warm-brown/60 mt-1 text-right text-xs">
+          Livraison et TVA calculées au checkout
+        </p>
         <div className="mt-10 flex items-center justify-between gap-4">
-          <Link href="/biscuits" className="text-warm-brown hover:text-honey-dark text-sm font-medium underline underline-offset-4">
+          <Link
+            href="/biscuits"
+            className="text-warm-brown hover:text-honey-dark text-sm font-medium underline underline-offset-4"
+          >
             ← Continuer mes achats
           </Link>
           <Link href="/checkout">
-            <Button className="bg-honey text-cream hover:bg-honey-dark px-6 py-6 text-base">{t("checkout")} →</Button>
+            <Button className="bg-honey text-cream hover:bg-honey-dark px-6 py-6 text-base">
+              {t("checkout")} →
+            </Button>
           </Link>
         </div>
       </Container>

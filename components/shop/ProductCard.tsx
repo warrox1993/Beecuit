@@ -25,10 +25,12 @@ export function ProductCard(p: Props) {
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-6xl opacity-30">🍪</div>
+          <div className="flex h-full w-full items-center justify-center text-6xl opacity-30">
+            🍪
+          </div>
         )}
         {isOut && (
-          <span className="bg-terracotta text-cream absolute right-3 top-3 rounded-full px-3 py-1 text-xs font-medium uppercase tracking-wider">
+          <span className="bg-terracotta text-cream absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-medium tracking-wider uppercase">
             {p.outOfStockLabel}
           </span>
         )}

@@ -16,14 +16,15 @@ export async function ComingSoonPage({ pageKey }: { pageKey: string }) {
         <Heading as="h1" size="h1" className="mt-3">
           {t(`pages.${pageKey}.title`)}
         </Heading>
-        <Prose className="mx-auto mt-6">
-          {t(`pages.${pageKey}.description`)}
-        </Prose>
+        <Prose className="mx-auto mt-6">{t(`pages.${pageKey}.description`)}</Prose>
         <p className="text-honey-dark mt-8 text-sm font-medium">
           {t("when")} {t(`pages.${pageKey}.when`)}
         </p>
         <Link href="/" className="mt-8 inline-block">
-          <Button variant="outline" className="border-warm-brown/20 text-warm-brown hover:bg-warm-brown/5">
+          <Button
+            variant="outline"
+            className="border-warm-brown/20 text-warm-brown hover:bg-warm-brown/5"
+          >
             ← {t("backHome")}
           </Button>
         </Link>
