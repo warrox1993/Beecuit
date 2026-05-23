@@ -17,7 +17,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     Resend({
       apiKey: env.AUTH_RESEND_KEY,
       from: env.AUTH_EMAIL_FROM,
-      async sendVerificationRequest(params) {
+      async sendVerificationRequest(params: {
+        identifier: string;
+        url: string;
+        provider: { from?: unknown; apiKey?: unknown };
+      }) {
         const { identifier, url, provider } = params;
 
         if (process.env.NODE_ENV !== "production") {
