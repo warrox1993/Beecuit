@@ -4,14 +4,24 @@ import { Button } from "@/components/ui/button";
 import { addToCart } from "@/lib/actions/cart.actions";
 import { useRouter } from "@/i18n/navigation";
 
+type Metadata = {
+  type?: "coffret";
+  giftMessage?: string | null;
+  packagingTier?: "standard" | "premium";
+};
+
 export function AddToCartButton({
   productId,
   label,
   outOfStock,
+  hideQuantitySelector = false,
+  getMetadata,
 }: {
   productId: string;
   label: string;
   outOfStock: boolean;
+  hideQuantitySelector?: boolean;
+  getMetadata?: () => Metadata;
 }) {
   const [qty, setQty] = useState(1);
   const [pending, startTransition] = useTransition();
@@ -23,6 +33,25 @@ export function AddToCartButton({
         Épuisé
       </Button>
     );
+  }
+
+  const button = (
+    <Button
+      className="bg-honey text-cream hover:bg-honey-dark flex-1 w-full"
+      disabled={pending}
+      onClick={() =>
+        startTransition(async () => {
+          await addToCart({ productId, quantity: qty, metadata: getMetadata?.() });
+          router.refresh();
+        })
+      }
+    >
+      {pending ? "…" : label}
+    </Button>
+  );
+
+  if (hideQuantitySelector) {
+    return button;
   }
 
   return (
@@ -39,18 +68,7 @@ export function AddToCartButton({
           </option>
         ))}
       </select>
-      <Button
-        className="bg-honey text-cream hover:bg-honey-dark flex-1"
-        disabled={pending}
-        onClick={() =>
-          startTransition(async () => {
-            await addToCart({ productId, quantity: qty });
-            router.refresh();
-          })
-        }
-      >
-        {pending ? "…" : label}
-      </Button>
+      {button}
     </div>
   );
 }
