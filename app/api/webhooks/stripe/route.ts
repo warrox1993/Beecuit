@@ -9,6 +9,8 @@ import {
   handleInvoicePaid,
   handleInvoicePaymentFailed,
 } from "@/lib/stripe/subscription-webhook";
+import { handleB2BPaymentCompleted } from "@/lib/stripe/b2b-webhook";
+import type Stripe from "stripe";
 
 export const runtime = "nodejs";
 
@@ -27,7 +29,12 @@ export async function POST(req: NextRequest) {
 
   try {
     if (event.type === "checkout.session.completed") {
-      await handleCheckoutCompleted(event);
+      const session = event.data.object as Stripe.Checkout.Session;
+      if (session.metadata?.b2b_quote_id) {
+        await handleB2BPaymentCompleted(session);
+      } else {
+        await handleCheckoutCompleted(event);
+      }
     } else if (event.type === "customer.subscription.created") {
       await handleSubscriptionCreated(event.data.object);
     } else if (event.type === "customer.subscription.updated") {

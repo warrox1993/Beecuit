@@ -4,7 +4,6 @@ export const COMING_SOON_PAGES = {
   journal: { messageKey: "journal" },
   "notre-histoire": { messageKey: "notreHistoire" },
   contact: { messageKey: "contact" },
-  entreprises: { messageKey: "entreprises" },
   cgv: { messageKey: "cgv" },
   "mentions-legales": { messageKey: "mentionsLegales" },
   confidentialite: { messageKey: "confidentialite" },
