@@ -36,6 +36,13 @@
       "when": 1780000000000,
       "tag": "0004_coffrets",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1780100000000,
+      "tag": "0005_gift_cards",
+      "breakpoints": true
     }
   ]
 }

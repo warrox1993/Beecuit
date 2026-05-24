@@ -32,6 +32,7 @@ export const orders = pgTable("orders", {
   shippingTrackingNumber: text("shipping_tracking_number"),
   stripeSessionId: text("stripe_session_id").unique(),
   stripePaymentIntentId: text("stripe_payment_intent_id"),
+  giftCardRedemptionId: text("gift_card_redemption_id"),
   metadata: jsonb("metadata")
     .$type<Record<string, unknown>>()
     .notNull()

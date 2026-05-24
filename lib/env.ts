@@ -13,6 +13,7 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: z.string().startsWith("whsec_"),
     STRIPE_TAX_RATE_ID: z.string().startsWith("txr_"),
     BLOB_READ_WRITE_TOKEN: z.string().startsWith("vercel_blob_rw_"),
+    CRON_SECRET: z.string().min(32),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().url(),
@@ -29,6 +30,7 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
     STRIPE_TAX_RATE_ID: process.env.STRIPE_TAX_RATE_ID,
     BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN,
+    CRON_SECRET: process.env.CRON_SECRET,
   },
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 });
