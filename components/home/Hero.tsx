@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui-primitives/Container";
@@ -37,9 +38,14 @@ export async function Hero({ locale: _locale }: { locale: string }) {
             </div>
           </div>
           <div className="bg-cookie/40 ring-warm-brown/10 relative aspect-[3/4] w-full overflow-hidden rounded-2xl shadow-xl ring-1">
-            <div className="flex h-full w-full items-center justify-center text-9xl opacity-30">
-              🍪
-            </div>
+            <Image
+              src="https://images.unsplash.com/photo-1522237825450-a0c44eecddb4?fm=jpg&q=75&w=1200&auto=format&fit=crop"
+              alt="Biscuits artisanaux belges sortant du four"
+              fill
+              priority
+              sizes="(min-width: 768px) 40vw, 100vw"
+              className="object-cover"
+            />
           </div>
         </div>
       </Container>

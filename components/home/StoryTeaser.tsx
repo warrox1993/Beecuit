@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui-primitives/Container";
@@ -12,10 +13,14 @@ export async function StoryTeaser() {
     <Section py="lg" bg="surface-elev">
       <Container>
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-          <div className="bg-cookie/40 aspect-square w-full overflow-hidden rounded-2xl">
-            <div className="flex h-full w-full items-center justify-center text-9xl opacity-30">
-              👩‍🍳
-            </div>
+          <div className="relative bg-cookie/40 aspect-square w-full overflow-hidden rounded-2xl">
+            <Image
+              src="https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?fm=jpg&q=75&w=1200&auto=format&fit=crop"
+              alt="Mains d'artisan boulanger pétrissant la pâte"
+              fill
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-cover"
+            />
           </div>
           <div className="space-y-6">
             <Eyebrow>{t("storyEyebrow")}</Eyebrow>

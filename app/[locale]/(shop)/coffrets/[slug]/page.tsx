@@ -65,8 +65,20 @@ export default async function CoffretDetailPage({ params }: Props) {
               key={b.biscuitId}
               className="bg-white rounded-xl overflow-hidden border border-cookie/40"
             >
-              <div className="aspect-[4/3] bg-cookie/30 flex items-center justify-center text-4xl">
-                🍪
+              <div className="relative aspect-[4/3] bg-cookie/30">
+                {b.primaryImageUrl ? (
+                  <Image
+                    src={b.primaryImageUrl}
+                    alt={b.name}
+                    fill
+                    sizes="(min-width: 768px) 33vw, 50vw"
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center text-4xl opacity-30">
+                    🍪
+                  </div>
+                )}
               </div>
               <div className="p-3">
                 <div className="font-semibold text-sm text-warm-brown">
