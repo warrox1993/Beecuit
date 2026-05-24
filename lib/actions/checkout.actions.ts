@@ -97,14 +97,48 @@ export async function createCheckoutSession(rawInput: unknown, locale: "fr" | "n
 
   const totalWeight = items.reduce((s, i) => s + i.weightGrams * i.quantity, 0);
   const subtotalCents = items.reduce((s, i) => s + i.unitPriceCents * i.quantity, 0);
-  const rate = await calculateShipping(totalWeight, subtotalCents);
-  if (!rate) throw new Error("Poids excède la livraison disponible");
+  // Gift-card-only orders ship "by email" — skip physical shipping.
+  const allGiftCards = items.every((i) => i.type === "gift_card");
+  let shippingCents = 0;
+  if (!allGiftCards) {
+    const rate = await calculateShipping(totalWeight, subtotalCents);
+    if (!rate) throw new Error("Poids excède la livraison disponible");
+    shippingCents = rate.priceCents;
+  }
 
   const totals = computeOrderTotals({
     lines: items.map((i) => ({ unitPriceCents: i.unitPriceCents, quantity: i.quantity })),
-    shippingCents: rate.priceCents,
+    shippingCents,
     vatPercentInclusive: 6,
   });
+
+  // Gift card redemption (cannot apply a card to an order that BUYS a gift card)
+  const hasGiftCardItem = items.some((i) => i.type === "gift_card");
+  let couponId: string | undefined;
+  let giftCardRedemptionPending:
+    | { giftCardId: string; deductionCents: number; couponId: string }
+    | undefined;
+  if (input.giftCardCode && !hasGiftCardItem) {
+    const { validateGiftCardCode } = await import("@/lib/gift-cards/validation");
+    const v = await validateGiftCardCode(input.giftCardCode);
+    if (!v.valid) throw new Error(v.error);
+    const { stripe } = await import("@/lib/stripe/client");
+    const deductionCents = Math.min(v.amountAvailableCents, totals.totalCents);
+    const coupon = await stripe.coupons.create({
+      amount_off: deductionCents,
+      currency: "eur",
+      duration: "once",
+      name: `Carte cadeau ${input.giftCardCode}`,
+    });
+    couponId = coupon.id;
+    giftCardRedemptionPending = {
+      giftCardId: v.cardId,
+      deductionCents,
+      couponId: coupon.id,
+    };
+  } else if (input.giftCardCode && hasGiftCardItem) {
+    throw new Error("Tu ne peux pas utiliser une carte cadeau pour acheter une carte cadeau");
+  }
 
   const seqResult = await db.execute(sql`SELECT nextval('order_number_seq') AS n`);
   const seqUnknown = seqResult as unknown;
@@ -165,9 +199,22 @@ export async function createCheckoutSession(rawInput: unknown, locale: "fr" | "n
     })),
     shippingCents: totals.shippingCents,
     appBaseUrl: env.NEXT_PUBLIC_APP_URL,
+    couponId,
   });
 
-  await db.update(orders).set({ stripeSessionId: stripeSession.id }).where(eq(orders.id, order.id));
+  await db
+    .update(orders)
+    .set({
+      stripeSessionId: stripeSession.id,
+      metadata: giftCardRedemptionPending
+        ? {
+            giftCardId: giftCardRedemptionPending.giftCardId,
+            giftCardDeductionCents: giftCardRedemptionPending.deductionCents,
+            stripeCouponId: giftCardRedemptionPending.couponId,
+          }
+        : {},
+    })
+    .where(eq(orders.id, order.id));
 
   redirect(stripeSession.url!);
 }

@@ -16,5 +16,9 @@ export const CheckoutSchema = z.object({
     isDefaultBilling: true,
   }).optional(),
   shippingMethod: z.literal("bpost_express_24h"),
+  giftCardCode: z
+    .string()
+    .regex(/^BC-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}$/)
+    .optional(),
 });
 export type CheckoutInput = z.infer<typeof CheckoutSchema>;

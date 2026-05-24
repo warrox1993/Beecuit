@@ -16,6 +16,7 @@ export async function createStripeCheckoutSession(args: {
   lineItems: CheckoutLineItem[];
   shippingCents: number;
   appBaseUrl: string;
+  couponId?: string;
 }) {
   const productLineItems: Array<{
     price_data: {
@@ -63,6 +64,7 @@ export async function createStripeCheckoutSession(args: {
             : "fr",
     customer_email: args.email,
     line_items: productLineItems,
+    discounts: args.couponId ? [{ coupon: args.couponId }] : undefined,
     success_url: `${args.appBaseUrl}/${args.locale}/commande-confirmee/${args.orderNumber}`,
     cancel_url: `${args.appBaseUrl}/${args.locale}/checkout`,
     metadata: { order_id: args.orderId, order_number: args.orderNumber },

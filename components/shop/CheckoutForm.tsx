@@ -2,6 +2,7 @@
 import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { createCheckoutSession } from "@/lib/actions/checkout.actions";
+import { GiftCardCodeInput } from "./GiftCardCodeInput";
 
 type SimpleAddress = {
   firstName: string;
@@ -43,6 +44,10 @@ export function CheckoutForm({
   });
   const [pending, start] = useTransition();
   const [err, setErr] = useState<string | null>(null);
+  const [giftCard, setGiftCard] = useState<{
+    code: string;
+    amountCents: number;
+  } | null>(null);
 
   function input<K extends keyof SimpleAddress>(
     target: SimpleAddress,
@@ -77,6 +82,7 @@ export function CheckoutForm({
                 billingSameAsShipping,
                 billingAddress: billingSameAsShipping ? undefined : bill,
                 shippingMethod: "bpost_express_24h",
+                giftCardCode: giftCard?.code,
               },
               locale,
             );
@@ -162,6 +168,14 @@ export function CheckoutForm({
           <input type="radio" checked readOnly />
           <span className="text-warm-brown">bpost Express 24h — tarif calculé selon poids</span>
         </label>
+      </fieldset>
+
+      <fieldset>
+        <GiftCardCodeInput
+          appliedAmountCents={giftCard?.amountCents ?? null}
+          onApplied={(code, amountCents) => setGiftCard({ code, amountCents })}
+          onRemoved={() => setGiftCard(null)}
+        />
       </fieldset>
 
       {err && <p className="text-terracotta text-sm">{err}</p>}
