@@ -16,3 +16,4 @@ export * from "./schemas/subscriptions";
 export * from "./schemas/subscription_boxes";
 export * from "./schemas/subscription_box_items";
 export * from "./schemas/b2b";
+export * from "./schemas/b2b_rate_limit";

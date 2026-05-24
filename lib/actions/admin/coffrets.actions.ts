@@ -1,6 +1,6 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { eq } from "drizzle-orm";
+import { and, eq, notInArray, sql } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { products, productTranslations, coffretContents } from "@/lib/db/schema";
 import { auth } from "@/lib/auth";
@@ -116,13 +116,34 @@ export async function updateCoffret(raw: unknown): Promise<void> {
       });
   }
 
-  await db.delete(coffretContents).where(eq(coffretContents.coffretId, coffretId));
-  for (const c of data.contents) {
-    await db.insert(coffretContents).values({
-      coffretId,
-      biscuitId: c.biscuitId,
-      quantity: c.quantity,
-    });
+  // Upsert all new contents in a single statement, then delete any rows not in
+  // the new list. Order matters: INSERT first so the table is never observed in
+  // a "missing biscuits" state by concurrent readers (neon-http has no txns).
+  const newBiscuitIds = data.contents.map((c) => c.biscuitId);
+  if (data.contents.length > 0) {
+    await db
+      .insert(coffretContents)
+      .values(
+        data.contents.map((c) => ({
+          coffretId,
+          biscuitId: c.biscuitId,
+          quantity: c.quantity,
+        })),
+      )
+      .onConflictDoUpdate({
+        target: [coffretContents.coffretId, coffretContents.biscuitId],
+        set: { quantity: sql`excluded.quantity` },
+      });
+    await db
+      .delete(coffretContents)
+      .where(
+        and(
+          eq(coffretContents.coffretId, coffretId),
+          notInArray(coffretContents.biscuitId, newBiscuitIds),
+        ),
+      );
+  } else {
+    await db.delete(coffretContents).where(eq(coffretContents.coffretId, coffretId));
   }
 
   revalidatePath("/admin/coffrets");

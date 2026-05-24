@@ -10,12 +10,57 @@ import {
   orderItems,
   products,
 } from "@/lib/db/schema";
+import { stripe } from "@/lib/stripe/client";
 import { currentYearMonth, compositionDeadlineFor } from "@/lib/subscription/dates";
 
 function addMonths(d: Date, months: number): Date {
   const dd = new Date(d.getTime());
   dd.setUTCMonth(dd.getUTCMonth() + months);
   return dd;
+}
+
+/**
+ * Convert a Stripe Customer's shipping (or fallback billing address + name/phone)
+ * into the project's address snapshot shape used by orders and subscriptions.
+ * Returns null if no usable address is present.
+ */
+function customerToAddressSnapshot(
+  customer: Stripe.Customer,
+): Record<string, unknown> | null {
+  const shipping = customer.shipping;
+  if (shipping?.address && shipping.address.line1) {
+    const a = shipping.address;
+    const name = (shipping.name ?? customer.name ?? "").trim();
+    const [firstName, ...rest] = name.split(/\s+/);
+    const lastName = rest.join(" ");
+    return {
+      firstName: firstName || "",
+      lastName: lastName || "",
+      line1: a.line1 ?? "",
+      line2: a.line2 ?? undefined,
+      postalCode: a.postal_code ?? "",
+      city: a.city ?? "",
+      country: (a.country ?? "BE").toUpperCase(),
+      phone: shipping.phone ?? customer.phone ?? undefined,
+    };
+  }
+  if (customer.address && customer.address.line1) {
+    const a = customer.address;
+    const name = (customer.name ?? "").trim();
+    const [firstName, ...rest] = name.split(/\s+/);
+    const lastName = rest.join(" ");
+    return {
+      firstName: firstName || "",
+      lastName: lastName || "",
+      line1: a.line1 ?? "",
+      line2: a.line2 ?? undefined,
+      postalCode: a.postal_code ?? "",
+      city: a.city ?? "",
+      country: (a.country ?? "BE").toUpperCase(),
+      phone: customer.phone ?? undefined,
+    };
+  }
+  return null;
 }
 
 export async function handleSubscriptionCreated(sub: Stripe.Subscription) {
@@ -35,6 +80,31 @@ export async function handleSubscriptionCreated(sub: Stripe.Subscription) {
   const customerId =
     typeof sub.customer === "string" ? sub.customer : sub.customer.id;
 
+  // Fetch the Stripe Customer to capture the shipping address collected during Checkout.
+  // Without this, the first monthly box order would ship with an empty address until the
+  // user manually updates it via updateSubscriptionAddress.
+  let shippingAddressSnapshot: Record<string, unknown> = {};
+  try {
+    const customer = await stripe.customers.retrieve(customerId);
+    if (customer && !customer.deleted) {
+      const snap = customerToAddressSnapshot(customer as Stripe.Customer);
+      if (snap) {
+        shippingAddressSnapshot = snap;
+      } else {
+        console.warn(
+          "[subscription.created] customer has no shipping/address; using empty snapshot",
+          { subscriptionId: sub.id, customerId },
+        );
+      }
+    }
+  } catch (err) {
+    console.error("[subscription.created] failed to fetch customer", {
+      subscriptionId: sub.id,
+      customerId,
+      err,
+    });
+  }
+
   await db
     .insert(subscriptions)
     .values({
@@ -46,7 +116,7 @@ export async function handleSubscriptionCreated(sub: Stripe.Subscription) {
       status: "trialing",
       startedAt,
       engagementEndsAt,
-      shippingAddressSnapshot: {},
+      shippingAddressSnapshot,
     })
     .onConflictDoNothing();
 }

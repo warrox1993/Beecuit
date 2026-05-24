@@ -29,6 +29,7 @@ export const subscriptionBoxes = pgTable(
     composingEmailSentAt: timestamp("composing_email_sent_at", { mode: "date" }),
     reminderEmailSentAt: timestamp("reminder_email_sent_at", { mode: "date" }),
     createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
   },
   (t) => ({
     uniqueSubMonth: uniqueIndex("uniq_subscription_box_month").on(t.subscriptionId, t.cycleYearMonth),

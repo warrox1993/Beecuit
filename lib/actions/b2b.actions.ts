@@ -16,6 +16,7 @@ import {
 } from "@/lib/validators/b2b";
 import { checkRateLimit, getClientIp } from "@/lib/b2b/anti-spam";
 import { createB2BPaymentLink, deactivateB2BPaymentLink } from "@/lib/stripe/payment-link";
+import { stripe } from "@/lib/stripe/client";
 import {
   sendB2BAdminNotification,
   sendB2BCustomerQuote,
@@ -43,7 +44,7 @@ export async function createB2BQuoteRequest(
 
   const h = await headers();
   const ip = getClientIp(h);
-  if (!checkRateLimit(ip)) {
+  if (!(await checkRateLimit(ip))) {
     return { ok: false, error: "Trop de demandes, réessaie dans quelques minutes." };
   }
 
@@ -97,35 +98,51 @@ export async function adminSetQuote(input: AdminSetQuoteInput): Promise<Result> 
   }
 
   const shortId = parsed.data.quoteId.slice(0, 8).toUpperCase();
-  const stripeRes = await createB2BPaymentLink({
-    quoteId: parsed.data.quoteId,
-    shortId,
-    amountCents: parsed.data.quotedAmountCents,
-    description: parsed.data.quoteDescription,
-    customerEmail: quote.email,
-  });
+  let stripeRes;
+  try {
+    stripeRes = await createB2BPaymentLink({
+      quoteId: parsed.data.quoteId,
+      shortId,
+      amountCents: parsed.data.quotedAmountCents,
+      description: parsed.data.quoteDescription,
+      customerEmail: quote.email,
+    });
+  } catch (e) {
+    return { ok: false, error: "Stripe error: " + (e as Error).message };
+  }
 
   const now = new Date();
   const expiresAt = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
 
-  await db
-    .update(b2bQuoteRequests)
-    .set({
-      status: "quoted",
-      quotedAmountCents: parsed.data.quotedAmountCents,
-      quoteDescription: parsed.data.quoteDescription,
-      shippingAddress: parsed.data.shippingAddress as Record<string, unknown>,
-      adminNotes: parsed.data.adminNotes || null,
-      stripeProductId: stripeRes.productId,
-      stripePriceId: stripeRes.priceId,
-      stripePaymentLinkId: stripeRes.paymentLinkId,
-      stripePaymentLinkUrl: stripeRes.paymentLinkUrl,
-      quotedAt: now,
-      quotedBy: session.user?.id ?? null,
-      quoteExpiresAt: expiresAt,
-      updatedAt: now,
-    })
-    .where(eq(b2bQuoteRequests.id, parsed.data.quoteId));
+  try {
+    await db
+      .update(b2bQuoteRequests)
+      .set({
+        status: "quoted",
+        quotedAmountCents: parsed.data.quotedAmountCents,
+        quoteDescription: parsed.data.quoteDescription,
+        shippingAddress: parsed.data.shippingAddress as Record<string, unknown>,
+        adminNotes: parsed.data.adminNotes || null,
+        stripeProductId: stripeRes.productId,
+        stripePriceId: stripeRes.priceId,
+        stripePaymentLinkId: stripeRes.paymentLinkId,
+        stripePaymentLinkUrl: stripeRes.paymentLinkUrl,
+        quotedAt: now,
+        quotedBy: session.user?.id ?? null,
+        quoteExpiresAt: expiresAt,
+        updatedAt: now,
+      })
+      .where(eq(b2bQuoteRequests.id, parsed.data.quoteId));
+  } catch (e) {
+    // Roll back Stripe objects so we don't leave orphan live PaymentLink/Product
+    // referencing a quote row that never recorded them.
+    await stripe.paymentLinks
+      .update(stripeRes.paymentLinkId, { active: false })
+      .catch(() => {});
+    await stripe.products.update(stripeRes.productId, { active: false }).catch(() => {});
+    console.error("[b2b] DB update failed after Stripe creation, deactivated Stripe objects", e);
+    return { ok: false, error: "Database error; quote not saved. Please retry." };
+  }
 
   await sendB2BCustomerQuote({
     quoteId: parsed.data.quoteId,

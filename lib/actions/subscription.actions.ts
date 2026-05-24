@@ -29,12 +29,23 @@ export async function createSubscriptionCheckout(
 
   const customerId = await getOrCreateStripeCustomer(session.user.id, session.user.email);
   const priceId = getStripePriceId(input.format, input.engagement);
-  const anchor = Math.floor(nextFirstOfMonth().getTime() / 1000);
+
+  // Compute the billing cycle anchor (1st of next month UTC). If we're within the last
+  // minute before the new month starts, the anchor we computed could become "in the past"
+  // by the time Stripe processes the API call. Bump by 1 hour in that window — Stripe
+  // still bills on the 1st and no harm is done.
+  const anchorDate = nextFirstOfMonth();
+  if (anchorDate.getTime() - Date.now() < 60_000) {
+    anchorDate.setUTCHours(anchorDate.getUTCHours() + 1);
+  }
+  const anchor = Math.floor(anchorDate.getTime() / 1000);
 
   const stripeSession = await stripe.checkout.sessions.create({
     mode: "subscription",
     customer: customerId,
     line_items: [{ price: priceId, quantity: 1 }],
+    shipping_address_collection: { allowed_countries: ["BE", "FR", "NL", "LU", "DE"] },
+    phone_number_collection: { enabled: true },
     subscription_data: {
       billing_cycle_anchor: anchor,
       proration_behavior: "none",
@@ -114,16 +125,18 @@ export async function composeBox(raw: unknown) {
   const session = await auth();
   if (!session?.user?.id) throw new Error("Auth required");
 
+  // 1. Read box including updatedAt (the CAS guard).
   const [box] = await db
     .select()
     .from(subscriptionBoxes)
     .where(eq(subscriptionBoxes.id, input.boxId))
     .limit(1);
   if (!box) throw new Error("Box not found");
+
+  // 2. Validate status and ownership.
   if (box.status !== "composing") {
     throw new Error("Box deadline passed (status: " + box.status + ")");
   }
-
   const [sub] = await db
     .select()
     .from(subscriptions)
@@ -138,18 +151,27 @@ export async function composeBox(raw: unknown) {
     );
   }
 
-  // Re-read box right before mutation to catch lock-phase cron flip (composing → locked).
-  // This narrows but doesn't eliminate the race; without transactions on neon-http we accept
-  // last-write-wins semantics for two concurrent user submissions (rare for a once-monthly action).
-  const [recheck] = await db
-    .select({ status: subscriptionBoxes.status })
-    .from(subscriptionBoxes)
-    .where(eq(subscriptionBoxes.id, box.id))
-    .limit(1);
-  if (!recheck || recheck.status !== "composing") {
-    throw new Error("Box was locked, please refresh and retry");
+  // 3. Compare-and-swap on (id, updated_at, status). This single SQL statement is
+  // atomic even on neon-http: it serializes concurrent writers because only one
+  // session's UPDATE will match the row's current updated_at.
+  const claimed = await db
+    .update(subscriptionBoxes)
+    .set({ updatedAt: new Date(), composedBy: "user" })
+    .where(
+      and(
+        eq(subscriptionBoxes.id, box.id),
+        eq(subscriptionBoxes.updatedAt, box.updatedAt),
+        eq(subscriptionBoxes.status, "composing"),
+      ),
+    )
+    .returning({ id: subscriptionBoxes.id });
+
+  // 4. If CAS lost (empty returning), another request modified the box.
+  if (claimed.length === 0) {
+    throw new Error("Box was modified by another request, please refresh and retry");
   }
 
+  // 5. Now safe to mutate the children: DELETE old items + batch INSERT new ones.
   await db.delete(subscriptionBoxItems).where(eq(subscriptionBoxItems.boxId, box.id));
   await db.insert(subscriptionBoxItems).values(
     input.items.map((item) => ({
@@ -158,9 +180,5 @@ export async function composeBox(raw: unknown) {
       quantity: item.quantity,
     })),
   );
-  await db
-    .update(subscriptionBoxes)
-    .set({ composedBy: "user" })
-    .where(eq(subscriptionBoxes.id, box.id));
   revalidatePath("/", "layout");
 }
