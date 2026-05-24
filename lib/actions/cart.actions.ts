@@ -3,11 +3,11 @@
 import { cookies } from "next/headers";
 import { v4 as uuid } from "uuid";
 import { revalidatePath } from "next/cache";
-import { eq, sql } from "drizzle-orm";
+import { eq, sql, and } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { carts, cartItems, products } from "@/lib/db/schema";
 import { auth } from "@/lib/auth";
-import { AddToCartSchema, UpdateQuantitySchema } from "@/lib/validators/cart";
+import { AddToCartSchema, UpdateQuantitySchema, UpdateGiftMessageSchema } from "@/lib/validators/cart";
 import { getOrCreateCartForSessionToken, getOrCreateCartForUser } from "@/lib/queries/cart";
 
 const COOKIE = "cart_session_token";
@@ -41,18 +41,48 @@ export async function addToCart(rawInput: unknown) {
   if (!prod.isActive) throw new Error("Product not available");
 
   const cartId = await getActiveCartId();
+  const meta = input.metadata ?? null;
 
-  await db
-    .insert(cartItems)
-    .values({ cartId, productId: input.productId, quantity: input.quantity })
-    .onConflictDoUpdate({
-      target: [cartItems.cartId, cartItems.productId],
-      set: {
-        quantity: sql`LEAST(${cartItems.quantity} + ${input.quantity}, ${prod.stockQuantity})`,
-      },
+  if (prod.type === "biscuit" && !meta) {
+    // Biscuits without metadata: upsert (sum quantities, cap to stock)
+    const [existing] = await db
+      .select()
+      .from(cartItems)
+      .where(and(eq(cartItems.cartId, cartId), eq(cartItems.productId, input.productId), sql`metadata IS NULL`))
+      .limit(1);
+    if (existing) {
+      const newQty = Math.min(existing.quantity + input.quantity, prod.stockQuantity);
+      await db.update(cartItems).set({ quantity: newQty }).where(eq(cartItems.id, existing.id));
+    } else {
+      await db.insert(cartItems).values({
+        cartId,
+        productId: input.productId,
+        quantity: Math.min(input.quantity, prod.stockQuantity),
+      });
+    }
+  } else {
+    // Coffret (or biscuit with metadata): always a new row
+    await db.insert(cartItems).values({
+      cartId,
+      productId: input.productId,
+      quantity: input.quantity,
+      metadata: meta,
     });
+  }
 
   await db.update(carts).set({ updatedAt: new Date() }).where(eq(carts.id, cartId));
+  revalidatePath("/", "layout");
+}
+
+export async function updateGiftMessage(rawInput: unknown) {
+  const { cartItemId, giftMessage } = UpdateGiftMessageSchema.parse(rawInput);
+  const [item] = await db.select().from(cartItems).where(eq(cartItems.id, cartItemId)).limit(1);
+  if (!item) throw new Error("Cart item not found");
+  const oldMeta = (item.metadata ?? {}) as Record<string, unknown>;
+  await db
+    .update(cartItems)
+    .set({ metadata: { ...oldMeta, giftMessage } })
+    .where(eq(cartItems.id, cartItemId));
   revalidatePath("/", "layout");
 }
 
