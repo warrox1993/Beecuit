@@ -12,6 +12,7 @@ import { pickShippingRate, type ShippingRate } from "@/lib/shipping/bpost";
 import { getCartContents } from "@/lib/queries/cart";
 import { formatOrderNumber } from "@/lib/order-number";
 import { createStripeCheckoutSession } from "@/lib/stripe/checkout";
+import { isCoffretAvailable } from "@/lib/coffret/availability";
 
 export async function calculateShipping(weightGrams: number, subtotalCents: number) {
   const rates = await db.select().from(shippingRates).where(eq(shippingRates.country, "BE"));
@@ -42,7 +43,14 @@ export async function createCheckoutSession(rawInput: unknown, locale: "fr" | "n
   if (items.length === 0) throw new Error("Cart is empty");
 
   for (const i of items) {
-    if (i.quantity > i.stockQuantity) {
+    if (i.type === "coffret") {
+      const avail = await isCoffretAvailable(i.productId, i.quantity);
+      if (!avail.available) {
+        throw new Error(
+          `Coffret « ${i.name} » indisponible (rupture sur ${avail.blockingBiscuit.name})`,
+        );
+      }
+    } else if (i.quantity > i.stockQuantity) {
       throw new Error(`Stock insuffisant pour ${i.name}`);
     }
   }
