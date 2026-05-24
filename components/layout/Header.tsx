@@ -18,9 +18,8 @@ export async function Header({ locale }: { locale: string }) {
           </Link>
           <nav className="hidden gap-8 md:flex" aria-label="Principal">
             <NavLink href="/biscuits">{t("biscuits")}</NavLink>
-            <NavLink href="/coffrets" comingSoon>
-              {t("coffrets")}
-            </NavLink>
+            <NavLink href="/coffrets">{t("coffrets")}</NavLink>
+            <NavLink href="/cartes-cadeaux">{t("giftCards")}</NavLink>
             <NavLink href="/abonnement" comingSoon>
               {t("abonnement")}
             </NavLink>

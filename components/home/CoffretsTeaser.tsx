@@ -1,4 +1,6 @@
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui-primitives/Container";
 import { Section } from "@/components/ui-primitives/Section";
 import { Eyebrow } from "@/components/ui-primitives/Eyebrow";
@@ -10,22 +12,28 @@ export async function CoffretsTeaser() {
   const t = await getTranslations("home");
   return (
     <Section py="lg">
-      <Container variant="narrow" className="text-center">
-        <Eyebrow>{t("coffretsEyebrow")}</Eyebrow>
-        <Heading as="h2" size="h2" className="mt-3">
-          {t("coffretsTitle")}
-        </Heading>
-        <Prose className="mx-auto mt-4">{t("coffretsProse")}</Prose>
-        <Button
-          disabled
-          className="bg-warm-brown/10 text-warm-brown/50 mt-8 cursor-not-allowed px-6 py-6 text-base"
-        >
-          {t("coffretsCta")}
-        </Button>
-        <div className="mt-12 flex justify-center">
-          <div className="relative h-32 w-40 [transform:rotateX(15deg)_rotateY(-25deg)] [transform-style:preserve-3d]">
-            <div className="bg-cookie border-warm-brown/20 absolute inset-0 rounded border shadow-lg" />
-            <div className="bg-honey/80 absolute inset-x-0 -top-2 h-4 origin-bottom [transform:rotateX(60deg)] rounded-t" />
+      <Container>
+        <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-xl">
+            <Image
+              src="https://images.unsplash.com/photo-1449049607083-e29383d58423?fm=jpg&q=75&w=1200&auto=format&fit=crop"
+              alt="Coffret cadeau de biscuits artisanaux BeeCuit"
+              fill
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-cover"
+            />
+          </div>
+          <div className="space-y-6">
+            <Eyebrow>{t("coffretsEyebrow")}</Eyebrow>
+            <Heading as="h2" size="h2">
+              {t("coffretsTitle")}
+            </Heading>
+            <Prose>{t("coffretsProse")}</Prose>
+            <Link href="/coffrets">
+              <Button className="bg-honey text-cream hover:bg-honey-dark mt-2 px-6 py-6 text-base">
+                {t("coffretsCta")} →
+              </Button>
+            </Link>
           </div>
         </div>
       </Container>

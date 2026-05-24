@@ -24,8 +24,11 @@ export function MobileNav() {
           <NavLink href="/biscuits" className="text-lg">
             {t("biscuits")}
           </NavLink>
-          <NavLink href="/coffrets" comingSoon className="text-lg">
+          <NavLink href="/coffrets" className="text-lg">
             {t("coffrets")}
+          </NavLink>
+          <NavLink href="/cartes-cadeaux" className="text-lg">
+            {t("giftCards")}
           </NavLink>
           <NavLink href="/abonnement" comingSoon className="text-lg">
             {t("abonnement")}

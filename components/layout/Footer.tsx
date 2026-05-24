@@ -35,6 +35,11 @@ export async function Footer({ locale }: { locale: string }) {
                 </Link>
               </li>
               <li>
+                <Link href="/cartes-cadeaux" className="hover:text-honey-dark">
+                  Cartes cadeaux
+                </Link>
+              </li>
+              <li>
                 <Link href="/abonnement" className="hover:text-honey-dark">
                   {t("links.abonnement")}
                 </Link>
@@ -107,10 +112,22 @@ export async function Footer({ locale }: { locale: string }) {
           <p className="text-warm-brown/60 text-xs">{t("copyright", { year })}</p>
           <p className="text-warm-brown/60 text-xs">{t("madeWith")}</p>
           <div className="text-warm-brown/60 flex gap-4">
-            <a href="#" aria-label="Instagram" className="hover:text-honey-dark">
+            <a
+              href="https://instagram.com/beecuit"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="hover:text-honey-dark"
+            >
               <Share2 className="h-4 w-4" />
             </a>
-            <a href="#" aria-label="Facebook" className="hover:text-honey-dark">
+            <a
+              href="https://facebook.com/beecuit"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              className="hover:text-honey-dark"
+            >
               <Globe className="h-4 w-4" />
             </a>
           </div>
