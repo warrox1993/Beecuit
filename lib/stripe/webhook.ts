@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { orders, orderItems, products, stripeWebhookEvents } from "@/lib/db/schema";
 import { sendEmail } from "@/lib/email/client";
 import { OrderConfirmation } from "@/lib/email/templates/OrderConfirmation";
+import { decrementCoffretStockCascade } from "@/lib/coffret/stock-cascade";
 
 export async function handleCheckoutCompleted(event: Stripe.CheckoutSessionCompletedEvent) {
   const session = event.data.object;
@@ -48,11 +49,16 @@ export async function handleCheckoutCompleted(event: Stripe.CheckoutSessionCompl
 
   for (const item of items) {
     if (!item.productId) continue;
+    // For coffret rows, the coffret product itself has stockQuantity=0 (ignored).
+    // The cascade below decrements each included biscuit instead.
     await db
       .update(products)
       .set({ stockQuantity: sql`GREATEST(${products.stockQuantity} - ${item.quantity}, 0)` })
       .where(eq(products.id, item.productId));
   }
+
+  // Cascade: for coffret order_items, decrement each biscuit by snapshot.qty × order_item.qty.
+  await decrementCoffretStockCascade(items);
 
   const recipient =
     order.guestEmail ??
