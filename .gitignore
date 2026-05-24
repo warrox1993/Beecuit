@@ -51,3 +51,5 @@ next-env.d.ts
 # local screenshots
 /beecuit-*.png
 
+# Claude Code local state
+/.claude/
