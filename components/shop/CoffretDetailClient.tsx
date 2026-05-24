@@ -5,10 +5,9 @@ import { GiftMessageInput } from "./GiftMessageInput";
 import { PackagingTierSelector } from "./PackagingTierSelector";
 import { AddToCartButton } from "./AddToCartButton";
 import { PREMIUM_PACKAGING_SURCHARGE_CENTS } from "@/lib/coffret/constants";
+import type { getCoffretBySlug } from "@/lib/queries/catalog";
 
-type Coffret = NonNullable<
-  Awaited<ReturnType<typeof import("@/lib/queries/catalog").getCoffretBySlug>>
->;
+type Coffret = NonNullable<Awaited<ReturnType<typeof getCoffretBySlug>>>;
 
 export function CoffretDetailClient({ coffret }: { coffret: Coffret }) {
   const [giftMessage, setGiftMessage] = useState<string>("");

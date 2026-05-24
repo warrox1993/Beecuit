@@ -45,7 +45,7 @@ export function PackagingTierSelector({
           }`}
         >
           <div className="font-semibold text-sm">Premium</div>
-          <div className="text-xs text-warm-brown/70">Cire d'abeille + ruban</div>
+          <div className="text-xs text-warm-brown/70">Cire d&apos;abeille + ruban</div>
           <div className="text-xs text-honey-dark mt-1">+ 2,50 €</div>
         </button>
       </div>

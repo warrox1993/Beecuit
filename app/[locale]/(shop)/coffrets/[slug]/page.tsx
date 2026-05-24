@@ -75,7 +75,7 @@ export default async function CoffretDetailPage({ params }: Props) {
                 <div className="text-xs text-warm-brown/70">
                   ×{b.quantity} ·{" "}
                   {(b.unitPriceCents / 100).toFixed(2).replace(".", ",")} €
-                  l'unité
+                  l&apos;unité
                 </div>
               </div>
             </div>
