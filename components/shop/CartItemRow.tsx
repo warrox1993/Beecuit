@@ -8,11 +8,20 @@ import {
 import { useRouter } from "@/i18n/navigation";
 import { X } from "lucide-react";
 
-type Metadata = {
-  type?: "coffret";
-  giftMessage?: string | null;
-  packagingTier?: "standard" | "premium";
-} | null;
+type Metadata =
+  | {
+      type?: "coffret";
+      giftMessage?: string | null;
+      packagingTier?: "standard" | "premium";
+    }
+  | {
+      type: "gift_card";
+      recipientEmail: string;
+      recipientName: string | null;
+      message: string | null;
+      deliveryAt: string;
+    }
+  | null;
 
 export function CartItemRow({
   cartItemId,
@@ -34,7 +43,8 @@ export function CartItemRow({
   const [pending, startTransition] = useTransition();
   const router = useRouter();
   const subtotalEur = ((unitPriceCents * quantity) / 100).toFixed(2);
-  const isCoffret = metadata?.type === "coffret";
+  const isCoffret = metadata && "packagingTier" in metadata;
+  const isGiftCard = metadata && "type" in metadata && metadata.type === "gift_card";
 
   return (
     <div className="flex flex-col gap-1 py-4">
@@ -49,7 +59,7 @@ export function CartItemRow({
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center text-2xl opacity-30">
-              {isCoffret ? "📦" : "🍪"}
+              {isGiftCard ? "🎁" : isCoffret ? "📦" : "🍪"}
             </div>
           )}
         </div>
@@ -57,14 +67,14 @@ export function CartItemRow({
           <p className="text-warm-brown font-display text-base">{name}</p>
           <p className="text-warm-brown/60 text-xs">
             {(unitPriceCents / 100).toFixed(2)} €
-            {isCoffret && metadata?.packagingTier === "premium" && (
+            {isCoffret && "packagingTier" in metadata && metadata.packagingTier === "premium" && (
               <span className="ml-2 inline-block bg-honey/20 text-honey-dark px-2 py-0.5 rounded">
                 📦 Emballage premium
               </span>
             )}
           </p>
         </div>
-        {isCoffret ? (
+        {isCoffret || isGiftCard ? (
           <span className="text-warm-brown/70 text-sm px-2">×1</span>
         ) : (
           <select
@@ -108,18 +118,29 @@ export function CartItemRow({
           <X className="h-4 w-4" />
         </button>
       </div>
-      {isCoffret && (
+      {isCoffret && "giftMessage" in metadata && (
         <div className="pl-24 pr-12 text-xs space-y-1">
-          {metadata?.giftMessage ? (
+          {metadata.giftMessage ? (
             <p className="italic text-warm-brown/80">
               ✉️ « {metadata.giftMessage} »
             </p>
           ) : null}
           <GiftMessageEditor
             cartItemId={cartItemId}
-            currentMessage={metadata?.giftMessage ?? ""}
+            currentMessage={metadata.giftMessage ?? ""}
             onSaved={() => router.refresh()}
           />
+        </div>
+      )}
+      {isGiftCard && metadata.type === "gift_card" && (
+        <div className="pl-24 pr-12 text-xs space-y-1">
+          <p className="text-warm-brown/80">📧 Pour {metadata.recipientEmail}</p>
+          <p className="text-warm-brown/60">
+            Envoi : {new Date(metadata.deliveryAt).toLocaleDateString("fr-BE")}
+          </p>
+          {metadata.message && (
+            <p className="italic text-warm-brown/80">✉️ « {metadata.message} »</p>
+          )}
         </div>
       )}
     </div>

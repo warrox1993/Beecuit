@@ -3,15 +3,23 @@ import { sql } from "drizzle-orm";
 import { orders } from "./orders";
 import { products } from "./products";
 
-export type OrderItemMetadata = {
-  type?: "coffret";
-  giftMessage?: string | null;
-  packagingTier?: "standard" | "premium";
-  snapshot?: {
-    discountPercent: number;
-    biscuits: Array<{ biscuitId: string; name: string; quantity: number; unitPriceCents: number }>;
-  };
-};
+export type OrderItemMetadata =
+  | {
+      type?: "coffret";
+      giftMessage?: string | null;
+      packagingTier?: "standard" | "premium";
+      snapshot?: {
+        discountPercent: number;
+        biscuits: Array<{ biscuitId: string; name: string; quantity: number; unitPriceCents: number }>;
+      };
+    }
+  | {
+      type: "gift_card";
+      recipientEmail: string;
+      recipientName: string | null;
+      message: string | null;
+      deliveryAt: string;
+    };
 
 export const orderItems = pgTable("order_items", {
   id: text("id")

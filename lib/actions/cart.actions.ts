@@ -8,6 +8,8 @@ import { db } from "@/lib/db";
 import { carts, cartItems, products } from "@/lib/db/schema";
 import { auth } from "@/lib/auth";
 import { AddToCartSchema, UpdateQuantitySchema, UpdateGiftMessageSchema } from "@/lib/validators/cart";
+import { AddGiftCardToCartSchema } from "@/lib/validators/gift-card";
+import { GIFT_CARD_SKUS, type GiftCardAmountCents } from "@/lib/gift-cards/constants";
 import { getOrCreateCartForSessionToken, getOrCreateCartForUser } from "@/lib/queries/cart";
 
 const COOKIE = "cart_session_token";
@@ -69,6 +71,33 @@ export async function addToCart(rawInput: unknown) {
       metadata: meta,
     });
   }
+
+  await db.update(carts).set({ updatedAt: new Date() }).where(eq(carts.id, cartId));
+  revalidatePath("/", "layout");
+}
+
+export async function addGiftCardToCart(rawInput: unknown) {
+  const input = AddGiftCardToCartSchema.parse(rawInput);
+  const sku = GIFT_CARD_SKUS[input.amountCents as GiftCardAmountCents];
+  if (!sku) throw new Error("Invalid gift card amount");
+
+  const [prod] = await db.select().from(products).where(eq(products.sku, sku)).limit(1);
+  if (!prod) throw new Error(`Gift card product ${sku} not found (run seed-gift-card-products.mjs)`);
+
+  const cartId = await getActiveCartId();
+
+  await db.insert(cartItems).values({
+    cartId,
+    productId: prod.id,
+    quantity: 1,
+    metadata: {
+      type: "gift_card" as const,
+      recipientEmail: input.recipientEmail,
+      recipientName: input.recipientName,
+      message: input.message,
+      deliveryAt: input.deliveryAt,
+    },
+  });
 
   await db.update(carts).set({ updatedAt: new Date() }).where(eq(carts.id, cartId));
   revalidatePath("/", "layout");

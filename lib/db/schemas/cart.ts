@@ -13,11 +13,19 @@ export const carts = pgTable("carts", {
   updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
 });
 
-export type CartItemMetadata = {
-  type?: "coffret";
-  giftMessage?: string | null;
-  packagingTier?: "standard" | "premium";
-};
+export type CartItemMetadata =
+  | {
+      type?: "coffret";
+      giftMessage?: string | null;
+      packagingTier?: "standard" | "premium";
+    }
+  | {
+      type: "gift_card";
+      recipientEmail: string;
+      recipientName: string | null;
+      message: string | null;
+      deliveryAt: string; // ISO timestamp
+    };
 
 export const cartItems = pgTable("cart_items", {
   id: text("id")

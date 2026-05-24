@@ -9,10 +9,50 @@ import { env } from "@/lib/env";
 import { CheckoutSchema } from "@/lib/validators/checkout";
 import { computeOrderTotals } from "@/lib/totals";
 import { pickShippingRate, type ShippingRate } from "@/lib/shipping/bpost";
-import { getCartContents } from "@/lib/queries/cart";
+import { getCartContents, type CartLine } from "@/lib/queries/cart";
 import { formatOrderNumber } from "@/lib/order-number";
 import { createStripeCheckoutSession } from "@/lib/stripe/checkout";
 import { isCoffretAvailable } from "@/lib/coffret/availability";
+
+// Narrow CartLine metadata for coffret rows and build the order_items.metadata jsonb.
+function buildOrderItemMetadata(i: CartLine) {
+  if (i.type === "coffret") {
+    const m = i.metadata && "packagingTier" in (i.metadata ?? {}) ? i.metadata : null;
+    const giftMessage = m && "giftMessage" in m ? m.giftMessage ?? null : null;
+    const packagingTier = m && "packagingTier" in m ? m.packagingTier ?? "standard" : "standard";
+    return {
+      type: "coffret" as const,
+      giftMessage,
+      packagingTier,
+      snapshot: {
+        discountPercent: i.coffretDiscountPercent ?? 0,
+        biscuits: (i.coffretBreakdown ?? []).map((b) => ({
+          biscuitId: b.biscuitId,
+          name: b.name,
+          quantity: b.quantity,
+          unitPriceCents: b.unitPriceCents,
+        })),
+      },
+    };
+  }
+  if (i.type === "gift_card" && i.metadata && i.metadata.type === "gift_card") {
+    return {
+      type: "gift_card" as const,
+      recipientEmail: i.metadata.recipientEmail,
+      recipientName: i.metadata.recipientName,
+      message: i.metadata.message,
+      deliveryAt: i.metadata.deliveryAt,
+    };
+  }
+  return null;
+}
+
+function lineItemName(i: CartLine): string {
+  if (i.type === "coffret" && i.metadata && "packagingTier" in i.metadata && i.metadata.packagingTier === "premium") {
+    return `${i.name} (emballage premium)`;
+  }
+  return i.name;
+}
 
 export async function calculateShipping(weightGrams: number, subtotalCents: number) {
   const rates = await db.select().from(shippingRates).where(eq(shippingRates.country, "BE"));
@@ -109,23 +149,7 @@ export async function createCheckoutSession(rawInput: unknown, locale: "fr" | "n
       unitPriceCentsSnapshot: i.unitPriceCents,
       quantity: i.quantity,
       lineTotalCents: i.unitPriceCents * i.quantity,
-      metadata:
-        i.type === "coffret"
-          ? {
-              type: "coffret" as const,
-              giftMessage: i.metadata?.giftMessage ?? null,
-              packagingTier: i.metadata?.packagingTier ?? "standard",
-              snapshot: {
-                discountPercent: i.coffretDiscountPercent ?? 0,
-                biscuits: (i.coffretBreakdown ?? []).map((b) => ({
-                  biscuitId: b.biscuitId,
-                  name: b.name,
-                  quantity: b.quantity,
-                  unitPriceCents: b.unitPriceCents,
-                })),
-              },
-            }
-          : null,
+      metadata: buildOrderItemMetadata(i),
     })),
   );
 
@@ -135,10 +159,7 @@ export async function createCheckoutSession(rawInput: unknown, locale: "fr" | "n
     email: input.email,
     locale,
     lineItems: items.map((i) => ({
-      name:
-        i.type === "coffret" && i.metadata?.packagingTier === "premium"
-          ? `${i.name} (emballage premium)`
-          : i.name,
+      name: lineItemName(i),
       unitPriceCents: i.unitPriceCents,
       quantity: i.quantity,
     })),

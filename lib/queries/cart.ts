@@ -26,11 +26,26 @@ export async function getOrCreateCartForUser(userId: string) {
   return created;
 }
 
+export type CartLineMetadata =
+  | {
+      type?: "coffret";
+      giftMessage?: string | null;
+      packagingTier?: "standard" | "premium";
+    }
+  | {
+      type: "gift_card";
+      recipientEmail: string;
+      recipientName: string | null;
+      message: string | null;
+      deliveryAt: string;
+    }
+  | null;
+
 export type CartLine = {
   cartItemId: string;
   productId: string;
   sku: string;
-  type: "biscuit" | "coffret";
+  type: "biscuit" | "coffret" | "gift_card";
   quantity: number;
   unitPriceCents: number; // for coffrets: computed price + premium surcharge (if applicable)
   stockQuantity: number;
@@ -38,11 +53,7 @@ export type CartLine = {
   name: string;
   slug: string;
   primaryImageUrl: string | null;
-  metadata: {
-    type?: "coffret";
-    giftMessage?: string | null;
-    packagingTier?: "standard" | "premium";
-  } | null;
+  metadata: CartLineMetadata;
   coffretDiscountPercent?: number;
   coffretBreakdown?: CoffretPrice["breakdown"];
 };
@@ -83,15 +94,21 @@ export async function getCartContents(cartId: string, locale: Locale): Promise<C
         unitPriceCents = p.totalCents;
         coffretBreakdown = p.breakdown;
         coffretDiscountPercent = p.discountPercent;
-        if (r.metadata?.packagingTier === "premium") {
+        // Narrow metadata to coffret variant (gift_card variant has no packagingTier)
+        if (
+          r.metadata &&
+          "packagingTier" in r.metadata &&
+          r.metadata.packagingTier === "premium"
+        ) {
           unitPriceCents += PREMIUM_PACKAGING_SURCHARGE_CENTS;
         }
       }
+      // gift_card lines: basePriceCents is already the amount; no special logic needed
       return {
         cartItemId: r.cartItemId,
         productId: r.productId,
         sku: r.sku,
-        type: r.type as "biscuit" | "coffret",
+        type: r.type as "biscuit" | "coffret" | "gift_card",
         quantity: r.quantity,
         unitPriceCents,
         stockQuantity: r.stockQuantity,
