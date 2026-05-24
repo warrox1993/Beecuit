@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { db } from "@/lib/db";
-import { products, cartItems, carts } from "@/lib/db/schema";
-import { eq, sql } from "drizzle-orm";
+import { products, carts } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 import { getOrCreateCartForSessionToken } from "@/lib/queries/cart";
 
 const TEST_TOKEN = "test-token-cart-actions";
@@ -20,21 +20,8 @@ describe("cart queries", () => {
     await db.delete(carts).where(eq(carts.id, c1.id));
   });
 
-  it("cart_items UNIQUE(cart_id, product_id) merges on conflict", async () => {
-    const cart = await getOrCreateCartForSessionToken(TEST_TOKEN);
-    const [p] = await db.select().from(products).limit(1);
-    if (!p) throw new Error("no product");
-    await db.insert(cartItems).values({ cartId: cart.id, productId: p.id, quantity: 1 });
-    await db
-      .insert(cartItems)
-      .values({ cartId: cart.id, productId: p.id, quantity: 2 })
-      .onConflictDoUpdate({
-        target: [cartItems.cartId, cartItems.productId],
-        set: { quantity: sql`${cartItems.quantity} + 2` },
-      });
-    const items = await db.select().from(cartItems).where(eq(cartItems.cartId, cart.id));
-    expect(items).toHaveLength(1);
-    expect(items[0]!.quantity).toBe(3);
-    await db.delete(carts).where(eq(carts.id, cart.id));
-  });
+  // Note: the previous "cart_items UNIQUE(cart_id, product_id) merges on conflict" test was
+  // removed when Phase 2 dropped that unique index (migration 0004 — coffrets with different
+  // gift messages must coexist as separate rows). Biscuit-without-metadata dedup logic is
+  // now implemented in cart.actions.ts and covered by coffret-add-to-cart.test.ts.
 });
