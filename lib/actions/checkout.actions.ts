@@ -97,10 +97,27 @@ export async function createCheckoutSession(rawInput: unknown, locale: "fr" | "n
       orderId: order.id,
       productId: i.productId,
       productNameSnapshot: i.name,
-      productSkuSnapshot: i.productId,
+      productSkuSnapshot: i.sku,
       unitPriceCentsSnapshot: i.unitPriceCents,
       quantity: i.quantity,
       lineTotalCents: i.unitPriceCents * i.quantity,
+      metadata:
+        i.type === "coffret"
+          ? {
+              type: "coffret" as const,
+              giftMessage: i.metadata?.giftMessage ?? null,
+              packagingTier: i.metadata?.packagingTier ?? "standard",
+              snapshot: {
+                discountPercent: i.coffretDiscountPercent ?? 0,
+                biscuits: (i.coffretBreakdown ?? []).map((b) => ({
+                  biscuitId: b.biscuitId,
+                  name: b.name,
+                  quantity: b.quantity,
+                  unitPriceCents: b.unitPriceCents,
+                })),
+              },
+            }
+          : null,
     })),
   );
 
@@ -110,7 +127,10 @@ export async function createCheckoutSession(rawInput: unknown, locale: "fr" | "n
     email: input.email,
     locale,
     lineItems: items.map((i) => ({
-      name: i.name,
+      name:
+        i.type === "coffret" && i.metadata?.packagingTier === "premium"
+          ? `${i.name} (emballage premium)`
+          : i.name,
       unitPriceCents: i.unitPriceCents,
       quantity: i.quantity,
     })),
