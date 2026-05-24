@@ -1,0 +1,1 @@
+export const PREMIUM_PACKAGING_SURCHARGE_CENTS = 250; // 2,50 €
