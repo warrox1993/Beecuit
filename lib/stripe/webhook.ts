@@ -75,6 +75,9 @@ export async function handleCheckoutCompleted(event: Stripe.CheckoutSessionCompl
             name: i.productNameSnapshot,
             quantity: i.quantity,
             lineTotalCents: i.lineTotalCents,
+            metadata: i.metadata as Parameters<
+              typeof OrderConfirmation
+            >[0]["items"][number]["metadata"],
           })),
         }),
       });
