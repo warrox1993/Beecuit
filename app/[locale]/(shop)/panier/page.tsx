@@ -75,6 +75,7 @@ export default async function CartPage({ params }: { params: Promise<{ locale: s
               quantity={i.quantity}
               stockQuantity={i.stockQuantity}
               primaryImageUrl={i.primaryImageUrl}
+              metadata={i.metadata}
             />
           ))}
         </div>
