@@ -23,6 +23,7 @@ export const env = createEnv({
     STRIPE_PRICE_FAMILLE_NONE: z.string().startsWith("price_"),
     STRIPE_PRICE_FAMILLE_6M: z.string().startsWith("price_"),
     STRIPE_PRICE_FAMILLE_12M: z.string().startsWith("price_"),
+    ADMIN_EMAIL: z.string().email(),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().url(),
@@ -49,6 +50,7 @@ export const env = createEnv({
     STRIPE_PRICE_FAMILLE_NONE: process.env.STRIPE_PRICE_FAMILLE_NONE,
     STRIPE_PRICE_FAMILLE_6M: process.env.STRIPE_PRICE_FAMILLE_6M,
     STRIPE_PRICE_FAMILLE_12M: process.env.STRIPE_PRICE_FAMILLE_12M,
+    ADMIN_EMAIL: process.env.ADMIN_EMAIL,
   },
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 });
