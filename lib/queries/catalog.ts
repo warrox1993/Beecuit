@@ -8,6 +8,8 @@ import {
   categoryTranslations,
 } from "@/lib/db/schema";
 import { and, eq, sql } from "drizzle-orm";
+import { computeCoffretPrice } from "@/lib/coffret/pricing";
+import { isCoffretAvailable } from "@/lib/coffret/availability";
 
 export type Locale = "fr" | "nl" | "de" | "en";
 
@@ -42,7 +44,9 @@ export async function listProductsForLocale(locale: Locale, categorySlug?: strin
     .select({
       id: products.id,
       sku: products.sku,
+      type: products.type,
       basePriceCents: products.basePriceCents,
+      discountPercent: products.discountPercent,
       stockQuantity: products.stockQuantity,
       name: productTranslations.name,
       slug: productTranslations.slug,
@@ -62,7 +66,15 @@ export async function listProductsForLocale(locale: Locale, categorySlug?: strin
     .where(where)
     .orderBy(products.createdAt);
 
-  return rows;
+  return Promise.all(
+    rows.map(async (r) => {
+      if (r.type === "coffret") {
+        const p = await computeCoffretPrice(r.id, locale);
+        return { ...r, displayedPriceCents: p.totalCents };
+      }
+      return { ...r, displayedPriceCents: r.basePriceCents };
+    }),
+  );
 }
 
 export async function listFeaturedProducts(locale: Locale, limit = 3) {
@@ -221,4 +233,77 @@ export async function listRelatedProducts(productId: string, locale: Locale, lim
     )
     .orderBy(products.createdAt)
     .limit(limit);
+}
+
+export async function listCoffretsForLocale(locale: Locale) {
+  const rows = await db
+    .select({
+      id: products.id,
+      sku: products.sku,
+      discountPercent: products.discountPercent,
+      isFeatured: products.isFeatured,
+      name: productTranslations.name,
+      slug: productTranslations.slug,
+      shortDescription: productTranslations.shortDescription,
+      primaryImageUrl: sql<
+        string | null
+      >`(SELECT url FROM product_images WHERE product_id = ${products.id} AND is_primary = true LIMIT 1)`,
+    })
+    .from(products)
+    .innerJoin(
+      productTranslations,
+      and(eq(productTranslations.productId, products.id), eq(productTranslations.locale, locale)),
+    )
+    .where(and(eq(products.isActive, true), eq(products.type, "coffret")))
+    .orderBy(products.createdAt);
+
+  return Promise.all(
+    rows.map(async (r) => {
+      const price = await computeCoffretPrice(r.id, locale);
+      const avail = await isCoffretAvailable(r.id, 1);
+      return { ...r, price, available: avail.available };
+    }),
+  );
+}
+
+export async function getCoffretBySlug(locale: Locale, slug: string) {
+  const [row] = await db
+    .select({
+      id: products.id,
+      sku: products.sku,
+      discountPercent: products.discountPercent,
+      weightGrams: products.weightGrams,
+      isFeatured: products.isFeatured,
+      name: productTranslations.name,
+      slug: productTranslations.slug,
+      shortDescription: productTranslations.shortDescription,
+      longDescription: productTranslations.longDescription,
+      seoTitle: productTranslations.seoTitle,
+      seoDescription: productTranslations.seoDescription,
+    })
+    .from(products)
+    .innerJoin(
+      productTranslations,
+      and(eq(productTranslations.productId, products.id), eq(productTranslations.locale, locale)),
+    )
+    .where(
+      and(
+        eq(products.isActive, true),
+        eq(products.type, "coffret"),
+        eq(productTranslations.slug, slug),
+      ),
+    )
+    .limit(1);
+  if (!row) return null;
+
+  const images = await db
+    .select()
+    .from(productImages)
+    .where(eq(productImages.productId, row.id))
+    .orderBy(productImages.sortOrder);
+
+  const price = await computeCoffretPrice(row.id, locale);
+  const avail = await isCoffretAvailable(row.id, 1);
+
+  return { ...row, images, price, availability: avail };
 }
