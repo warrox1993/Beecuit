@@ -28,6 +28,7 @@ type GiftCardItemMetadata = {
 export async function createGiftCardsForOrder(
   orderId: string,
   purchaserEmail: string,
+  purchaserUserId?: string | null,
 ): Promise<void> {
   // Idempotent: if any gift cards were already created for this order, skip.
   const existing = await db
@@ -55,6 +56,7 @@ export async function createGiftCardsForOrder(
           remainingAmountCents: item.unitPriceCentsSnapshot,
           currency: "EUR",
           purchaserEmail,
+          purchaserUserId: purchaserUserId ?? null,
           recipientEmail: gcMeta.recipientEmail,
           recipientName: gcMeta.recipientName,
           message: gcMeta.message,

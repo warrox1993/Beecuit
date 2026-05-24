@@ -140,6 +140,8 @@ export async function handleInvoicePaid(invoice: Stripe.Invoice) {
     ? new Date(invoice.status_transitions.paid_at * 1000)
     : new Date();
 
+  // UNIQUE(subscription_box_id) on orders is the idempotency guard against concurrent
+  // invoice.paid replays. onConflictDoNothing returns no rows on conflict, so we exit.
   const [order] = await db
     .insert(orders)
     .values({
@@ -161,6 +163,7 @@ export async function handleInvoicePaid(invoice: Stripe.Invoice) {
       subscriptionBoxId: box.id,
       paidAt,
     })
+    .onConflictDoNothing({ target: orders.subscriptionBoxId })
     .returning();
   if (!order) return;
 

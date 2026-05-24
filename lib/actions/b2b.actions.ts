@@ -158,10 +158,8 @@ export async function adminRejectQuote(input: AdminRejectQuoteInput): Promise<Re
   if (!quote) return { ok: false, error: "Devis introuvable" };
   if (quote.status === "paid") return { ok: false, error: "Devis déjà payé" };
 
-  if (quote.stripePaymentLinkId) {
-    await deactivateB2BPaymentLink(quote.stripePaymentLinkId);
-  }
-
+  // Update DB first so a Stripe failure leaves the system in a recoverable state
+  // (rejected quote with link briefly active is harmless; the reverse is not).
   await db
     .update(b2bQuoteRequests)
     .set({
@@ -170,6 +168,10 @@ export async function adminRejectQuote(input: AdminRejectQuoteInput): Promise<Re
       updatedAt: new Date(),
     })
     .where(eq(b2bQuoteRequests.id, parsed.data.quoteId));
+
+  if (quote.stripePaymentLinkId) {
+    await deactivateB2BPaymentLink(quote.stripePaymentLinkId);
+  }
 
   await sendB2BQuoteRejected({
     to: quote.email,

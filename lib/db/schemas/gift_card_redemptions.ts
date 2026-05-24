@@ -12,6 +12,7 @@ export const giftCardRedemptions = pgTable("gift_card_redemptions", {
     .references(() => giftCards.id, { onDelete: "restrict" }),
   orderId: text("order_id")
     .notNull()
+    .unique()
     .references(() => orders.id, { onDelete: "restrict" }),
   amountCents: integer("amount_cents").notNull(),
   stripeCouponId: text("stripe_coupon_id"),

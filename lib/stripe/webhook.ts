@@ -68,8 +68,9 @@ export async function handleCheckoutCompleted(event: Stripe.CheckoutSessionCompl
     order.guestEmail ??
     (typeof session.customer_details?.email === "string" ? session.customer_details.email : null);
 
-  // Gift cards: issue cards purchased in this order, then finalize a redemption (if any)
-  await createGiftCardsForOrder(orderId, recipient ?? order.guestEmail ?? "");
+  // Gift cards: issue cards purchased in this order, then finalize a redemption (if any).
+  // Pass order.userId so authenticated purchasers see their gift cards in /compte/cartes-cadeaux.
+  await createGiftCardsForOrder(orderId, recipient ?? order.guestEmail ?? "", order.userId);
   await applyGiftCardRedemption(orderId);
 
   if (recipient) {

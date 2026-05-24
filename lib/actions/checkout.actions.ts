@@ -112,29 +112,22 @@ export async function createCheckoutSession(rawInput: unknown, locale: "fr" | "n
     vatPercentInclusive: 6,
   });
 
-  // Gift card redemption (cannot apply a card to an order that BUYS a gift card)
+  // Gift card redemption (cannot apply a card to an order that BUYS a gift card).
+  // Validate eagerly but defer coupon creation until just before createStripeCheckoutSession
+  // to minimize the orphaned-coupon window.
   const hasGiftCardItem = items.some((i) => i.type === "gift_card");
-  let couponId: string | undefined;
-  let giftCardRedemptionPending:
-    | { giftCardId: string; deductionCents: number; couponId: string }
+  let giftCardValidation:
+    | { cardId: string; deductionCents: number; code: string }
     | undefined;
   if (input.giftCardCode && !hasGiftCardItem) {
     const { validateGiftCardCode } = await import("@/lib/gift-cards/validation");
     const v = await validateGiftCardCode(input.giftCardCode);
     if (!v.valid) throw new Error(v.error);
-    const { stripe } = await import("@/lib/stripe/client");
     const deductionCents = Math.min(v.amountAvailableCents, totals.totalCents);
-    const coupon = await stripe.coupons.create({
-      amount_off: deductionCents,
-      currency: "eur",
-      duration: "once",
-      name: `Carte cadeau ${input.giftCardCode}`,
-    });
-    couponId = coupon.id;
-    giftCardRedemptionPending = {
-      giftCardId: v.cardId,
+    giftCardValidation = {
+      cardId: v.cardId,
       deductionCents,
-      couponId: coupon.id,
+      code: input.giftCardCode,
     };
   } else if (input.giftCardCode && hasGiftCardItem) {
     throw new Error("Tu ne peux pas utiliser une carte cadeau pour acheter une carte cadeau");
@@ -187,32 +180,58 @@ export async function createCheckoutSession(rawInput: unknown, locale: "fr" | "n
     })),
   );
 
-  const stripeSession = await createStripeCheckoutSession({
-    orderId: order.id,
-    orderNumber: order.orderNumber,
-    email: input.email,
-    locale,
-    lineItems: items.map((i) => ({
-      name: lineItemName(i),
-      unitPriceCents: i.unitPriceCents,
-      quantity: i.quantity,
-    })),
-    shippingCents: totals.shippingCents,
-    appBaseUrl: env.NEXT_PUBLIC_APP_URL,
-    couponId,
-  });
+  // Create the Stripe coupon JIT, then the Checkout Session; if either fails,
+  // delete the coupon to prevent orphans in the Stripe account.
+  let couponId: string | undefined;
+  let stripeSession: { id: string; url: string | null };
+  try {
+    if (giftCardValidation) {
+      const { stripe } = await import("@/lib/stripe/client");
+      const coupon = await stripe.coupons.create({
+        amount_off: giftCardValidation.deductionCents,
+        currency: "eur",
+        duration: "once",
+        name: `Carte cadeau ${giftCardValidation.code}`,
+      });
+      couponId = coupon.id;
+    }
+
+    stripeSession = await createStripeCheckoutSession({
+      orderId: order.id,
+      orderNumber: order.orderNumber,
+      email: input.email,
+      locale,
+      lineItems: items.map((i) => ({
+        name: lineItemName(i),
+        unitPriceCents: i.unitPriceCents,
+        quantity: i.quantity,
+      })),
+      shippingCents: totals.shippingCents,
+      appBaseUrl: env.NEXT_PUBLIC_APP_URL,
+      couponId,
+    });
+  } catch (e) {
+    if (couponId) {
+      const { stripe } = await import("@/lib/stripe/client");
+      await stripe.coupons.del(couponId).catch((delErr) =>
+        console.error("[checkout] failed to delete orphan coupon", couponId, delErr),
+      );
+    }
+    throw e;
+  }
 
   await db
     .update(orders)
     .set({
       stripeSessionId: stripeSession.id,
-      metadata: giftCardRedemptionPending
-        ? {
-            giftCardId: giftCardRedemptionPending.giftCardId,
-            giftCardDeductionCents: giftCardRedemptionPending.deductionCents,
-            stripeCouponId: giftCardRedemptionPending.couponId,
-          }
-        : {},
+      metadata:
+        giftCardValidation && couponId
+          ? {
+              giftCardId: giftCardValidation.cardId,
+              giftCardDeductionCents: giftCardValidation.deductionCents,
+              stripeCouponId: couponId,
+            }
+          : {},
     })
     .where(eq(orders.id, order.id));
 

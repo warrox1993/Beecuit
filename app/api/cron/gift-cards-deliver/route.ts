@@ -28,6 +28,16 @@ export async function GET(req: NextRequest) {
   let sent = 0;
   const errors: Array<{ id: string; error: string }> = [];
   for (const card of due) {
+    // Mark delivered BEFORE sending the email. If the email fails, we accept a single missed
+    // send (admin can manually re-trigger via dashboard) over the alternative of re-delivering
+    // the same gift card indefinitely on every cron tick when the DB update fails.
+    const claimed = await db
+      .update(giftCards)
+      .set({ deliveredAt: new Date() })
+      .where(and(eq(giftCards.id, card.id), sql`${giftCards.deliveredAt} IS NULL`))
+      .returning({ id: giftCards.id });
+    if (claimed.length === 0) continue; // another cron instance already claimed this card
+
     try {
       await sendEmail({
         to: card.recipientEmail,
@@ -42,10 +52,6 @@ export async function GET(req: NextRequest) {
           appBaseUrl: env.NEXT_PUBLIC_APP_URL,
         }),
       });
-      await db
-        .update(giftCards)
-        .set({ deliveredAt: new Date() })
-        .where(eq(giftCards.id, card.id));
       sent++;
     } catch (e) {
       errors.push({ id: card.id, error: (e as Error).message });

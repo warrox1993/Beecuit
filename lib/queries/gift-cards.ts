@@ -4,8 +4,21 @@ import { giftCards, giftCardRedemptions } from "@/lib/db/schema";
 import { eq, desc, and, sql } from "drizzle-orm";
 
 export async function listPurchasedByUser(userId: string) {
+  // Column-scoped select — never expose `code` to the purchaser (the code goes to the recipient).
   return db
-    .select()
+    .select({
+      id: giftCards.id,
+      initialAmountCents: giftCards.initialAmountCents,
+      remainingAmountCents: giftCards.remainingAmountCents,
+      recipientName: giftCards.recipientName,
+      recipientEmail: giftCards.recipientEmail,
+      message: giftCards.message,
+      deliveryAt: giftCards.deliveryAt,
+      deliveredAt: giftCards.deliveredAt,
+      expiresAt: giftCards.expiresAt,
+      isActive: giftCards.isActive,
+      createdAt: giftCards.createdAt,
+    })
     .from(giftCards)
     .where(eq(giftCards.purchaserUserId, userId))
     .orderBy(desc(giftCards.createdAt));

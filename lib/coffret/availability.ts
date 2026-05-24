@@ -61,7 +61,8 @@ export async function isCoffretAvailable(
   }
 
   if (maxOrderable >= requestedQty) {
-    return { available: true, maxOrderable };
+    // Clamp Infinity (degenerate case if any content row had needed=0) to a sane finite max.
+    return { available: true, maxOrderable: Number.isFinite(maxOrderable) ? maxOrderable : 9999 };
   }
   return { available: false, blockingBiscuit: blocking! };
 }

@@ -73,8 +73,9 @@ export async function pauseSubscription(subscriptionId: string) {
 
 export async function resumeSubscription(subscriptionId: string) {
   const sub = await getOwnedSubscription(subscriptionId);
+  // Stripe accepts `null` to clear pause_collection; "" is silently ignored.
   await stripe.subscriptions.update(sub.stripeSubscriptionId, {
-    pause_collection: "" as never,
+    pause_collection: null,
   });
   await db
     .update(subscriptions)
@@ -137,14 +138,26 @@ export async function composeBox(raw: unknown) {
     );
   }
 
+  // Re-read box right before mutation to catch lock-phase cron flip (composing → locked).
+  // This narrows but doesn't eliminate the race; without transactions on neon-http we accept
+  // last-write-wins semantics for two concurrent user submissions (rare for a once-monthly action).
+  const [recheck] = await db
+    .select({ status: subscriptionBoxes.status })
+    .from(subscriptionBoxes)
+    .where(eq(subscriptionBoxes.id, box.id))
+    .limit(1);
+  if (!recheck || recheck.status !== "composing") {
+    throw new Error("Box was locked, please refresh and retry");
+  }
+
   await db.delete(subscriptionBoxItems).where(eq(subscriptionBoxItems.boxId, box.id));
-  for (const item of input.items) {
-    await db.insert(subscriptionBoxItems).values({
+  await db.insert(subscriptionBoxItems).values(
+    input.items.map((item) => ({
       boxId: box.id,
       biscuitId: item.biscuitId,
       quantity: item.quantity,
-    });
-  }
+    })),
+  );
   await db
     .update(subscriptionBoxes)
     .set({ composedBy: "user" })
