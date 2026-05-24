@@ -33,12 +33,18 @@ export async function listActiveCategoriesForLocale(locale: Locale) {
 }
 
 export async function listProductsForLocale(locale: Locale, categorySlug?: string) {
+  // Exclude gift_card type from the biscuits/coffrets catalog listing
+  // (gift cards have their own page /cartes-cadeaux)
+  const baseWhere = and(
+    eq(products.isActive, true),
+    sql`${products.type} IN ('biscuit', 'coffret')`,
+  );
   const where = categorySlug
     ? and(
-        eq(products.isActive, true),
+        baseWhere,
         sql`${products.categoryId} = (SELECT id FROM categories WHERE slug = ${categorySlug})`,
       )
-    : eq(products.isActive, true);
+    : baseWhere;
 
   const rows = await db
     .select({
