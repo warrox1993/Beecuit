@@ -9,7 +9,7 @@ type Props = {
   basePriceCents: number;
   stockQuantity: number;
   outOfStockLabel: string;
-  type?: "biscuit" | "coffret" | "subscription_plan";
+  type?: "biscuit" | "coffret" | "subscription_plan" | "gift_card";
   displayedPriceCents?: number;
 };
 
