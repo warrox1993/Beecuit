@@ -61,17 +61,27 @@ describe("computeCoffretPrice", () => {
   });
 
   it("throws si coffret vide (pas de biscuits)", async () => {
-    mockContentsThenDiscount([], 0);
+    // Only the first mock (empty contents) is consumed; we throw before reaching the discount lookup.
+    (db.select as any).mockReturnValueOnce({
+      from: () => ({
+        innerJoin: () => ({
+          innerJoin: () => ({
+            where: () => Promise.resolve([]),
+          }),
+        }),
+      }),
+    });
     await expect(computeCoffretPrice("empty", "fr")).rejects.toThrow(/empty/i);
   });
 
-  it("ceil arrondi: 1000c * 17% = 170c", async () => {
+  it("ceil arrondi: 333c * 10% = 34c (not floor 33)", async () => {
+    // 333 × 10 / 100 = 33.3 → ceil = 34. Distinguishes ceil from floor.
     mockContentsThenDiscount(
-      [{ biscuitId: "a", name: "X", quantity: 1, unitPriceCents: 1000 }],
-      17,
+      [{ biscuitId: "a", name: "X", quantity: 1, unitPriceCents: 333 }],
+      10,
     );
     const r = await computeCoffretPrice("c", "fr");
-    expect(r.discountCents).toBe(170);
-    expect(r.totalCents).toBe(830);
+    expect(r.discountCents).toBe(34);
+    expect(r.totalCents).toBe(299);
   });
 });

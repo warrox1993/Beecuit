@@ -42,7 +42,7 @@ export async function computeCoffretPrice(coffretId: string, locale: Locale): Pr
     .from(products)
     .where(eq(products.id, coffretId))
     .limit(1);
-  const discountPercent = coffret?.discountPercent ?? 0;
+  const discountPercent: number = coffret?.discountPercent ?? 0;
 
   const breakdown = rows.map((r) => ({
     biscuitId: r.biscuitId,
