@@ -6,6 +6,10 @@ import { orders, orderItems, products, stripeWebhookEvents } from "@/lib/db/sche
 import { sendEmail } from "@/lib/email/client";
 import { OrderConfirmation } from "@/lib/email/templates/OrderConfirmation";
 import { decrementCoffretStockCascade } from "@/lib/coffret/stock-cascade";
+import {
+  createGiftCardsForOrder,
+  applyGiftCardRedemption,
+} from "@/lib/stripe/gift-card-webhook";
 
 export async function handleCheckoutCompleted(event: Stripe.CheckoutSessionCompletedEvent) {
   const session = event.data.object;
@@ -63,6 +67,11 @@ export async function handleCheckoutCompleted(event: Stripe.CheckoutSessionCompl
   const recipient =
     order.guestEmail ??
     (typeof session.customer_details?.email === "string" ? session.customer_details.email : null);
+
+  // Gift cards: issue cards purchased in this order, then finalize a redemption (if any)
+  await createGiftCardsForOrder(orderId, recipient ?? order.guestEmail ?? "");
+  await applyGiftCardRedemption(orderId);
+
   if (recipient) {
     try {
       await sendEmail({
