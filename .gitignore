@@ -53,3 +53,6 @@ next-env.d.ts
 
 # Claude Code local state
 /.claude/
+
+# superpowers brainstorming session artifacts
+/.superpowers/
