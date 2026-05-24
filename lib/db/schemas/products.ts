@@ -1,7 +1,12 @@
 import { pgTable, text, integer, timestamp, boolean, pgEnum } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
-export const productType = pgEnum("product_type", ["biscuit", "coffret", "subscription_plan"]);
+export const productType = pgEnum("product_type", [
+  "biscuit",
+  "coffret",
+  "subscription_plan",
+  "gift_card",
+]);
 
 export const products = pgTable("products", {
   id: text("id")
