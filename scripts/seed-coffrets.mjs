@@ -14,12 +14,12 @@ const sql = neon(env.DATABASE_URL);
 
 const PHOTOS = {
   decouverte: [
-    "https://images.unsplash.com/photo-1606312619070-d48b4c652a52?fm=jpg&q=75&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1551404973-761c83cd8339?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1634188023615-7e08901193b6?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1598839950984-034f6dc7b495?fm=jpg&q=75&w=1200&auto=format&fit=crop",
   ],
   gourmand: [
-    "https://images.unsplash.com/photo-1606313564200-e75d8e3b3a36?fm=jpg&q=75&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1676292943577-65f74f4a52e2?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1491821893533-80f535044695?fm=jpg&q=75&w=1200&auto=format&fit=crop",
   ],
   chocolat: [
     "https://images.unsplash.com/photo-1606312619070-d48b4c652a52?fm=jpg&q=75&w=1200&auto=format&fit=crop",
