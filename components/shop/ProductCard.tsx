@@ -9,13 +9,19 @@ type Props = {
   basePriceCents: number;
   stockQuantity: number;
   outOfStockLabel: string;
+  type?: "biscuit" | "coffret" | "subscription_plan";
+  displayedPriceCents?: number;
 };
 
 export function ProductCard(p: Props) {
-  const isOut = p.stockQuantity <= 0;
-  const priceEur = (p.basePriceCents / 100).toFixed(2);
+  const isCoffret = p.type === "coffret";
+  // Coffrets have stockQuantity=0 by design; out-of-stock is handled at coffret detail via isCoffretAvailable.
+  const isOut = !isCoffret && p.stockQuantity <= 0;
+  const priceCents = p.displayedPriceCents ?? p.basePriceCents;
+  const priceEur = (priceCents / 100).toFixed(2);
+  const href = isCoffret ? `/coffrets/${p.slug}` : `/biscuits/${p.slug}`;
   return (
-    <Link href={`/biscuits/${p.slug}`} className="group block">
+    <Link href={href} className="group block">
       <div className="bg-cookie/30 relative aspect-[4/5] overflow-hidden rounded-xl">
         {p.primaryImageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -26,8 +32,13 @@ export function ProductCard(p: Props) {
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-6xl opacity-30">
-            🍪
+            {isCoffret ? "📦" : "🍪"}
           </div>
+        )}
+        {isCoffret && (
+          <span className="bg-honey text-cream absolute top-3 left-3 rounded px-2 py-1 text-xs font-medium tracking-wider uppercase">
+            Coffret
+          </span>
         )}
         {isOut && (
           <span className="bg-terracotta text-cream absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-medium tracking-wider uppercase">
@@ -37,7 +48,9 @@ export function ProductCard(p: Props) {
       </div>
       <div className="mt-4 space-y-1">
         {p.categoryName && <Eyebrow>{p.categoryName}</Eyebrow>}
-        <p className="text-warm-brown font-display text-lg leading-tight">{p.name}</p>
+        <p className="text-warm-brown font-display text-lg leading-tight">
+          {p.name}
+        </p>
         <p className="text-honey-dark font-display text-base">{priceEur} €</p>
       </div>
     </Link>

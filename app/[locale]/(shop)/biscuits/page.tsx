@@ -72,6 +72,8 @@ export default async function CatalogPage({
                       basePriceCents={p.basePriceCents}
                       stockQuantity={p.stockQuantity}
                       outOfStockLabel={t("outOfStock")}
+                      type={p.type}
+                      displayedPriceCents={p.displayedPriceCents}
                     />
                   ))}
                 </div>
