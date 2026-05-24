@@ -1,7 +1,17 @@
-import { pgTable, text, integer } from "drizzle-orm/pg-core";
+import { pgTable, text, integer, jsonb } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { orders } from "./orders";
 import { products } from "./products";
+
+export type OrderItemMetadata = {
+  type?: "coffret";
+  giftMessage?: string | null;
+  packagingTier?: "standard" | "premium";
+  snapshot?: {
+    discountPercent: number;
+    biscuits: Array<{ biscuitId: string; name: string; quantity: number; unitPriceCents: number }>;
+  };
+};
 
 export const orderItems = pgTable("order_items", {
   id: text("id")
@@ -16,4 +26,5 @@ export const orderItems = pgTable("order_items", {
   unitPriceCentsSnapshot: integer("unit_price_cents_snapshot").notNull(),
   quantity: integer("quantity").notNull(),
   lineTotalCents: integer("line_total_cents").notNull(),
+  metadata: jsonb("metadata").$type<OrderItemMetadata>(),
 });

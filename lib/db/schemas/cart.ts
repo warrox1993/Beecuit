@@ -1,4 +1,4 @@
-import { pgTable, text, integer, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+import { pgTable, text, integer, timestamp, jsonb } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { users } from "./auth";
 import { products } from "./products";
@@ -13,20 +13,23 @@ export const carts = pgTable("carts", {
   updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
 });
 
-export const cartItems = pgTable(
-  "cart_items",
-  {
-    id: text("id")
-      .primaryKey()
-      .default(sql`gen_random_uuid()`),
-    cartId: text("cart_id")
-      .notNull()
-      .references(() => carts.id, { onDelete: "cascade" }),
-    productId: text("product_id")
-      .notNull()
-      .references(() => products.id, { onDelete: "cascade" }),
-    quantity: integer("quantity").notNull(),
-    addedAt: timestamp("added_at", { mode: "date" }).notNull().defaultNow(),
-  },
-  (t) => ({ uniqueCartProduct: uniqueIndex("uniq_cart_product").on(t.cartId, t.productId) }),
-);
+export type CartItemMetadata = {
+  type?: "coffret";
+  giftMessage?: string | null;
+  packagingTier?: "standard" | "premium";
+};
+
+export const cartItems = pgTable("cart_items", {
+  id: text("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  cartId: text("cart_id")
+    .notNull()
+    .references(() => carts.id, { onDelete: "cascade" }),
+  productId: text("product_id")
+    .notNull()
+    .references(() => products.id, { onDelete: "cascade" }),
+  quantity: integer("quantity").notNull(),
+  metadata: jsonb("metadata").$type<CartItemMetadata>(),
+  addedAt: timestamp("added_at", { mode: "date" }).notNull().defaultNow(),
+});

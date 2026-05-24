@@ -15,6 +15,7 @@ export const products = pgTable("products", {
   isActive: boolean("is_active").notNull().default(true),
   isFeatured: boolean("is_featured").notNull().default(false),
   stockQuantity: integer("stock_quantity").notNull().default(0),
+  discountPercent: integer("discount_percent"), // NULL for biscuits, 0-99 for coffrets (CHECK in SQL)
   model3dUrl: text("model_3d_url"),
   createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),

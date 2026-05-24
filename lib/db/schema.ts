@@ -9,3 +9,4 @@ export * from "./schemas/cart";
 export * from "./schemas/order_items";
 export * from "./schemas/shipping";
 export * from "./schemas/stripe";
+export * from "./schemas/coffret_contents";
