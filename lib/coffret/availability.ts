@@ -2,6 +2,7 @@ import "server-only";
 import { db } from "@/lib/db";
 import { coffretContents, products, productTranslations } from "@/lib/db/schema";
 import { and, eq } from "drizzle-orm";
+import type { Locale } from "@/lib/queries/catalog";
 
 export type CoffretAvailability =
   | { available: true; maxOrderable: number }
@@ -13,6 +14,7 @@ export type CoffretAvailability =
 export async function isCoffretAvailable(
   coffretId: string,
   requestedQty = 1,
+  locale: Locale = "fr",
 ): Promise<CoffretAvailability> {
   const rows = await db
     .select({
@@ -26,7 +28,7 @@ export async function isCoffretAvailable(
     .innerJoin(products, eq(products.id, coffretContents.biscuitId))
     .innerJoin(
       productTranslations,
-      and(eq(productTranslations.productId, products.id), eq(productTranslations.locale, "fr")),
+      and(eq(productTranslations.productId, products.id), eq(productTranslations.locale, locale)),
     )
     .where(eq(coffretContents.coffretId, coffretId));
 

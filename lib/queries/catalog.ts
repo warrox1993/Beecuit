@@ -260,7 +260,7 @@ export async function listCoffretsForLocale(locale: Locale) {
   return Promise.all(
     rows.map(async (r) => {
       const price = await computeCoffretPrice(r.id, locale);
-      const avail = await isCoffretAvailable(r.id, 1);
+      const avail = await isCoffretAvailable(r.id, 1, locale);
       return { ...r, price, available: avail.available };
     }),
   );
@@ -303,7 +303,7 @@ export async function getCoffretBySlug(locale: Locale, slug: string) {
     .orderBy(productImages.sortOrder);
 
   const price = await computeCoffretPrice(row.id, locale);
-  const avail = await isCoffretAvailable(row.id, 1);
+  const avail = await isCoffretAvailable(row.id, 1, locale);
 
   return { ...row, images, price, availability: avail };
 }

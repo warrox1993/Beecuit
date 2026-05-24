@@ -44,7 +44,7 @@ export async function createCheckoutSession(rawInput: unknown, locale: "fr" | "n
 
   for (const i of items) {
     if (i.type === "coffret") {
-      const avail = await isCoffretAvailable(i.productId, i.quantity);
+      const avail = await isCoffretAvailable(i.productId, i.quantity, locale);
       if (!avail.available) {
         throw new Error(
           `Coffret « ${i.name} » indisponible (rupture sur ${avail.blockingBiscuit.name})`,

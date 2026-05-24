@@ -116,13 +116,43 @@ export async function mergeAnonymousCart() {
 
   const items = await db.select().from(cartItems).where(eq(cartItems.cartId, anon.id));
   for (const item of items) {
-    await db
-      .insert(cartItems)
-      .values({ cartId: userCart.id, productId: item.productId, quantity: item.quantity })
-      .onConflictDoUpdate({
-        target: [cartItems.cartId, cartItems.productId],
-        set: { quantity: sql`${cartItems.quantity} + ${item.quantity}` },
+    // The unique(cart_id, product_id) index was dropped by Phase 2 migration 0004
+    // (coffrets with different gift messages must coexist as separate rows).
+    // Strategy: for items with metadata (coffrets), always insert as a new row.
+    // For items without metadata (biscuits), merge by hand: find existing
+    // metadata-null row for same product and bump its quantity, else insert.
+    if (item.metadata) {
+      await db.insert(cartItems).values({
+        cartId: userCart.id,
+        productId: item.productId,
+        quantity: item.quantity,
+        metadata: item.metadata,
       });
+    } else {
+      const [existing] = await db
+        .select()
+        .from(cartItems)
+        .where(
+          and(
+            eq(cartItems.cartId, userCart.id),
+            eq(cartItems.productId, item.productId),
+            sql`metadata IS NULL`,
+          ),
+        )
+        .limit(1);
+      if (existing) {
+        await db
+          .update(cartItems)
+          .set({ quantity: existing.quantity + item.quantity })
+          .where(eq(cartItems.id, existing.id));
+      } else {
+        await db.insert(cartItems).values({
+          cartId: userCart.id,
+          productId: item.productId,
+          quantity: item.quantity,
+        });
+      }
+    }
   }
   await db.delete(carts).where(eq(carts.id, anon.id));
   store.delete(COOKIE);
