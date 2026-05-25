@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 type Props = {
   children: React.ReactNode;
   py?: "sm" | "md" | "lg";
-  bg?: "default" | "surface-elev" | "cookie";
+  bg?: "default" | "surface-elev" | "elevated" | "cookie" | "chocolate";
   className?: string;
 };
 
@@ -16,7 +16,10 @@ const PY = {
 const BG = {
   default: "",
   "surface-elev": "bg-white",
+  // Preferred for new Phase 4B+ components: warm cream-light tone
+  elevated: "bg-surface-elevated",
   cookie: "bg-cookie/20",
+  chocolate: "bg-surface-inverse text-text-inverse",
 } as const;
 
 export function Section({ children, py = "md", bg = "default", className }: Props) {
