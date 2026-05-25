@@ -33,11 +33,11 @@ export async function listActiveCategoriesForLocale(locale: Locale) {
 }
 
 export async function listProductsForLocale(locale: Locale, categorySlug?: string) {
-  // Exclude gift_card type from the biscuits/coffrets catalog listing
-  // (gift cards have their own page /cartes-cadeaux)
+  // Biscuit catalog only. Coffrets and gift cards have their own pages
+  // (/coffrets and /cartes-cadeaux).
   const baseWhere = and(
     eq(products.isActive, true),
-    sql`${products.type} IN ('biscuit', 'coffret')`,
+    sql`${products.type} = 'biscuit'`,
   );
   const where = categorySlug
     ? and(
