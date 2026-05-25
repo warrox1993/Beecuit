@@ -6,20 +6,24 @@ import { LocaleSwitcher } from "./LocaleSwitcher";
 import { CartIcon } from "./CartIcon";
 import { NavLink } from "./NavLink";
 import { MobileNav } from "./MobileNav";
+import { HeaderClient } from "./HeaderClient";
 
 export async function Header({ locale }: { locale: string }) {
   setRequestLocale(locale);
   const t = await getTranslations("nav");
   return (
-    <header className="bg-cream/95 border-warm-brown/10 sticky top-0 z-50 border-b backdrop-blur-sm">
+    <HeaderClient>
       <Container>
-        <div className="flex h-16 items-center justify-between md:h-20">
+        <div className="flex h-16 items-center justify-between transition-all duration-300 ease-out group-data-[shrunk=true]/header:h-12 md:h-20 md:group-data-[shrunk=true]/header:h-14">
           <Link
             href="/"
             aria-label="Au Fil des Saveurs — Accueil"
             className="text-warm-brown hover:text-honey-dark transition-colors"
           >
-            <Logo variant="wordmark" className="h-10 w-auto md:h-12" />
+            <Logo
+              variant="wordmark"
+              className="h-10 w-auto transition-all duration-300 ease-out group-data-[shrunk=true]/header:h-8 md:h-12 md:group-data-[shrunk=true]/header:h-9"
+            />
           </Link>
           <nav className="hidden gap-8 md:flex" aria-label="Principal">
             <NavLink href="/biscuits">{t("biscuits")}</NavLink>
@@ -42,6 +46,6 @@ export async function Header({ locale }: { locale: string }) {
           </div>
         </div>
       </Container>
-    </header>
+    </HeaderClient>
   );
 }
