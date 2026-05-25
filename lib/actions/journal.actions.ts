@@ -6,7 +6,7 @@ import { db } from "@/lib/db";
 import { journalArticles, journalArticleTranslations } from "@/lib/db/schema";
 import { toSlug } from "@/lib/slug";
 import { auth } from "@/lib/auth";
-import { and, eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { validateBody } from "@/lib/journal/validate-body";
 import { calculateReadingMinutes } from "@/lib/journal/reading-time";
 import { generateExcerpt } from "@/lib/journal/excerpt";
@@ -190,5 +190,99 @@ export async function upsertTranslation(raw: unknown) {
   }
 
   revalidatePath(`/admin/journal/${data.articleId}`);
+  return { ok: true };
+}
+
+export async function publishArticle(id: string) {
+  await requireAdmin();
+  const [article] = await db
+    .select()
+    .from(journalArticles)
+    .where(eq(journalArticles.id, id))
+    .limit(1);
+  if (!article) throw new Error("Article not found");
+  if (!article.coverImage) throw new Error("Cover image required");
+  const [fr] = await db
+    .select()
+    .from(journalArticleTranslations)
+    .where(
+      and(
+        eq(journalArticleTranslations.articleId, id),
+        eq(journalArticleTranslations.locale, "fr"),
+      ),
+    )
+    .limit(1);
+  if (!fr || !fr.title || !fr.excerpt) throw new Error("FR translation incomplete");
+
+  await db
+    .update(journalArticles)
+    .set({
+      status: "published",
+      publishedAt: sql`COALESCE(${journalArticles.publishedAt}, NOW())`,
+      updatedAt: new Date(),
+    })
+    .where(eq(journalArticles.id, id));
+
+  revalidatePath(`/admin/journal/${id}`);
+  revalidatePath(`/admin/journal`);
+  for (const locale of ["fr", "nl", "en", "de"] as const) {
+    revalidatePath(`/${locale}/journal`);
+    revalidatePath(`/${locale}/journal/${article.slug}`);
+    revalidatePath(`/${locale}`);
+  }
+  revalidatePath("/sitemap.xml");
+  return { ok: true };
+}
+
+export async function unpublishArticle(id: string) {
+  await requireAdmin();
+  const [article] = await db
+    .select()
+    .from(journalArticles)
+    .where(eq(journalArticles.id, id))
+    .limit(1);
+  if (!article) throw new Error("Article not found");
+  await db
+    .update(journalArticles)
+    .set({ status: "draft", updatedAt: new Date() })
+    .where(eq(journalArticles.id, id));
+  revalidatePath(`/admin/journal/${id}`);
+  for (const locale of ["fr", "nl", "en", "de"] as const) {
+    revalidatePath(`/${locale}/journal`);
+    revalidatePath(`/${locale}/journal/${article.slug}`);
+    revalidatePath(`/${locale}`);
+  }
+  return { ok: true };
+}
+
+export async function setFeatured(id: string) {
+  await requireAdmin();
+  await db.transaction(async (tx) => {
+    await tx
+      .update(journalArticles)
+      .set({ isFeatured: false })
+      .where(eq(journalArticles.isFeatured, true));
+    await tx
+      .update(journalArticles)
+      .set({ isFeatured: true })
+      .where(eq(journalArticles.id, id));
+  });
+  for (const locale of ["fr", "nl", "en", "de"] as const) {
+    revalidatePath(`/${locale}`);
+    revalidatePath(`/${locale}/journal`);
+  }
+  return { ok: true };
+}
+
+export async function clearFeatured() {
+  await requireAdmin();
+  await db
+    .update(journalArticles)
+    .set({ isFeatured: false })
+    .where(eq(journalArticles.isFeatured, true));
+  for (const locale of ["fr", "nl", "en", "de"] as const) {
+    revalidatePath(`/${locale}`);
+    revalidatePath(`/${locale}/journal`);
+  }
   return { ok: true };
 }
