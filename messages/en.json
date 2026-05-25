@@ -222,5 +222,11 @@
     "coffretBadge": "Gift box",
     "coffretIncludes": "includes",
     "discountBadge": "gift-box discount"
+  },
+  "journal": {
+    "newsletter": {
+      "optInLabel": "Also receive our monthly journal",
+      "optInHelp": "Recipes, tips and behind-the-scenes, 1 email per published article."
+    }
   }
 }

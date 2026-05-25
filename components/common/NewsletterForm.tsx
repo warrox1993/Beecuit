@@ -1,10 +1,12 @@
 "use client";
 import { useId, useState, useTransition } from "react";
+import { useLocale } from "next-intl";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { subscribeToNewsletter } from "@/lib/actions/newsletter.actions";
 
 export function NewsletterForm() {
+  const locale = useLocale() as "fr" | "nl" | "en" | "de";
   const inputId = useId();
   const [email, setEmail] = useState("");
   const [pending, start] = useTransition();
@@ -16,7 +18,12 @@ export function NewsletterForm() {
         e.preventDefault();
         setMsg(null);
         start(async () => {
-          const r = await subscribeToNewsletter({ email });
+          const r = await subscribeToNewsletter({
+            email,
+            locale,
+            journalOptIn: false,
+            source: "home",
+          });
           setMsg({ ok: r.success, text: r.message });
           if (r.success) {
             setEmail("");

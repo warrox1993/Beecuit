@@ -222,5 +222,11 @@
     "coffretBadge": "Coffret",
     "coffretIncludes": "inclus",
     "discountBadge": "remise coffret"
+  },
+  "journal": {
+    "newsletter": {
+      "optInLabel": "Recevoir aussi le journal mensuel",
+      "optInHelp": "Recettes, conseils et coulisses, 1 email par article publié."
+    }
   }
 }

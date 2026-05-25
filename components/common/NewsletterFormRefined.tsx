@@ -1,26 +1,37 @@
 "use client";
-import { useState, useTransition } from "react";
+import { useId, useState, useTransition } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { subscribeToNewsletter } from "@/lib/actions/newsletter.actions";
 
 /**
- * Refined newsletter form variant — Phase 4B + 4G validation.
+ * Refined newsletter form variant — Phase 4B + 4G validation + journal opt-in.
  *
  * Single underline input + integrated arrow submit + inline email validation
  * (Phase 4G item 27). The legacy NewsletterForm (boxed input + button) remains
  * for the Footer.
+ *
+ * Variant:
+ * - `home` (default): primary signup, journal opt-in unchecked by default.
+ * - `journal_inline`: in-article signup, journal opt-in pre-checked.
  */
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function NewsletterFormRefined({
   placeholder = "ton@email.com",
   submitLabel = "S'inscrire",
+  variant = "home",
 }: {
   placeholder?: string;
   submitLabel?: string;
+  variant?: "home" | "journal_inline";
 }) {
+  const locale = useLocale() as "fr" | "nl" | "en" | "de";
+  const t = useTranslations("journal.newsletter");
+  const optInId = useId();
   const [email, setEmail] = useState("");
   const [touched, setTouched] = useState(false);
+  const [optIn, setOptIn] = useState(variant === "journal_inline");
   const [pending, start] = useTransition();
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
@@ -42,11 +53,17 @@ export function NewsletterFormRefined({
         if (!isValidFormat) return;
         setMsg(null);
         start(async () => {
-          const r = await subscribeToNewsletter({ email });
+          const r = await subscribeToNewsletter({
+            email,
+            locale,
+            journalOptIn: optIn,
+            source: variant,
+          });
           setMsg({ ok: r.success, text: r.message });
           if (r.success) {
             setEmail("");
             setTouched(false);
+            setOptIn(variant === "journal_inline");
             toast.success(r.message);
           } else {
             toast.error(r.message);
@@ -114,6 +131,24 @@ export function NewsletterFormRefined({
           )}
         </button>
       </div>
+      <label
+        htmlFor={optInId}
+        className="text-warm-brown/80 mt-3 flex items-start gap-2 text-sm"
+      >
+        <input
+          id={optInId}
+          type="checkbox"
+          checked={optIn}
+          onChange={(e) => setOptIn(e.target.checked)}
+          className="accent-honey-dark mt-1"
+        />
+        <span>
+          {t("optInLabel")}
+          <span className="text-warm-brown/60 mt-0.5 block text-xs">
+            {t("optInHelp")}
+          </span>
+        </span>
+      </label>
       {showError && (
         <p
           id="newsletter-refined-email-error"
