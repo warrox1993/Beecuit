@@ -22,17 +22,27 @@ const env = Object.fromEntries(
 );
 const sql = neon(env.DATABASE_URL);
 
+// Photos visuellement validées (inspection JPEG locale) : assiette/bol de
+// biscuits gourmands plutôt que les anciens placeholders Unsplash random qui
+// retournaient portraits, AirPods, soupe, etc. (les IDs HEAD-200 OK ne
+// garantissent JAMAIS le contenu visuel — vérifier les bytes systématiquement).
 const PHOTOS = {
   decouverte: [
-    "https://images.unsplash.com/photo-1611042553365-9b101441c135?fm=jpg&q=75&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1607920591413-4ec007e70023?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+    // bol de cookies aux pépites sur tissu sombre — mood cosy gourmand
+    "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+    // cookies aux pépites étalés sur papier sulfurisé, vue de dessus
+    "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?fm=jpg&q=75&w=1200&auto=format&fit=crop",
   ],
   gourmand: [
-    "https://images.unsplash.com/photo-1605464315542-bda3e2f4e605?fm=jpg&q=75&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1576185850227-1f72b7f8d483?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+    // cookies abondance top-view (format gourmand 10 pièces)
+    "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+    // bol cookies tissu sombre (ordre inversé vs Découverte pour différencier)
+    "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?fm=jpg&q=75&w=1200&auto=format&fit=crop",
   ],
   spav: [
+    // spéculoos artisanal belge (validé Phase 1 + biscuit Spec Gros)
     "https://images.unsplash.com/photo-1606058492835-ceaef4cd2bc2?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+    // biscuit avoine épais sur lin (validé sur la fiche produit Avoine)
     "https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?fm=jpg&q=75&w=1200&auto=format&fit=crop",
   ],
 };
