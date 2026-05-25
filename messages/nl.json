@@ -264,6 +264,11 @@
       "ingredients": "Ingrediënten",
       "steps": "Stappen",
       "print": "Recept afdrukken"
+    },
+    "featured": {
+      "eyebrow": "Au fil des saveurs · Het journaal",
+      "cta": "Lees het artikel",
+      "all": "Alle artikelen"
     }
   }
 }

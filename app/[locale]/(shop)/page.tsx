@@ -3,6 +3,7 @@ import { Hero } from "@/components/home/Hero";
 import { FeaturedProducts } from "@/components/home/FeaturedProducts";
 import { StoryTeaser } from "@/components/home/StoryTeaser";
 import { CoffretsTeaser } from "@/components/home/CoffretsTeaser";
+import { JournalFeatured } from "@/components/journal/JournalFeatured";
 import { InstagramGrid } from "@/components/home/InstagramGrid";
 import { NewsletterCTA } from "@/components/home/NewsletterCTA";
 import { Reveal } from "@/components/motion/Reveal";
@@ -19,6 +20,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </Reveal>
       <Reveal delay={0.05}>
         <StoryTeaser />
+      </Reveal>
+      <Reveal delay={0.08}>
+        <JournalFeatured locale={locale} />
       </Reveal>
       <Reveal delay={0.1}>
         <CoffretsTeaser />

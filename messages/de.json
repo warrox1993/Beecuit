@@ -264,6 +264,11 @@
       "ingredients": "Zutaten",
       "steps": "Schritte",
       "print": "Rezept drucken"
+    },
+    "featured": {
+      "eyebrow": "Au fil des saveurs · Das Journal",
+      "cta": "Artikel lesen",
+      "all": "Alle Artikel"
     }
   }
 }

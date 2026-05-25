@@ -264,6 +264,11 @@
       "ingredients": "Ingredients",
       "steps": "Steps",
       "print": "Print the recipe"
+    },
+    "featured": {
+      "eyebrow": "Au fil des saveurs · The journal",
+      "cta": "Read the article",
+      "all": "All articles"
     }
   }
 }
