@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
+import { eq } from "drizzle-orm";
+import { db } from "@/lib/db";
+import { journalArticleTranslations } from "@/lib/db/schema";
 import { getArticleBySlug, getAlsoRead } from "@/lib/journal/queries";
 import { renderArticleBody } from "@/lib/journal/render";
 import { JournalHero } from "@/components/journal/JournalHero";
@@ -29,10 +32,28 @@ export async function generateMetadata({
   if (!result) return {};
   const t = result.translation ?? result.fallback;
   if (!t) return {};
+
+  // Look up every locale that has a translation for this article so we can
+  // advertise accurate hreflang alternates. Slugs are shared across locales
+  // (the article slug lives on `journalArticles`), so the URL pattern only
+  // varies by the locale segment.
+  const allTranslations = await db
+    .select({ locale: journalArticleTranslations.locale })
+    .from(journalArticleTranslations)
+    .where(eq(journalArticleTranslations.articleId, result.article.id));
+
+  const languages: Record<string, string> = {};
+  for (const tr of allTranslations) {
+    languages[tr.locale] = `/${tr.locale}/journal/${slug}`;
+  }
+
   return {
     title: t.seoTitle ?? t.title,
     description: t.seoDescription ?? t.excerpt,
-    alternates: { canonical: `/${locale}/journal/${slug}` },
+    alternates: {
+      canonical: `/${locale}/journal/${slug}`,
+      languages,
+    },
     openGraph: {
       title: t.seoTitle ?? t.title,
       description: t.seoDescription ?? t.excerpt,

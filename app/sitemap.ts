@@ -1,4 +1,7 @@
 import type { MetadataRoute } from "next";
+import { eq } from "drizzle-orm";
+import { db } from "@/lib/db";
+import { journalArticles, journalArticleTranslations } from "@/lib/db/schema";
 import { SITE_URL, SUPPORTED_LOCALES, type SupportedLocale } from "@/lib/seo/site";
 import {
   listBiscuitSitemapRows,
@@ -107,5 +110,53 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   groupAndEmit(biscuitRows, "/biscuits");
   groupAndEmit(coffretRows, "/coffrets");
 
-  return [...staticEntries, ...dynamicEntries];
+  // 3) Journal articles — one entry per (published article × translated locale),
+  // each advertising hreflang alternates to its sibling-locale URLs.
+  const articleRows = await db
+    .select({
+      id: journalArticles.id,
+      slug: journalArticles.slug,
+      updatedAt: journalArticles.updatedAt,
+      locale: journalArticleTranslations.locale,
+    })
+    .from(journalArticles)
+    .innerJoin(
+      journalArticleTranslations,
+      eq(journalArticleTranslations.articleId, journalArticles.id),
+    )
+    .where(eq(journalArticles.status, "published"));
+
+  const articlesById = new Map<
+    string,
+    { slug: string; updatedAt: Date; locales: SupportedLocale[] }
+  >();
+  for (const row of articleRows) {
+    if (!(SUPPORTED_LOCALES as readonly string[]).includes(row.locale)) continue;
+    const existing = articlesById.get(row.id) ?? {
+      slug: row.slug,
+      updatedAt: row.updatedAt,
+      locales: [] as SupportedLocale[],
+    };
+    existing.locales.push(row.locale as SupportedLocale);
+    articlesById.set(row.id, existing);
+  }
+
+  const journalEntries: MetadataRoute.Sitemap = [];
+  for (const { slug, updatedAt, locales } of articlesById.values()) {
+    const languages: Record<string, string> = {};
+    for (const l of locales) {
+      languages[l] = `${SITE_URL}/${l}/journal/${encodeURIComponent(slug)}`;
+    }
+    for (const locale of locales) {
+      journalEntries.push({
+        url: `${SITE_URL}/${locale}/journal/${encodeURIComponent(slug)}`,
+        lastModified: updatedAt,
+        changeFrequency: "monthly",
+        priority: 0.7,
+        alternates: { languages },
+      });
+    }
+  }
+
+  return [...staticEntries, ...dynamicEntries, ...journalEntries];
 }
