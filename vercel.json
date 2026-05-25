@@ -1,3 +1,5 @@
 {
-  "crons": []
+  "crons": [
+    { "path": "/api/cron/gift-cards-deliver", "schedule": "0 9 * * *" }
+  ]
 }
