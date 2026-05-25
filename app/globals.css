@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  /* — BeeCuit palette — */
+  /* — Au Fil des Saveurs palette — */
   --color-honey: #e4a11b;
   --color-honey-dark: #b07a0e;
   --color-cream: #fbf6ee;
@@ -15,8 +15,14 @@
   --color-soft-rose: #e8d2c5;
   --color-leaf: #708b58;
 
+  /* NEW for Au Fil des Saveurs brand (Phase 4A) */
+  --color-brand-chocolate: #2c1810;
+  --color-cream-gold: #c9a368;
+  --color-cream-light: #fdfaf3;
+
   /* — Typography — */
   --font-display: var(--font-fraunces, "Fraunces"), ui-serif, Georgia, serif;
+  --font-script: var(--font-pinyon, "Pinyon Script"), "Brush Script MT", "Lucida Handwriting", cursive;
   --font-body: var(--font-inter, "Inter"), ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
@@ -26,7 +32,7 @@
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
 
-  /* — Semantic color tokens — */
+  /* — Semantic color tokens (legacy — kept for existing components) — */
   --color-surface: var(--color-cream);
   --color-surface-elev: #ffffff;
   --color-ink: var(--color-warm-brown);
@@ -34,6 +40,25 @@
   --color-brand-border: rgb(74 51 42 / 0.1);
   --color-brand-accent: var(--color-honey);
   --color-brand-accent-strong: var(--color-honey-dark);
+
+  /* — Semantic tokens (preferred for new components — Phase 4A) — */
+  --color-surface-elevated: var(--color-cream-light);
+  --color-surface-inverse: var(--color-brand-chocolate);
+
+  --color-text-primary: var(--color-warm-brown);
+  --color-text-muted: rgb(74 51 42 / 0.7);
+  --color-text-inverse: var(--color-cream-gold);
+  --color-text-accent: var(--color-honey-dark);
+
+  --color-border-subtle: rgb(74 51 42 / 0.1);
+  --color-border-accent: var(--color-honey-dark);
+
+  --color-cta-primary: var(--color-honey-dark);
+  --color-cta-primary-hover: var(--color-brand-chocolate);
+  --color-cta-secondary: var(--color-warm-brown);
+
+  --color-accent-feminine: var(--color-soft-rose);
+  --color-accent-gold: var(--color-cream-gold);
 }
 
 @layer base {
