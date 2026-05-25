@@ -17,7 +17,7 @@ export default async function AbonnementPage({
           Abonnement mensuel
         </p>
         <h1 className="text-4xl md:text-5xl font-display text-warm-brown">
-          Ta box BeeCuit chaque mois
+          Ta box Au Fil des Saveurs chaque mois
         </h1>
         <p className="mt-3 text-warm-brown/70">
           Choisis ta formule, compose ta box chaque mois, on livre.

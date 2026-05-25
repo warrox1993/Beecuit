@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
     try {
       await sendEmail({
         to: card.recipientEmail,
-        subject: `${card.purchaserEmail} t'a offert une carte cadeau BeeCuit`,
+        subject: `${card.purchaserEmail} t'a offert une carte cadeau Au Fil des Saveurs`,
         react: GiftCardDelivery({
           recipientName: card.recipientName,
           purchaserEmail: card.purchaserEmail,

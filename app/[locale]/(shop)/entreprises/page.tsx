@@ -13,7 +13,7 @@ export default async function EntreprisesPage({
     <main className="mx-auto max-w-3xl px-4 py-12">
       <header className="mb-10 text-center">
         <h1 className="mb-3 text-4xl font-bold tracking-tight text-amber-900">
-          BeeCuit pour les entreprises
+          Au Fil des Saveurs pour les entreprises
         </h1>
         <p className="text-lg text-amber-800">
           Cadeaux d&apos;affaires, séminaires, événements clients : on compose un devis sur
@@ -50,8 +50,8 @@ export default async function EntreprisesPage({
 
       <section className="mt-10 text-center text-sm text-amber-800">
         On vous répond sous <strong>48h ouvrées</strong>. Pour les demandes urgentes :{" "}
-        <a className="underline" href="mailto:hello@beecuit.be">
-          hello@beecuit.be
+        <a className="underline" href="mailto:hello@aufildessaveurs.be">
+          hello@aufildessaveurs.be
         </a>
       </section>
     </main>

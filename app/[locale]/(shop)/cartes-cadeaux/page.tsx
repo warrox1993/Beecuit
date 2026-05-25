@@ -18,7 +18,7 @@ export default async function CartesCadeauxPage({
           Cartes cadeaux
         </p>
         <h1 className="text-4xl md:text-5xl font-display text-warm-brown">
-          Offre BeeCuit
+          Offre Au Fil des Saveurs
         </h1>
         <p className="mt-3 text-warm-brown/70">
           Une carte cadeau numérique pour faire goûter nos biscuits liégeois.

@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui-primitives/Container";
 import { Heading } from "@/components/ui-primitives/Heading";
 import { Prose } from "@/components/ui-primitives/Prose";
+import { Logo } from "@/components/brand/Logo";
 
 export default async function SignInPage({
   params,
@@ -22,8 +23,12 @@ export default async function SignInPage({
     return (
       <section className="bg-cream flex min-h-[80vh] items-center justify-center py-12">
         <Container variant="narrow" className="max-w-md text-center">
-          <Link href="/" className="text-honey font-display mb-12 inline-block text-3xl">
-            BeeCuit
+          <Link
+            href="/"
+            aria-label="Au Fil des Saveurs — Accueil"
+            className="text-warm-brown mb-12 inline-block"
+          >
+            <Logo variant="wordmark" className="h-12 w-auto" />
           </Link>
           <div className="border-warm-brown/10 rounded-2xl border bg-white p-8 shadow-sm">
             <div className="bg-honey/10 mx-auto flex h-16 w-16 items-center justify-center rounded-full text-3xl">
@@ -53,8 +58,12 @@ export default async function SignInPage({
   return (
     <section className="bg-cream flex min-h-[80vh] items-center justify-center py-12">
       <Container variant="narrow" className="max-w-md">
-        <Link href="/" className="text-honey font-display mb-12 block text-center text-3xl">
-          BeeCuit
+        <Link
+          href="/"
+          aria-label="Au Fil des Saveurs — Accueil"
+          className="text-warm-brown mb-12 flex justify-center"
+        >
+          <Logo variant="wordmark" className="h-12 w-auto" />
         </Link>
         <div className="border-warm-brown/10 rounded-2xl border bg-white p-8 shadow-sm">
           <Heading as="h2" size="h3">
