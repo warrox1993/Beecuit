@@ -17,7 +17,7 @@ export async function CoffretsTeaser() {
           <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-xl">
             <Image
               src="https://images.unsplash.com/photo-1449049607083-e29383d58423?fm=jpg&q=75&w=1200&auto=format&fit=crop"
-              alt="Coffret cadeau de biscuits artisanaux BeeCuit"
+              alt="Coffret cadeau de biscuits artisanaux Au Fil des Saveurs"
               fill
               sizes="(min-width: 768px) 50vw, 100vw"
               className="object-cover"

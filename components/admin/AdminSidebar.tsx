@@ -15,8 +15,8 @@ const items = [
 export function AdminSidebar() {
   return (
     <aside className="border-warm-brown/10 bg-cream w-56 shrink-0 border-r p-4">
-      <Link href="/admin" className="text-honey font-display block text-2xl">
-        BeeCuit admin
+      <Link href="/admin" className="text-warm-brown font-display block text-xl">
+        Au Fil des Saveurs <span className="text-warm-brown/60 text-sm">— admin</span>
       </Link>
       <nav className="mt-6 text-sm">
         <ul className="space-y-1">

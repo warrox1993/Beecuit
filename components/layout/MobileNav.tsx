@@ -18,7 +18,9 @@ export function MobileNav() {
       </SheetTrigger>
       <SheetContent side="right" className="bg-cream w-80">
         <SheetHeader>
-          <SheetTitle className="text-honey font-display text-2xl">BeeCuit</SheetTitle>
+          <SheetTitle className="text-warm-brown font-display text-xl">
+            Au Fil des Saveurs
+          </SheetTitle>
         </SheetHeader>
         <nav className="mt-8 flex flex-col gap-4" onClick={() => setOpen(false)}>
           <NavLink href="/biscuits" className="text-lg">

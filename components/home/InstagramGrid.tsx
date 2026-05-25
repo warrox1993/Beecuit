@@ -34,7 +34,7 @@ export async function InstagramGrid() {
           <Heading as="h2" size="h2" className="mt-3">
             {t("instagramTitle")}{" "}
             <a
-              href="https://instagram.com/beecuit"
+              href="https://instagram.com/aufildessaveurs"
               className="text-honey-dark underline underline-offset-4"
             >
               {t("instagramHandle")}
@@ -45,7 +45,7 @@ export async function InstagramGrid() {
           {TILES.map((tile, i) => (
             <a
               key={i}
-              href="https://instagram.com/beecuit"
+              href="https://instagram.com/aufildessaveurs"
               className="relative aspect-square overflow-hidden rounded-lg bg-cookie/40 transition-opacity hover:opacity-80"
               aria-label={`Instagram post ${i + 1}`}
             >

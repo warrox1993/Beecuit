@@ -111,7 +111,7 @@ export function CheckoutForm({
             checked={newsletterOptIn}
             onChange={(e) => setNewsletter(e.target.checked)}
           />
-          M&apos;abonner à la newsletter BeeCuit
+          M&apos;abonner à la newsletter Au Fil des Saveurs
         </label>
       </fieldset>
 
