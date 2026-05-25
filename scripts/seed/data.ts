@@ -1,23 +1,23 @@
+// Catalog seed data — Au Fil des Saveurs.
+//
+// Nouveau catalogue 2026-05-25 : 5 produits validés par la cliente, 3 catégories.
+// Cible prix : ~27,50 €/kg avec arrondi psychologique (.50/.90).
+//
+// Le seed (scripts/seed/index.ts) utilise IMAGE_URLS pour insérer les vraies photos
+// Unsplash directement, sans passer par picsum.photos + un script de patch.
+
 export const CATEGORIES = [
   {
-    slug: "sables",
-    names: { fr: "Sablés", nl: "Zandkoekjes", de: "Sandgebäck", en: "Shortbreads" },
-  },
-  {
     slug: "speculoos",
-    names: { fr: "Spéculoos", nl: "Speculoos", de: "Spekulatius", en: "Spéculoos" },
+    names: { fr: "Spéculoos", nl: "Speculoos", de: "Spekulatius", en: "Speculoos" },
   },
   {
-    slug: "chocolat",
-    names: { fr: "Chocolat", nl: "Chocolade", de: "Schokolade", en: "Chocolate" },
+    slug: "coco",
+    names: { fr: "Rochers Coco", nl: "Kokosrotsjes", de: "Kokosmakronen", en: "Coconut Rocks" },
   },
   {
-    slug: "saisonniers",
-    names: { fr: "Saisonniers", nl: "Seizoensgebonden", de: "Saisonal", en: "Seasonal" },
-  },
-  {
-    slug: "sans-gluten",
-    names: { fr: "Sans Gluten", nl: "Glutenvrij", de: "Glutenfrei", en: "Gluten-Free" },
+    slug: "avoine",
+    names: { fr: "Avoine", nl: "Haver", de: "Hafer", en: "Oat" },
   },
 ] as const;
 
@@ -30,6 +30,8 @@ type Trans = {
   seoTitle: string;
   seoDescription: string;
 };
+
+type Image = { url: string; altText: string };
 
 export const PRODUCTS: Array<{
   sku: string;
@@ -46,11 +48,13 @@ export const PRODUCTS: Array<{
     salt_g: number;
   };
   translations: Record<"fr" | "nl" | "de" | "en", Trans>;
-  imageCount: number;
+  images: [Image, Image];
 }> = [
-  // BCT-SPEC-200 — Spéculoos artisanal 200g
+  // ──────────────────────────────────────────────────────────────────────────
+  // BCT-SPEC-GROS-200 — Spéculoos gros 200g
+  // ──────────────────────────────────────────────────────────────────────────
   {
-    sku: "BCT-SPEC-200",
+    sku: "BCT-SPEC-GROS-200",
     categorySlug: "speculoos",
     basePriceCents: 550,
     weightGrams: 200,
@@ -63,559 +67,396 @@ export const PRODUCTS: Array<{
       protein_g: 6.2,
       salt_g: 0.55,
     },
-    imageCount: 2,
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1606058492835-ceaef4cd2bc2?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+        altText: "Grands spéculoos belges artisanaux, dorés et croustillants",
+      },
+      {
+        url: "https://images.unsplash.com/photo-1665844190955-692de472faeb?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+        altText: "Spéculoos disposés en éventail sur un plan de travail bois",
+      },
+    ],
     translations: {
       fr: {
-        name: "Spéculoos artisanal 200g",
+        name: "Spéculoos Gros 200g",
         shortDescription:
-          "Le classique belge dans toute sa gloire épicée — cuit lentement au four pour une texture croustillante parfaite.",
+          "Grands spéculoos belges aux épices traditionnelles — texture croustillante, casse franche, parfaits pour le café.",
         longDescription:
-          "Nos spéculoos artisanaux sont préparés selon une recette transmise de génération en génération, avec un mélange soigneusement dosé de cassonade brune, de cannelle, de gingembre et de muscade. Cuits lentement sur des plaques en acier épaisses, ils développent cette couleur ambrée et ce croquant si particulier qui fait tout le charme du vrai spéculoos belge. Idéals avec un café du matin ou un chocolat chaud hivernal.",
+          "Nos grands spéculoos sont préparés selon une recette transmise par la cliente, à base de cassonade brune belge, de beurre fermier, de cannelle de Ceylan, de gingembre et de muscade fraîche. Cuits lentement sur des plaques épaisses pour développer cette croûte ambrée et ce parfum d'épices chaudes si reconnaissables. Format généreux : un seul biscuit suffit pour accompagner un café noir. Sachet kraft refermable de 200g pour préserver le croquant.",
         ingredients:
           "Farine de blé, cassonade brune, beurre (lait), épices (cannelle, gingembre, muscade, clou de girofle), levure chimique, sel.",
         allergens: ["Gluten", "Lait"],
-        seoTitle: "Spéculoos artisanal belge 200g — Au Fil des Saveurs",
+        seoTitle: "Spéculoos Gros 200g artisanal belge — Au Fil des Saveurs",
         seoDescription:
-          "Découvrez nos spéculoos artisanaux belges : une recette traditionnelle aux épices douces, cuits au four pour un croustillant irrésistible. 200g de pur bonheur.",
+          "Grands spéculoos belges artisanaux : cassonade brune, beurre fermier, épices traditionnelles. Cuits lentement, parfaits pour le café. Sachet 200g.",
       },
       nl: {
-        name: "Ambachtelijke speculoos 200g",
+        name: "Grote Speculoos 200g",
         shortDescription:
-          "De Belgische klassieker in al zijn gekruide glorie — langzaam gebakken voor een perfecte knapperige textuur.",
+          "Grote Belgische speculoos met traditionele specerijen — knapperige textuur, perfect bij de koffie.",
         longDescription:
-          "Onze ambachtelijke speculoos worden bereid volgens een recept dat van generatie op generatie is doorgegeven, met een zorgvuldig afgemeten mengsel van bruine basterdsuiker, kaneel, gember en nootmuskaat. Langzaam gebakken op dikke stalen platen ontwikkelen ze die karakteristieke amberkleur en dat onweerstaanbare knapperige karakter van echte Belgische speculoos. Perfect bij een ochtendkoffie of een warme winterse chocolademelk.",
+          "Onze grote speculoos worden bereid volgens een familierecept, met Belgische bruine basterdsuiker, boerderijboter, Ceylonkaneel, gember en verse nootmuskaat. Langzaam gebakken op dikke platen om die karakteristieke amberkleur en het warme specerijenaroma te ontwikkelen. Royaal formaat: één koekje volstaat bij een zwarte koffie. Hersluitbare kraftzak van 200g om de knapperigheid te bewaren.",
         ingredients:
           "Tarwebloem, bruine basterdsuiker, boter (melk), specerijen (kaneel, gember, nootmuskaat, kruidnagel), rijsmiddel, zout.",
         allergens: ["Gluten", "Melk"],
-        seoTitle: "Ambachtelijke Belgische speculoos 200g — Au Fil des Saveurs",
+        seoTitle: "Grote Speculoos 200g ambachtelijk Belgisch — Au Fil des Saveurs",
         seoDescription:
-          "Ontdek onze ambachtelijke Belgische speculoos: een traditioneel recept met zachte specerijen, gebakken voor een onweerstaanbare knapperigheid. 200g puur genot.",
+          "Grote ambachtelijke Belgische speculoos: bruine suiker, boerderijboter, traditionele specerijen. Langzaam gebakken, perfect bij de koffie. Zak 200g.",
       },
       de: {
-        name: "Handgemachter Spekulatius 200g",
+        name: "Großer Spekulatius 200g",
         shortDescription:
-          "Der belgische Klassiker in seiner ganzen würzigen Pracht — langsam gebacken für eine perfekt knusprige Textur.",
+          "Große belgische Spekulatius mit traditionellen Gewürzen — knusprige Textur, ideal zum Kaffee.",
         longDescription:
-          "Unsere handgemachten Spekulatius werden nach einem Rezept zubereitet, das von Generation zu Generation weitergegeben wurde, mit einer sorgfältig abgestimmten Mischung aus braunem Zucker, Zimt, Ingwer und Muskatnuss. Langsam auf dicken Stahlblechen gebacken, entwickeln sie die charakteristische Bernsteinfarbe und das unwiderstehliche Knuspern, das echten belgischen Spekulatius ausmacht. Ideal zu einem Morgenkaffee oder einer heißen Winterschokolade.",
+          "Unsere großen Spekulatius werden nach einem Familienrezept zubereitet, mit belgischem braunem Zucker, Bauernbutter, Ceylon-Zimt, Ingwer und frischer Muskatnuss. Langsam auf dicken Blechen gebacken, um die typische Bernsteinkrust und das warme Gewürzaroma zu entwickeln. Großzügiges Format: ein Keks reicht, um einen schwarzen Kaffee zu begleiten. Wiederverschließbarer Kraftbeutel mit 200g, der die Knusprigkeit bewahrt.",
         ingredients:
-          "Weizenmehl, brauner Zucker, Butter (Milch), Gewürze (Zimt, Ingwer, Muskatnuss, Nelken), Backpulver, Salz.",
+          "Weizenmehl, brauner Zucker, Butter (Milch), Gewürze (Zimt, Ingwer, Muskatnuss, Gewürznelke), Backtriebmittel, Salz.",
         allergens: ["Gluten", "Milch"],
-        seoTitle: "Handgemachter belgischer Spekulatius 200g — Au Fil des Saveurs",
+        seoTitle: "Großer Spekulatius 200g handwerklich belgisch — Au Fil des Saveurs",
         seoDescription:
-          "Entdecken Sie unseren handgemachten belgischen Spekulatius: ein traditionelles Rezept mit sanften Gewürzen, für unwiderstehliche Knusprigkeit gebacken. 200g purer Genuss.",
+          "Großer handwerklicher belgischer Spekulatius: brauner Zucker, Bauernbutter, traditionelle Gewürze. Langsam gebacken, ideal zum Kaffee. Beutel 200g.",
       },
       en: {
-        name: "Artisan Spéculoos 200g",
+        name: "Large Speculoos 200g",
         shortDescription:
-          "The Belgian classic in all its spiced glory — slow-baked for a perfectly crisp, snappy texture.",
+          "Large Belgian speculoos with traditional spices — crisp texture, clean snap, perfect with coffee.",
         longDescription:
-          "Our artisan spéculoos are made following a recipe passed down through generations, with a carefully balanced blend of dark brown sugar, cinnamon, ginger and nutmeg. Slow-baked on thick steel trays, they develop that beautiful amber colour and unmistakable snap that defines a true Belgian spéculoos. Perfect alongside a morning coffee or a steaming winter hot chocolate.",
+          "Our large speculoos are made to a recipe passed down by the owner, using Belgian brown sugar, farmhouse butter, Ceylon cinnamon, ginger and fresh nutmeg. Slow-baked on heavy plates to develop that signature amber crust and warm spice aroma. Generous size: a single biscuit is enough to enjoy alongside a black coffee. Resealable kraft bag, 200g, to keep them crisp.",
         ingredients:
-          "Wheat flour, dark brown sugar, butter (milk), spices (cinnamon, ginger, nutmeg, cloves), baking powder, salt.",
+          "Wheat flour, brown sugar, butter (milk), spices (cinnamon, ginger, nutmeg, clove), raising agent, salt.",
         allergens: ["Gluten", "Milk"],
-        seoTitle: "Artisan Belgian Spéculoos 200g — Au Fil des Saveurs",
+        seoTitle: "Large Speculoos 200g artisan Belgian — Au Fil des Saveurs",
         seoDescription:
-          "Discover our artisan Belgian spéculoos: a traditional recipe with gentle spices, baked for irresistible crispness. 200g of pure delight.",
+          "Large artisan Belgian speculoos: brown sugar, farmhouse butter, traditional spices. Slow-baked, perfect with coffee. 200g resealable bag.",
       },
     },
   },
-
-  // BCT-SABL-CHOC-180 — Sablé chocolat noir 180g
+  // ──────────────────────────────────────────────────────────────────────────
+  // BCT-SPEC-PETIT-200 — Spéculoos petit 200g
+  // ──────────────────────────────────────────────────────────────────────────
   {
-    sku: "BCT-SABL-CHOC-180",
-    categorySlug: "sables",
-    basePriceCents: 490,
-    weightGrams: 180,
+    sku: "BCT-SPEC-PETIT-200",
+    categorySlug: "speculoos",
+    basePriceCents: 550,
+    weightGrams: 200,
     stockQuantity: 50,
-    isFeatured: false,
+    isFeatured: true,
     nutritionalFactsPer100g: {
-      energy_kcal: 510,
-      fat_g: 27.0,
-      carbs_g: 62.0,
-      protein_g: 6.5,
-      salt_g: 0.45,
+      energy_kcal: 470,
+      fat_g: 18.8,
+      carbs_g: 70.2,
+      protein_g: 6.3,
+      salt_g: 0.55,
     },
-    imageCount: 2,
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1665844190955-692de472faeb?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+        altText: "Petits spéculoos belges en empilement, prêts à accompagner un café",
+      },
+      {
+        url: "https://images.unsplash.com/photo-1606058492835-ceaef4cd2bc2?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+        altText: "Petits spéculoos artisanaux disposés sur soucoupe blanche",
+      },
+    ],
     translations: {
       fr: {
-        name: "Sablé chocolat noir 180g",
+        name: "Spéculoos Petit 200g",
         shortDescription:
-          "Un sablé fondant enrichi de morceaux de chocolat noir belge — douceur intense à chaque bouchée.",
+          "La version mignonnette : petits spéculoos à croquer en une bouchée, même recette, mêmes épices.",
         longDescription:
-          "Fabriqués avec du beurre de qualité supérieure et enrichis de généreux éclats de chocolat noir belge 70 %, ces sablés offrent un équilibre parfait entre la friabilité beurrée du biscuit et l'amertume élégante du grand cacao. La recette, simple dans ses ingrédients mais exigeante dans sa réalisation, donne un résultat à la fois fondant et légèrement croquant. À savourer à la pause de l'après-midi, accompagnés d'un thé noir fumé ou d'un verre de lait froid.",
+          "Mêmes ingrédients que nos grands spéculoos — cassonade brune, beurre fermier, cannelle, gingembre, muscade — mais en format mini, parfait à grignoter, à servir avec une tasse à thé ou à émietter sur un yaourt nature. Idéal aussi pour les enfants : moins d'épaisseur, plus de croustillant, et la quantité parfaite pour un goûter sans excès. Sachet refermable de 200g.",
         ingredients:
-          "Farine de blé, beurre (lait), sucre, chocolat noir 70 % (cacao, sucre, beurre de cacao, vanille), œufs, sel.",
-        allergens: ["Gluten", "Lait", "Œufs"],
-        seoTitle: "Sablé chocolat noir 180g — Au Fil des Saveurs",
+          "Farine de blé, cassonade brune, beurre (lait), épices (cannelle, gingembre, muscade, clou de girofle), levure chimique, sel.",
+        allergens: ["Gluten", "Lait"],
+        seoTitle: "Spéculoos Petit format 200g artisanal — Au Fil des Saveurs",
         seoDescription:
-          "Nos sablés au chocolat noir belge : beurre de qualité, éclats de cacao 70 %, texture fondante irrésistible. 180g de gourmandise pure.",
+          "Petits spéculoos belges artisanaux : même recette traditionnelle, format mini parfait à grignoter ou à servir avec le thé. Sachet 200g.",
       },
       nl: {
-        name: "Chocolade zandkoekje 180g",
+        name: "Kleine Speculoos 200g",
         shortDescription:
-          "Een smeltend zandkoekje verrijkt met stukjes Belgische pure chocolade — intense zoetheid bij elke hap.",
+          "De mini-versie: kleine speculoos in één hap, zelfde recept, zelfde specerijen.",
         longDescription:
-          "Gemaakt met superieure boter en verrijkt met royale stukjes Belgische pure chocolade 70%, bieden deze zandkoekjes een perfect evenwicht tussen de brokkelige boterkwaliteit van het koekje en de elegante bitterheid van de beste cacao. Het recept, eenvoudig in zijn ingrediënten maar veeleisend in zijn bereiding, levert een resultaat dat zowel smeltend als licht knapperig is. Te genieten tijdens de namiddagpauze, bij een zwarte thee of een glas koude melk.",
+          "Dezelfde ingrediënten als onze grote speculoos — bruine basterdsuiker, boerderijboter, kaneel, gember, nootmuskaat — maar in miniformaat, perfect om te knabbelen, bij een kopje thee te serveren of over een natuuryoghurt te verkruimelen. Ook ideaal voor kinderen: dunner, knapperiger, de perfecte hoeveelheid voor een tussendoortje. Hersluitbare zak van 200g.",
         ingredients:
-          "Tarwebloem, boter (melk), suiker, pure chocolade 70% (cacao, suiker, cacaoboter, vanille), eieren, zout.",
-        allergens: ["Gluten", "Melk", "Eieren"],
-        seoTitle: "Pure chocolade zandkoekje 180g — Au Fil des Saveurs",
+          "Tarwebloem, bruine basterdsuiker, boter (melk), specerijen (kaneel, gember, nootmuskaat, kruidnagel), rijsmiddel, zout.",
+        allergens: ["Gluten", "Melk"],
+        seoTitle: "Kleine Speculoos 200g ambachtelijk — Au Fil des Saveurs",
         seoDescription:
-          "Onze zandkoekjes met Belgische pure chocolade: kwaliteitsboter, 70% cacao stukjes, onweerstaanbare smeltende textuur. 180g puur genot.",
+          "Kleine ambachtelijke Belgische speculoos: hetzelfde traditionele recept, miniformaat perfect om te knabbelen of bij de thee. Zak 200g.",
       },
       de: {
-        name: "Zartbitter-Sandgebäck 180g",
+        name: "Kleiner Spekulatius 200g",
         shortDescription:
-          "Ein zartes Mürbegebäck mit belgischer Zartbitterschokolade — intensive Süße bei jedem Bissen.",
+          "Die Mini-Version: kleine Spekulatius zum Knabbern, gleiches Rezept, gleiche Gewürze.",
         longDescription:
-          "Mit erstklassiger Butter und großzügigen Stücken belgischer Zartbitterschokolade 70% hergestellt, bieten diese Sandgebäcke eine perfekte Balance zwischen der buttrigen Mürbe des Kekses und der eleganten Bitterkeit des feinen Kakaos. Das Rezept, schlicht in seinen Zutaten, aber anspruchsvoll in der Zubereitung, liefert ein Ergebnis, das sowohl zart schmelzend als auch leicht knusprig ist. Ideal zur Nachmittagspause, begleitet von einem Schwarztee oder einem Glas kalter Milch.",
+          "Dieselben Zutaten wie unsere großen Spekulatius — brauner Zucker, Bauernbutter, Zimt, Ingwer, Muskat — aber im Miniformat, perfekt zum Knabbern, zum Tee zu reichen oder über einen Naturjoghurt zu zerbröseln. Auch ideal für Kinder: dünner, knuspriger, die perfekte Menge für eine Zwischenmahlzeit. Wiederverschließbarer Beutel mit 200g.",
         ingredients:
-          "Weizenmehl, Butter (Milch), Zucker, Zartbitterschokolade 70% (Kakao, Zucker, Kakaobutter, Vanille), Eier, Salz.",
-        allergens: ["Gluten", "Milch", "Eier"],
-        seoTitle: "Zartbitter-Sandgebäck 180g — Au Fil des Saveurs",
+          "Weizenmehl, brauner Zucker, Butter (Milch), Gewürze (Zimt, Ingwer, Muskatnuss, Gewürznelke), Backtriebmittel, Salz.",
+        allergens: ["Gluten", "Milch"],
+        seoTitle: "Kleiner Spekulatius 200g handwerklich — Au Fil des Saveurs",
         seoDescription:
-          "Unser Sandgebäck mit belgischer Zartbitterschokolade: Qualitätsbutter, 70% Kakaostücke, unwiderstehlich zarte Textur. 180g purer Genuss.",
+          "Kleine handwerkliche belgische Spekulatius: gleiches traditionelles Rezept, Miniformat perfekt zum Knabbern oder zum Tee. Beutel 200g.",
       },
       en: {
-        name: "Dark Chocolate Shortbread 180g",
+        name: "Small Speculoos 200g",
         shortDescription:
-          "A melt-in-the-mouth shortbread enriched with Belgian 70% dark chocolate chips — deep, indulgent flavour in every bite.",
+          "The mini version: bite-size speculoos, same recipe, same spices.",
         longDescription:
-          "Made with top-grade butter and loaded with generous pieces of Belgian 70% dark chocolate, these shortbreads strike a perfect balance between buttery crumble and the elegant bitterness of fine cacao. The recipe — simple in ingredients, exacting in execution — delivers a result that is at once melt-in-the-mouth and ever so slightly snappy. Savour them at the afternoon break alongside a smoky black tea or a cold glass of milk.",
+          "Same ingredients as our large speculoos — brown sugar, farmhouse butter, cinnamon, ginger, nutmeg — but in miniature format, perfect to nibble, to serve with a cup of tea or to crumble over a plain yoghurt. Ideal too for children: thinner, crunchier, the perfect amount for a snack. 200g resealable bag.",
         ingredients:
-          "Wheat flour, butter (milk), sugar, dark chocolate 70% (cocoa, sugar, cocoa butter, vanilla), eggs, salt.",
-        allergens: ["Gluten", "Milk", "Eggs"],
-        seoTitle: "Dark Chocolate Shortbread 180g — Au Fil des Saveurs",
+          "Wheat flour, brown sugar, butter (milk), spices (cinnamon, ginger, nutmeg, clove), raising agent, salt.",
+        allergens: ["Gluten", "Milk"],
+        seoTitle: "Small Speculoos 200g artisan — Au Fil des Saveurs",
         seoDescription:
-          "Our dark chocolate shortbreads: quality butter, Belgian 70% cacao pieces, irresistibly melt-in-the-mouth texture. 180g of pure indulgence.",
+          "Small artisan Belgian speculoos: same traditional recipe, bite-size format perfect to nibble or serve with tea. 200g bag.",
       },
     },
   },
-
-  // BCT-MACA-NOIS-006 — Macaron noisette x6
+  // ──────────────────────────────────────────────────────────────────────────
+  // BCT-COCO-CHOC-180 — Rocher coco enrobé chocolat 180g
+  // ──────────────────────────────────────────────────────────────────────────
   {
-    sku: "BCT-MACA-NOIS-006",
-    categorySlug: "sables",
-    basePriceCents: 250,
-    weightGrams: 90,
+    sku: "BCT-COCO-CHOC-180",
+    categorySlug: "coco",
+    basePriceCents: 490,
+    weightGrams: 180,
+    stockQuantity: 40,
+    isFeatured: true,
+    nutritionalFactsPer100g: {
+      energy_kcal: 482,
+      fat_g: 27.5,
+      carbs_g: 52.0,
+      protein_g: 5.8,
+      salt_g: 0.12,
+    },
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1551529834-525807d6b4f3?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+        altText: "Rochers coco enrobés de chocolat noir, alignés sur ardoise",
+      },
+      {
+        url: "https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+        altText: "Rocher coco chocolat avec éclats de coco visibles en coupe",
+      },
+    ],
+    translations: {
+      fr: {
+        name: "Rocher Coco Chocolat 180g",
+        shortDescription:
+          "Petits dômes de coco râpée enrobés de chocolat noir belge — fondants à cœur, croquants en surface.",
+        longDescription:
+          "Nos rochers coco enrobés sont préparés à la main : coco râpée fine et blancs d'œufs montés, façonnés en petits dômes, dorés au four pour obtenir une croûte légèrement caramélisée, puis trempés un à un dans un chocolat noir belge à 60% de cacao. Le contraste entre la coque chocolatée croquante et le cœur moelleux de coco fait toute la signature de ce biscuit. Boîte de 180g, environ 12 rochers selon le calibrage.",
+        ingredients:
+          "Noix de coco râpée, sucre, blancs d'œufs, chocolat noir 60% (pâte de cacao, sucre, beurre de cacao, émulsifiant : lécithine de soja), sel.",
+        allergens: ["Œufs", "Soja"],
+        seoTitle: "Rocher Coco enrobé chocolat noir 180g — Au Fil des Saveurs",
+        seoDescription:
+          "Rochers coco artisanaux enrobés de chocolat noir belge 60%. Fondants à cœur, croquants en surface. Boîte de 180g, environ 12 pièces.",
+      },
+      nl: {
+        name: "Kokosrotsje Chocolade 180g",
+        shortDescription:
+          "Kleine kokoskoepeltjes omhuld met Belgische pure chocolade — zacht van binnen, knapperig van buiten.",
+        longDescription:
+          "Onze omhulde kokosrotsjes worden met de hand bereid: fijne geraspte kokos en opgeklopt eiwit, in kleine koepeltjes gevormd, in de oven gebakken voor een licht gekarameliseerde korst, en daarna één voor één gedoopt in Belgische pure chocolade van 60% cacao. Het contrast tussen de knapperige chocoladeschelp en het zachte kokoshart maakt de signature van dit koekje. Doos van 180g, ongeveer 12 rotsjes naargelang het kaliber.",
+        ingredients:
+          "Geraspte kokosnoot, suiker, eiwit, pure chocolade 60% (cacaomassa, suiker, cacaoboter, emulgator: sojalecithine), zout.",
+        allergens: ["Eieren", "Soja"],
+        seoTitle: "Kokosrotsje omhuld met pure chocolade 180g — Au Fil des Saveurs",
+        seoDescription:
+          "Ambachtelijke kokosrotsjes omhuld met Belgische pure chocolade 60%. Zacht van binnen, knapperig van buiten. Doos 180g, ongeveer 12 stuks.",
+      },
+      de: {
+        name: "Kokosmakrone Schokolade 180g",
+        shortDescription:
+          "Kleine Kokoskuppeln, in belgischer Zartbitterschokolade getaucht — weich im Kern, knusprig außen.",
+        longDescription:
+          "Unsere überzogenen Kokosmakronen werden von Hand zubereitet: fein geriebene Kokosnuss und aufgeschlagenes Eiweiß, zu kleinen Kuppeln geformt, im Ofen für eine leicht karamellisierte Kruste gebacken und dann einzeln in belgische Zartbitterschokolade mit 60% Kakao getaucht. Der Kontrast zwischen der knusprigen Schokoladenhülle und dem weichen Kokoskern macht die Signatur dieses Gebäcks aus. Schachtel mit 180g, je nach Kaliber etwa 12 Makronen.",
+        ingredients:
+          "Geriebene Kokosnuss, Zucker, Eiweiß, Zartbitterschokolade 60% (Kakaomasse, Zucker, Kakaobutter, Emulgator: Sojalecithin), Salz.",
+        allergens: ["Eier", "Soja"],
+        seoTitle: "Kokosmakrone mit Zartbitterschokolade 180g — Au Fil des Saveurs",
+        seoDescription:
+          "Handwerkliche Kokosmakronen mit belgischer Zartbitterschokolade 60% überzogen. Weich im Kern, knusprig außen. Schachtel 180g, ca. 12 Stück.",
+      },
+      en: {
+        name: "Coconut Rock Chocolate 180g",
+        shortDescription:
+          "Little coconut domes coated in Belgian dark chocolate — soft inside, crunchy outside.",
+        longDescription:
+          "Our coated coconut rocks are hand-made: finely grated coconut and whipped egg whites, shaped into small domes, oven-baked to a lightly caramelised crust, then dipped one by one in Belgian dark chocolate at 60% cocoa. The contrast between the crisp chocolate shell and the tender coconut core is the signature of this biscuit. 180g box, about 12 rocks depending on size.",
+        ingredients:
+          "Grated coconut, sugar, egg whites, dark chocolate 60% (cocoa mass, sugar, cocoa butter, emulsifier: soy lecithin), salt.",
+        allergens: ["Eggs", "Soy"],
+        seoTitle: "Coconut Rock dark chocolate coated 180g — Au Fil des Saveurs",
+        seoDescription:
+          "Artisan coconut rocks coated in Belgian dark chocolate 60%. Soft inside, crunchy outside. 180g box, about 12 pieces.",
+      },
+    },
+  },
+  // ──────────────────────────────────────────────────────────────────────────
+  // BCT-COCO-NATU-180 — Rocher coco nature 180g
+  // ──────────────────────────────────────────────────────────────────────────
+  {
+    sku: "BCT-COCO-NATU-180",
+    categorySlug: "coco",
+    basePriceCents: 490,
+    weightGrams: 180,
+    stockQuantity: 40,
+    isFeatured: false,
+    nutritionalFactsPer100g: {
+      energy_kcal: 425,
+      fat_g: 22.0,
+      carbs_g: 48.0,
+      protein_g: 5.2,
+      salt_g: 0.08,
+    },
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+        altText: "Rochers coco nature dorés, façonnés à la main et alignés",
+      },
+      {
+        url: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+        altText: "Rochers coco nature en boîte cadeau ouverte sur fond clair",
+      },
+    ],
+    translations: {
+      fr: {
+        name: "Rocher Coco Nature 180g",
+        shortDescription:
+          "Dômes de coco râpée juste dorés au four — moelleux, parfumés, sans chocolat pour laisser parler la coco.",
+        longDescription:
+          "La version pure de notre rocher coco : coco râpée fine, blancs d'œufs montés en neige, juste assez de sucre pour caraméliser légèrement la surface, et c'est tout. Cuits jusqu'à ce que la croûte soit dorée et le cœur encore moelleux. Sans chocolat, sans matière grasse ajoutée — le goût de la coco est mis en avant. Boîte de 180g, environ 12 rochers.",
+        ingredients:
+          "Noix de coco râpée, sucre, blancs d'œufs, sel.",
+        allergens: ["Œufs"],
+        seoTitle: "Rocher Coco nature 180g artisanal — Au Fil des Saveurs",
+        seoDescription:
+          "Rochers coco nature artisanaux, juste dorés au four. Sans chocolat, moelleux, parfumés. Boîte de 180g, environ 12 pièces.",
+      },
+      nl: {
+        name: "Kokosrotsje Naturel 180g",
+        shortDescription:
+          "Kokoskoepeltjes net goudbruin gebakken — zacht, geurig, zonder chocolade om de kokos te laten spreken.",
+        longDescription:
+          "De pure versie van ons kokosrotsje: fijne geraspte kokos, opgeklopt eiwit, net genoeg suiker om het oppervlak licht te karamelliseren, en dat is alles. Gebakken tot de korst goudbruin is en het hart nog zacht. Zonder chocolade, zonder toegevoegd vet — de smaak van de kokos staat centraal. Doos van 180g, ongeveer 12 rotsjes.",
+        ingredients:
+          "Geraspte kokosnoot, suiker, eiwit, zout.",
+        allergens: ["Eieren"],
+        seoTitle: "Kokosrotsje naturel 180g ambachtelijk — Au Fil des Saveurs",
+        seoDescription:
+          "Ambachtelijke naturel kokosrotsjes, net goudbruin gebakken. Zonder chocolade, zacht, geurig. Doos 180g, ongeveer 12 stuks.",
+      },
+      de: {
+        name: "Kokosmakrone Natur 180g",
+        shortDescription:
+          "Kokoskuppeln, gerade goldbraun gebacken — weich, duftend, ohne Schokolade, um die Kokosnuss sprechen zu lassen.",
+        longDescription:
+          "Die pure Version unserer Kokosmakrone: fein geriebene Kokosnuss, aufgeschlagenes Eiweiß, gerade so viel Zucker, um die Oberfläche leicht zu karamellisieren, und das war's. So lange gebacken, bis die Kruste goldbraun und der Kern noch weich ist. Ohne Schokolade, ohne zugesetztes Fett — der Kokosgeschmack steht im Vordergrund. Schachtel mit 180g, etwa 12 Makronen.",
+        ingredients:
+          "Geriebene Kokosnuss, Zucker, Eiweiß, Salz.",
+        allergens: ["Eier"],
+        seoTitle: "Kokosmakrone natur 180g handwerklich — Au Fil des Saveurs",
+        seoDescription:
+          "Handwerkliche natur Kokosmakronen, gerade goldbraun gebacken. Ohne Schokolade, weich, duftend. Schachtel 180g, ca. 12 Stück.",
+      },
+      en: {
+        name: "Coconut Rock Natural 180g",
+        shortDescription:
+          "Coconut domes baked to a soft gold — tender, fragrant, no chocolate so the coconut speaks for itself.",
+        longDescription:
+          "The pure version of our coconut rock: finely grated coconut, whipped egg whites, just enough sugar to lightly caramelise the surface, and that's all. Baked until the crust is golden and the core still soft. No chocolate, no added fat — the coconut flavour takes centre stage. 180g box, about 12 rocks.",
+        ingredients:
+          "Grated coconut, sugar, egg whites, salt.",
+        allergens: ["Eggs"],
+        seoTitle: "Coconut Rock natural 180g artisan — Au Fil des Saveurs",
+        seoDescription:
+          "Artisan natural coconut rocks, baked to a soft gold. No chocolate, tender, fragrant. 180g box, about 12 pieces.",
+      },
+    },
+  },
+  // ──────────────────────────────────────────────────────────────────────────
+  // BCT-AVOI-200 — Biscuit à l'avoine 200g
+  // ──────────────────────────────────────────────────────────────────────────
+  {
+    sku: "BCT-AVOI-200",
+    categorySlug: "avoine",
+    basePriceCents: 550,
+    weightGrams: 200,
     stockQuantity: 50,
     isFeatured: true,
     nutritionalFactsPer100g: {
       energy_kcal: 445,
-      fat_g: 22.0,
-      carbs_g: 55.0,
-      protein_g: 7.8,
-      salt_g: 0.2,
+      fat_g: 19.5,
+      carbs_g: 60.0,
+      protein_g: 8.0,
+      salt_g: 0.40,
     },
-    imageCount: 2,
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+        altText: "Biscuits à l'avoine épais, dorés, posés sur un torchon de lin",
+      },
+      {
+        url: "https://images.unsplash.com/photo-1568051243851-f9b136146e97?fm=jpg&q=75&w=1200&auto=format&fit=crop",
+        altText: "Biscuits avoine empilés près d'un bol de flocons d'avoine",
+      },
+    ],
     translations: {
       fr: {
-        name: "Macaron noisette x6",
+        name: "Biscuit Avoine 200g",
         shortDescription:
-          "Six macarons moelleux à la noisette du Piémont — une douceur délicate avec une légère note torréfiée.",
+          "Gros biscuits rustiques aux flocons d'avoine et cassonade — texture dense, légèrement moelleuse, parfaits pour le petit-déj.",
         longDescription:
-          "Chaque macaron est composé d'une coque légèrement croquante à l'extérieur et tendre à l'intérieur, avec une ganache onctueuse à la pâte de noisette du Piémont. La noisette, soigneusement torréfiée avant d'être incorporée, apporte ses notes caramélisées et profondes qui subliment la douceur du biscuit. Une confection délicate, idéale pour offrir ou pour transformer une pause ordinaire en véritable instant de plaisir.",
+          "Notre biscuit avoine est ce qu'on appelle dans le métier un biscuit \"de table\" : épais, généreux, à la texture dense mais légèrement moelleuse en cœur. Préparé avec des flocons d'avoine complets, de la cassonade brune pour la note caramélisée, du beurre fermier et une pincée de cannelle. Aucun arôme artificiel : juste les ingrédients de base, dans leurs bonnes proportions. Excellent au petit-déjeuner trempé dans un café au lait, ou à 16h avec un thé. Sachet refermable de 200g.",
         ingredients:
-          "Sucre glace, poudre d'amandes, pâte de noisettes du Piémont (noisettes), blancs d'œufs, crème fraîche (lait), beurre (lait), chocolat blanc (sucre, beurre de cacao, lait entier, vanille).",
-        allergens: ["Gluten", "Lait", "Œufs", "Fruits à coque"],
-        seoTitle: "Macarons noisette du Piémont x6 — Au Fil des Saveurs",
+          "Flocons d'avoine, farine de blé, cassonade brune, beurre (lait), œufs, cannelle, levure chimique, sel.",
+        allergens: ["Gluten", "Avoine", "Lait", "Œufs"],
+        seoTitle: "Biscuit Avoine 200g artisanal belge — Au Fil des Saveurs",
         seoDescription:
-          "Six macarons artisanaux à la noisette du Piémont : coques délicates, ganache onctueuse et notes torréfiées pour un moment de pur raffinement.",
+          "Biscuits avoine artisanaux : flocons complets, cassonade brune, beurre fermier, cannelle. Texture dense et moelleuse. Sachet 200g.",
       },
       nl: {
-        name: "Hazelnoot macaron x6",
+        name: "Haverkoekje 200g",
         shortDescription:
-          "Zes zachte hazelnootmacarons met Piëmontese hazelnoten — een delicate zoetheid met een lichte geroosterde toets.",
+          "Grote rustieke koekjes met haverlokken en bruine suiker — dense, lichtjes zachte textuur, perfect bij het ontbijt.",
         longDescription:
-          "Elke macaron bestaat uit een licht knapperige buitenkant en een zacht binnenste, met een romige ganache van Piëmontese hazelnootpasta. De hazelnoot, zorgvuldig geroosterd voor verwerking, brengt zijn gekarameliseerde en diepe noten die de zoetheid van het koekje naar een hoger niveau tillen. Een delicate creatie, ideaal als cadeau of om een gewone pauze te transformeren in een echt genietsmoment.",
+          "Ons haverkoekje is wat in het vak een \"tafelkoekje\" heet: dik, royaal, met een dichte maar in het hart lichtjes zachte textuur. Bereid met volle haverlokken, bruine basterdsuiker voor de gekarameliseerde toets, boerderijboter en een snufje kaneel. Geen kunstmatige aroma's: enkel de basisingrediënten, in de juiste verhoudingen. Heerlijk bij het ontbijt gedoopt in een koffie verkeerd, of om 16 uur bij een thee. Hersluitbare zak van 200g.",
         ingredients:
-          "Poedersuiker, amandelpoeder, Piëmontese hazelnootpasta (hazelnoten), eiwitten, slagroom (melk), boter (melk), witte chocolade (suiker, cacaoboter, volle melk, vanille).",
-        allergens: ["Gluten", "Melk", "Eieren", "Noten"],
-        seoTitle: "Piëmontese hazelnoot macarons x6 — Au Fil des Saveurs",
+          "Haverlokken, tarwebloem, bruine basterdsuiker, boter (melk), eieren, kaneel, rijsmiddel, zout.",
+        allergens: ["Gluten", "Haver", "Melk", "Eieren"],
+        seoTitle: "Haverkoekje 200g ambachtelijk Belgisch — Au Fil des Saveurs",
         seoDescription:
-          "Zes ambachtelijke hazelnootmacarons met Piëmontese hazelnoten: delicate koekjes, romige ganache en geroosterde noten voor een moment van puur verfijning.",
+          "Ambachtelijke haverkoekjes: volle lokken, bruine suiker, boerderijboter, kaneel. Dense en zachte textuur. Zak 200g.",
       },
       de: {
-        name: "Haselnuss-Macaron x6",
+        name: "Haferkeks 200g",
         shortDescription:
-          "Sechs zarte Piemonteser Haselnuss-Macarons — delikate Süße mit einer leichten gerösteten Note.",
+          "Große rustikale Kekse mit Haferflocken und braunem Zucker — dichte, leicht weiche Textur, perfekt zum Frühstück.",
         longDescription:
-          "Jeder Macaron besteht aus einer leicht knusprigen Außenschale und einem zarten Inneren, mit einer cremigen Ganache aus Piemonteser Haselnusspaste. Die sorgfältig gerösteten Haselnüsse bringen ihre karamellierten und tiefen Noten, die die Süße des Gebäcks auf ein neues Niveau heben. Eine delikate Kreation, ideal als Geschenk oder um eine gewöhnliche Pause in einen echten Genussmoment zu verwandeln.",
+          "Unser Haferkeks ist das, was in der Branche ein \"Tischkeks\" genannt wird: dick, großzügig, mit einer dichten, aber im Kern leicht weichen Textur. Zubereitet mit Vollkorn-Haferflocken, braunem Zucker für die karamellisierte Note, Bauernbutter und einer Prise Zimt. Keine künstlichen Aromen: nur die Grundzutaten in den richtigen Verhältnissen. Hervorragend zum Frühstück, in einen Milchkaffee getunkt, oder um 16 Uhr zum Tee. Wiederverschließbarer Beutel mit 200g.",
         ingredients:
-          "Puderzucker, Mandelmehl, Piemonteser Haselnusspaste (Haselnüsse), Eiweiß, Sahne (Milch), Butter (Milch), weiße Schokolade (Zucker, Kakaobutter, Vollmilch, Vanille).",
-        allergens: ["Gluten", "Milch", "Eier", "Schalenfrüchte"],
-        seoTitle: "Piemonteser Haselnuss-Macarons x6 — Au Fil des Saveurs",
+          "Haferflocken, Weizenmehl, brauner Zucker, Butter (Milch), Eier, Zimt, Backtriebmittel, Salz.",
+        allergens: ["Gluten", "Hafer", "Milch", "Eier"],
+        seoTitle: "Haferkeks 200g handwerklich belgisch — Au Fil des Saveurs",
         seoDescription:
-          "Sechs handgemachte Haselnuss-Macarons mit Piemonteser Haselnüssen: zarte Schalen, cremige Ganache und geröstete Noten für einen Moment purer Raffinesse.",
+          "Handwerkliche Haferkekse: Vollkornflocken, brauner Zucker, Bauernbutter, Zimt. Dichte und weiche Textur. Beutel 200g.",
       },
       en: {
-        name: "Hazelnut Macaron x6",
+        name: "Oat Biscuit 200g",
         shortDescription:
-          "Six pillowy Piedmont hazelnut macarons — delicate sweetness with a gentle, toasty depth.",
+          "Big rustic oat biscuits with brown sugar — dense, slightly chewy texture, perfect for breakfast.",
         longDescription:
-          "Each macaron features a slightly crisp outer shell giving way to a tender, chewy centre, filled with a silky Piedmont hazelnut ganache. The hazelnuts are carefully toasted before blending, coaxing out their caramelised, nutty depth and lifting the sweetness of the biscuit into something truly special. A refined confection, perfect as a gift or for turning an ordinary break into a moment of genuine pleasure.",
+          "Our oat biscuit is what the trade calls a \"table biscuit\": thick, generous, with a dense but slightly chewy core. Made with whole rolled oats, brown sugar for the caramel note, farmhouse butter and a pinch of cinnamon. No artificial flavours: just the basics, in the right proportions. Excellent for breakfast dipped in a café au lait, or at four o'clock with a cup of tea. 200g resealable bag.",
         ingredients:
-          "Icing sugar, almond flour, Piedmont hazelnut paste (hazelnuts), egg whites, cream (milk), butter (milk), white chocolate (sugar, cocoa butter, whole milk, vanilla).",
-        allergens: ["Gluten", "Milk", "Eggs", "Tree nuts"],
-        seoTitle: "Piedmont Hazelnut Macarons x6 — Au Fil des Saveurs",
+          "Rolled oats, wheat flour, brown sugar, butter (milk), eggs, cinnamon, raising agent, salt.",
+        allergens: ["Gluten", "Oats", "Milk", "Eggs"],
+        seoTitle: "Oat Biscuit 200g artisan Belgian — Au Fil des Saveurs",
         seoDescription:
-          "Six artisan hazelnut macarons with Piedmont hazelnuts: delicate shells, silky ganache and toasted notes for a moment of pure refinement.",
-      },
-    },
-  },
-
-  // BCT-COOK-CHOC-250 — Cookies pépites chocolat 250g
-  {
-    sku: "BCT-COOK-CHOC-250",
-    categorySlug: "chocolat",
-    basePriceCents: 690,
-    weightGrams: 250,
-    stockQuantity: 50,
-    isFeatured: false,
-    nutritionalFactsPer100g: {
-      energy_kcal: 490,
-      fat_g: 24.0,
-      carbs_g: 63.0,
-      protein_g: 6.0,
-      salt_g: 0.6,
-    },
-    imageCount: 2,
-    translations: {
-      fr: {
-        name: "Cookies pépites chocolat 250g",
-        shortDescription:
-          "Des cookies généreux, légèrement dorés en surface et fondants au cœur — avec de vraies pépites de chocolat belge.",
-        longDescription:
-          "Ces cookies sont tout ce qu'un bon cookie devrait être : dorés à l'extérieur, légèrement moelleux et fondants à l'intérieur, avec de grosses pépites de chocolat belge qui se nichent dans chaque bouchée. La recette utilise du beurre non salé de qualité, de la cassonade pour une douceur profonde et une touche de vanille naturelle. Conditionnés en sachet de 250g, ils font le bonheur des petits et des grands — au goûter, en dessert ou simplement quand l'envie se fait sentir.",
-        ingredients:
-          "Farine de blé, beurre (lait), sucre, cassonade, pépites de chocolat belge (cacao, sucre, beurre de cacao), œufs, extrait de vanille naturelle, levure chimique, sel.",
-        allergens: ["Gluten", "Lait", "Œufs"],
-        seoTitle: "Cookies pépites de chocolat belge 250g — Au Fil des Saveurs",
-        seoDescription:
-          "Des cookies artisanaux avec de vraies pépites de chocolat belge : croustillants dehors, fondants dedans. Le sachet de 250g idéal pour les gourmands.",
-      },
-      nl: {
-        name: "Chocoladechip cookies 250g",
-        shortDescription:
-          "Royale koekjes, licht goudbruin aan de buitenkant en smeltend van binnen — met echte Belgische chocoladechips.",
-        longDescription:
-          "Deze cookies zijn alles wat een goed koekje moet zijn: goudbruin aan de buitenkant, licht zacht en smeltend van binnen, met grote stukjes Belgische chocolade die in elke hap genesteld zitten. Het recept gebruikt kwaliteits-ongezouten boter, bruine suiker voor een diepe zoetheid en een vleugje natuurlijke vanille. Verpakt in een zak van 250g, maken ze groot en klein blij — bij de vieruurtje, als dessert of gewoon wanneer de trek toeslaat.",
-        ingredients:
-          "Tarwebloem, boter (melk), suiker, bruine suiker, Belgische chocoladechips (cacao, suiker, cacaoboter), eieren, natuurlijk vanille-extract, rijsmiddel, zout.",
-        allergens: ["Gluten", "Melk", "Eieren"],
-        seoTitle: "Belgische chocoladechip cookies 250g — Au Fil des Saveurs",
-        seoDescription:
-          "Ambachtelijke cookies met echte Belgische chocoladechips: knapperig van buiten, smeltend van binnen. De ideale zak van 250g voor de echte zoetekauw.",
-      },
-      de: {
-        name: "Schokoladenchip-Cookies 250g",
-        shortDescription:
-          "Großzügige Cookies, außen leicht goldbraun und innen zart schmelzend — mit echten belgischen Schokoladenchips.",
-        longDescription:
-          "Diese Cookies sind alles, was ein guter Keks sein sollte: außen goldbraun, innen leicht weich und schmelzend, mit großen Stücken belgischer Schokolade in jedem Bissen. Das Rezept verwendet hochwertige ungesalzene Butter, braunen Zucker für eine tiefe Süße und einen Hauch natürlicher Vanille. Im 250g-Beutel verpackt erfreuen sie Groß und Klein — als Nachmittagssnack, Dessert oder einfach wann immer die Lust aufkommt.",
-        ingredients:
-          "Weizenmehl, Butter (Milch), Zucker, brauner Zucker, belgische Schokoladenchips (Kakao, Zucker, Kakaobutter), Eier, natürliches Vanilleextrakt, Backpulver, Salz.",
-        allergens: ["Gluten", "Milch", "Eier"],
-        seoTitle: "Belgische Schokoladenchip-Cookies 250g — Au Fil des Saveurs",
-        seoDescription:
-          "Handgemachte Cookies mit echten belgischen Schokoladenchips: außen knusprig, innen schmelzend. Der ideale 250g-Beutel für echte Naschkatzen.",
-      },
-      en: {
-        name: "Chocolate Chip Cookies 250g",
-        shortDescription:
-          "Generous cookies, lightly golden on the outside and soft in the middle — loaded with real Belgian chocolate chips.",
-        longDescription:
-          "These cookies are everything a great cookie should be: golden on the outside, slightly chewy and melting on the inside, with big pieces of Belgian chocolate tucked into every bite. The recipe calls for quality unsalted butter, brown sugar for a deeper caramel sweetness, and a hint of natural vanilla. Packed in a 250g bag, they are a crowd-pleaser for all ages — at snack time, as dessert, or simply when the craving strikes.",
-        ingredients:
-          "Wheat flour, butter (milk), sugar, brown sugar, Belgian chocolate chips (cocoa, sugar, cocoa butter), eggs, natural vanilla extract, baking powder, salt.",
-        allergens: ["Gluten", "Milk", "Eggs"],
-        seoTitle: "Belgian Chocolate Chip Cookies 250g — Au Fil des Saveurs",
-        seoDescription:
-          "Artisan cookies with real Belgian chocolate chips: crisp outside, soft and gooey inside. The perfect 250g bag for true chocolate lovers.",
-      },
-    },
-  },
-
-  // BCT-GALE-BEUR-150 — Galettes pur beurre 150g
-  {
-    sku: "BCT-GALE-BEUR-150",
-    categorySlug: "sables",
-    basePriceCents: 390,
-    weightGrams: 150,
-    stockQuantity: 50,
-    isFeatured: false,
-    nutritionalFactsPer100g: {
-      energy_kcal: 495,
-      fat_g: 25.5,
-      carbs_g: 62.0,
-      protein_g: 5.5,
-      salt_g: 0.8,
-    },
-    imageCount: 2,
-    translations: {
-      fr: {
-        name: "Galettes pur beurre 150g",
-        shortDescription:
-          "Des galettes rondes et fondantes, façonnées à la main avec du pur beurre fermier — la simplicité à l'état pur.",
-        longDescription:
-          "Ces galettes pur beurre sont le témoignage de la puissance des bons ingrédients. Fabriquées avec du beurre fermier de qualité supérieure, de la farine de blé et une touche de sel fin, elles développent à la cuisson une saveur beurrée profonde et une texture qui fond en bouche. Rondes, régulières, légèrement dorées : elles incarnent l'élégance du biscuit classique. Un accompagnement parfait pour le thé de l'après-midi ou une simple douceur après le repas.",
-        ingredients: "Farine de blé, beurre fermier (lait), sucre, sel fin.",
-        allergens: ["Gluten", "Lait"],
-        seoTitle: "Galettes pur beurre artisanales 150g — Au Fil des Saveurs",
-        seoDescription:
-          "Nos galettes pur beurre : beurre fermier de qualité, texture fondante, saveur authentique. Un classique indémodable en sachet de 150g.",
-      },
-      nl: {
-        name: "Pure boter galetten 150g",
-        shortDescription:
-          "Ronde, smeltende galetten, met de hand gevormd met pure boerenboter — eenvoud in zijn puurste vorm.",
-        longDescription:
-          "Deze pure boter galetten zijn een bewijs van de kracht van goede ingrediënten. Gemaakt met superieure boerenboter, tarwebloem en een vleugje fijn zout, ontwikkelen ze tijdens het bakken een diepe boterse smaak en een textuur die smelt in de mond. Rond, regelmatig, licht goudbruin: ze belichamen de elegantie van het klassieke koekje. Een perfecte begeleider voor de namiddagthee of een eenvoudige verwennerij na de maaltijd.",
-        ingredients: "Tarwebloem, boerenboter (melk), suiker, fijn zout.",
-        allergens: ["Gluten", "Melk"],
-        seoTitle: "Ambachtelijke pure boter galetten 150g — Au Fil des Saveurs",
-        seoDescription:
-          "Onze pure boter galetten: kwaliteitsboerenboter, smeltende textuur, authentieke smaak. Een tijdloze klassieker in een zak van 150g.",
-      },
-      de: {
-        name: "Reine Butter-Galetten 150g",
-        shortDescription:
-          "Runde, zart schmelzende Galetten, von Hand geformt mit echter Landbutter — Einfachheit in reinster Form.",
-        longDescription:
-          "Diese reinen Butter-Galetten sind ein Zeugnis der Kraft guter Zutaten. Mit hochwertiger Landbutter, Weizenmehl und einer Prise feinem Salz entwickeln sie beim Backen ein tiefes Butteararoma und eine Textur, die auf der Zunge zergeht. Rund, gleichmäßig, leicht goldbraun: Sie verkörpern die Eleganz des klassischen Kekses. Eine perfekte Begleitung zum Nachmittagstee oder als einfache Süßigkeit nach dem Essen.",
-        ingredients: "Weizenmehl, Landbutter (Milch), Zucker, feines Salz.",
-        allergens: ["Gluten", "Milch"],
-        seoTitle: "Handgemachte reine Butter-Galetten 150g — Au Fil des Saveurs",
-        seoDescription:
-          "Unsere reinen Butter-Galetten: Qualitätslandbutter, schmelzende Textur, authentischer Geschmack. Ein zeitloser Klassiker im 150g-Beutel.",
-      },
-      en: {
-        name: "Pure Butter Shortbread Rounds 150g",
-        shortDescription:
-          "Round, melt-in-the-mouth rounds shaped by hand with pure farmhouse butter — simplicity at its finest.",
-        longDescription:
-          "These pure butter rounds are a testament to the power of excellent ingredients. Made with top-grade farmhouse butter, wheat flour and a touch of fine salt, they develop a deep, rounded butter flavour and a texture that dissolves on the tongue. Perfectly round, evenly golden: they embody the timeless elegance of a classic biscuit. A natural partner for afternoon tea, or a quiet indulgence to finish a meal.",
-        ingredients: "Wheat flour, farmhouse butter (milk), sugar, fine salt.",
-        allergens: ["Gluten", "Milk"],
-        seoTitle: "Artisan Pure Butter Shortbread Rounds 150g — Au Fil des Saveurs",
-        seoDescription:
-          "Our pure butter shortbread rounds: quality farmhouse butter, melt-in-the-mouth texture, authentic flavour. A timeless classic in a 150g bag.",
-      },
-    },
-  },
-
-  // BCT-SPEC-SG-180 — Spéculoos sans gluten 180g
-  {
-    sku: "BCT-SPEC-SG-180",
-    categorySlug: "sans-gluten",
-    basePriceCents: 490,
-    weightGrams: 180,
-    stockQuantity: 50,
-    isFeatured: false,
-    nutritionalFactsPer100g: {
-      energy_kcal: 452,
-      fat_g: 19.0,
-      carbs_g: 66.0,
-      protein_g: 4.5,
-      salt_g: 0.5,
-    },
-    imageCount: 2,
-    translations: {
-      fr: {
-        name: "Spéculoos sans gluten 180g",
-        shortDescription:
-          "La saveur authentique du spéculoos belge revisitée sans gluten — aussi croustillant et épicé que l'original.",
-        longDescription:
-          "Élaborés pour que personne ne soit exclu du plaisir du spéculoos, ces biscuits sans gluten réinterprètent la recette traditionnelle avec un mélange de farine de riz et de fécule de maïs. Le résultat est étonnant : la même texture croustillante, le même bouquet d'épices chaudes — cannelle, gingembre, muscade — et la même couleur ambrée caractéristique. Certifiés sans gluten, ils sont également exempts de tout allergène à base de blé. Idéaux pour tous ceux qui souhaitent savourer un vrai goût belge sans compromis.",
-        ingredients:
-          "Farine de riz, fécule de maïs, cassonade brune, huile de noix de coco, épices (cannelle, gingembre, muscade, clou de girofle), levure chimique (sans gluten), sel.",
-        allergens: ["Lait"],
-        seoTitle: "Spéculoos sans gluten belge 180g — Au Fil des Saveurs",
-        seoDescription:
-          "Des spéculoos sans gluten avec toute la saveur de l'original : épices chaudes, texture croustillante, certifiés sans gluten. 180g de plaisir accessible à tous.",
-      },
-      nl: {
-        name: "Glutenvrije speculoos 180g",
-        shortDescription:
-          "De authentieke smaak van Belgische speculoos herdacht zonder gluten — even knapperig en gekruid als het origineel.",
-        longDescription:
-          "Ontwikkeld zodat niemand het genot van speculoos hoeft te missen, herinterpreteren deze glutenvrije koekjes het traditionele recept met een mengsel van rijstmeel en maïszetmeel. Het resultaat is verrassend: dezelfde knapperige textuur, hetzelfde boeket van warme specerijen — kaneel, gember, nootmuskaat — en dezelfde karakteristieke amberkleur. Gecertificeerd glutenvrij en vrij van alle op tarwe gebaseerde allergenen. Ideaal voor iedereen die wil genieten van een echte Belgische smaak zonder compromis.",
-        ingredients:
-          "Rijstmeel, maïszetmeel, bruine basterdsuiker, kokosolie, specerijen (kaneel, gember, nootmuskaat, kruidnagel), glutenvrij rijsmiddel, zout.",
-        allergens: ["Melk"],
-        seoTitle: "Belgische glutenvrije speculoos 180g — Au Fil des Saveurs",
-        seoDescription:
-          "Glutenvrije speculoos met alle smaak van het origineel: warme specerijen, knapperige textuur, gecertificeerd glutenvrij. 180g plezier voor iedereen.",
-      },
-      de: {
-        name: "Glutenfreier Spekulatius 180g",
-        shortDescription:
-          "Der authentische Geschmack belgischen Spekulatius neu gedacht ohne Gluten — genauso knusprig und würzig wie das Original.",
-        longDescription:
-          "Entwickelt damit niemand das Vergnügen von Spekulatius verpassen muss, interpretieren diese glutenfreien Kekse das traditionelle Rezept mit einer Mischung aus Reismehl und Maisstärke neu. Das Ergebnis ist überraschend: dieselbe knusprige Textur, dasselbe Bouquet warmer Gewürze — Zimt, Ingwer, Muskatnuss — und dieselbe charakteristische Bernsteinfarbe. Glutenfrei zertifiziert und frei von allen weizenhaltigen Allergenen. Ideal für alle, die einen echten belgischen Geschmack ohne Kompromiss genießen möchten.",
-        ingredients:
-          "Reismehl, Maisstärke, brauner Zucker, Kokosöl, Gewürze (Zimt, Ingwer, Muskatnuss, Nelken), glutenfreies Backpulver, Salz.",
-        allergens: ["Milch"],
-        seoTitle: "Belgischer glutenfreier Spekulatius 180g — Au Fil des Saveurs",
-        seoDescription:
-          "Glutenfreier Spekulatius mit dem vollen Geschmack des Originals: warme Gewürze, knusprige Textur, glutenfrei zertifiziert. 180g Genuss für alle.",
-      },
-      en: {
-        name: "Gluten-Free Spéculoos 180g",
-        shortDescription:
-          "The authentic taste of Belgian spéculoos reimagined without gluten — just as crisp and spiced as the original.",
-        longDescription:
-          "Crafted so no one misses out on the pleasure of spéculoos, these gluten-free biscuits reinterpret the traditional recipe using a blend of rice flour and corn starch. The result is genuinely surprising: the same crisp texture, the same bouquet of warming spices — cinnamon, ginger, nutmeg — and that same characteristic amber colour. Certified gluten-free and free from all wheat-based allergens. Perfect for anyone who wants a true Belgian taste without compromise.",
-        ingredients:
-          "Rice flour, corn starch, dark brown sugar, coconut oil, spices (cinnamon, ginger, nutmeg, cloves), gluten-free baking powder, salt.",
-        allergens: ["Milk"],
-        seoTitle: "Belgian Gluten-Free Spéculoos 180g — Au Fil des Saveurs",
-        seoDescription:
-          "Gluten-free spéculoos with all the flavour of the original: warming spices, crisp texture, certified gluten-free. 180g of pleasure for everyone.",
-      },
-    },
-  },
-
-  // BCT-FLOR-AMAN-200 — Florentins amandes 200g
-  {
-    sku: "BCT-FLOR-AMAN-200",
-    categorySlug: "chocolat",
-    basePriceCents: 550,
-    weightGrams: 200,
-    stockQuantity: 50,
-    isFeatured: false,
-    nutritionalFactsPer100g: {
-      energy_kcal: 515,
-      fat_g: 28.0,
-      carbs_g: 58.0,
-      protein_g: 7.2,
-      salt_g: 0.25,
-    },
-    imageCount: 2,
-    translations: {
-      fr: {
-        name: "Florentins amandes 200g",
-        shortDescription:
-          "De fins biscuits caramélisés garnis d'amandes effilées et enrobés de chocolat noir — une confiserie d'exception.",
-        longDescription:
-          "Les florentins sont l'un des joyaux de la pâtisserie belge : une fine couche de caramel aux amandes effilées, légèrement croustillante et dorée, dont le revers est généreusement nappé de chocolat noir belge. Chaque bouchée offre un contraste saisissant entre le caramel fondant, le croquant des amandes et l'amertume du chocolat. Une confiserie d'exception, idéale pour offrir en cadeau ou pour ponctuer un repas raffiné d'une note sucrée et élégante.",
-        ingredients:
-          "Amandes effilées, sucre, miel, crème fraîche (lait), beurre (lait), chocolat noir (cacao, sucre, beurre de cacao).",
-        allergens: ["Lait", "Fruits à coque"],
-        seoTitle: "Florentins amandes et chocolat noir 200g — Au Fil des Saveurs",
-        seoDescription:
-          "Des florentins artisanaux belges : caramel croustillant, amandes effilées et chocolat noir. Un biscuit d'exception en boîte de 200g.",
-      },
-      nl: {
-        name: "AmandelFlorentijnen 200g",
-        shortDescription:
-          "Fijne gekarameliseerde koekjes met geschaafde amandelen en gecoat met pure chocolade — een uitzonderlijk snoepgoed.",
-        longDescription:
-          "Florentijnen zijn een van de juweeltjes van de Belgische banketbakkerij: een dunne laag karamel met geschaafde amandelen, licht knapperig en goudbruin, waarvan de onderkant royaal gedoopt is in Belgische pure chocolade. Elke hap biedt een treffend contrast tussen de smeltende karamel, het knappen van de amandelen en de bitterheid van de chocolade. Een uitzonderlijk snoepgoed, ideaal als cadeau of om een verfijnd diner te besluiten met een zoete en elegante noot.",
-        ingredients:
-          "Geschaafde amandelen, suiker, honing, slagroom (melk), boter (melk), pure chocolade (cacao, suiker, cacaoboter).",
-        allergens: ["Melk", "Noten"],
-        seoTitle: "Amandel Florentijnen en pure chocolade 200g — Au Fil des Saveurs",
-        seoDescription:
-          "Ambachtelijke Belgische Florentijnen: knapperige karamel, geschaafde amandelen en pure chocolade. Een uitzonderlijk koekje in een doos van 200g.",
-      },
-      de: {
-        name: "Mandelfloren-Tinen 200g",
-        shortDescription:
-          "Feine karamellisierte Kekse mit Mandelblättchen und überzogen mit Zartbitterschokolade — eine außergewöhnliche Konfiserie.",
-        longDescription:
-          "Florentiner sind eines der Juwelen der belgischen Pâtisserie: eine dünne Karamellschicht mit Mandelblättchen, leicht knusprig und goldbraun, deren Unterseite großzügig mit belgischer Zartbitterschokolade überzogen ist. Jeder Bissen bietet einen beeindruckenden Kontrast zwischen dem schmelzenden Karamell, dem Knistern der Mandeln und der Bitterkeit der Schokolade. Eine außergewöhnliche Konfiserie, ideal als Geschenk oder um ein feines Essen mit einem süßen und eleganten Abschluss zu krönen.",
-        ingredients:
-          "Mandelblättchen, Zucker, Honig, Sahne (Milch), Butter (Milch), Zartbitterschokolade (Kakao, Zucker, Kakaobutter).",
-        allergens: ["Milch", "Schalenfrüchte"],
-        seoTitle: "Mandelfloren-Tinen und Zartbitterschokolade 200g — Au Fil des Saveurs",
-        seoDescription:
-          "Handgemachte belgische Florentiner: knuspriges Karamell, Mandelblättchen und Zartbitterschokolade. Ein außergewöhnlicher Keks in der 200g-Box.",
-      },
-      en: {
-        name: "Almond Florentines 200g",
-        shortDescription:
-          "Thin caramelised biscuits packed with flaked almonds and coated in dark chocolate — a confection of rare elegance.",
-        longDescription:
-          "Florentines are one of the jewels of Belgian pâtisserie: a thin layer of almond-flake caramel, just crisp and golden, with a back generously coated in Belgian dark chocolate. Each bite offers a striking contrast between the yielding caramel, the snap of the almonds and the bittersweet depth of the chocolate. An exceptional confection, perfect to give as a gift or to close a refined dinner on a sweet and elegant note.",
-        ingredients:
-          "Flaked almonds, sugar, honey, cream (milk), butter (milk), dark chocolate (cocoa, sugar, cocoa butter).",
-        allergens: ["Milk", "Tree nuts"],
-        seoTitle: "Almond Florentines with Dark Chocolate 200g — Au Fil des Saveurs",
-        seoDescription:
-          "Artisan Belgian florentines: crisp caramel, flaked almonds and dark chocolate. An exceptional biscuit in a 200g box.",
-      },
-    },
-  },
-
-  // BCT-SPRI-VANI-200 — Spritz vanille 200g
-  {
-    sku: "BCT-SPRI-VANI-200",
-    categorySlug: "sables",
-    basePriceCents: 550,
-    weightGrams: 200,
-    stockQuantity: 50,
-    isFeatured: false,
-    nutritionalFactsPer100g: {
-      energy_kcal: 482,
-      fat_g: 23.0,
-      carbs_g: 64.0,
-      protein_g: 5.8,
-      salt_g: 0.35,
-    },
-    imageCount: 2,
-    translations: {
-      fr: {
-        name: "Spritz vanille 200g",
-        shortDescription:
-          "Des petits sablés en étoile, délicatement parfumés à la vanille bourbon — légers, friables et irrésistiblement beurrés.",
-        longDescription:
-          "Les spritz sont une institution de la biscuiterie artisanale belge. Dressés à la poche à douille cannelée en jolies rosettes ou étoiles, ces petits sablés à la vanille bourbon fondent littéralement en bouche, laissant un sillage de beurre doux et de vanille naturelle. Leur texture friable et légère en fait des biscuits presque aériens, malgré leur richesse. Parfaits pour accompagner un café ou disposés dans une boîte cadeau pour combler vos proches.",
-        ingredients:
-          "Farine de blé, beurre (lait), sucre glace, œufs, extrait naturel de vanille bourbon, sel.",
-        allergens: ["Gluten", "Lait", "Œufs"],
-        seoTitle: "Spritz vanille bourbon artisanaux 200g — Au Fil des Saveurs",
-        seoDescription:
-          "Nos spritz à la vanille bourbon : petits sablés légers, beurrés et fondants en forme d'étoile. 200g de biscuiterie belge artisanale.",
-      },
-      nl: {
-        name: "Vanille spritz 200g",
-        shortDescription:
-          "Kleine stervormige zandkoekjes, delicaat geparfumeerd met bourbon vanille — licht, kruimelig en onweerstaanbaar boterig.",
-        longDescription:
-          "Spritz zijn een instelling van de Belgische ambachtelijke koekjesbakkerij. Gespoten via een gekartelde spuitzak in mooie roosjes of sterren, smelten deze kleine vanille-zandkoekjes letterlijk in de mond, met een nasmaak van zachte boter en natuurlijke vanille. Hun kruimelige en lichte textuur maakt ze bijna luchtig, ondanks hun rijkheid. Perfect bij een koffie of mooi gepresenteerd in een geschenkdoos om uw dierbaren te verwennen.",
-        ingredients:
-          "Tarwebloem, boter (melk), poedersuiker, eieren, natuurlijk bourbon vanille-extract, zout.",
-        allergens: ["Gluten", "Melk", "Eieren"],
-        seoTitle: "Ambachtelijke bourbon vanille spritz 200g — Au Fil des Saveurs",
-        seoDescription:
-          "Onze bourbon vanille spritz: kleine lichte, boterige en smeltende stervormige zandkoekjes. 200g ambachtelijke Belgische koekjesbakkerij.",
-      },
-      de: {
-        name: "Vanille-Spritzgebäck 200g",
-        shortDescription:
-          "Kleine sternförmige Mürbeteigkekse, zart mit Bourbon-Vanille parfümiert — leicht, zart-mürbe und unwiderstehlich butterig.",
-        longDescription:
-          "Spritzgebäck ist eine Institution der belgischen handwerklichen Keksbackerei. Durch eine Sterntülle als hübsche Rosetten oder Sterne gespritzt, schmelzen diese kleinen Vanillesandgebäcke buchstäblich auf der Zunge und hinterlassen ein Aroma von weicher Butter und natürlicher Vanille. Ihre mürbe und leichte Textur macht sie trotz ihrer Reichhaltigkeit fast luftig. Perfekt zu einem Kaffee oder in einer Geschenkbox hübsch präsentiert, um Ihre Liebsten zu verwöhnen.",
-        ingredients:
-          "Weizenmehl, Butter (Milch), Puderzucker, Eier, natürliches Bourbon-Vanilleextrakt, Salz.",
-        allergens: ["Gluten", "Milch", "Eier"],
-        seoTitle: "Handgemachtes Bourbon-Vanille-Spritzgebäck 200g — Au Fil des Saveurs",
-        seoDescription:
-          "Unser Bourbon-Vanille-Spritzgebäck: kleine, leichte, butterige und schmelzende sternförmige Mürbeteigkekse. 200g belgische handwerkliche Keksbackerei.",
-      },
-      en: {
-        name: "Vanilla Spritz Biscuits 200g",
-        shortDescription:
-          "Little star-shaped shortbreads, delicately scented with bourbon vanilla — light, crumbly and irresistibly buttery.",
-        longDescription:
-          "Spritz are a cornerstone of Belgian artisan biscuit-making. Piped through a star nozzle into pretty rosettes and stars, these little vanilla shortbreads dissolve on the tongue, leaving a trail of soft butter and natural vanilla. Their light, crumbly texture makes them almost airy despite their richness. Perfect alongside a coffee or presented in a gift box to delight the people you love.",
-        ingredients:
-          "Wheat flour, butter (milk), icing sugar, eggs, natural bourbon vanilla extract, salt.",
-        allergens: ["Gluten", "Milk", "Eggs"],
-        seoTitle: "Artisan Bourbon Vanilla Spritz Biscuits 200g — Au Fil des Saveurs",
-        seoDescription:
-          "Our bourbon vanilla spritz: light, buttery, melt-in-the-mouth star-shaped shortbreads. 200g of Belgian artisan biscuit-making at its finest.",
+          "Artisan oat biscuits: whole rolled oats, brown sugar, farmhouse butter, cinnamon. Dense, chewy texture. 200g bag.",
       },
     },
   },

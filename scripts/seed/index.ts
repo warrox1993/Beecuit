@@ -103,20 +103,18 @@ async function seedProducts() {
         });
     }
 
-    const existing = await db
-      .select()
-      .from(productImages)
-      .where(sql`${productImages.productId} = ${prod.id}`);
-    if (existing.length === 0) {
-      for (let i = 0; i < p.imageCount; i++) {
-        await db.insert(productImages).values({
-          productId: prod.id,
-          url: `https://picsum.photos/seed/${p.sku}-${i}/800/800`,
-          altText: p.translations.fr.name,
-          sortOrder: i,
-          isPrimary: i === 0,
-        });
-      }
+    // Replace any existing images with the curated list from data.ts
+    // (idempotent: re-seeding always reflects the source of truth).
+    await db.delete(productImages).where(sql`${productImages.productId} = ${prod.id}`);
+    for (let i = 0; i < p.images.length; i++) {
+      const img = p.images[i]!;
+      await db.insert(productImages).values({
+        productId: prod.id,
+        url: img.url,
+        altText: img.altText,
+        sortOrder: i,
+        isPrimary: i === 0,
+      });
     }
   }
 }
