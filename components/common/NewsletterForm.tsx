@@ -1,10 +1,11 @@
 "use client";
-import { useState, useTransition } from "react";
+import { useId, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { subscribeToNewsletter } from "@/lib/actions/newsletter.actions";
 
 export function NewsletterForm() {
+  const inputId = useId();
   const [email, setEmail] = useState("");
   const [pending, start] = useTransition();
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
@@ -26,25 +27,41 @@ export function NewsletterForm() {
         });
       }}
       className="flex flex-col gap-2"
+      aria-busy={pending || undefined}
     >
+      <label htmlFor={inputId} className="sr-only">
+        Adresse email
+      </label>
       <div className="flex gap-2">
         <input
+          id={inputId}
           type="email"
           required
+          aria-required="true"
+          autoComplete="email"
+          inputMode="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="ton@email.com"
-          className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 flex-1 rounded-md border bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+          className="border-warm-brown/20 focus-visible:border-honey-dark focus-visible:ring-honey-dark/30 flex-1 rounded-md border bg-white px-3 py-2 text-sm focus-visible:ring-2 focus-visible:outline-none"
         />
         <Button
           type="submit"
           disabled={pending}
-          className="bg-honey text-cream hover:bg-honey-dark"
+          aria-busy={pending || undefined}
+          className="bg-honey text-cream hover:bg-honey-dark focus-visible:ring-2 focus-visible:ring-honey-dark/40"
         >
           {pending ? "..." : "S'inscrire"}
         </Button>
       </div>
-      {msg && <p className={`text-xs ${msg.ok ? "text-leaf" : "text-terracotta"}`}>{msg.text}</p>}
+      {msg && (
+        <p
+          role={msg.ok ? "status" : "alert"}
+          className={`text-xs ${msg.ok ? "text-leaf" : "text-terracotta"}`}
+        >
+          {msg.text}
+        </p>
+      )}
     </form>
   );
 }
