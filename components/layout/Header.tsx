@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui-primitives/Container";
+import { Logo } from "@/components/brand/Logo";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { CartIcon } from "./CartIcon";
 import { NavLink } from "./NavLink";
@@ -13,8 +14,12 @@ export async function Header({ locale }: { locale: string }) {
     <header className="bg-cream/95 border-warm-brown/10 sticky top-0 z-50 border-b backdrop-blur-sm">
       <Container>
         <div className="flex h-16 items-center justify-between md:h-20">
-          <Link href="/" className="text-honey font-display text-2xl">
-            BeeCuit
+          <Link
+            href="/"
+            aria-label="Au Fil des Saveurs — Accueil"
+            className="text-warm-brown hover:text-honey-dark transition-colors"
+          >
+            <Logo variant="wordmark" className="h-10 w-auto md:h-12" />
           </Link>
           <nav className="hidden gap-8 md:flex" aria-label="Principal">
             <NavLink href="/biscuits">{t("biscuits")}</NavLink>
