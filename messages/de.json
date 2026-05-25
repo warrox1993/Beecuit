@@ -73,6 +73,23 @@
   "a11y": {
     "skipToContent": "Zum Hauptinhalt springen"
   },
+  "histoire": {
+    "eyebrow": "UNSERE GESCHICHTE",
+    "scriptAccent": "Maison",
+    "title": "Eine Lütticher Keksmanufaktur",
+    "lead": "Au Fil des Saveurs entstand 2026 aus einer einfachen Obsession: in jedem Bissen die Geste einer Hand zu spüren, die sich Zeit nimmt. Keine Fließbänder, keine industrielle Presse — nur Teig, Ofen und viel Geduld.",
+    "section1Title": "Die Werkstatt",
+    "section1Body": "In der Rue de la Maison in Lüttich, in einer achtzig Quadratmeter großen Werkstatt, backen wir jede Charge minutengenau. Wir beobachten das Backen — nicht mit einem Timer, sondern mit den Augen.",
+    "section1Quote": "Die Geste macht den Geschmack, nicht das Rezept.",
+    "section2Title": "Unsere Zutaten",
+    "section2Body": "Frische belgische Butter, bio Wallonisches Mehl, unraffinierter Rohrzucker, Madagaskar-Vanille. Eine Regel: Was wir nicht selbst kaufen würden, kommt nicht in den Teig.",
+    "section2Quote": "Weniger als fünf Zutaten pro Rezept, immer.",
+    "section3Title": "Die handwerkliche Geste",
+    "section3Body": "Wir glauben, Luxus ist Zeit. Zeit, sanft zu kneten. Zeit, ruhen zu lassen. Zeit, in jede Geschenkbox einen handgeschriebenen Gruß zu legen. Diese Zeit teilen wir mit jedem Keks.",
+    "signature": "— Das Haus Au Fil des Saveurs",
+    "ctaTitle": "Unsere Kekse entdecken",
+    "ctaSubtitle": "Dreißig Rezepte, sanft gebacken in Lüttich."
+  },
   "auth": {
     "signInTitle": "Bei Au Fil des Saveurs anmelden",
     "signInDescription": "Erhalte einen Login-Link per E-Mail — kein Passwort nötig.",

@@ -73,6 +73,23 @@
   "a11y": {
     "skipToContent": "Aller au contenu principal"
   },
+  "histoire": {
+    "eyebrow": "NOTRE HISTOIRE",
+    "scriptAccent": "Maison",
+    "title": "Une biscuiterie liégeoise",
+    "lead": "Au Fil des Saveurs est née en 2026 d'une obsession très simple : ressentir, dans chaque bouchée, le geste d'une main qui prend son temps. Pas de chaîne, pas de presse industrielle — juste de la pâte, du four, et beaucoup de patience.",
+    "section1Title": "L'atelier",
+    "section1Body": "Rue de la Maison, à Liège, dans un atelier de quatre-vingts mètres carrés, nous cuisons chaque fournée à la minute. La cuisson, on la regarde — pas avec une minuterie, mais avec les yeux. Quand le bord du sablé dore au point juste, on sort la plaque.",
+    "section1Quote": "Le geste fait la saveur, pas la recette.",
+    "section2Title": "Nos ingrédients",
+    "section2Body": "Beurre frais belge, farine bio de Wallonie, sucre de canne non raffiné, vanille de Madagascar. Un seul critère : si on n'achèterait pas l'ingrédient pour soi-même, il ne rentre pas dans la pâte.",
+    "section2Quote": "Moins de cinq ingrédients par recette, toujours.",
+    "section3Title": "Le geste artisan",
+    "section3Body": "Nous croyons que le luxe, c'est le temps. Le temps de pétrir doucement. Le temps de laisser reposer. Le temps de glisser, dans chaque coffret, un petit mot manuscrit. C'est ce temps qu'on offre avec chaque biscuit.",
+    "signature": "— La Maison Au Fil des Saveurs",
+    "ctaTitle": "Découvrir nos biscuits",
+    "ctaSubtitle": "Trente recettes, cuites doucement à Liège."
+  },
   "auth": {
     "signInTitle": "Se connecter à Au Fil des Saveurs",
     "signInDescription": "Reçois un lien de connexion par email — pas de mot de passe.",

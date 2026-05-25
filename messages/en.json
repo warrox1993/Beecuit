@@ -73,6 +73,23 @@
   "a11y": {
     "skipToContent": "Skip to main content"
   },
+  "histoire": {
+    "eyebrow": "OUR STORY",
+    "scriptAccent": "Maison",
+    "title": "A Liège biscuit house",
+    "lead": "Au Fil des Saveurs was born in 2026 from a very simple obsession: to feel, in every bite, the gesture of a hand that takes its time. No assembly line, no industrial press — only dough, oven, and a great deal of patience.",
+    "section1Title": "The workshop",
+    "section1Body": "On Rue de la Maison, in Liège, in an eighty-square-meter workshop, we bake each batch by the minute. We watch the baking — not with a timer, but with our eyes. When the shortbread edge browns just right, the tray comes out.",
+    "section1Quote": "The gesture makes the flavour, not the recipe.",
+    "section2Title": "Our ingredients",
+    "section2Body": "Fresh Belgian butter, organic Walloon flour, unrefined cane sugar, Madagascar vanilla. One rule: if we wouldn't buy it for ourselves, it doesn't go in the dough.",
+    "section2Quote": "Fewer than five ingredients per recipe, always.",
+    "section3Title": "The artisan gesture",
+    "section3Body": "We believe luxury is time. Time to knead gently. Time to let rest. Time to slip a handwritten note into every gift box. That is the time we share with every biscuit.",
+    "signature": "— The Au Fil des Saveurs House",
+    "ctaTitle": "Discover our biscuits",
+    "ctaSubtitle": "Thirty recipes, slowly baked in Liège."
+  },
   "auth": {
     "signInTitle": "Sign in to Au Fil des Saveurs",
     "signInDescription": "Receive a sign-in link by email — no password needed.",

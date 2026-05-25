@@ -73,6 +73,23 @@
   "a11y": {
     "skipToContent": "Ga naar de hoofdinhoud"
   },
+  "histoire": {
+    "eyebrow": "ONS VERHAAL",
+    "scriptAccent": "Maison",
+    "title": "Een Luikse koekjeshuis",
+    "lead": "Au Fil des Saveurs ontstond in 2026 uit een eenvoudige obsessie: in elke hap het gebaar voelen van een hand die de tijd neemt. Geen lopende band, geen industriële pers — alleen deeg, oven en veel geduld.",
+    "section1Title": "Het atelier",
+    "section1Body": "In de Rue de la Maison te Luik, in een atelier van tachtig vierkante meter, bakken we elke partij minuut per minuut. We kijken naar de baktijd — niet met een timer, maar met de ogen.",
+    "section1Quote": "Het gebaar maakt de smaak, niet het recept.",
+    "section2Title": "Onze ingrediënten",
+    "section2Body": "Verse Belgische boter, biologische bloem uit Wallonië, ongeraffineerde rietsuiker, vanille uit Madagaskar. Eén regel: wat we zelf niet zouden kopen, gaat niet in het deeg.",
+    "section2Quote": "Minder dan vijf ingrediënten per recept, altijd.",
+    "section3Title": "Het ambachtelijke gebaar",
+    "section3Body": "We geloven dat luxe tijd is. Tijd om zacht te kneden. Tijd om te laten rusten. Tijd om in elke doos een handgeschreven woordje te schuiven. Die tijd schenken we mee met elk koekje.",
+    "signature": "— Het Huis Au Fil des Saveurs",
+    "ctaTitle": "Ontdek onze koekjes",
+    "ctaSubtitle": "Dertig recepten, zacht gebakken in Luik."
+  },
   "auth": {
     "signInTitle": "Inloggen bij Au Fil des Saveurs",
     "signInDescription": "Ontvang een loginlink per e-mail — geen wachtwoord nodig.",
