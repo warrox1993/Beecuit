@@ -233,8 +233,8 @@ export const PRODUCTS: Array<{
     },
     images: [
       {
-        url: "https://images.unsplash.com/photo-1551529834-525807d6b4f3?fm=jpg&q=75&w=1200&auto=format&fit=crop",
-        altText: "Rochers coco enrobés de chocolat noir, alignés sur ardoise",
+        url: "/images/products/coco-choc.webp",
+        altText: "Rochers coco enrobés de chocolat noir, six pièces alignées sur planche bois (photo cliente)",
       },
       {
         url: "https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?fm=jpg&q=75&w=1200&auto=format&fit=crop",
@@ -315,8 +315,8 @@ export const PRODUCTS: Array<{
     },
     images: [
       {
-        url: "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?fm=jpg&q=75&w=1200&auto=format&fit=crop",
-        altText: "Rochers coco nature dorés, façonnés à la main et alignés",
+        url: "/images/products/coco-nature.webp",
+        altText: "Rochers coco nature dorés, présentation pâtissière sur plat turquoise (photo cliente)",
       },
       {
         url: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?fm=jpg&q=75&w=1200&auto=format&fit=crop",
@@ -397,8 +397,8 @@ export const PRODUCTS: Array<{
     },
     images: [
       {
-        url: "https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?fm=jpg&q=75&w=1200&auto=format&fit=crop",
-        altText: "Biscuits à l'avoine épais, dorés, posés sur un torchon de lin",
+        url: "/images/products/avoine.webp",
+        altText: "Biscuits à l'avoine et raisins empilés sur assiette blanche (photo cliente)",
       },
       {
         url: "https://images.unsplash.com/photo-1568051243851-f9b136146e97?fm=jpg&q=75&w=1200&auto=format&fit=crop",
