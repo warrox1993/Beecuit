@@ -193,6 +193,9 @@
     "allergensTitle": "Allergènes",
     "nutritionTitle": "Valeurs nutritionnelles /100 g",
     "storyTitle": "L'histoire de ce biscuit",
-    "relatedTitle": "À découvrir aussi"
+    "relatedTitle": "À découvrir aussi",
+    "coffretBadge": "Coffret",
+    "coffretIncludes": "inclus",
+    "discountBadge": "remise coffret"
   }
 }

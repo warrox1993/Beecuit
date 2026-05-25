@@ -193,6 +193,9 @@
     "allergensTitle": "Allergens",
     "nutritionTitle": "Nutritional facts /100 g",
     "storyTitle": "The story of this biscuit",
-    "relatedTitle": "Also worth discovering"
+    "relatedTitle": "Also worth discovering",
+    "coffretBadge": "Gift box",
+    "coffretIncludes": "includes",
+    "discountBadge": "gift-box discount"
   }
 }

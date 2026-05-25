@@ -193,6 +193,9 @@
     "allergensTitle": "Allergene",
     "nutritionTitle": "Nährwerte /100 g",
     "storyTitle": "Die Geschichte dieses Kekses",
-    "relatedTitle": "Auch zu entdecken"
+    "relatedTitle": "Auch zu entdecken",
+    "coffretBadge": "Geschenkbox",
+    "coffretIncludes": "enthält",
+    "discountBadge": "Box-Rabatt"
   }
 }

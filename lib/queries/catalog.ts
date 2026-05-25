@@ -267,7 +267,9 @@ export async function listCoffretsForLocale(locale: Locale) {
     rows.map(async (r) => {
       const price = await computeCoffretPrice(r.id, locale);
       const avail = await isCoffretAvailable(r.id, 1, locale);
-      return { ...r, price, available: avail.available };
+      // Expose up to 3 biscuit names for the Phase 4C CoffretCard hover reveal.
+      const breakdownNames = price.breakdown.slice(0, 3).map((b) => b.name);
+      return { ...r, price, available: avail.available, breakdownNames };
     }),
   );
 }

@@ -193,6 +193,9 @@
     "allergensTitle": "Allergenen",
     "nutritionTitle": "Voedingswaarden /100 g",
     "storyTitle": "Het verhaal van dit koekje",
-    "relatedTitle": "Ook te ontdekken"
+    "relatedTitle": "Ook te ontdekken",
+    "coffretBadge": "Doos",
+    "coffretIncludes": "inbegrepen",
+    "discountBadge": "korting doos"
   }
 }
