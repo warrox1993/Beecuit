@@ -1,8 +1,9 @@
 "use client";
-import { useState, useTransition } from "react";
+import { useState, useTransition, useRef, type MouseEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { addToCart } from "@/lib/actions/cart.actions";
 import { useRouter } from "@/i18n/navigation";
+import { toast } from "sonner";
 
 type Metadata = {
   type?: "coffret";
@@ -16,16 +17,19 @@ export function AddToCartButton({
   outOfStock,
   hideQuantitySelector = false,
   getMetadata,
+  toastMessage = "Ajouté au panier",
 }: {
   productId: string;
   label: string;
   outOfStock: boolean;
   hideQuantitySelector?: boolean;
   getMetadata?: () => Metadata;
+  toastMessage?: string;
 }) {
   const [qty, setQty] = useState(1);
   const [pending, startTransition] = useTransition();
   const router = useRouter();
+  const btnRef = useRef<HTMLButtonElement | null>(null);
 
   if (outOfStock) {
     return (
@@ -35,16 +39,33 @@ export function AddToCartButton({
     );
   }
 
+  function handleClick(e: MouseEvent<HTMLButtonElement>) {
+    // Dispatch fly-to-cart event with click coordinates
+    const rect = (e.currentTarget as HTMLButtonElement).getBoundingClientRect();
+    const fromX = rect.left + rect.width / 2;
+    const fromY = rect.top + rect.height / 2;
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(
+        new CustomEvent("afds:fly-to-cart", { detail: { fromX, fromY } }),
+      );
+    }
+    startTransition(async () => {
+      try {
+        await addToCart({ productId, quantity: qty, metadata: getMetadata?.() });
+        toast.success(toastMessage);
+        router.refresh();
+      } catch {
+        toast.error("Impossible d'ajouter au panier");
+      }
+    });
+  }
+
   const button = (
     <Button
+      ref={btnRef}
       className="bg-honey text-cream hover:bg-honey-dark flex-1 w-full"
       disabled={pending}
-      onClick={() =>
-        startTransition(async () => {
-          await addToCart({ productId, quantity: qty, metadata: getMetadata?.() });
-          router.refresh();
-        })
-      }
+      onClick={handleClick}
     >
       {pending ? "…" : label}
     </Button>

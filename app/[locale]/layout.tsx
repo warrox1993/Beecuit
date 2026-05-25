@@ -2,6 +2,16 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import dynamic from "next/dynamic";
+import { PageTransition } from "@/components/motion/PageTransition";
+
+// FlyToCart and ToastProvider are non-critical client widgets — load after hydration.
+const FlyToCart = dynamic(() =>
+  import("@/components/motion/FlyToCart").then((m) => ({ default: m.FlyToCart })),
+);
+const ToastProvider = dynamic(() =>
+  import("@/components/motion/ToastProvider").then((m) => ({ default: m.ToastProvider })),
+);
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -25,7 +35,9 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      {children}
+      <PageTransition>{children}</PageTransition>
+      <FlyToCart />
+      <ToastProvider />
     </NextIntlClientProvider>
   );
 }

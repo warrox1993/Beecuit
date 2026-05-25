@@ -1,5 +1,6 @@
 "use client";
 import { useState, useTransition } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { subscribeToNewsletter } from "@/lib/actions/newsletter.actions";
 
@@ -16,7 +17,12 @@ export function NewsletterForm() {
         start(async () => {
           const r = await subscribeToNewsletter({ email });
           setMsg({ ok: r.success, text: r.message });
-          if (r.success) setEmail("");
+          if (r.success) {
+            setEmail("");
+            toast.success(r.message);
+          } else {
+            toast.error(r.message);
+          }
         });
       }}
       className="flex flex-col gap-2"
