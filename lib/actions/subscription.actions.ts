@@ -147,7 +147,7 @@ export async function composeBox(raw: unknown) {
   const totalQty = input.items.reduce((s, x) => s + x.quantity, 0);
   if (totalQty !== FORMAT_SIZES[sub.format]) {
     throw new Error(
-      `Composition must total ${FORMAT_SIZES[sub.format]} biscuits, got ${totalQty}`,
+      `Composition must total ${FORMAT_SIZES[sub.format]} sachets, got ${totalQty}`,
     );
   }
 

@@ -35,7 +35,7 @@ export function SubscriptionPricingTable({ locale }: { locale: string }) {
             {FORMAT_LABELS[format]}
           </h3>
           <p className="text-sm text-warm-brown/70 mt-1">
-            {FORMAT_SIZES[format]} biscuits par mois
+            {FORMAT_SIZES[format]} sachets par mois
           </p>
           <div className="mt-6 space-y-3">
             {([0, 6, 12] as EngagementMonths[]).map((engagement) => {

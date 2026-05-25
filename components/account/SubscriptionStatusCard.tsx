@@ -31,7 +31,7 @@ export function SubscriptionStatusCard({
       <div>
         <p className="font-display text-2xl text-warm-brown">
           {s.format[0]!.toUpperCase() + s.format.slice(1)} (
-          {FORMAT_SIZES[s.format as keyof typeof FORMAT_SIZES]} biscuits/mois)
+          {FORMAT_SIZES[s.format as keyof typeof FORMAT_SIZES]} sachets/mois)
         </p>
         <p className="text-sm text-warm-brown/70">
           Engagement :{" "}

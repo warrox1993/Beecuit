@@ -76,7 +76,7 @@ export default async function ProchaineBoxPage({
       <p className="text-warm-brown/70 text-sm">
         Deadline :{" "}
         {new Date(box.compositionDeadline).toLocaleDateString("fr-BE")} · Box
-        size : {boxSize} biscuits · Status : {box.status}
+        size : {boxSize} sachets · Status : {box.status}
       </p>
       {box.status === "composing" ? (
         <BoxComposer

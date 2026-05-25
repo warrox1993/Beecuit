@@ -21,10 +21,13 @@ if (!env.STRIPE_SECRET_KEY) {
 }
 const stripe = new Stripe(env.STRIPE_SECRET_KEY);
 
+// Tailles et prix rebasés 2026-05-25 pour cibler 25-28 €/kg
+// (cohérence avec le nouveau catalogue 5 produits à ~27.50 €/kg).
+// 1 « biscuit » dans un abonnement = 1 sachet/boîte du catalogue (180-200g).
 const FORMATS = {
-  MINI: { sizeLabel: "6 biscuits", baseCents: 1990 },
-  CLASSIQUE: { sizeLabel: "12 biscuits", baseCents: 2990 },
-  FAMILLE: { sizeLabel: "24 biscuits", baseCents: 4990 },
+  MINI: { sizeLabel: "2 sachets", baseCents: 1050 },
+  CLASSIQUE: { sizeLabel: "4 sachets", baseCents: 2090 },
+  FAMILLE: { sizeLabel: "8 sachets", baseCents: 3990 },
 };
 const ENGAGEMENTS = {
   NONE: { months: 0, discount: 0 },
