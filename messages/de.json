@@ -237,6 +237,24 @@
     "newsletter": {
       "optInLabel": "Auch das monatliche Journal erhalten",
       "optInHelp": "Rezepte, Tipps und Einblicke, 1 E-Mail pro veröffentlichtem Artikel."
+    },
+    "tableOfContents": "Inhalt",
+    "readingTime": "{minutes} Min. Lesezeit",
+    "publishedOn": "Veröffentlicht am {date}",
+    "alsoRead": "Auch lesenswert",
+    "fallbackBanner": "Artikel nur auf Französisch verfügbar.",
+    "share": {
+      "label": "Teilen",
+      "pinterest": "Pinnen",
+      "facebook": "Teilen",
+      "email": "Per E-Mail",
+      "copy": "Link kopieren",
+      "copied": "Link kopiert"
+    },
+    "relatedProducts": {
+      "recettes": "Die Kekse dieses Rezepts",
+      "default": "Die genannten Kekse",
+      "cta": "Entdecke alle unsere Kekse"
     }
   }
 }

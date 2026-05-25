@@ -237,6 +237,24 @@
     "newsletter": {
       "optInLabel": "Also receive our monthly journal",
       "optInHelp": "Recipes, tips and behind-the-scenes, 1 email per published article."
+    },
+    "tableOfContents": "Contents",
+    "readingTime": "{minutes} min read",
+    "publishedOn": "Published on {date}",
+    "alsoRead": "Also worth reading",
+    "fallbackBanner": "Article only available in French.",
+    "share": {
+      "label": "Share",
+      "pinterest": "Pin it",
+      "facebook": "Share",
+      "email": "Email",
+      "copy": "Copy link",
+      "copied": "Link copied"
+    },
+    "relatedProducts": {
+      "recettes": "The biscuits from this recipe",
+      "default": "The biscuits mentioned",
+      "cta": "Discover all our biscuits"
     }
   }
 }

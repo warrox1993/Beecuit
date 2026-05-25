@@ -237,6 +237,24 @@
     "newsletter": {
       "optInLabel": "Recevoir aussi le journal mensuel",
       "optInHelp": "Recettes, conseils et coulisses, 1 email par article publié."
+    },
+    "tableOfContents": "Sommaire",
+    "readingTime": "{minutes} min de lecture",
+    "publishedOn": "Publié le {date}",
+    "alsoRead": "À lire aussi",
+    "fallbackBanner": "Article disponible en français uniquement.",
+    "share": {
+      "label": "Partager",
+      "pinterest": "Épingler",
+      "facebook": "Partager",
+      "email": "Envoyer par mail",
+      "copy": "Copier le lien",
+      "copied": "Lien copié"
+    },
+    "relatedProducts": {
+      "recettes": "Les biscuits de cette recette",
+      "default": "Les biscuits mentionnés",
+      "cta": "Découvrir tous nos biscuits"
     }
   }
 }

@@ -237,6 +237,24 @@
     "newsletter": {
       "optInLabel": "Ook het maandelijkse journaal ontvangen",
       "optInHelp": "Recepten, tips en kijkjes achter de schermen, 1 e-mail per gepubliceerd artikel."
+    },
+    "tableOfContents": "Inhoud",
+    "readingTime": "{minutes} min leestijd",
+    "publishedOn": "Gepubliceerd op {date}",
+    "alsoRead": "Ook lezen",
+    "fallbackBanner": "Artikel alleen in het Frans beschikbaar.",
+    "share": {
+      "label": "Delen",
+      "pinterest": "Pinnen",
+      "facebook": "Delen",
+      "email": "E-mailen",
+      "copy": "Link kopiëren",
+      "copied": "Link gekopieerd"
+    },
+    "relatedProducts": {
+      "recettes": "De koekjes uit dit recept",
+      "default": "De vermelde koekjes",
+      "cta": "Ontdek al onze koekjes"
     }
   }
 }

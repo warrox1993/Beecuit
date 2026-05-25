@@ -1,7 +1,7 @@
 import "server-only";
 import { db } from "@/lib/db";
 import { journalArticles, journalArticleTranslations } from "@/lib/db/schema";
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, ne, sql } from "drizzle-orm";
 
 export async function listArticlesForAdmin() {
   const rows = await db.select().from(journalArticles).orderBy(desc(journalArticles.updatedAt));
@@ -91,4 +91,62 @@ export async function getFeaturedArticle(locale: "fr" | "nl" | "en" | "de") {
     .where(and(eq(journalArticles.isFeatured, true), eq(journalArticles.status, "published")))
     .limit(1);
   return rows[0] ? { ...rows[0].a, translation: rows[0].t } : null;
+}
+
+export async function getArticleBySlug(slug: string, locale: "fr" | "nl" | "en" | "de") {
+  const [row] = await db
+    .select({ a: journalArticles, t: journalArticleTranslations })
+    .from(journalArticles)
+    .leftJoin(
+      journalArticleTranslations,
+      and(
+        eq(journalArticleTranslations.articleId, journalArticles.id),
+        eq(journalArticleTranslations.locale, locale),
+      ),
+    )
+    .where(eq(journalArticles.slug, slug))
+    .limit(1);
+  if (!row) return null;
+  let fallback: typeof journalArticleTranslations.$inferSelect | null = null;
+  if (!row.t && locale !== "fr") {
+    const [fr] = await db
+      .select()
+      .from(journalArticleTranslations)
+      .where(
+        and(
+          eq(journalArticleTranslations.articleId, row.a.id),
+          eq(journalArticleTranslations.locale, "fr"),
+        ),
+      )
+      .limit(1);
+    fallback = fr ?? null;
+  }
+  return { article: row.a, translation: row.t, fallback };
+}
+
+export async function getAlsoRead(
+  articleId: string,
+  category: "recettes" | "savoir-faire" | "saisons" | "atelier",
+  locale: "fr" | "nl" | "en" | "de",
+  limit = 3,
+) {
+  return db
+    .select({ a: journalArticles, t: journalArticleTranslations })
+    .from(journalArticles)
+    .innerJoin(
+      journalArticleTranslations,
+      and(
+        eq(journalArticleTranslations.articleId, journalArticles.id),
+        eq(journalArticleTranslations.locale, locale),
+      ),
+    )
+    .where(
+      and(
+        eq(journalArticles.status, "published"),
+        eq(journalArticles.category, category),
+        ne(journalArticles.id, articleId),
+      ),
+    )
+    .orderBy(sql`random()`)
+    .limit(limit);
 }
