@@ -14,6 +14,8 @@ import { Container } from "@/components/ui-primitives/Container";
 import { Section } from "@/components/ui-primitives/Section";
 import { Eyebrow } from "@/components/ui-primitives/Eyebrow";
 import { Heading } from "@/components/ui-primitives/Heading";
+import { CheckoutStepper } from "@/components/shop/CheckoutStepper";
+import { CheckoutTrustBadges } from "@/components/shop/CheckoutTrustBadges";
 
 export const dynamic = "force-dynamic";
 
@@ -45,9 +47,10 @@ export default async function CheckoutPage({ params }: { params: Promise<{ local
     <Section py="md">
       <Container>
         <Eyebrow>PAIEMENT</Eyebrow>
-        <Heading as="h1" size="h1" className="mt-3 mb-10">
+        <Heading as="h1" size="h1" className="mt-3 mb-6">
           Finalise ta commande
         </Heading>
+        <CheckoutStepper activeStep={1} />
         <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_360px]">
           <div>
             <CheckoutForm
@@ -55,16 +58,19 @@ export default async function CheckoutPage({ params }: { params: Promise<{ local
               locale={locale as "fr" | "nl" | "de" | "en"}
             />
           </div>
-          <OrderSummary
-            lines={items.map((i) => ({
-              name: i.name,
-              unitPriceCents: i.unitPriceCents,
-              quantity: i.quantity,
-            }))}
-            shippingCents={totals.shippingCents}
-            totalCents={totals.totalCents}
-            vatCents={totals.vatCents}
-          />
+          <aside className="md:sticky md:top-28 md:self-start">
+            <OrderSummary
+              lines={items.map((i) => ({
+                name: i.name,
+                unitPriceCents: i.unitPriceCents,
+                quantity: i.quantity,
+              }))}
+              shippingCents={totals.shippingCents}
+              totalCents={totals.totalCents}
+              vatCents={totals.vatCents}
+            />
+            <CheckoutTrustBadges />
+          </aside>
         </div>
       </Container>
     </Section>
