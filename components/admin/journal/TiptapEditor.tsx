@@ -5,7 +5,8 @@ import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import { VideoEmbed, VideoUpload, ProductCard, Callout } from "./tiptap-nodes";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { uploadToBlob } from "@/lib/actions/blob-upload.actions";
 
 export function TiptapEditor({
   initial,
@@ -58,6 +59,9 @@ function Toolbar({ editor }: { editor: Editor }) {
   const btnBase =
     "px-2 py-1 rounded text-sm text-warm-brown hover:bg-honey/10 disabled:opacity-30";
   const btnActive = "bg-honey/20 text-honey-dark";
+
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const videoInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="border-warm-brown/10 flex flex-wrap items-center gap-1 border-b bg-cream/30 p-2">
@@ -124,13 +128,27 @@ function Toolbar({ editor }: { editor: Editor }) {
         ❝
       </button>
       <span className="bg-warm-brown/10 mx-1 h-5 w-px" />
+      <input
+        ref={imageInputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        className="hidden"
+        onChange={async (e) => {
+          const file = e.target.files?.[0];
+          if (!file) return;
+          try {
+            const url = await downsizeAndUploadImage(file);
+            editor.chain().focus().setImage({ src: url, alt: "" }).run();
+          } catch (err) {
+            window.alert(err instanceof Error ? err.message : "Erreur upload");
+          } finally {
+            if (imageInputRef.current) imageInputRef.current.value = "";
+          }
+        }}
+      />
       <button
         type="button"
-        onClick={() => {
-          const url = window.prompt("URL de l'image (Vercel Blob, à venir)");
-          if (!url) return;
-          editor.chain().focus().setImage({ src: url, alt: "" }).run();
-        }}
+        onClick={() => imageInputRef.current?.click()}
         className={btnBase}
       >
         🖼️ Img
@@ -162,6 +180,44 @@ function Toolbar({ editor }: { editor: Editor }) {
         className={btnBase}
       >
         ▶️ Vidéo
+      </button>
+      <input
+        ref={videoInputRef}
+        type="file"
+        accept="video/mp4,video/webm,video/quicktime"
+        className="hidden"
+        onChange={async (e) => {
+          const file = e.target.files?.[0];
+          if (!file) return;
+          try {
+            const fd = new FormData();
+            fd.append("file", file);
+            const result = await uploadToBlob(fd);
+            editor
+              .chain()
+              .focus()
+              .insertContent({
+                type: "video-upload",
+                attrs: {
+                  src: result.url,
+                  poster: null,
+                  blobPath: result.pathname,
+                },
+              })
+              .run();
+          } catch (err) {
+            window.alert(err instanceof Error ? err.message : "Erreur upload vidéo");
+          } finally {
+            if (videoInputRef.current) videoInputRef.current.value = "";
+          }
+        }}
+      />
+      <button
+        type="button"
+        onClick={() => videoInputRef.current?.click()}
+        className={btnBase}
+      >
+        🎬 Upload Vidéo
       </button>
       <button
         type="button"
@@ -203,4 +259,38 @@ function Toolbar({ editor }: { editor: Editor }) {
       </button>
     </div>
   );
+}
+
+async function downsizeAndUploadImage(file: File): Promise<string> {
+  const img = await new Promise<HTMLImageElement>((res, rej) => {
+    const i = new window.Image();
+    i.onload = () => res(i);
+    i.onerror = rej;
+    i.src = URL.createObjectURL(file);
+  });
+  const canvas = document.createElement("canvas");
+  const maxW = 2000;
+  const ratio = Math.min(1, maxW / img.width);
+  canvas.width = img.width * ratio;
+  canvas.height = img.height * ratio;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("Canvas context unavailable");
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  const blob: Blob = await new Promise((resolve, reject) => {
+    canvas.toBlob(
+      (b) => {
+        if (b) resolve(b);
+        else reject(new Error("Canvas toBlob returned null"));
+      },
+      "image/jpeg",
+      0.85,
+    );
+  });
+  const fd = new FormData();
+  fd.append(
+    "file",
+    new File([blob], file.name.replace(/\.\w+$/, ".jpg"), { type: "image/jpeg" }),
+  );
+  const result = await uploadToBlob(fd);
+  return result.url;
 }

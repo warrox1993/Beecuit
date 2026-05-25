@@ -1,6 +1,7 @@
 "use client";
-import { useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import { updateArticleMeta } from "@/lib/actions/journal.actions";
+import { uploadToBlob } from "@/lib/actions/blob-upload.actions";
 
 type Article = {
   id: string;
@@ -30,6 +31,11 @@ export function JournalMetaSidebar({ article }: { article: Article }) {
   const [msg, setMsg] = useState<string | null>(null);
   const [pending, start] = useTransition();
 
+  const coverInputRef = useRef<HTMLInputElement>(null);
+  const pinterestInputRef = useRef<HTMLInputElement>(null);
+  const [uploadingCover, setUploadingCover] = useState(false);
+  const [uploadingPinterest, setUploadingPinterest] = useState(false);
+
   const isRecipe = category === "recettes";
 
   return (
@@ -50,15 +56,49 @@ export function JournalMetaSidebar({ article }: { article: Article }) {
         </select>
       </label>
 
-      <label className="block text-sm">
+      <div className="block text-sm">
         <span className="text-warm-brown font-medium">Image de couverture (URL)</span>
-        <input
-          type="url"
-          value={coverImage}
-          onChange={(e) => setCoverImage(e.target.value)}
-          className="border-warm-brown/20 mt-1 w-full rounded border px-2 py-1"
-        />
-      </label>
+        <div className="mt-1 flex gap-2">
+          <input
+            type="url"
+            value={coverImage}
+            onChange={(e) => setCoverImage(e.target.value)}
+            className="border-warm-brown/20 flex-1 rounded border px-2 py-1"
+          />
+          <input
+            ref={coverInputRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            className="hidden"
+            onChange={async (e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              setUploadingCover(true);
+              try {
+                const url = await downsizeAndUpload(file, uploadToBlob);
+                setCoverImage(url);
+              } catch (err) {
+                setMsg(
+                  err instanceof Error
+                    ? `Erreur upload : ${err.message}`
+                    : "Erreur upload",
+                );
+              } finally {
+                setUploadingCover(false);
+                if (coverInputRef.current) coverInputRef.current.value = "";
+              }
+            }}
+          />
+          <button
+            type="button"
+            onClick={() => coverInputRef.current?.click()}
+            disabled={uploadingCover}
+            className="bg-warm-brown/10 text-warm-brown hover:bg-warm-brown/20 rounded px-2 py-1 text-xs disabled:opacity-50"
+          >
+            {uploadingCover ? "…" : "Upload"}
+          </button>
+        </div>
+      </div>
 
       <label className="block text-sm">
         <span className="text-warm-brown font-medium">Alt FR de la couverture</span>
@@ -70,15 +110,51 @@ export function JournalMetaSidebar({ article }: { article: Article }) {
         />
       </label>
 
-      <label className="block text-sm">
-        <span className="text-warm-brown font-medium">Image Pinterest (URL, optionnel)</span>
-        <input
-          type="url"
-          value={pinterestImage}
-          onChange={(e) => setPinterestImage(e.target.value)}
-          className="border-warm-brown/20 mt-1 w-full rounded border px-2 py-1"
-        />
-      </label>
+      <div className="block text-sm">
+        <span className="text-warm-brown font-medium">
+          Image Pinterest (URL, optionnel)
+        </span>
+        <div className="mt-1 flex gap-2">
+          <input
+            type="url"
+            value={pinterestImage}
+            onChange={(e) => setPinterestImage(e.target.value)}
+            className="border-warm-brown/20 flex-1 rounded border px-2 py-1"
+          />
+          <input
+            ref={pinterestInputRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            className="hidden"
+            onChange={async (e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              setUploadingPinterest(true);
+              try {
+                const url = await downsizeAndUpload(file, uploadToBlob);
+                setPinterestImage(url);
+              } catch (err) {
+                setMsg(
+                  err instanceof Error
+                    ? `Erreur upload : ${err.message}`
+                    : "Erreur upload",
+                );
+              } finally {
+                setUploadingPinterest(false);
+                if (pinterestInputRef.current) pinterestInputRef.current.value = "";
+              }
+            }}
+          />
+          <button
+            type="button"
+            onClick={() => pinterestInputRef.current?.click()}
+            disabled={uploadingPinterest}
+            className="bg-warm-brown/10 text-warm-brown hover:bg-warm-brown/20 rounded px-2 py-1 text-xs disabled:opacity-50"
+          >
+            {uploadingPinterest ? "…" : "Upload"}
+          </button>
+        </div>
+      </div>
 
       {isRecipe && (
         <>
@@ -169,4 +245,45 @@ export function JournalMetaSidebar({ article }: { article: Article }) {
       {msg && <p className="text-warm-brown/70 text-xs">{msg}</p>}
     </div>
   );
+}
+
+async function loadImage(file: File): Promise<HTMLImageElement> {
+  return new Promise((res, rej) => {
+    const img = new window.Image();
+    img.onload = () => res(img);
+    img.onerror = rej;
+    img.src = URL.createObjectURL(file);
+  });
+}
+
+async function downsizeAndUpload(
+  file: File,
+  uploadFn: typeof uploadToBlob,
+): Promise<string> {
+  const img = await loadImage(file);
+  const canvas = document.createElement("canvas");
+  const maxW = 2000;
+  const ratio = Math.min(1, maxW / img.width);
+  canvas.width = img.width * ratio;
+  canvas.height = img.height * ratio;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("Canvas context unavailable");
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  const blob: Blob = await new Promise((resolve, reject) => {
+    canvas.toBlob(
+      (b) => {
+        if (b) resolve(b);
+        else reject(new Error("Canvas toBlob returned null"));
+      },
+      "image/jpeg",
+      0.85,
+    );
+  });
+  const fd = new FormData();
+  fd.append(
+    "file",
+    new File([blob], file.name.replace(/\.\w+$/, ".jpg"), { type: "image/jpeg" }),
+  );
+  const result = await uploadFn(fd);
+  return result.url;
 }
