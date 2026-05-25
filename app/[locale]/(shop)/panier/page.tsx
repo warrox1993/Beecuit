@@ -13,6 +13,7 @@ import { Container } from "@/components/ui-primitives/Container";
 import { Section } from "@/components/ui-primitives/Section";
 import { Eyebrow } from "@/components/ui-primitives/Eyebrow";
 import { Heading } from "@/components/ui-primitives/Heading";
+import { EmptyState } from "@/components/common/EmptyState";
 
 export const dynamic = "force-dynamic";
 
@@ -39,17 +40,18 @@ export default async function CartPage({ params }: { params: Promise<{ locale: s
   if (items.length === 0) {
     return (
       <Section py="lg">
-        <Container variant="narrow" className="text-center">
-          <Eyebrow>MON PANIER</Eyebrow>
-          <Heading as="h1" size="h1" className="mt-3">
-            {t("label")}
-          </Heading>
-          <p className="text-warm-brown/70 mt-6 mb-8">{t("empty")}</p>
-          <Link href="/biscuits">
-            <Button className="bg-honey text-cream hover:bg-honey-dark px-6 py-6 text-base">
-              Découvrir nos biscuits →
-            </Button>
-          </Link>
+        <Container variant="narrow">
+          <EmptyState
+            title={t("empty")}
+            description="Glisse un biscuit ou un coffret dans ton panier — on l'emballe à la main."
+            cta={
+              <Link href="/biscuits">
+                <Button className="bg-cta-primary text-cream hover:bg-cta-primary-hover h-auto rounded-full px-7 py-4 text-base">
+                  Découvrir nos biscuits →
+                </Button>
+              </Link>
+            }
+          />
         </Container>
       </Section>
     );
