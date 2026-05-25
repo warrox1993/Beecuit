@@ -160,6 +160,10 @@ export async function getProductBySlug(locale: Locale, slug: string) {
       nutritionalFactsPer100g: productTranslations.nutritionalFactsPer100g,
       seoTitle: productTranslations.seoTitle,
       seoDescription: productTranslations.seoDescription,
+      // Phase 4G: expose categorySlug to drive PairingSuggestions content
+      categorySlug: sql<
+        string | null
+      >`(SELECT slug FROM categories WHERE id = ${products.categoryId} LIMIT 1)`,
     })
     .from(products)
     .innerJoin(

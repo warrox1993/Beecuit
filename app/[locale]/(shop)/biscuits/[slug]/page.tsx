@@ -10,6 +10,7 @@ import { ProductImages } from "@/components/shop/ProductImages";
 import { AddToCartButton } from "@/components/shop/AddToCartButton";
 import { TrustIndicators } from "@/components/shop/TrustIndicators";
 import { RelatedProducts } from "@/components/shop/RelatedProducts";
+import { PairingSuggestions } from "@/components/shop/PairingSuggestions";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -113,6 +114,7 @@ export default async function ProductPage({
             {t("storyTitle")}
           </Heading>
           <Prose>{product.longDescription}</Prose>
+          <PairingSuggestions categorySlug={product.categorySlug} />
         </Container>
       </Section>
       <RelatedProducts productId={product.id} locale={locale} />
