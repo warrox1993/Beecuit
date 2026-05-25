@@ -4,6 +4,7 @@ const items = [
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/produits", label: "Produits" },
   { href: "/admin/coffrets", label: "Coffrets" },
+  { href: "/admin/journal", label: "Journal" },
   { href: "/admin/cartes-cadeaux", label: "Cartes cadeaux" },
   { href: "/admin/abonnements", label: "Abonnements" },
   { href: "/admin/devis", label: "Devis B2B" },
