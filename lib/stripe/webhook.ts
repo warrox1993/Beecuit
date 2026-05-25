@@ -77,7 +77,7 @@ export async function handleCheckoutCompleted(event: Stripe.CheckoutSessionCompl
     try {
       await sendEmail({
         to: recipient,
-        subject: `Ta commande BeeCuit #${order.orderNumber} est confirmée`,
+        subject: `Ta commande Au Fil des Saveurs #${order.orderNumber} est confirmée`,
         react: OrderConfirmation({
           orderNumber: order.orderNumber,
           totalCents: order.totalCents,

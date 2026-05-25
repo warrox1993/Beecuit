@@ -17,7 +17,7 @@ export async function createB2BPaymentLink(args: CreateB2BPaymentLinkArgs): Prom
   paymentLinkUrl: string;
 }> {
   const product = await stripe.products.create({
-    name: `Devis BeeCuit #${args.shortId}`,
+    name: `Devis Au Fil des Saveurs #${args.shortId}`,
     description: args.description.slice(0, 500),
     metadata: { b2b_quote_id: args.quoteId },
   });

@@ -34,20 +34,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const result = await resend.emails.send({
           from: provider.from as string,
           to: identifier,
-          subject: "Ton lien de connexion BeeCuit",
+          subject: "Ton lien de connexion Au Fil des Saveurs",
           html: `
             <div style="font-family: system-ui, sans-serif; max-width: 480px; margin: 0 auto; padding: 32px 24px; color: #4a332a;">
-              <h1 style="color: #e4a11b; font-size: 28px; margin-bottom: 16px;">BeeCuit</h1>
+              <h1 style="color: #4a332a; font-size: 24px; margin-bottom: 16px; font-weight: 500;">Au Fil des Saveurs</h1>
               <p>Clique sur le lien ci-dessous pour te connecter. Il est valable 24 heures.</p>
               <p style="margin: 24px 0;">
-                <a href="${url}" style="display: inline-block; background: #e4a11b; color: #fbf6ee; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">
-                  Se connecter à BeeCuit
+                <a href="${url}" style="display: inline-block; background: #b07a0e; color: #fbf6ee; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">
+                  Se connecter à Au Fil des Saveurs
                 </a>
               </p>
               <p style="font-size: 12px; color: #888;">Si tu n'as pas demandé ce lien, tu peux ignorer cet email.</p>
             </div>
           `,
-          text: `Lien de connexion BeeCuit : ${url}`,
+          text: `Lien de connexion Au Fil des Saveurs : ${url}`,
         });
 
         if (result.error) {

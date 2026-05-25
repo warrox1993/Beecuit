@@ -1,10 +1,10 @@
 import { test, expect } from "@playwright/test";
 
 const expected = {
-  fr: { title: "BeeCuit", tagline: "Biscuits artisanaux de Liège" },
-  nl: { title: "BeeCuit", tagline: "Ambachtelijke koekjes uit Luik" },
-  de: { title: "BeeCuit", tagline: "Handwerkliche Kekse aus Lüttich" },
-  en: { title: "BeeCuit", tagline: "Artisan biscuits from Liège" },
+  fr: { title: "Au Fil des Saveurs", tagline: "Biscuits artisanaux de Liège" },
+  nl: { title: "Au Fil des Saveurs", tagline: "Ambachtelijke koekjes uit Luik" },
+  de: { title: "Au Fil des Saveurs", tagline: "Handwerkliche Kekse aus Lüttich" },
+  en: { title: "Au Fil des Saveurs", tagline: "Artisan biscuits from Liège" },
 } as const;
 
 for (const [locale, content] of Object.entries(expected)) {

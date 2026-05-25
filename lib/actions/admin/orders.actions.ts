@@ -37,7 +37,7 @@ export async function markAsShipped(raw: unknown) {
     try {
       await sendEmail({
         to: recipient,
-        subject: `Ta commande BeeCuit #${orderNumber} est en route`,
+        subject: `Ta commande Au Fil des Saveurs #${orderNumber} est en route`,
         react: OrderShipped({ orderNumber, trackingUrl }),
       });
     } catch (e) {

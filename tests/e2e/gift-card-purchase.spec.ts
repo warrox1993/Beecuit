@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 test("guest can fill the gift card form and add to cart", async ({ page }) => {
   await page.goto("/fr/cartes-cadeaux");
   await expect(
-    page.getByRole("heading", { name: /offre beecuit/i }),
+    page.getByRole("heading", { name: /offre au fil des saveurs/i }),
   ).toBeVisible();
 
   // Pick 25 € amount (second tier)
