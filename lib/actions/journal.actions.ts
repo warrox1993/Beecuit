@@ -3,13 +3,21 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
-import { journalArticles, journalArticleTranslations } from "@/lib/db/schema";
+import {
+  journalArticles,
+  journalArticleTranslations,
+  newsletterSubscribers,
+  journalEmailLog,
+} from "@/lib/db/schema";
 import { toSlug } from "@/lib/slug";
 import { auth } from "@/lib/auth";
 import { and, eq, sql } from "drizzle-orm";
 import { validateBody } from "@/lib/journal/validate-body";
 import { calculateReadingMinutes } from "@/lib/journal/reading-time";
 import { generateExcerpt } from "@/lib/journal/excerpt";
+import { sendBatchEmails } from "@/lib/email/client";
+import { JournalArticleEmail } from "@/components/email/JournalArticleEmail";
+import { env } from "@/lib/env";
 
 async function requireAdmin() {
   const session = await auth();
@@ -193,7 +201,7 @@ export async function upsertTranslation(raw: unknown) {
   return { ok: true };
 }
 
-export async function publishArticle(id: string) {
+export async function publishArticle(id: string, sendEmail = true) {
   await requireAdmin();
   const [article] = await db
     .select()
@@ -231,7 +239,77 @@ export async function publishArticle(id: string) {
     revalidatePath(`/${locale}`);
   }
   revalidatePath("/sitemap.xml");
+
+  // Auto-send email if first publish (journalEmailSentAt not set).
+  // Best-effort: a Resend outage must not break the publish action.
+  if (sendEmail && !article.journalEmailSentAt) {
+    try {
+      await sendArticleEmails(id);
+      await db
+        .update(journalArticles)
+        .set({ journalEmailSentAt: new Date() })
+        .where(eq(journalArticles.id, id));
+    } catch (err) {
+      console.error("[journal] auto-send failed", err);
+      // Don't fail the publish — admin can re-trigger manually later.
+    }
+  }
+
   return { ok: true };
+}
+
+export async function sendArticleEmails(articleId: string) {
+  const [article] = await db
+    .select()
+    .from(journalArticles)
+    .where(eq(journalArticles.id, articleId))
+    .limit(1);
+  if (!article) return;
+
+  const translations = await db
+    .select()
+    .from(journalArticleTranslations)
+    .where(eq(journalArticleTranslations.articleId, articleId));
+
+  for (const tr of translations) {
+    const subscribers = await db
+      .select()
+      .from(newsletterSubscribers)
+      .where(
+        and(
+          eq(newsletterSubscribers.status, "confirmed"),
+          eq(newsletterSubscribers.journalOptIn, true),
+          eq(newsletterSubscribers.locale, tr.locale),
+        ),
+      );
+    if (subscribers.length === 0) continue;
+
+    const payloads = subscribers.map((s) => ({
+      to: s.email,
+      subject: tr.title,
+      react: JournalArticleEmail({
+        title: tr.title,
+        excerpt: tr.excerpt,
+        coverImage: article.coverImage,
+        articleUrl: `${env.NEXT_PUBLIC_APP_URL}/${tr.locale}/journal/${article.slug}`,
+        unsubscribeUrl: `${env.NEXT_PUBLIC_APP_URL}/api/newsletter/unsubscribe/${s.unsubscribeToken}`,
+      }),
+    }));
+
+    const results = await sendBatchEmails(payloads);
+    if (results.length > 0) {
+      await db.insert(journalEmailLog).values(
+        results.map((r) => ({
+          articleId,
+          locale: tr.locale,
+          recipientEmail: r.to,
+          status: r.status,
+          resendId: r.resendId ?? null,
+          errorMessage: r.errorMessage ?? null,
+        })),
+      );
+    }
+  }
 }
 
 export async function unpublishArticle(id: string) {
