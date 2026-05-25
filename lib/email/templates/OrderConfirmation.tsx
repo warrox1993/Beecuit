@@ -53,7 +53,7 @@ export function OrderConfirmation({
           }}
         >
           <Heading style={{ color: "#E4A11B", fontSize: 28, margin: 0 }}>
-            BeeCuit
+            Au Fil des Saveurs
           </Heading>
           <Text>Merci ! Ta commande #{orderNumber} est confirmée.</Text>
           <Section>

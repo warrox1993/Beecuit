@@ -14,7 +14,7 @@ export function OrderShipped({
         <Container
           style={{ maxWidth: 480, margin: "0 auto", padding: "32px 24px", color: "#4A332A" }}
         >
-          <Heading style={{ color: "#E4A11B", fontSize: 28, margin: 0 }}>BeeCuit</Heading>
+          <Heading style={{ color: "#E4A11B", fontSize: 28, margin: 0 }}>Au Fil des Saveurs</Heading>
           <Text>Ta commande #{orderNumber} est en route 📦</Text>
           <Text>
             Tu peux suivre la livraison ici :{" "}

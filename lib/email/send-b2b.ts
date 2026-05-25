@@ -39,7 +39,7 @@ export async function sendB2BCustomerQuote(opts: {
 }) {
   await sendEmail({
     to: opts.to,
-    subject: "Votre devis BeeCuit",
+    subject: "Votre devis Au Fil des Saveurs",
     react: B2BCustomerQuote({
       contactName: opts.contactName,
       amountCents: opts.amountCents,
@@ -73,7 +73,7 @@ export async function sendB2BQuoteRejected(opts: {
 }) {
   await sendEmail({
     to: opts.to,
-    subject: "Concernant votre demande BeeCuit",
+    subject: "Concernant votre demande Au Fil des Saveurs",
     react: B2BQuoteRejected({ contactName: opts.contactName, reason: opts.reason }),
   });
 }

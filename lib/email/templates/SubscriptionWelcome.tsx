@@ -32,13 +32,13 @@ export function SubscriptionWelcome({
           }}
         >
           <Heading style={{ color: "#E4A11B", fontSize: 28, margin: 0 }}>
-            BeeCuit
+            Au Fil des Saveurs
           </Heading>
           <Text style={{ fontSize: 18 }}>
             {recipientName ? `Bonjour ${recipientName},` : "Bonjour,"}
           </Text>
           <Text>
-            Ton abonnement BeeCuit <strong>{formatLabel}</strong> ({engagementLabel}){" "}
+            Ton abonnement Au Fil des Saveurs <strong>{formatLabel}</strong> ({engagementLabel}){" "}
             est confirmé !
           </Text>
           <Text>

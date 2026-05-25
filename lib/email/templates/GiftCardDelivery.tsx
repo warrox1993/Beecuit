@@ -42,14 +42,14 @@ export function GiftCardDelivery({
           }}
         >
           <Heading style={{ color: "#E4A11B", fontSize: 28, margin: 0 }}>
-            BeeCuit
+            Au Fil des Saveurs
           </Heading>
           <Text style={{ fontSize: 18 }}>
             {recipientName ? `Bonjour ${recipientName},` : "Bonjour,"}
           </Text>
           <Text>
             <strong>{purchaserEmail}</strong> t&apos;a offert une carte cadeau
-            BeeCuit de <strong>{amount}</strong>.
+            Au Fil des Saveurs de <strong>{amount}</strong>.
           </Text>
           {message && (
             <Section

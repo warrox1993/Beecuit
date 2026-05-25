@@ -20,7 +20,7 @@ export function B2BQuoteRejected({
           }}
         >
           <Heading style={{ color: "#E4A11B", fontSize: 24, margin: 0 }}>
-            BeeCuit — Demande non aboutie
+            Au Fil des Saveurs — Demande non aboutie
           </Heading>
           <Text style={{ fontSize: 18 }}>Bonjour {contactName},</Text>
           <Text>
