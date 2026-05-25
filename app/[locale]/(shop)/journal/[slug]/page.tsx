@@ -103,7 +103,6 @@ export default async function JournalDetailPage({
       {/* JSON-LD: Article + Breadcrumb (always) + Recipe (when applicable) */}
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             articleJsonLd(result.article, translation, locale),
@@ -112,7 +111,6 @@ export default async function JournalDetailPage({
       />
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             breadcrumbJsonLd(result.article, translation.title, locale),
@@ -125,7 +123,6 @@ export default async function JournalDetailPage({
           return r ? (
             <script
               type="application/ld+json"
-              // eslint-disable-next-line react/no-danger
               dangerouslySetInnerHTML={{ __html: JSON.stringify(r) }}
             />
           ) : null;
