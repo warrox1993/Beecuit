@@ -20,7 +20,7 @@ export function NavLink({
       href={href as Parameters<typeof Link>[0]["href"]}
       className={cn(
         "text-sm font-medium tracking-wide transition-colors",
-        comingSoon && "text-warm-brown/50 hover:text-warm-brown/70",
+        comingSoon && "text-warm-brown/60 hover:text-warm-brown/80",
         isActive ? "text-honey-dark" : "text-warm-brown hover:text-honey-dark",
         className,
       )}

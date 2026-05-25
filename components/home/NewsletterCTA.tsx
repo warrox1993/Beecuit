@@ -42,7 +42,7 @@ export async function NewsletterCTA() {
             <NewsletterFormRefined />
           </div>
 
-          <p className="text-warm-brown/55 mt-5 text-xs">{t("newsletterDisclaimer")}</p>
+          <p className="text-warm-brown/70 mt-5 text-xs">{t("newsletterDisclaimer")}</p>
 
           {/* Bottom rope flourish */}
           <RopeDivider

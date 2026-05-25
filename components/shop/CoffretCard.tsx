@@ -111,7 +111,7 @@ export async function CoffretCard({ locale, coffret }: Props) {
               {fmt(coffret.price.totalCents)}
             </span>
             {coffret.price.discountCents > 0 && (
-              <span className="text-warm-brown/55 text-xs line-through">
+              <span className="text-warm-brown/65 text-xs line-through">
                 {fmt(coffret.price.subtotalCents)}
               </span>
             )}

@@ -112,7 +112,7 @@ export function CartItemRow({
             })
           }
           disabled={pending}
-          className="text-warm-brown/40 hover:text-terracotta transition-colors"
+          className="text-warm-brown/65 hover:text-terracotta transition-colors"
           aria-label="Retirer"
         >
           <X className="h-4 w-4" />
