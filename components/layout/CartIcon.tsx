@@ -41,7 +41,8 @@ export async function CartIcon() {
     <Link
       href="/panier"
       aria-label="Panier"
-      className="text-warm-brown hover:text-honey-dark relative"
+      id="cart-icon-anchor"
+      className="text-warm-brown hover:text-honey-dark relative inline-block transition-transform"
     >
       <span>🛒</span>
       {count > 0 && (
