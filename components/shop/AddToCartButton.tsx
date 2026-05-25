@@ -1,5 +1,5 @@
 "use client";
-import { useState, useTransition, useRef, type MouseEvent } from "react";
+import { useState, useTransition, useRef, useEffect, type MouseEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { addToCart } from "@/lib/actions/cart.actions";
 import { useRouter } from "@/i18n/navigation";
@@ -28,8 +28,15 @@ export function AddToCartButton({
 }) {
   const [qty, setQty] = useState(1);
   const [pending, startTransition] = useTransition();
+  const [feedback, setFeedback] = useState<"idle" | "success" | "error">("idle");
   const router = useRouter();
   const btnRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (feedback === "idle") return;
+    const t = setTimeout(() => setFeedback("idle"), 900);
+    return () => clearTimeout(t);
+  }, [feedback]);
 
   if (outOfStock) {
     return (
@@ -53,9 +60,11 @@ export function AddToCartButton({
       try {
         await addToCart({ productId, quantity: qty, metadata: getMetadata?.() });
         toast.success(toastMessage);
+        setFeedback("success");
         router.refresh();
       } catch {
         toast.error("Impossible d'ajouter au panier");
+        setFeedback("error");
       }
     });
   }
@@ -63,11 +72,32 @@ export function AddToCartButton({
   const button = (
     <Button
       ref={btnRef}
-      className="bg-honey text-cream hover:bg-honey-dark flex-1 w-full"
-      disabled={pending}
+      className={
+        "flex-1 w-full transition-colors " +
+        (feedback === "success"
+          ? "bg-leaf text-cream hover:bg-leaf "
+          : feedback === "error"
+            ? "bg-terracotta text-cream hover:bg-terracotta animate-[afds-shake_0.4s_ease-in-out_1] "
+            : "bg-honey text-cream hover:bg-honey-dark ")
+      }
+      disabled={pending || feedback === "success"}
       onClick={handleClick}
     >
-      {pending ? "…" : label}
+      {pending ? (
+        <span className="inline-flex items-center gap-2">
+          <span className="border-cream/40 border-t-cream h-4 w-4 animate-spin rounded-full border-2" />
+          <span>...</span>
+        </span>
+      ) : feedback === "success" ? (
+        <span className="inline-flex items-center gap-2">
+          <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
+            <path d="M5 12 L 10 17 L 19 7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <span>Ajouté</span>
+        </span>
+      ) : (
+        label
+      )}
     </Button>
   );
 
