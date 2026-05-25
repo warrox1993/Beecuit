@@ -22,8 +22,9 @@ function walk(node: unknown): void {
     if (!a.videoId || !a.url) throw new Error("video-embed: missing videoId or url");
   }
   if (n.type === "image" || n.type === "video-upload") {
-    const a = n.attrs as { src?: string; blobPath?: string };
-    if (!a?.src || !a.blobPath) throw new Error(`${n.type}: missing src/blobPath`);
+    // src is the source of truth for rendering; blobPath is optional cleanup metadata
+    const a = n.attrs as { src?: string };
+    if (!a?.src) throw new Error(`${n.type}: missing src`);
   }
   if (n.type === "product-card") {
     const a = n.attrs as { productSlug?: string };
