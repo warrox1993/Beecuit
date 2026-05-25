@@ -45,7 +45,7 @@ const ENGAGEMENTS = {
       continue;
     }
     const p = await stripe.products.create({
-      name: `Abonnement BeeCuit ${fk[0]}${fk.slice(1).toLowerCase()} (${f.sizeLabel}/mois)`,
+      name: `Abonnement Au Fil des Saveurs ${fk[0]}${fk.slice(1).toLowerCase()} (${f.sizeLabel}/mois)`,
       metadata: { beecuit_subscription: slug },
     });
     products[fk] = p.id;

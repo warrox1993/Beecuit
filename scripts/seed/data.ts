@@ -74,7 +74,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Farine de blé, cassonade brune, beurre (lait), épices (cannelle, gingembre, muscade, clou de girofle), levure chimique, sel.",
         allergens: ["Gluten", "Lait"],
-        seoTitle: "Spéculoos artisanal belge 200g — BeeCuit",
+        seoTitle: "Spéculoos artisanal belge 200g — Au Fil des Saveurs",
         seoDescription:
           "Découvrez nos spéculoos artisanaux belges : une recette traditionnelle aux épices douces, cuits au four pour un croustillant irrésistible. 200g de pur bonheur.",
       },
@@ -87,7 +87,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Tarwebloem, bruine basterdsuiker, boter (melk), specerijen (kaneel, gember, nootmuskaat, kruidnagel), rijsmiddel, zout.",
         allergens: ["Gluten", "Melk"],
-        seoTitle: "Ambachtelijke Belgische speculoos 200g — BeeCuit",
+        seoTitle: "Ambachtelijke Belgische speculoos 200g — Au Fil des Saveurs",
         seoDescription:
           "Ontdek onze ambachtelijke Belgische speculoos: een traditioneel recept met zachte specerijen, gebakken voor een onweerstaanbare knapperigheid. 200g puur genot.",
       },
@@ -100,7 +100,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Weizenmehl, brauner Zucker, Butter (Milch), Gewürze (Zimt, Ingwer, Muskatnuss, Nelken), Backpulver, Salz.",
         allergens: ["Gluten", "Milch"],
-        seoTitle: "Handgemachter belgischer Spekulatius 200g — BeeCuit",
+        seoTitle: "Handgemachter belgischer Spekulatius 200g — Au Fil des Saveurs",
         seoDescription:
           "Entdecken Sie unseren handgemachten belgischen Spekulatius: ein traditionelles Rezept mit sanften Gewürzen, für unwiderstehliche Knusprigkeit gebacken. 200g purer Genuss.",
       },
@@ -113,7 +113,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Wheat flour, dark brown sugar, butter (milk), spices (cinnamon, ginger, nutmeg, cloves), baking powder, salt.",
         allergens: ["Gluten", "Milk"],
-        seoTitle: "Artisan Belgian Spéculoos 200g — BeeCuit",
+        seoTitle: "Artisan Belgian Spéculoos 200g — Au Fil des Saveurs",
         seoDescription:
           "Discover our artisan Belgian spéculoos: a traditional recipe with gentle spices, baked for irresistible crispness. 200g of pure delight.",
       },
@@ -146,7 +146,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Farine de blé, beurre (lait), sucre, chocolat noir 70 % (cacao, sucre, beurre de cacao, vanille), œufs, sel.",
         allergens: ["Gluten", "Lait", "Œufs"],
-        seoTitle: "Sablé chocolat noir 180g — BeeCuit",
+        seoTitle: "Sablé chocolat noir 180g — Au Fil des Saveurs",
         seoDescription:
           "Nos sablés au chocolat noir belge : beurre de qualité, éclats de cacao 70 %, texture fondante irrésistible. 180g de gourmandise pure.",
       },
@@ -159,7 +159,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Tarwebloem, boter (melk), suiker, pure chocolade 70% (cacao, suiker, cacaoboter, vanille), eieren, zout.",
         allergens: ["Gluten", "Melk", "Eieren"],
-        seoTitle: "Pure chocolade zandkoekje 180g — BeeCuit",
+        seoTitle: "Pure chocolade zandkoekje 180g — Au Fil des Saveurs",
         seoDescription:
           "Onze zandkoekjes met Belgische pure chocolade: kwaliteitsboter, 70% cacao stukjes, onweerstaanbare smeltende textuur. 180g puur genot.",
       },
@@ -172,7 +172,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Weizenmehl, Butter (Milch), Zucker, Zartbitterschokolade 70% (Kakao, Zucker, Kakaobutter, Vanille), Eier, Salz.",
         allergens: ["Gluten", "Milch", "Eier"],
-        seoTitle: "Zartbitter-Sandgebäck 180g — BeeCuit",
+        seoTitle: "Zartbitter-Sandgebäck 180g — Au Fil des Saveurs",
         seoDescription:
           "Unser Sandgebäck mit belgischer Zartbitterschokolade: Qualitätsbutter, 70% Kakaostücke, unwiderstehlich zarte Textur. 180g purer Genuss.",
       },
@@ -185,7 +185,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Wheat flour, butter (milk), sugar, dark chocolate 70% (cocoa, sugar, cocoa butter, vanilla), eggs, salt.",
         allergens: ["Gluten", "Milk", "Eggs"],
-        seoTitle: "Dark Chocolate Shortbread 180g — BeeCuit",
+        seoTitle: "Dark Chocolate Shortbread 180g — Au Fil des Saveurs",
         seoDescription:
           "Our dark chocolate shortbreads: quality butter, Belgian 70% cacao pieces, irresistibly melt-in-the-mouth texture. 180g of pure indulgence.",
       },
@@ -218,7 +218,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Sucre glace, poudre d'amandes, pâte de noisettes du Piémont (noisettes), blancs d'œufs, crème fraîche (lait), beurre (lait), chocolat blanc (sucre, beurre de cacao, lait entier, vanille).",
         allergens: ["Gluten", "Lait", "Œufs", "Fruits à coque"],
-        seoTitle: "Macarons noisette du Piémont x6 — BeeCuit",
+        seoTitle: "Macarons noisette du Piémont x6 — Au Fil des Saveurs",
         seoDescription:
           "Six macarons artisanaux à la noisette du Piémont : coques délicates, ganache onctueuse et notes torréfiées pour un moment de pur raffinement.",
       },
@@ -231,7 +231,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Poedersuiker, amandelpoeder, Piëmontese hazelnootpasta (hazelnoten), eiwitten, slagroom (melk), boter (melk), witte chocolade (suiker, cacaoboter, volle melk, vanille).",
         allergens: ["Gluten", "Melk", "Eieren", "Noten"],
-        seoTitle: "Piëmontese hazelnoot macarons x6 — BeeCuit",
+        seoTitle: "Piëmontese hazelnoot macarons x6 — Au Fil des Saveurs",
         seoDescription:
           "Zes ambachtelijke hazelnootmacarons met Piëmontese hazelnoten: delicate koekjes, romige ganache en geroosterde noten voor een moment van puur verfijning.",
       },
@@ -244,7 +244,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Puderzucker, Mandelmehl, Piemonteser Haselnusspaste (Haselnüsse), Eiweiß, Sahne (Milch), Butter (Milch), weiße Schokolade (Zucker, Kakaobutter, Vollmilch, Vanille).",
         allergens: ["Gluten", "Milch", "Eier", "Schalenfrüchte"],
-        seoTitle: "Piemonteser Haselnuss-Macarons x6 — BeeCuit",
+        seoTitle: "Piemonteser Haselnuss-Macarons x6 — Au Fil des Saveurs",
         seoDescription:
           "Sechs handgemachte Haselnuss-Macarons mit Piemonteser Haselnüssen: zarte Schalen, cremige Ganache und geröstete Noten für einen Moment purer Raffinesse.",
       },
@@ -257,7 +257,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Icing sugar, almond flour, Piedmont hazelnut paste (hazelnuts), egg whites, cream (milk), butter (milk), white chocolate (sugar, cocoa butter, whole milk, vanilla).",
         allergens: ["Gluten", "Milk", "Eggs", "Tree nuts"],
-        seoTitle: "Piedmont Hazelnut Macarons x6 — BeeCuit",
+        seoTitle: "Piedmont Hazelnut Macarons x6 — Au Fil des Saveurs",
         seoDescription:
           "Six artisan hazelnut macarons with Piedmont hazelnuts: delicate shells, silky ganache and toasted notes for a moment of pure refinement.",
       },
@@ -290,7 +290,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Farine de blé, beurre (lait), sucre, cassonade, pépites de chocolat belge (cacao, sucre, beurre de cacao), œufs, extrait de vanille naturelle, levure chimique, sel.",
         allergens: ["Gluten", "Lait", "Œufs"],
-        seoTitle: "Cookies pépites de chocolat belge 250g — BeeCuit",
+        seoTitle: "Cookies pépites de chocolat belge 250g — Au Fil des Saveurs",
         seoDescription:
           "Des cookies artisanaux avec de vraies pépites de chocolat belge : croustillants dehors, fondants dedans. Le sachet de 250g idéal pour les gourmands.",
       },
@@ -303,7 +303,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Tarwebloem, boter (melk), suiker, bruine suiker, Belgische chocoladechips (cacao, suiker, cacaoboter), eieren, natuurlijk vanille-extract, rijsmiddel, zout.",
         allergens: ["Gluten", "Melk", "Eieren"],
-        seoTitle: "Belgische chocoladechip cookies 250g — BeeCuit",
+        seoTitle: "Belgische chocoladechip cookies 250g — Au Fil des Saveurs",
         seoDescription:
           "Ambachtelijke cookies met echte Belgische chocoladechips: knapperig van buiten, smeltend van binnen. De ideale zak van 250g voor de echte zoetekauw.",
       },
@@ -316,7 +316,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Weizenmehl, Butter (Milch), Zucker, brauner Zucker, belgische Schokoladenchips (Kakao, Zucker, Kakaobutter), Eier, natürliches Vanilleextrakt, Backpulver, Salz.",
         allergens: ["Gluten", "Milch", "Eier"],
-        seoTitle: "Belgische Schokoladenchip-Cookies 250g — BeeCuit",
+        seoTitle: "Belgische Schokoladenchip-Cookies 250g — Au Fil des Saveurs",
         seoDescription:
           "Handgemachte Cookies mit echten belgischen Schokoladenchips: außen knusprig, innen schmelzend. Der ideale 250g-Beutel für echte Naschkatzen.",
       },
@@ -329,7 +329,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Wheat flour, butter (milk), sugar, brown sugar, Belgian chocolate chips (cocoa, sugar, cocoa butter), eggs, natural vanilla extract, baking powder, salt.",
         allergens: ["Gluten", "Milk", "Eggs"],
-        seoTitle: "Belgian Chocolate Chip Cookies 250g — BeeCuit",
+        seoTitle: "Belgian Chocolate Chip Cookies 250g — Au Fil des Saveurs",
         seoDescription:
           "Artisan cookies with real Belgian chocolate chips: crisp outside, soft and gooey inside. The perfect 250g bag for true chocolate lovers.",
       },
@@ -361,7 +361,7 @@ export const PRODUCTS: Array<{
           "Ces galettes pur beurre sont le témoignage de la puissance des bons ingrédients. Fabriquées avec du beurre fermier de qualité supérieure, de la farine de blé et une touche de sel fin, elles développent à la cuisson une saveur beurrée profonde et une texture qui fond en bouche. Rondes, régulières, légèrement dorées : elles incarnent l'élégance du biscuit classique. Un accompagnement parfait pour le thé de l'après-midi ou une simple douceur après le repas.",
         ingredients: "Farine de blé, beurre fermier (lait), sucre, sel fin.",
         allergens: ["Gluten", "Lait"],
-        seoTitle: "Galettes pur beurre artisanales 150g — BeeCuit",
+        seoTitle: "Galettes pur beurre artisanales 150g — Au Fil des Saveurs",
         seoDescription:
           "Nos galettes pur beurre : beurre fermier de qualité, texture fondante, saveur authentique. Un classique indémodable en sachet de 150g.",
       },
@@ -373,7 +373,7 @@ export const PRODUCTS: Array<{
           "Deze pure boter galetten zijn een bewijs van de kracht van goede ingrediënten. Gemaakt met superieure boerenboter, tarwebloem en een vleugje fijn zout, ontwikkelen ze tijdens het bakken een diepe boterse smaak en een textuur die smelt in de mond. Rond, regelmatig, licht goudbruin: ze belichamen de elegantie van het klassieke koekje. Een perfecte begeleider voor de namiddagthee of een eenvoudige verwennerij na de maaltijd.",
         ingredients: "Tarwebloem, boerenboter (melk), suiker, fijn zout.",
         allergens: ["Gluten", "Melk"],
-        seoTitle: "Ambachtelijke pure boter galetten 150g — BeeCuit",
+        seoTitle: "Ambachtelijke pure boter galetten 150g — Au Fil des Saveurs",
         seoDescription:
           "Onze pure boter galetten: kwaliteitsboerenboter, smeltende textuur, authentieke smaak. Een tijdloze klassieker in een zak van 150g.",
       },
@@ -385,7 +385,7 @@ export const PRODUCTS: Array<{
           "Diese reinen Butter-Galetten sind ein Zeugnis der Kraft guter Zutaten. Mit hochwertiger Landbutter, Weizenmehl und einer Prise feinem Salz entwickeln sie beim Backen ein tiefes Butteararoma und eine Textur, die auf der Zunge zergeht. Rund, gleichmäßig, leicht goldbraun: Sie verkörpern die Eleganz des klassischen Kekses. Eine perfekte Begleitung zum Nachmittagstee oder als einfache Süßigkeit nach dem Essen.",
         ingredients: "Weizenmehl, Landbutter (Milch), Zucker, feines Salz.",
         allergens: ["Gluten", "Milch"],
-        seoTitle: "Handgemachte reine Butter-Galetten 150g — BeeCuit",
+        seoTitle: "Handgemachte reine Butter-Galetten 150g — Au Fil des Saveurs",
         seoDescription:
           "Unsere reinen Butter-Galetten: Qualitätslandbutter, schmelzende Textur, authentischer Geschmack. Ein zeitloser Klassiker im 150g-Beutel.",
       },
@@ -397,7 +397,7 @@ export const PRODUCTS: Array<{
           "These pure butter rounds are a testament to the power of excellent ingredients. Made with top-grade farmhouse butter, wheat flour and a touch of fine salt, they develop a deep, rounded butter flavour and a texture that dissolves on the tongue. Perfectly round, evenly golden: they embody the timeless elegance of a classic biscuit. A natural partner for afternoon tea, or a quiet indulgence to finish a meal.",
         ingredients: "Wheat flour, farmhouse butter (milk), sugar, fine salt.",
         allergens: ["Gluten", "Milk"],
-        seoTitle: "Artisan Pure Butter Shortbread Rounds 150g — BeeCuit",
+        seoTitle: "Artisan Pure Butter Shortbread Rounds 150g — Au Fil des Saveurs",
         seoDescription:
           "Our pure butter shortbread rounds: quality farmhouse butter, melt-in-the-mouth texture, authentic flavour. A timeless classic in a 150g bag.",
       },
@@ -430,7 +430,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Farine de riz, fécule de maïs, cassonade brune, huile de noix de coco, épices (cannelle, gingembre, muscade, clou de girofle), levure chimique (sans gluten), sel.",
         allergens: ["Lait"],
-        seoTitle: "Spéculoos sans gluten belge 180g — BeeCuit",
+        seoTitle: "Spéculoos sans gluten belge 180g — Au Fil des Saveurs",
         seoDescription:
           "Des spéculoos sans gluten avec toute la saveur de l'original : épices chaudes, texture croustillante, certifiés sans gluten. 180g de plaisir accessible à tous.",
       },
@@ -443,7 +443,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Rijstmeel, maïszetmeel, bruine basterdsuiker, kokosolie, specerijen (kaneel, gember, nootmuskaat, kruidnagel), glutenvrij rijsmiddel, zout.",
         allergens: ["Melk"],
-        seoTitle: "Belgische glutenvrije speculoos 180g — BeeCuit",
+        seoTitle: "Belgische glutenvrije speculoos 180g — Au Fil des Saveurs",
         seoDescription:
           "Glutenvrije speculoos met alle smaak van het origineel: warme specerijen, knapperige textuur, gecertificeerd glutenvrij. 180g plezier voor iedereen.",
       },
@@ -456,7 +456,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Reismehl, Maisstärke, brauner Zucker, Kokosöl, Gewürze (Zimt, Ingwer, Muskatnuss, Nelken), glutenfreies Backpulver, Salz.",
         allergens: ["Milch"],
-        seoTitle: "Belgischer glutenfreier Spekulatius 180g — BeeCuit",
+        seoTitle: "Belgischer glutenfreier Spekulatius 180g — Au Fil des Saveurs",
         seoDescription:
           "Glutenfreier Spekulatius mit dem vollen Geschmack des Originals: warme Gewürze, knusprige Textur, glutenfrei zertifiziert. 180g Genuss für alle.",
       },
@@ -469,7 +469,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Rice flour, corn starch, dark brown sugar, coconut oil, spices (cinnamon, ginger, nutmeg, cloves), gluten-free baking powder, salt.",
         allergens: ["Milk"],
-        seoTitle: "Belgian Gluten-Free Spéculoos 180g — BeeCuit",
+        seoTitle: "Belgian Gluten-Free Spéculoos 180g — Au Fil des Saveurs",
         seoDescription:
           "Gluten-free spéculoos with all the flavour of the original: warming spices, crisp texture, certified gluten-free. 180g of pleasure for everyone.",
       },
@@ -502,7 +502,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Amandes effilées, sucre, miel, crème fraîche (lait), beurre (lait), chocolat noir (cacao, sucre, beurre de cacao).",
         allergens: ["Lait", "Fruits à coque"],
-        seoTitle: "Florentins amandes et chocolat noir 200g — BeeCuit",
+        seoTitle: "Florentins amandes et chocolat noir 200g — Au Fil des Saveurs",
         seoDescription:
           "Des florentins artisanaux belges : caramel croustillant, amandes effilées et chocolat noir. Un biscuit d'exception en boîte de 200g.",
       },
@@ -515,7 +515,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Geschaafde amandelen, suiker, honing, slagroom (melk), boter (melk), pure chocolade (cacao, suiker, cacaoboter).",
         allergens: ["Melk", "Noten"],
-        seoTitle: "Amandel Florentijnen en pure chocolade 200g — BeeCuit",
+        seoTitle: "Amandel Florentijnen en pure chocolade 200g — Au Fil des Saveurs",
         seoDescription:
           "Ambachtelijke Belgische Florentijnen: knapperige karamel, geschaafde amandelen en pure chocolade. Een uitzonderlijk koekje in een doos van 200g.",
       },
@@ -528,7 +528,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Mandelblättchen, Zucker, Honig, Sahne (Milch), Butter (Milch), Zartbitterschokolade (Kakao, Zucker, Kakaobutter).",
         allergens: ["Milch", "Schalenfrüchte"],
-        seoTitle: "Mandelfloren-Tinen und Zartbitterschokolade 200g — BeeCuit",
+        seoTitle: "Mandelfloren-Tinen und Zartbitterschokolade 200g — Au Fil des Saveurs",
         seoDescription:
           "Handgemachte belgische Florentiner: knuspriges Karamell, Mandelblättchen und Zartbitterschokolade. Ein außergewöhnlicher Keks in der 200g-Box.",
       },
@@ -541,7 +541,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Flaked almonds, sugar, honey, cream (milk), butter (milk), dark chocolate (cocoa, sugar, cocoa butter).",
         allergens: ["Milk", "Tree nuts"],
-        seoTitle: "Almond Florentines with Dark Chocolate 200g — BeeCuit",
+        seoTitle: "Almond Florentines with Dark Chocolate 200g — Au Fil des Saveurs",
         seoDescription:
           "Artisan Belgian florentines: crisp caramel, flaked almonds and dark chocolate. An exceptional biscuit in a 200g box.",
       },
@@ -574,7 +574,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Farine de blé, beurre (lait), sucre glace, œufs, extrait naturel de vanille bourbon, sel.",
         allergens: ["Gluten", "Lait", "Œufs"],
-        seoTitle: "Spritz vanille bourbon artisanaux 200g — BeeCuit",
+        seoTitle: "Spritz vanille bourbon artisanaux 200g — Au Fil des Saveurs",
         seoDescription:
           "Nos spritz à la vanille bourbon : petits sablés légers, beurrés et fondants en forme d'étoile. 200g de biscuiterie belge artisanale.",
       },
@@ -587,7 +587,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Tarwebloem, boter (melk), poedersuiker, eieren, natuurlijk bourbon vanille-extract, zout.",
         allergens: ["Gluten", "Melk", "Eieren"],
-        seoTitle: "Ambachtelijke bourbon vanille spritz 200g — BeeCuit",
+        seoTitle: "Ambachtelijke bourbon vanille spritz 200g — Au Fil des Saveurs",
         seoDescription:
           "Onze bourbon vanille spritz: kleine lichte, boterige en smeltende stervormige zandkoekjes. 200g ambachtelijke Belgische koekjesbakkerij.",
       },
@@ -600,7 +600,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Weizenmehl, Butter (Milch), Puderzucker, Eier, natürliches Bourbon-Vanilleextrakt, Salz.",
         allergens: ["Gluten", "Milch", "Eier"],
-        seoTitle: "Handgemachtes Bourbon-Vanille-Spritzgebäck 200g — BeeCuit",
+        seoTitle: "Handgemachtes Bourbon-Vanille-Spritzgebäck 200g — Au Fil des Saveurs",
         seoDescription:
           "Unser Bourbon-Vanille-Spritzgebäck: kleine, leichte, butterige und schmelzende sternförmige Mürbeteigkekse. 200g belgische handwerkliche Keksbackerei.",
       },
@@ -613,7 +613,7 @@ export const PRODUCTS: Array<{
         ingredients:
           "Wheat flour, butter (milk), icing sugar, eggs, natural bourbon vanilla extract, salt.",
         allergens: ["Gluten", "Milk", "Eggs"],
-        seoTitle: "Artisan Bourbon Vanilla Spritz Biscuits 200g — BeeCuit",
+        seoTitle: "Artisan Bourbon Vanilla Spritz Biscuits 200g — Au Fil des Saveurs",
         seoDescription:
           "Our bourbon vanilla spritz: light, buttery, melt-in-the-mouth star-shaped shortbreads. 200g of Belgian artisan biscuit-making at its finest.",
       },

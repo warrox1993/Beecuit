@@ -37,7 +37,7 @@ const LOCALES = ["fr", "nl", "en", "de"];
       const slug = "carte-cadeau-" + t.cents / 100 + "-euros" + (loc === "fr" ? "" : "-" + loc);
       const name = "Carte cadeau " + t.label;
       const desc =
-        "Une carte cadeau BeeCuit de " +
+        "Une carte cadeau Au Fil des Saveurs de " +
         t.label +
         " à offrir par email. Valable 12 mois sur tous les biscuits et coffrets.";
       await sql`
@@ -46,11 +46,11 @@ const LOCALES = ["fr", "nl", "en", "de"];
         VALUES (
           ${prod.id}, ${loc},
           ${name}, ${slug},
-          ${"Carte cadeau BeeCuit " + t.label}, ${desc},
+          ${"Carte cadeau Au Fil des Saveurs " + t.label}, ${desc},
           '—', ARRAY[]::text[],
           '{"energy_kcal":0,"fat_g":0,"carbs_g":0,"protein_g":0,"salt_g":0}'::jsonb,
-          ${name + " BeeCuit"},
-          ${"Carte cadeau " + t.label + " BeeCuit à offrir, valable 12 mois"}
+          ${name + " Au Fil des Saveurs"},
+          ${"Carte cadeau " + t.label + " Au Fil des Saveurs à offrir, valable 12 mois"}
         )
       `;
     }

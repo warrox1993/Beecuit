@@ -39,7 +39,7 @@ const COFFRETS = [
     photos: PHOTOS.decouverte,
     name: "Coffret Découverte",
     slug: "coffret-decouverte",
-    shortDesc: "Une sélection panachée pour découvrir l'univers BeeCuit.",
+    shortDesc: "Une sélection panachée pour découvrir l'univers Au Fil des Saveurs.",
     longDesc:
       "Spéculoos artisanal, cookies pépites chocolat, sablés au beurre — l'introduction parfaite à notre savoir-faire liégeois. Présenté dans une boîte kraft élégante, prêt à offrir.",
     contents: [
