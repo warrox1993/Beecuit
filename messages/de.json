@@ -64,7 +64,14 @@
     "signIn": "Anmelden",
     "signOut": "Abmelden",
     "comingSoon": "Bald verfügbar",
-    "menu": "Menü"
+    "menu": "Menü",
+    "bottomBoutique": "Shop",
+    "bottomCoffrets": "Boxen",
+    "bottomPanier": "Warenkorb",
+    "bottomCompte": "Konto"
+  },
+  "a11y": {
+    "skipToContent": "Zum Hauptinhalt springen"
   },
   "auth": {
     "signInTitle": "Bei Au Fil des Saveurs anmelden",

@@ -64,7 +64,14 @@
     "signIn": "Inloggen",
     "signOut": "Uitloggen",
     "comingSoon": "Binnenkort beschikbaar",
-    "menu": "Menu"
+    "menu": "Menu",
+    "bottomBoutique": "Winkel",
+    "bottomCoffrets": "Dozen",
+    "bottomPanier": "Mand",
+    "bottomCompte": "Account"
+  },
+  "a11y": {
+    "skipToContent": "Ga naar de hoofdinhoud"
   },
   "auth": {
     "signInTitle": "Inloggen bij Au Fil des Saveurs",

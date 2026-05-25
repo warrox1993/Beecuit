@@ -64,7 +64,14 @@
     "signIn": "Se connecter",
     "signOut": "Se déconnecter",
     "comingSoon": "Bientôt disponible",
-    "menu": "Menu"
+    "menu": "Menu",
+    "bottomBoutique": "Boutique",
+    "bottomCoffrets": "Coffrets",
+    "bottomPanier": "Panier",
+    "bottomCompte": "Compte"
+  },
+  "a11y": {
+    "skipToContent": "Aller au contenu principal"
   },
   "auth": {
     "signInTitle": "Se connecter à Au Fil des Saveurs",

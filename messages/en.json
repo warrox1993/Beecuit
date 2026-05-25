@@ -64,7 +64,14 @@
     "signIn": "Sign in",
     "signOut": "Sign out",
     "comingSoon": "Coming soon",
-    "menu": "Menu"
+    "menu": "Menu",
+    "bottomBoutique": "Shop",
+    "bottomCoffrets": "Gift boxes",
+    "bottomPanier": "Cart",
+    "bottomCompte": "Account"
+  },
+  "a11y": {
+    "skipToContent": "Skip to main content"
   },
   "auth": {
     "signInTitle": "Sign in to Au Fil des Saveurs",
