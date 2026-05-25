@@ -52,7 +52,7 @@ export const PRODUCTS: Array<{
   {
     sku: "BCT-SPEC-200",
     categorySlug: "speculoos",
-    basePriceCents: 690,
+    basePriceCents: 550,
     weightGrams: 200,
     stockQuantity: 50,
     isFeatured: true,
@@ -124,7 +124,7 @@ export const PRODUCTS: Array<{
   {
     sku: "BCT-SABL-CHOC-180",
     categorySlug: "sables",
-    basePriceCents: 850,
+    basePriceCents: 490,
     weightGrams: 180,
     stockQuantity: 50,
     isFeatured: false,
@@ -196,7 +196,7 @@ export const PRODUCTS: Array<{
   {
     sku: "BCT-MACA-NOIS-006",
     categorySlug: "sables",
-    basePriceCents: 1200,
+    basePriceCents: 250,
     weightGrams: 90,
     stockQuantity: 50,
     isFeatured: true,
@@ -268,7 +268,7 @@ export const PRODUCTS: Array<{
   {
     sku: "BCT-COOK-CHOC-250",
     categorySlug: "chocolat",
-    basePriceCents: 990,
+    basePriceCents: 690,
     weightGrams: 250,
     stockQuantity: 50,
     isFeatured: false,
@@ -340,7 +340,7 @@ export const PRODUCTS: Array<{
   {
     sku: "BCT-GALE-BEUR-150",
     categorySlug: "sables",
-    basePriceCents: 590,
+    basePriceCents: 390,
     weightGrams: 150,
     stockQuantity: 50,
     isFeatured: false,
@@ -408,7 +408,7 @@ export const PRODUCTS: Array<{
   {
     sku: "BCT-SPEC-SG-180",
     categorySlug: "sans-gluten",
-    basePriceCents: 790,
+    basePriceCents: 490,
     weightGrams: 180,
     stockQuantity: 50,
     isFeatured: false,
@@ -480,7 +480,7 @@ export const PRODUCTS: Array<{
   {
     sku: "BCT-FLOR-AMAN-200",
     categorySlug: "chocolat",
-    basePriceCents: 1050,
+    basePriceCents: 550,
     weightGrams: 200,
     stockQuantity: 50,
     isFeatured: false,
@@ -552,7 +552,7 @@ export const PRODUCTS: Array<{
   {
     sku: "BCT-SPRI-VANI-200",
     categorySlug: "sables",
-    basePriceCents: 750,
+    basePriceCents: 550,
     weightGrams: 200,
     stockQuantity: 50,
     isFeatured: false,
