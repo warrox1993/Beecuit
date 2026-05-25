@@ -224,6 +224,16 @@
     "discountBadge": "remise coffret"
   },
   "journal": {
+    "title": "Journal de la maison",
+    "lead": "Recettes, savoir-faire et coulisses de l'atelier.",
+    "empty": "Le journal arrive bientôt. Abonnez-vous à la newsletter pour ne rien manquer.",
+    "categories": {
+      "all": "Tout",
+      "recettes": "Recettes",
+      "savoir-faire": "Savoir-faire",
+      "saisons": "Saisons",
+      "atelier": "L'atelier"
+    },
     "newsletter": {
       "optInLabel": "Recevoir aussi le journal mensuel",
       "optInHelp": "Recettes, conseils et coulisses, 1 email par article publié."

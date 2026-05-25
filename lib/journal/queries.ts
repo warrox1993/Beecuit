@@ -1,7 +1,7 @@
 import "server-only";
 import { db } from "@/lib/db";
 import { journalArticles, journalArticleTranslations } from "@/lib/db/schema";
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 
 export async function listArticlesForAdmin() {
   const rows = await db.select().from(journalArticles).orderBy(desc(journalArticles.updatedAt));
@@ -24,4 +24,71 @@ export async function getArticleForAdmin(id: string) {
     .from(journalArticleTranslations)
     .where(eq(journalArticleTranslations.articleId, id));
   return { article, translations };
+}
+
+export async function listPublishedArticles(opts: {
+  locale: "fr" | "nl" | "en" | "de";
+  category?: "recettes" | "savoir-faire" | "saisons" | "atelier";
+  limit?: number;
+  offset?: number;
+}) {
+  const rows = await db
+    .select({ a: journalArticles, t: journalArticleTranslations })
+    .from(journalArticles)
+    .innerJoin(
+      journalArticleTranslations,
+      and(
+        eq(journalArticleTranslations.articleId, journalArticles.id),
+        eq(journalArticleTranslations.locale, opts.locale),
+      ),
+    )
+    .where(
+      and(
+        eq(journalArticles.status, "published"),
+        opts.category ? eq(journalArticles.category, opts.category) : undefined,
+      ),
+    )
+    .orderBy(desc(journalArticles.publishedAt))
+    .limit(opts.limit ?? 9)
+    .offset(opts.offset ?? 0);
+  return rows.map((r) => ({ ...r.a, translation: r.t }));
+}
+
+export async function countPublishedArticles(opts: {
+  locale: "fr" | "nl" | "en" | "de";
+  category?: "recettes" | "savoir-faire" | "saisons" | "atelier";
+}) {
+  const rows = await db
+    .select({ id: journalArticles.id })
+    .from(journalArticles)
+    .innerJoin(
+      journalArticleTranslations,
+      and(
+        eq(journalArticleTranslations.articleId, journalArticles.id),
+        eq(journalArticleTranslations.locale, opts.locale),
+      ),
+    )
+    .where(
+      and(
+        eq(journalArticles.status, "published"),
+        opts.category ? eq(journalArticles.category, opts.category) : undefined,
+      ),
+    );
+  return rows.length;
+}
+
+export async function getFeaturedArticle(locale: "fr" | "nl" | "en" | "de") {
+  const rows = await db
+    .select({ a: journalArticles, t: journalArticleTranslations })
+    .from(journalArticles)
+    .innerJoin(
+      journalArticleTranslations,
+      and(
+        eq(journalArticleTranslations.articleId, journalArticles.id),
+        eq(journalArticleTranslations.locale, locale),
+      ),
+    )
+    .where(and(eq(journalArticles.isFeatured, true), eq(journalArticles.status, "published")))
+    .limit(1);
+  return rows[0] ? { ...rows[0].a, translation: rows[0].t } : null;
 }

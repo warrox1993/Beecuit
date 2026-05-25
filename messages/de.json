@@ -224,6 +224,16 @@
     "discountBadge": "Box-Rabatt"
   },
   "journal": {
+    "title": "Das Journal des Hauses",
+    "lead": "Rezepte, Handwerk und Einblicke aus der Werkstatt.",
+    "empty": "Das Journal erscheint bald. Abonniere den Newsletter, um nichts zu verpassen.",
+    "categories": {
+      "all": "Alle",
+      "recettes": "Rezepte",
+      "savoir-faire": "Handwerk",
+      "saisons": "Jahreszeiten",
+      "atelier": "Die Werkstatt"
+    },
     "newsletter": {
       "optInLabel": "Auch das monatliche Journal erhalten",
       "optInHelp": "Rezepte, Tipps und Einblicke, 1 E-Mail pro veröffentlichtem Artikel."

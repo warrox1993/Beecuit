@@ -224,6 +224,16 @@
     "discountBadge": "gift-box discount"
   },
   "journal": {
+    "title": "The house journal",
+    "lead": "Recipes, craft and behind-the-scenes from the atelier.",
+    "empty": "The journal is coming soon. Subscribe to the newsletter so you don't miss a thing.",
+    "categories": {
+      "all": "All",
+      "recettes": "Recipes",
+      "savoir-faire": "Craft",
+      "saisons": "Seasons",
+      "atelier": "The atelier"
+    },
     "newsletter": {
       "optInLabel": "Also receive our monthly journal",
       "optInHelp": "Recipes, tips and behind-the-scenes, 1 email per published article."
