@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Container } from "@/components/ui-primitives/Container";
 import { Link } from "@/i18n/navigation";
 import { NewsletterForm } from "@/components/common/NewsletterForm";
+import { Logo } from "@/components/brand/Logo";
 import { Share2, Globe } from "lucide-react";
 
 export async function Footer({ locale }: { locale: string }) {
@@ -14,7 +15,10 @@ export async function Footer({ locale }: { locale: string }) {
       <Container>
         <div className="grid grid-cols-1 gap-12 py-16 md:grid-cols-4">
           <div>
-            <p className="text-honey font-display text-2xl">BeeCuit</p>
+            <Logo
+              variant="full"
+              className="text-warm-brown -ml-2 h-32 w-auto md:-ml-4 md:h-36"
+            />
             <p className="text-warm-brown/80 mt-4 text-sm">{t("tagline")}</p>
             <p className="text-warm-brown/70 mt-4 text-xs">{t("address")}</p>
             <p className="text-warm-brown/70 text-xs">{t("hours")}</p>
@@ -113,7 +117,7 @@ export async function Footer({ locale }: { locale: string }) {
           <p className="text-warm-brown/60 text-xs">{t("madeWith")}</p>
           <div className="text-warm-brown/60 flex gap-4">
             <a
-              href="https://instagram.com/beecuit"
+              href="https://instagram.com/aufildessaveurs"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
@@ -122,7 +126,7 @@ export async function Footer({ locale }: { locale: string }) {
               <Share2 className="h-4 w-4" />
             </a>
             <a
-              href="https://facebook.com/beecuit"
+              href="https://facebook.com/aufildessaveurs"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
