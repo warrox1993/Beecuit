@@ -36,7 +36,7 @@ export function NewsletterConfirmationEmail({
         Confirmer
       </a>
       <p style={{ fontSize: 12, color: "#7a5a3c", marginTop: 24 }}>
-        Si vous n'êtes pas à l'origine de cette inscription, ignorez cet email.
+        Si vous n&apos;êtes pas à l&apos;origine de cette inscription, ignorez cet email.
       </p>
     </div>
   );
