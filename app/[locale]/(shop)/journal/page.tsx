@@ -22,10 +22,12 @@ export default async function JournalPage({
   const PAGE_SIZE = 9;
   const pageNum = Math.max(1, parseInt(page ?? "1", 10) || 1);
 
-  const [articles, featured] = await Promise.all([
+  const [articlesRaw, featured] = await Promise.all([
     listPublishedArticles({ locale, limit: PAGE_SIZE, offset: (pageNum - 1) * PAGE_SIZE }),
     getFeaturedArticle(locale),
   ]);
+  // Exclude the featured article from the grid — it's already shown in the hero above
+  const articles = featured ? articlesRaw.filter((a) => a.id !== featured.id) : articlesRaw;
 
   return (
     <section className="container mx-auto px-4 py-16">
