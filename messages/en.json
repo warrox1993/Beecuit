@@ -27,7 +27,28 @@
     "newsletterTitle": "Get our latest news",
     "newsletterAccent": "-10 %",
     "newsletterTaglineSuffix": "on your first order",
-    "newsletterDisclaimer": "No spam, just monthly updates. Unsubscribe in 1 click."
+    "newsletterDisclaimer": "No spam, just monthly updates. Unsubscribe in 1 click.",
+    "heroScriptAccent": "Saveurs",
+    "heroSubEyebrow": "A Liège house · since 2026",
+    "storyScriptAccent": "story",
+    "storyPullQuote": "Every biscuit tells the gesture of a hand that takes its time.",
+    "storyPullQuoteSignature": "— The House",
+    "coffretsListEyebrow": "OUR GIFT BOXES",
+    "coffretsListScriptAccent": "gift",
+    "coffretsListSubtitle": "Four signature compositions, ready to be offered.",
+    "coffretsListCta": "View all gift boxes",
+    "coffretsList": {
+      "name1": "Discovery Box",
+      "teaser1": "8 biscuits · shortbread · spéculoos · macaron",
+      "name2": "Atelier Box",
+      "teaser2": "12 biscuits · seasonal selection",
+      "name3": "Maison Box",
+      "teaser3": "18 biscuits · generous gourmet format",
+      "name4": "Signature Box",
+      "teaser4": "24 biscuits · the complete experience"
+    },
+    "newsletterScriptAccent": "news",
+    "newsletterIntro": "Get our latest"
   },
   "nav": {
     "home": "Home",

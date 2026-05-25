@@ -27,7 +27,28 @@
     "newsletterTitle": "Ontvang onze nieuwigheden",
     "newsletterAccent": "-10 %",
     "newsletterTaglineSuffix": "op je eerste bestelling",
-    "newsletterDisclaimer": "Geen spam, alleen maandelijkse nieuwtjes. Afmelden in 1 klik."
+    "newsletterDisclaimer": "Geen spam, alleen maandelijkse nieuwtjes. Afmelden in 1 klik.",
+    "heroScriptAccent": "Saveurs",
+    "heroSubEyebrow": "Luiks huis · sinds 2026",
+    "storyScriptAccent": "verhaal",
+    "storyPullQuote": "Elk koekje vertelt het gebaar van een hand die de tijd neemt.",
+    "storyPullQuoteSignature": "— Het Huis",
+    "coffretsListEyebrow": "ONZE DOZEN",
+    "coffretsListScriptAccent": "cadeau",
+    "coffretsListSubtitle": "Vier signature composities, klaar om cadeau te geven.",
+    "coffretsListCta": "Bekijk alle dozen",
+    "coffretsList": {
+      "name1": "Doos Ontdekking",
+      "teaser1": "8 koekjes · zandkoek · speculoos · macaron",
+      "name2": "Doos Atelier",
+      "teaser2": "12 koekjes · selectie van het moment",
+      "name3": "Doos Huis",
+      "teaser3": "18 koekjes · royale gourmet keuze",
+      "name4": "Doos Signature",
+      "teaser4": "24 koekjes · de complete ervaring"
+    },
+    "newsletterScriptAccent": "nieuwigheden",
+    "newsletterIntro": "Ontvang onze"
   },
   "nav": {
     "home": "Home",

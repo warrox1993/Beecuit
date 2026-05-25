@@ -27,7 +27,28 @@
     "newsletterTitle": "Erhalte unsere Neuigkeiten",
     "newsletterAccent": "-10 %",
     "newsletterTaglineSuffix": "auf deine erste Bestellung",
-    "newsletterDisclaimer": "Kein Spam, nur monatliche Neuigkeiten. Abmeldung in 1 Klick."
+    "newsletterDisclaimer": "Kein Spam, nur monatliche Neuigkeiten. Abmeldung in 1 Klick.",
+    "heroScriptAccent": "Saveurs",
+    "heroSubEyebrow": "Lütticher Haus · seit 2026",
+    "storyScriptAccent": "Geschichte",
+    "storyPullQuote": "Jeder Keks erzählt die Geste einer Hand, die sich Zeit nimmt.",
+    "storyPullQuoteSignature": "— Das Haus",
+    "coffretsListEyebrow": "UNSERE GESCHENKBOXEN",
+    "coffretsListScriptAccent": "Geschenk",
+    "coffretsListSubtitle": "Vier Signatur-Kompositionen, zum Verschenken bereit.",
+    "coffretsListCta": "Alle Boxen ansehen",
+    "coffretsList": {
+      "name1": "Box Entdeckung",
+      "teaser1": "8 Kekse · Sandgebäck · Spekulatius · Macaron",
+      "name2": "Box Atelier",
+      "teaser2": "12 Kekse · saisonale Auswahl",
+      "name3": "Box Haus",
+      "teaser3": "18 Kekse · großzügiges Gourmet-Format",
+      "name4": "Box Signatur",
+      "teaser4": "24 Kekse · das vollständige Erlebnis"
+    },
+    "newsletterScriptAccent": "Neuigkeiten",
+    "newsletterIntro": "Erhalte unsere"
   },
   "nav": {
     "home": "Startseite",

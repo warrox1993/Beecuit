@@ -27,7 +27,28 @@
     "newsletterTitle": "Reçois nos nouveautés",
     "newsletterAccent": "-10 %",
     "newsletterTaglineSuffix": "à la première commande",
-    "newsletterDisclaimer": "Pas de spam, juste les nouveautés mensuelles. Désinscription en 1 clic."
+    "newsletterDisclaimer": "Pas de spam, juste les nouveautés mensuelles. Désinscription en 1 clic.",
+    "heroScriptAccent": "Saveurs",
+    "heroSubEyebrow": "Maison liégeoise · depuis 2026",
+    "storyScriptAccent": "histoire",
+    "storyPullQuote": "Chaque biscuit raconte le geste d'une main qui prend son temps.",
+    "storyPullQuoteSignature": "— La Maison",
+    "coffretsListEyebrow": "NOS COFFRETS",
+    "coffretsListScriptAccent": "cadeau",
+    "coffretsListSubtitle": "Quatre compositions signature, prêtes à offrir.",
+    "coffretsListCta": "Voir tous les coffrets",
+    "coffretsList": {
+      "name1": "Coffret Découverte",
+      "teaser1": "8 biscuits · sablé · spéculoos · macaron",
+      "name2": "Coffret Atelier",
+      "teaser2": "12 biscuits · sélection du moment",
+      "name3": "Coffret Maison",
+      "teaser3": "18 biscuits · grand format gourmand",
+      "name4": "Coffret Signature",
+      "teaser4": "24 biscuits · l'expérience complète"
+    },
+    "newsletterScriptAccent": "nouveautés",
+    "newsletterIntro": "Reçois nos"
   },
   "nav": {
     "home": "Accueil",
