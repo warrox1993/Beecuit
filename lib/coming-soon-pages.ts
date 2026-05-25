@@ -1,7 +1,6 @@
 export const COMING_SOON_PAGES = {
   coffrets: { messageKey: "coffrets" },
   abonnement: { messageKey: "abonnement" },
-  journal: { messageKey: "journal" },
   "notre-histoire": { messageKey: "notreHistoire" },
   contact: { messageKey: "contact" },
   cgv: { messageKey: "cgv" },
