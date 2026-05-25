@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { getArticleBySlug, getAlsoRead } from "@/lib/journal/queries";
@@ -8,10 +9,38 @@ import { RelatedProducts } from "@/components/journal/RelatedProducts";
 import { JournalAlsoRead } from "@/components/journal/JournalAlsoRead";
 import { JournalTableOfContents } from "@/components/journal/JournalTableOfContents";
 import { RecipeBlock } from "@/components/journal/RecipeBlock";
+import {
+  articleJsonLd,
+  recipeJsonLd,
+  breadcrumbJsonLd,
+} from "@/lib/journal/structured-data";
 import { env } from "@/lib/env";
 import type { ProseMirrorNode } from "@/lib/journal/prosemirror-types";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: "fr" | "nl" | "en" | "de"; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const result = await getArticleBySlug(slug, locale);
+  if (!result) return {};
+  const t = result.translation ?? result.fallback;
+  if (!t) return {};
+  return {
+    title: t.seoTitle ?? t.title,
+    description: t.seoDescription ?? t.excerpt,
+    alternates: { canonical: `/${locale}/journal/${slug}` },
+    openGraph: {
+      title: t.seoTitle ?? t.title,
+      description: t.seoDescription ?? t.excerpt,
+      type: "article",
+      // The OG image is auto-discovered at /{locale}/journal/{slug}/opengraph-image
+    },
+  };
+}
 
 export default async function JournalDetailPage({
   params,
@@ -50,6 +79,36 @@ export default async function JournalDetailPage({
 
   return (
     <article className="bg-cream">
+      {/* JSON-LD: Article + Breadcrumb (always) + Recipe (when applicable) */}
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            articleJsonLd(result.article, translation, locale),
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd(result.article, translation.title, locale),
+          ),
+        }}
+      />
+      {isRecipe &&
+        (() => {
+          const r = recipeJsonLd(result.article, translation);
+          return r ? (
+            <script
+              type="application/ld+json"
+              // eslint-disable-next-line react/no-danger
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(r) }}
+            />
+          ) : null;
+        })()}
       <JournalHero article={result.article} translation={translation} locale={locale} />
       {fallback && (
         <div className="border-honey/40 bg-honey/10 container mx-auto my-4 max-w-prose rounded border p-3 text-center text-sm">
