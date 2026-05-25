@@ -1,10 +1,10 @@
 {
   "home": {
-    "title": "BeeCuit",
+    "title": "Au Fil des Saveurs",
     "tagline": "Handwerkliche Kekse aus Lüttich",
     "cta": "Entdecke unsere Boxen",
     "languageSwitcher": "Sprache wechseln",
-    "heroEyebrow": "BEECUIT — LÜTTICH",
+    "heroEyebrow": "AU FIL DES SAVEURS — LÜTTICH",
     "heroTitle": "Das belgische Gebäck,",
     "heroTitleAccent": "von Hand gemacht.",
     "heroProse": "Sanft gebackene Spekulatius, Sandgebäck mit belgischer frischer Butter, Macarons mit Haselnüssen aus dem Piemont. Alles wird in Lüttich gemacht, in kleinen Mengen, um den Geschmack zu bewahren.",
@@ -15,15 +15,15 @@
     "featuredCta": "Den ganzen Katalog ansehen",
     "storyEyebrow": "DIE GESCHICHTE",
     "storyTitle": "Ein Lütticher Haus seit 2026",
-    "storyProse": "BeeCuit entstand aus einer Obsession: belgisches Gebäck zu einem Genusserlebnis zu machen, nicht zu einem Industrieprodukt. In unserer Werkstatt in der Rue de la Maison in Lüttich wird jede Charge von Hand goldbraun gebacken, Minute für Minute überwacht.",
+    "storyProse": "Au Fil des Saveurs entstand aus einer Obsession: belgisches Gebäck zu einem Genusserlebnis zu machen, nicht zu einem Industrieprodukt. In unserer Werkstatt in der Rue de la Maison in Lüttich wird jede Charge von Hand goldbraun gebacken, Minute für Minute überwacht.",
     "storyCta": "Die ganze Geschichte lesen",
     "coffretsEyebrow": "DEMNÄCHST",
     "coffretsTitle": "Stelle deine Box zusammen",
     "coffretsProse": "Wähle deine Lieblingskekse, und wir stellen dir eine Box in einer recycelbaren Bienenwachsverpackung zusammen. Erhältlich Frühjahr 2026.",
     "coffretsCta": "Beim Launch benachrichtigen",
-    "instagramEyebrow": "DAS LEBEN VON BEECUIT",
+    "instagramEyebrow": "DAS LEBEN VON AU FIL DES SAVEURS",
     "instagramTitle": "Folge uns",
-    "instagramHandle": "@beecuit",
+    "instagramHandle": "@aufildessaveurs",
     "newsletterTitle": "Erhalte unsere Neuigkeiten",
     "newsletterAccent": "-10 %",
     "newsletterTaglineSuffix": "auf deine erste Bestellung",
@@ -46,7 +46,7 @@
     "menu": "Menü"
   },
   "auth": {
-    "signInTitle": "Bei BeeCuit anmelden",
+    "signInTitle": "Bei Au Fil des Saveurs anmelden",
     "signInDescription": "Erhalte einen Login-Link per E-Mail — kein Passwort nötig.",
     "emailLabel": "E-Mail-Adresse",
     "emailPlaceholder": "deine@email.com",
@@ -61,7 +61,7 @@
   },
   "footer": {
     "tagline": "Belgische handwerkliche Kekse, mit Liebe in Lüttich gebacken.",
-    "copyright": "© {year} BeeCuit — Alle Rechte vorbehalten",
+    "copyright": "© {year} Au Fil des Saveurs — Alle Rechte vorbehalten",
     "address": "Rue de la Maison 12 · 4000 Lüttich",
     "hours": "Mi-Sa, 10-18 Uhr",
     "columnShop": "Shop",
@@ -110,7 +110,7 @@
         "when": "Frühjahr 2026"
       },
       "abonnement": {
-        "title": "Monatliches BeeCuit-Abonnement",
+        "title": "Monatliches Au Fil des Saveurs-Abonnement",
         "description": "Erhalte jeden Monat eine Überraschungsbox mit Keksen, zusammengestellt von uns. Mini, Klassisch oder Familie — du entscheidest.",
         "when": "Frühjahr 2026"
       },
@@ -121,7 +121,7 @@
       },
       "notreHistoire": {
         "title": "Unsere Geschichte",
-        "description": "Wer hinter BeeCuit steckt, warum dieses Projekt, wie wir arbeiten. Eine aufrichtige Seite über belgisches Handwerk.",
+        "description": "Wer hinter Au Fil des Saveurs steckt, warum dieses Projekt, wie wir arbeiten. Eine aufrichtige Seite über belgisches Handwerk.",
         "when": "Sommer 2026"
       },
       "contact": {
@@ -130,13 +130,13 @@
         "when": "Frühjahr 2026"
       },
       "entreprises": {
-        "title": "BeeCuit für Unternehmen",
+        "title": "Au Fil des Saveurs für Unternehmen",
         "description": "Geschenkboxen für Kunden oder Mitarbeiter, mit oder ohne Ihr Logo. Persönliche Angebote.",
         "when": "Sommer 2026"
       },
       "cgv": {
         "title": "Allgemeine Geschäftsbedingungen",
-        "description": "Die BeeCuit-AGB für über diese Website aufgegebene Bestellungen.",
+        "description": "Die Au Fil des Saveurs-AGB für über diese Website aufgegebene Bestellungen.",
         "when": "Bei der ersten Bestellung"
       },
       "mentionsLegales": {
@@ -158,13 +158,13 @@
   },
   "catalog": {
     "title": "Unsere Kekse",
-    "intro": "Entdecke die BeeCuit-Auswahl, alle unsere Kekse gebacken in Lüttich.",
+    "intro": "Entdecke die Au Fil des Saveurs-Auswahl, alle unsere Kekse gebacken in Lüttich.",
     "filterAll": "Alle",
     "outOfStock": "Ausverkauft",
     "addToCart": "In den Warenkorb",
     "from": "ab",
     "pageEyebrow": "UNSER KATALOG",
-    "pageProse": "Entdecke die BeeCuit-Auswahl, gebacken in Lüttich.",
+    "pageProse": "Entdecke die Au Fil des Saveurs-Auswahl, gebacken in Lüttich.",
     "trustDelivery": "Lieferung in 24h per Bpost",
     "trustOrigin": "Gebacken in Lüttich",
     "trustNatural": "Ohne Konservierungsstoffe",

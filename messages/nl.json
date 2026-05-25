@@ -1,10 +1,10 @@
 {
   "home": {
-    "title": "BeeCuit",
+    "title": "Au Fil des Saveurs",
     "tagline": "Ambachtelijke koekjes uit Luik",
     "cta": "Ontdek onze dozen",
     "languageSwitcher": "Taal wijzigen",
-    "heroEyebrow": "BEECUIT — LUIK",
+    "heroEyebrow": "AU FIL DES SAVEURS — LUIK",
     "heroTitle": "Het Belgische koekje,",
     "heroTitleAccent": "met de hand gemaakt.",
     "heroProse": "Zacht gebakken speculoos, zandkoekjes met Belgische verse boter, macarons met hazelnoten uit Piemonte. Alles wordt in Luik gemaakt, in kleine hoeveelheden, om de smaak te behouden.",
@@ -15,15 +15,15 @@
     "featuredCta": "Bekijk de volledige collectie",
     "storyEyebrow": "HET VERHAAL",
     "storyTitle": "Een Luiks huis sinds 2026",
-    "storyProse": "BeeCuit ontstond uit een obsessie: van het Belgische koekje een smaakbeleving maken, geen industrieel product. In ons atelier in de Rue de la Maison in Luik wordt elke partij met de hand goudbruin gebakken, minuut per minuut gevolgd.",
+    "storyProse": "Au Fil des Saveurs ontstond uit een obsessie: van het Belgische koekje een smaakbeleving maken, geen industrieel product. In ons atelier in de Rue de la Maison in Luik wordt elke partij met de hand goudbruin gebakken, minuut per minuut gevolgd.",
     "storyCta": "Lees het volledige verhaal",
     "coffretsEyebrow": "BINNENKORT",
     "coffretsTitle": "Stel je doos samen",
     "coffretsProse": "Kies je favoriete koekjes en wij stellen voor jou een doos samen in een herbruikbare bijenwas verpakking. Beschikbaar lente 2026.",
     "coffretsCta": "Verwittig mij bij de lancering",
-    "instagramEyebrow": "HET LEVEN VAN BEECUIT",
+    "instagramEyebrow": "HET LEVEN VAN AU FIL DES SAVEURS",
     "instagramTitle": "Volg ons",
-    "instagramHandle": "@beecuit",
+    "instagramHandle": "@aufildessaveurs",
     "newsletterTitle": "Ontvang onze nieuwigheden",
     "newsletterAccent": "-10 %",
     "newsletterTaglineSuffix": "op je eerste bestelling",
@@ -46,7 +46,7 @@
     "menu": "Menu"
   },
   "auth": {
-    "signInTitle": "Inloggen bij BeeCuit",
+    "signInTitle": "Inloggen bij Au Fil des Saveurs",
     "signInDescription": "Ontvang een loginlink per e-mail — geen wachtwoord nodig.",
     "emailLabel": "E-mailadres",
     "emailPlaceholder": "jouw@email.com",
@@ -61,7 +61,7 @@
   },
   "footer": {
     "tagline": "Belgische ambachtelijke koekjes, met liefde gebakken in Luik.",
-    "copyright": "© {year} BeeCuit — Alle rechten voorbehouden",
+    "copyright": "© {year} Au Fil des Saveurs — Alle rechten voorbehouden",
     "address": "Rue de la Maison 12 · 4000 Luik",
     "hours": "Woe-zat, 10u-18u",
     "columnShop": "Winkel",
@@ -110,7 +110,7 @@
         "when": "Lente 2026"
       },
       "abonnement": {
-        "title": "Maandelijks BeeCuit-abonnement",
+        "title": "Maandelijks Au Fil des Saveurs-abonnement",
         "description": "Ontvang elke maand een verrassingsbox met koekjes, samengesteld door ons. Mini, Klassiek of Familie — jij kiest.",
         "when": "Lente 2026"
       },
@@ -121,7 +121,7 @@
       },
       "notreHistoire": {
         "title": "Ons verhaal",
-        "description": "Wie er achter BeeCuit zit, waarom dit project, hoe we werken. Een oprechte pagina over Belgisch vakmanschap.",
+        "description": "Wie er achter Au Fil des Saveurs zit, waarom dit project, hoe we werken. Een oprechte pagina over Belgisch vakmanschap.",
         "when": "Zomer 2026"
       },
       "contact": {
@@ -130,13 +130,13 @@
         "when": "Lente 2026"
       },
       "entreprises": {
-        "title": "BeeCuit voor bedrijven",
+        "title": "Au Fil des Saveurs voor bedrijven",
         "description": "Cadeaudozen voor klanten of medewerkers, met of zonder uw logo. Persoonlijke offertes.",
         "when": "Zomer 2026"
       },
       "cgv": {
         "title": "Algemene verkoopvoorwaarden",
-        "description": "De BeeCuit-verkoopvoorwaarden van toepassing op bestellingen geplaatst via deze site.",
+        "description": "De Au Fil des Saveurs-verkoopvoorwaarden van toepassing op bestellingen geplaatst via deze site.",
         "when": "Bij de eerste bestelling"
       },
       "mentionsLegales": {
@@ -158,13 +158,13 @@
   },
   "catalog": {
     "title": "Onze koekjes",
-    "intro": "Ontdek de BeeCuit-selectie, al onze koekjes gebakken in Luik.",
+    "intro": "Ontdek de Au Fil des Saveurs-selectie, al onze koekjes gebakken in Luik.",
     "filterAll": "Alle",
     "outOfStock": "Uitverkocht",
     "addToCart": "Toevoegen aan winkelmandje",
     "from": "vanaf",
     "pageEyebrow": "ONZE CATALOGUS",
-    "pageProse": "Ontdek de BeeCuit-selectie, gebakken in Luik.",
+    "pageProse": "Ontdek de Au Fil des Saveurs-selectie, gebakken in Luik.",
     "trustDelivery": "Levering binnen 24u Bpost",
     "trustOrigin": "Gebakken in Luik",
     "trustNatural": "Zonder bewaarmiddelen",

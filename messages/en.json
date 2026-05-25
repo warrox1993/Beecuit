@@ -1,10 +1,10 @@
 {
   "home": {
-    "title": "BeeCuit",
+    "title": "Au Fil des Saveurs",
     "tagline": "Artisan biscuits from Liège",
     "cta": "Discover our boxes",
     "languageSwitcher": "Change language",
-    "heroEyebrow": "BEECUIT — LIÈGE",
+    "heroEyebrow": "AU FIL DES SAVEURS — LIÈGE",
     "heroTitle": "The Belgian biscuit,",
     "heroTitleAccent": "handmade.",
     "heroProse": "Spéculoos baked slowly, shortbreads with fresh Belgian butter, macarons with hazelnuts from Piedmont. Everything is made in Liège, in small quantities, to preserve the taste.",
@@ -15,15 +15,15 @@
     "featuredCta": "View the full catalogue",
     "storyEyebrow": "THE STORY",
     "storyTitle": "A Liège house since 2026",
-    "storyProse": "BeeCuit was born from an obsession: turning the Belgian biscuit into a tasting experience, not an industrial product. In our workshop on Rue de la Maison in Liège, every batch comes out golden by hand, watched to the minute.",
+    "storyProse": "Au Fil des Saveurs was born from an obsession: turning the Belgian biscuit into a tasting experience, not an industrial product. In our workshop on Rue de la Maison in Liège, every batch comes out golden by hand, watched to the minute.",
     "storyCta": "Read the full story",
     "coffretsEyebrow": "COMING SOON",
     "coffretsTitle": "Compose your box",
     "coffretsProse": "Choose your favourite biscuits and we'll assemble a box for you in recyclable beeswax packaging. Available spring 2026.",
     "coffretsCta": "Notify me at launch",
-    "instagramEyebrow": "LIFE AT BEECUIT",
+    "instagramEyebrow": "LIFE AT AU FIL DES SAVEURS",
     "instagramTitle": "Follow us",
-    "instagramHandle": "@beecuit",
+    "instagramHandle": "@aufildessaveurs",
     "newsletterTitle": "Get our latest news",
     "newsletterAccent": "-10 %",
     "newsletterTaglineSuffix": "on your first order",
@@ -46,7 +46,7 @@
     "menu": "Menu"
   },
   "auth": {
-    "signInTitle": "Sign in to BeeCuit",
+    "signInTitle": "Sign in to Au Fil des Saveurs",
     "signInDescription": "Receive a sign-in link by email — no password needed.",
     "emailLabel": "Email address",
     "emailPlaceholder": "your@email.com",
@@ -61,7 +61,7 @@
   },
   "footer": {
     "tagline": "Belgian artisan biscuits, baked with love in Liège.",
-    "copyright": "© {year} BeeCuit — All rights reserved",
+    "copyright": "© {year} Au Fil des Saveurs — All rights reserved",
     "address": "Rue de la Maison 12 · 4000 Liège",
     "hours": "Wed-Sat, 10am-6pm",
     "columnShop": "Shop",
@@ -110,7 +110,7 @@
         "when": "Spring 2026"
       },
       "abonnement": {
-        "title": "Monthly BeeCuit subscription",
+        "title": "Monthly Au Fil des Saveurs subscription",
         "description": "Receive a surprise biscuit box every month, curated by us. Mini, Classic or Family — your choice.",
         "when": "Spring 2026"
       },
@@ -121,7 +121,7 @@
       },
       "notreHistoire": {
         "title": "Our story",
-        "description": "Who is behind BeeCuit, why this project, how we work. A sincere page about Belgian craftsmanship.",
+        "description": "Who is behind Au Fil des Saveurs, why this project, how we work. A sincere page about Belgian craftsmanship.",
         "when": "Summer 2026"
       },
       "contact": {
@@ -130,13 +130,13 @@
         "when": "Spring 2026"
       },
       "entreprises": {
-        "title": "BeeCuit for business",
+        "title": "Au Fil des Saveurs for business",
         "description": "Gift boxes for clients or colleagues, with or without your logo. Custom quotes.",
         "when": "Summer 2026"
       },
       "cgv": {
         "title": "Terms and conditions",
-        "description": "BeeCuit's terms and conditions applicable to orders placed on this site.",
+        "description": "Au Fil des Saveurs's terms and conditions applicable to orders placed on this site.",
         "when": "At first order"
       },
       "mentionsLegales": {
@@ -158,13 +158,13 @@
   },
   "catalog": {
     "title": "Our biscuits",
-    "intro": "Discover the BeeCuit selection, all our biscuits baked in Liège.",
+    "intro": "Discover the Au Fil des Saveurs selection, all our biscuits baked in Liège.",
     "filterAll": "All",
     "outOfStock": "Sold out",
     "addToCart": "Add to cart",
     "from": "from",
     "pageEyebrow": "OUR CATALOG",
-    "pageProse": "Discover the BeeCuit selection, baked in Liège.",
+    "pageProse": "Discover the Au Fil des Saveurs selection, baked in Liège.",
     "trustDelivery": "Delivered in 24h via Bpost",
     "trustOrigin": "Baked in Liège",
     "trustNatural": "No preservatives",
