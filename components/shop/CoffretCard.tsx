@@ -73,9 +73,11 @@ export async function CoffretCard({ locale, coffret }: Props) {
           {/* Bottom scrim for cohesion */}
           <div className="from-brand-chocolate/35 pointer-events-none absolute inset-0 bg-gradient-to-t to-transparent" />
 
-          {/* — Composition reveal overlay (hover) — */}
+          {/* — Composition reveal overlay (hover/focus on desktop, always on touch) — */}
           {breakdownNames.length > 0 && (
-            <div className="bg-brand-chocolate/85 text-cream-gold pointer-events-none absolute right-3 bottom-3 left-3 max-h-0 overflow-hidden rounded-xl opacity-0 backdrop-blur-sm transition-all duration-400 ease-out group-hover:max-h-44 group-hover:opacity-100 motion-reduce:max-h-44 motion-reduce:opacity-100">
+            <div
+              className="bg-brand-chocolate/85 text-cream-gold pointer-events-none absolute right-3 bottom-3 left-3 max-h-0 overflow-hidden rounded-xl opacity-0 backdrop-blur-sm transition-all duration-400 ease-out group-hover:max-h-44 group-hover:opacity-100 group-focus-within:max-h-44 group-focus-within:opacity-100 motion-reduce:max-h-44 motion-reduce:opacity-100 [@media(hover:none)]:max-h-44 [@media(hover:none)]:opacity-100"
+            >
               <div className="p-3 text-left">
                 <p className="font-script mb-1 text-base">{includesLabel}</p>
                 <ul className="text-cream space-y-0.5 text-[0.78rem] leading-tight">
