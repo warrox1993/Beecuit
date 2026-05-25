@@ -16,7 +16,7 @@ export const newsletterSubscribers = pgTable("newsletter_subscribers", {
   confirmToken: text("confirm_token").notNull().unique(),
   unsubscribeToken: text("unsubscribe_token").notNull().unique(),
   source: text("source"),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  confirmedAt: timestamp("confirmed_at", { withTimezone: true }),
-  unsubscribedAt: timestamp("unsubscribed_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { mode: "date", withTimezone: true }).notNull().defaultNow(),
+  confirmedAt: timestamp("confirmed_at", { mode: "date", withTimezone: true }),
+  unsubscribedAt: timestamp("unsubscribed_at", { mode: "date", withTimezone: true }),
 });

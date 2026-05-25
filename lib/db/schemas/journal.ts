@@ -36,10 +36,10 @@ export const journalArticles = pgTable("journal_articles", {
   recipePrepMin: integer("recipe_prep_min"),
   recipeCookMin: integer("recipe_cook_min"),
   recipeDifficulty: recipeDifficulty("recipe_difficulty"),
-  journalEmailSentAt: timestamp("journal_email_sent_at", { withTimezone: true }),
-  publishedAt: timestamp("published_at", { withTimezone: true }),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  journalEmailSentAt: timestamp("journal_email_sent_at", { mode: "date", withTimezone: true }),
+  publishedAt: timestamp("published_at", { mode: "date", withTimezone: true }),
+  createdAt: timestamp("created_at", { mode: "date", withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date", withTimezone: true }).notNull().defaultNow(),
   featuredProductSlugs: jsonb("featured_product_slugs")
     .$type<string[]>()
     .notNull()
@@ -83,5 +83,5 @@ export const journalEmailLog = pgTable("journal_email_log", {
   status: journalEmailStatus("status").notNull(),
   resendId: text("resend_id"),
   errorMessage: text("error_message"),
-  sentAt: timestamp("sent_at", { withTimezone: true }).notNull().defaultNow(),
+  sentAt: timestamp("sent_at", { mode: "date", withTimezone: true }).notNull().defaultNow(),
 });
