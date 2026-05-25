@@ -1,6 +1,7 @@
 "use client";
 import { useState, useTransition } from "react";
 import { upsertTranslation } from "@/lib/actions/journal.actions";
+import { TiptapEditor } from "./TiptapEditor";
 
 type Article = {
   id: string;
@@ -78,12 +79,8 @@ function TranslationForm({
 }) {
   const [title, setTitle] = useState(initial?.title ?? "");
   const [excerpt, setExcerpt] = useState(initial?.excerpt ?? "");
-  const [bodyJsonStr, setBodyJsonStr] = useState(
-    JSON.stringify(
-      initial?.bodyJson ?? { type: "doc", content: [{ type: "paragraph" }] },
-      null,
-      2,
-    ),
+  const [bodyJson, setBodyJson] = useState<unknown>(
+    initial?.bodyJson ?? { type: "doc", content: [{ type: "paragraph" }] },
   );
   const [seoTitle, setSeoTitle] = useState(initial?.seoTitle ?? "");
   const [seoDescription, setSeoDescription] = useState(initial?.seoDescription ?? "");
@@ -121,17 +118,10 @@ function TranslationForm({
         />
         <span className="text-warm-brown/50 text-xs">{excerpt.length}/200</span>
       </label>
-      <label className="block text-sm">
-        <span className="text-warm-brown font-medium">
-          Body (JSON ProseMirror — Tiptap editor à venir)
-        </span>
-        <textarea
-          value={bodyJsonStr}
-          onChange={(e) => setBodyJsonStr(e.target.value)}
-          className="border-warm-brown/20 mt-1 w-full rounded border px-3 py-2 font-mono text-xs"
-          rows={16}
-        />
-      </label>
+      <div className="block text-sm">
+        <span className="text-warm-brown mb-1 block font-medium">Body</span>
+        <TiptapEditor initial={bodyJson} onChange={setBodyJson} />
+      </div>
       <details className="text-sm">
         <summary className="text-warm-brown/70 cursor-pointer">SEO (optionnel)</summary>
         <div className="mt-2 space-y-2">
@@ -205,7 +195,6 @@ function TranslationForm({
         onClick={() => {
           start(async () => {
             try {
-              const bodyJson = JSON.parse(bodyJsonStr);
               const recipeIngredients = isRecipe ? JSON.parse(recipeIngredientsStr) : null;
               const recipeSteps = isRecipe ? JSON.parse(recipeStepsStr) : null;
               const r = await upsertTranslation({
