@@ -4,12 +4,14 @@ import { toast } from "sonner";
 import { subscribeToNewsletter } from "@/lib/actions/newsletter.actions";
 
 /**
- * Refined newsletter form variant — Phase 4B.
+ * Refined newsletter form variant — Phase 4B + 4G validation.
  *
- * Single underline input + integrated arrow submit.  Designed for the
- * editorial NewsletterCTA oval block. The legacy NewsletterForm (boxed
- * input + button) remains for the Footer.
+ * Single underline input + integrated arrow submit + inline email validation
+ * (Phase 4G item 27). The legacy NewsletterForm (boxed input + button) remains
+ * for the Footer.
  */
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export function NewsletterFormRefined({
   placeholder = "ton@email.com",
   submitLabel = "S'inscrire",
@@ -18,19 +20,33 @@ export function NewsletterFormRefined({
   submitLabel?: string;
 }) {
   const [email, setEmail] = useState("");
+  const [touched, setTouched] = useState(false);
   const [pending, start] = useTransition();
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+
+  const isValidFormat = EMAIL_RE.test(email);
+  const showError = touched && email.length > 0 && !isValidFormat;
+  const showSuccess = touched && isValidFormat && !pending && !msg;
+
+  const borderClass = showError
+    ? "border-terracotta"
+    : showSuccess
+      ? "border-leaf"
+      : "border-warm-brown/30 focus-within:border-honey-dark";
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
+        setTouched(true);
+        if (!isValidFormat) return;
         setMsg(null);
         start(async () => {
           const r = await subscribeToNewsletter({ email });
           setMsg({ ok: r.success, text: r.message });
           if (r.success) {
             setEmail("");
+            setTouched(false);
             toast.success(r.message);
           } else {
             toast.error(r.message);
@@ -38,8 +54,11 @@ export function NewsletterFormRefined({
         });
       }}
       className="w-full"
+      noValidate
     >
-      <div className="border-warm-brown/30 focus-within:border-honey-dark relative flex items-center border-b transition-colors">
+      <div
+        className={`relative flex items-center border-b transition-colors ${borderClass}`}
+      >
         <label htmlFor="newsletter-refined-email" className="sr-only">
           {placeholder}
         </label>
@@ -49,14 +68,42 @@ export function NewsletterFormRefined({
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          onBlur={() => setTouched(true)}
           placeholder={placeholder}
+          aria-invalid={showError}
+          aria-describedby={showError ? "newsletter-refined-email-error" : undefined}
           className="text-warm-brown placeholder:text-warm-brown/40 flex-1 bg-transparent py-3 text-base focus:outline-none"
         />
+        {/* Inline validation icon */}
+        {showSuccess && (
+          <svg
+            viewBox="0 0 24 24"
+            className="text-leaf mr-2 h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            aria-hidden
+          >
+            <path d="M5 12 L 10 17 L 19 7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        )}
+        {showError && (
+          <svg
+            viewBox="0 0 24 24"
+            className="text-terracotta mr-2 h-5 w-5 animate-[afds-shake_0.4s_ease-in-out_1]"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            aria-hidden
+          >
+            <path d="M6 6 L 18 18 M 18 6 L 6 18" strokeLinecap="round" />
+          </svg>
+        )}
         <button
           type="submit"
           disabled={pending}
           aria-label={submitLabel}
-          className="text-honey-dark hover:text-cta-primary-hover ml-3 inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors disabled:opacity-50"
+          className="text-honey-dark hover:text-cta-primary-hover ml-1 inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors disabled:opacity-50"
         >
           {pending ? (
             <span className="border-honey-dark/40 border-t-honey-dark h-4 w-4 animate-spin rounded-full border-2" />
@@ -67,7 +114,16 @@ export function NewsletterFormRefined({
           )}
         </button>
       </div>
-      {msg && (
+      {showError && (
+        <p
+          id="newsletter-refined-email-error"
+          role="alert"
+          className="text-terracotta mt-2 text-xs"
+        >
+          Adresse email invalide
+        </p>
+      )}
+      {msg && !showError && (
         <p
           role={msg.ok ? "status" : "alert"}
           className={`mt-2 text-xs ${msg.ok ? "text-leaf" : "text-terracotta"}`}
