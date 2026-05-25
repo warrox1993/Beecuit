@@ -18,8 +18,11 @@ export function HeaderClient({
   const [shrunk, setShrunk] = useState(false);
 
   useEffect(() => {
+    // Hysteresis: shrink past 32px, expand below 8px. Prevents flicker when
+    // scrollY micro-oscillates around a single threshold (trackpad inertia).
     function onScroll() {
-      setShrunk(window.scrollY > 8);
+      const y = window.scrollY;
+      setShrunk((prev) => (prev ? y > 8 : y > 32));
     }
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
