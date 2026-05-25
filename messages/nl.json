@@ -255,6 +255,15 @@
       "recettes": "De koekjes uit dit recept",
       "default": "De vermelde koekjes",
       "cta": "Ontdek al onze koekjes"
+    },
+    "recipe": {
+      "yield": "Voor",
+      "prep": "Bereiding",
+      "cook": "Baktijd",
+      "difficulty": "Moeilijkheid",
+      "ingredients": "Ingrediënten",
+      "steps": "Stappen",
+      "print": "Recept afdrukken"
     }
   }
 }

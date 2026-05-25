@@ -255,6 +255,15 @@
       "recettes": "Les biscuits de cette recette",
       "default": "Les biscuits mentionnés",
       "cta": "Découvrir tous nos biscuits"
+    },
+    "recipe": {
+      "yield": "Pour",
+      "prep": "Préparation",
+      "cook": "Cuisson",
+      "difficulty": "Difficulté",
+      "ingredients": "Ingrédients",
+      "steps": "Étapes",
+      "print": "Imprimer la recette"
     }
   }
 }

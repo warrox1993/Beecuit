@@ -255,6 +255,15 @@
       "recettes": "Die Kekse dieses Rezepts",
       "default": "Die genannten Kekse",
       "cta": "Entdecke alle unsere Kekse"
+    },
+    "recipe": {
+      "yield": "Für",
+      "prep": "Zubereitung",
+      "cook": "Backzeit",
+      "difficulty": "Schwierigkeit",
+      "ingredients": "Zutaten",
+      "steps": "Schritte",
+      "print": "Rezept drucken"
     }
   }
 }

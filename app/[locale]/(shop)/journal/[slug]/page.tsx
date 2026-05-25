@@ -64,11 +64,15 @@ export default async function JournalDetailPage({
           {isRecipe &&
             translation.recipeIngredients &&
             translation.recipeYieldLabel && (
-              <RecipeBlock article={result.article} translation={translation} />
+              <RecipeBlock
+                article={result.article}
+                translation={translation}
+                locale={locale}
+              />
             )}
           {renderArticleBody(body)}
           {isRecipe && translation.recipeSteps && (
-            <RecipeBlock.Steps steps={translation.recipeSteps} />
+            <RecipeBlock.Steps steps={translation.recipeSteps} locale={locale} />
           )}
           <JournalShareButtons
             url={articleUrl}

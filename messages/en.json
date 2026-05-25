@@ -255,6 +255,15 @@
       "recettes": "The biscuits from this recipe",
       "default": "The biscuits mentioned",
       "cta": "Discover all our biscuits"
+    },
+    "recipe": {
+      "yield": "Serves",
+      "prep": "Prep time",
+      "cook": "Cook time",
+      "difficulty": "Difficulty",
+      "ingredients": "Ingredients",
+      "steps": "Steps",
+      "print": "Print the recipe"
     }
   }
 }
