@@ -558,3 +558,140 @@ export async function requestEmailChange(formData: FormData) {
   }
   redirect(`/${locale}/compte/profil?email=verify-sent`);
 }
+
+export type EmailChangeResult =
+  | { ok: true; redirectTo: string }
+  | { ok: false; error: "expired" | "taken-race" | "cannot-revert" };
+
+export async function confirmEmailChange(
+  rawToken: string,
+  locale: string,
+): Promise<EmailChangeResult> {
+  const safeLocale = asLocale(locale);
+  const hashed = hashToken(rawToken);
+  const [row] = await db
+    .select({
+      id: users.id,
+      email: users.email,
+      pendingEmail: users.pendingEmail,
+      expiresAt: users.pendingEmailExpiresAt,
+      purgedAt: users.purgedAt,
+    })
+    .from(users)
+    .where(eq(users.pendingEmailToken, hashed))
+    .limit(1);
+  if (!row || row.purgedAt || !row.pendingEmail) {
+    return { ok: false, error: "expired" };
+  }
+  if (!row.expiresAt || row.expiresAt.getTime() < Date.now()) {
+    return { ok: false, error: "expired" };
+  }
+
+  // Race check: nobody else registered the new address in the meantime.
+  const [conflict] = await db
+    .select({ id: users.id })
+    .from(users)
+    .where(
+      and(
+        eq(users.email, row.pendingEmail),
+        isNull(users.purgedAt),
+      ),
+    )
+    .limit(1);
+  if (conflict && conflict.id !== row.id) {
+    await db
+      .update(users)
+      .set({
+        pendingEmail: null,
+        pendingEmailToken: null,
+        pendingEmailExpiresAt: null,
+      })
+      .where(eq(users.id, row.id));
+    return { ok: false, error: "taken-race" };
+  }
+
+  const oldEmail = row.email;
+  const undoRaw = generateRawToken();
+
+  await db
+    .update(users)
+    .set({
+      email: row.pendingEmail,
+      emailVerified: new Date(),
+      emailChangeUndoTo: oldEmail,
+      emailChangeUndoToken: hashToken(undoRaw),
+      emailChangeUndoExpiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      pendingEmail: null,
+      pendingEmailToken: null,
+      pendingEmailExpiresAt: null,
+    })
+    .where(eq(users.id, row.id));
+
+  const appBase = env.NEXT_PUBLIC_APP_URL.replace(/\/$/, "");
+  const undoUrl = `${appBase}/${safeLocale}/undo-email-change/${undoRaw}`;
+  try {
+    await sendEmail({
+      to: oldEmail,
+      subject: "Ton adresse email a été modifiée — Au Fil des Saveurs",
+      react: EmailChangedNotificationEmail({
+        locale: safeLocale,
+        undoUrl,
+        newEmail: row.pendingEmail,
+      }),
+    });
+  } catch (e) {
+    console.error("[auth] email-changed notif send failed", e);
+  }
+
+  return { ok: true, redirectTo: `/${safeLocale}/compte/profil?email=changed` };
+}
+
+export async function revertEmailChange(
+  rawToken: string,
+  locale: string,
+): Promise<EmailChangeResult> {
+  const safeLocale = asLocale(locale);
+  const hashed = hashToken(rawToken);
+  const [row] = await db
+    .select({
+      id: users.id,
+      currentEmail: users.email,
+      undoTo: users.emailChangeUndoTo,
+      undoExpiresAt: users.emailChangeUndoExpiresAt,
+      purgedAt: users.purgedAt,
+    })
+    .from(users)
+    .where(eq(users.emailChangeUndoToken, hashed))
+    .limit(1);
+  if (!row || row.purgedAt || !row.undoTo) {
+    return { ok: false, error: "expired" };
+  }
+  if (!row.undoExpiresAt || row.undoExpiresAt.getTime() < Date.now()) {
+    return { ok: false, error: "expired" };
+  }
+
+  // Make sure the old address isn't taken by someone else now
+  const [conflict] = await db
+    .select({ id: users.id })
+    .from(users)
+    .where(and(eq(users.email, row.undoTo), isNull(users.purgedAt)))
+    .limit(1);
+  if (conflict && conflict.id !== row.id) {
+    return { ok: false, error: "cannot-revert" };
+  }
+
+  await db.transaction(async (tx) => {
+    await tx
+      .update(users)
+      .set({
+        email: row.undoTo as string,
+        emailChangeUndoTo: null,
+        emailChangeUndoToken: null,
+        emailChangeUndoExpiresAt: null,
+      })
+      .where(eq(users.id, row.id));
+    await tx.delete(sessions).where(eq(sessions.userId, row.id));
+  });
+
+  return { ok: true, redirectTo: `/${safeLocale}/sign-in?email=reverted` };
+}
