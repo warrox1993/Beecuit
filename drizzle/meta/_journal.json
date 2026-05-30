@@ -92,6 +92,13 @@
       "when": 1780168329439,
       "tag": "0012_auth_rate_limit",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1780174236958,
+      "tag": "0013_auth_password",
+      "breakpoints": true
     }
   ]
 }
