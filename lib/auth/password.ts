@@ -1,9 +1,11 @@
 import "server-only";
-import { hash, verify, Algorithm } from "@node-rs/argon2";
+import { hash, verify } from "@node-rs/argon2";
 
 // OWASP 2024 recommended Argon2id parameters.
+// `algorithm` defaults to Argon2id in @node-rs/argon2 v2.x — omitted here
+// because the exported `Algorithm` is a const enum, incompatible with our
+// isolatedModules TS config.
 const ARGON2_OPTIONS = {
-  algorithm: Algorithm.Argon2id,
   memoryCost: 19 * 1024, // 19 MiB
   timeCost: 2,
   parallelism: 1,
