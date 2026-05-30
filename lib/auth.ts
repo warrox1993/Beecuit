@@ -1,11 +1,11 @@
 import NextAuth from "next-auth";
-import Resend from "next-auth/providers/resend";
+import Google from "next-auth/providers/google";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/lib/db";
 import { accounts, sessions, users, verificationTokens } from "@/lib/db/schema";
 import { env } from "@/lib/env";
-import { sendEmail } from "@/lib/email/client";
-import { MagicLinkEmail } from "@/components/email/MagicLinkEmail";
+
+const googleConfigured = !!(env.AUTH_GOOGLE_ID && env.AUTH_GOOGLE_SECRET);
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db, {
@@ -15,29 +15,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     verificationTokensTable: verificationTokens,
   }),
   session: { strategy: "database" },
-  providers: [
-    Resend({
-      apiKey: env.AUTH_RESEND_KEY,
-      from: env.AUTH_EMAIL_FROM,
-      async sendVerificationRequest(params: { identifier: string; url: string }) {
-        const { identifier, url } = params;
-
-        if (process.env.NODE_ENV !== "production") {
-          console.log("\n[auth] Magic link for", identifier);
-          console.log("[auth]", url, "\n");
-        }
-
-        await sendEmail({
-          to: identifier,
-          subject: "Ton lien de connexion Au Fil des Saveurs",
-          react: MagicLinkEmail({ signInUrl: url }),
-        });
-      },
-    }),
-  ],
+  providers: googleConfigured
+    ? [
+        Google({
+          clientId: env.AUTH_GOOGLE_ID!,
+          clientSecret: env.AUTH_GOOGLE_SECRET!,
+          // Google verifies the email — safe to link an existing local account
+          // when the addresses match.
+          allowDangerousEmailAccountLinking: true,
+        }),
+      ]
+    : [],
   pages: {
     signIn: "/fr/sign-in",
-    verifyRequest: "/fr/sign-in?check=email",
   },
   trustHost: true,
   callbacks: {
