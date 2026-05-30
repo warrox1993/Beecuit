@@ -1,7 +1,7 @@
 "use client";
 import { useTransition } from "react";
 import { useTranslations } from "next-intl";
-import { LogOut, ShoppingBag, MapPin, Gift, Repeat, LayoutDashboard } from "lucide-react";
+import { LogOut, ShoppingBag, MapPin, Gift, Repeat, LayoutDashboard, User } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import {
   DropdownMenu,
@@ -106,6 +106,12 @@ export function HeaderUserMenu({
           <Link href="/compte/abonnement">
             <Repeat className="h-4 w-4" aria-hidden />
             {tAccount("subscription")}
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild className="text-warm-brown focus:bg-honey/10 focus:text-honey-dark cursor-pointer gap-2">
+          <Link href="/compte/profil">
+            <User className="h-4 w-4" aria-hidden />
+            {tAccount("profile")}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator className="bg-warm-brown/10" />

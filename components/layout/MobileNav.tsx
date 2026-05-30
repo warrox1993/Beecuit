@@ -111,6 +111,13 @@ export function MobileNav({
               >
                 {tAccount("dashboard")}
               </Link>
+              <Link
+                href="/compte/profil"
+                onClick={() => setOpen(false)}
+                className="text-warm-brown hover:text-honey-dark border-warm-brown/15 hover:border-honey-dark/40 block rounded-xl border px-4 py-2.5 text-center text-sm font-medium transition-all"
+              >
+                {tAccount("profile")}
+              </Link>
               <button
                 type="button"
                 disabled={pending}

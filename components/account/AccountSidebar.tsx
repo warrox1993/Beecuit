@@ -9,6 +9,7 @@ const items = [
   { href: "/compte/adresses", labelKey: "addresses" },
   { href: "/compte/cartes-cadeaux", labelKey: "giftCards" },
   { href: "/compte/abonnement", labelKey: "subscription" },
+  { href: "/compte/profil", labelKey: "profile" },
 ] as const;
 
 export function AccountSidebar() {
