@@ -16,6 +16,7 @@ const ERROR_KEYS: Record<string, string> = {
   "rate-limit": "errorRateLimit",
   "use-oauth": "errorUseOauth",
   "oauth-error": "errorOauth",
+  "account-deleted": "errorAccountDeleted",
 };
 
 export default async function SignInPage({
