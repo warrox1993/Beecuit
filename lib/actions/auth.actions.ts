@@ -173,10 +173,21 @@ export async function signInWithPassword(formData: FormData) {
     .select({
       id: users.id,
       passwordHash: users.passwordHash,
+      deletedAt: users.deletedAt,
+      purgedAt: users.purgedAt,
     })
     .from(users)
     .where(eq(users.email, normalizedEmail))
     .limit(1);
+
+  if (user?.purgedAt) {
+    // Treat tombstones like non-existent — never leak that the account once
+    // existed.
+    redirect(`/${locale}/sign-in?error=invalid-credentials`);
+  }
+  if (user?.deletedAt) {
+    redirect(`/${locale}/sign-in?error=account-deleted`);
+  }
 
   if (!user) {
     redirect(`/${locale}/sign-in?error=invalid-credentials`);

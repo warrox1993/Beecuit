@@ -31,6 +31,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   trustHost: true,
   callbacks: {
+    async signIn({ user }) {
+      // Block OAuth sign-in for users in cool-off or already tombstoned.
+      const u = user as {
+        id?: string;
+        deletedAt?: Date | null;
+        purgedAt?: Date | null;
+      };
+      if (u?.purgedAt) return false;
+      if (u?.deletedAt) return "/fr/sign-in?error=account-deleted";
+      return true;
+    },
     async session({ session, user }) {
       if (session.user && user) {
         const dbUser = user as {
