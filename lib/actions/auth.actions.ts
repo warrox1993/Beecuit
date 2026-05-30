@@ -378,3 +378,96 @@ export async function resendEmailVerification(formData: FormData) {
   });
   redirect(`/${locale}/compte?verify=sent`);
 }
+
+const changePasswordSchema = z
+  .object({
+    currentPassword: z.string().min(1).max(200),
+    newPassword: z.string().min(12).max(200),
+    confirmPassword: z.string().min(12).max(200),
+    locale: z.string(),
+  })
+  .refine((d) => d.newPassword === d.confirmPassword, {
+    message: "password-mismatch",
+    path: ["confirmPassword"],
+  });
+
+export async function changePassword(formData: FormData) {
+  const locale = asLocale(formData.get("locale") as string | null);
+  const session = await auth();
+  if (!session?.user?.id) redirect(`/${locale}/sign-in`);
+
+  const parsed = changePasswordSchema.safeParse({
+    currentPassword: formData.get("currentPassword"),
+    newPassword: formData.get("newPassword"),
+    confirmPassword: formData.get("confirmPassword"),
+    locale,
+  });
+  if (!parsed.success) {
+    const code = parsed.error.issues[0]?.path[0] === "confirmPassword" ? "password-mismatch" : "invalid";
+    redirect(`/${locale}/compte/profil?error=${code}`);
+  }
+  const { currentPassword, newPassword } = parsed.data;
+
+  const reqHeaders = await headers();
+  const ip = getClientIp(reqHeaders);
+  const email = session.user.email?.toLowerCase() ?? "";
+  const limit = await checkAuthRateLimit({ action: "change-password", email, ip });
+  if (!limit.ok) redirect(`/${locale}/compte/profil?error=rate-limit`);
+
+  const [user] = await db
+    .select({ id: users.id, passwordHash: users.passwordHash, email: users.email })
+    .from(users)
+    .where(eq(users.id, session.user.id))
+    .limit(1);
+  if (!user) redirect(`/${locale}/sign-in`);
+
+  if (!user.passwordHash) {
+    redirect(`/${locale}/compte/profil?error=no-password-yet`);
+  }
+  const valid = await verifyPassword(currentPassword, user.passwordHash);
+  if (!valid) redirect(`/${locale}/compte/profil?error=wrong-current`);
+
+  const newHash = await hashPassword(newPassword);
+  await db.update(users).set({ passwordHash: newHash }).where(eq(users.id, user.id));
+
+  try {
+    await sendEmail({
+      to: user.email,
+      subject: "Ton mot de passe a été modifié",
+      react: PasswordChangedEmail({ locale }),
+    });
+  } catch (e) {
+    console.error("[auth] password-changed email send failed", e);
+  }
+
+  redirect(`/${locale}/compte/profil?password=ok`);
+}
+
+const updateProfileSchema = z.object({
+  preferredLocale: z.enum(["fr", "nl", "de", "en"]),
+  newsletterOptIn: z.union([z.literal("on"), z.undefined()]),
+  locale: z.string(),
+});
+
+export async function updateProfile(formData: FormData) {
+  const locale = asLocale(formData.get("locale") as string | null);
+  const session = await auth();
+  if (!session?.user?.id) redirect(`/${locale}/sign-in`);
+
+  const parsed = updateProfileSchema.safeParse({
+    preferredLocale: formData.get("preferredLocale"),
+    newsletterOptIn: formData.get("newsletterOptIn") ?? undefined,
+    locale,
+  });
+  if (!parsed.success) redirect(`/${locale}/compte/profil?error=invalid`);
+
+  await db
+    .update(users)
+    .set({
+      preferredLocale: parsed.data.preferredLocale,
+      newsletterOptIn: parsed.data.newsletterOptIn === "on",
+    })
+    .where(eq(users.id, session.user.id));
+
+  redirect(`/${parsed.data.preferredLocale}/compte/profil?profile=ok`);
+}
