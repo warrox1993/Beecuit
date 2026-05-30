@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 import { signIn } from "@/lib/auth";
-import { checkSignInRateLimit, getClientIp } from "@/lib/auth/rate-limit";
+import { checkAuthRateLimit, getClientIp } from "@/lib/auth/rate-limit";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui-primitives/Container";
@@ -60,7 +60,7 @@ export default async function SignInPage({
     }
     const reqHeaders = await headers();
     const ip = getClientIp(reqHeaders);
-    const limit = await checkSignInRateLimit(email, ip);
+    const limit = await checkAuthRateLimit({ action: "sign-in", email, ip });
     if (!limit.ok) {
       redirect(`/${locale}/sign-in?error=rate-limit`);
     }

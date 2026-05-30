@@ -3,63 +3,58 @@ import { sql } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { authRateLimitHits } from "@/lib/db/schemas/auth_rate_limit";
 
+export type AuthAction = "sign-in" | "register" | "forgot" | "reset" | "change-password";
+
+const LIMITS: Record<AuthAction, { email: number; ip: number }> = {
+  "sign-in": { email: 3, ip: 10 },
+  register: { email: 3, ip: 5 },
+  forgot: { email: 3, ip: 5 },
+  reset: { email: Number.POSITIVE_INFINITY, ip: 5 },
+  "change-password": { email: 5, ip: Number.POSITIVE_INFINITY },
+};
+
 const WINDOW_INTERVAL = "15 minutes";
-const MAX_PER_EMAIL = 3;
-const MAX_PER_IP = 10;
 
-export type SignInRateLimitResult =
-  | { ok: true }
-  | { ok: false; reason: "email" | "ip" };
+export type AuthRateLimitResult = { ok: true } | { ok: false; reason: "email" | "ip" };
 
-/**
- * Per-email + per-IP window check for the sign-in form.
- *
- * Both dimensions are evaluated against the same 15-minute rolling window:
- *  - per email: caps how many magic links can be requested for one address
- *  - per IP: caps a single sender (incl. shared IPs)
- *
- * The caller logs a hit only after a successful check, to avoid letting
- * blocked attempts grow the table further.
- */
-export async function checkSignInRateLimit(
-  email: string | null | undefined,
-  ip: string | null | undefined,
-): Promise<SignInRateLimitResult> {
-  const normalizedEmail = email?.trim().toLowerCase() ?? null;
-  const normalizedIp = ip?.trim() || null;
+export async function checkAuthRateLimit(opts: {
+  action: AuthAction;
+  email?: string | null;
+  ip?: string | null;
+}): Promise<AuthRateLimitResult> {
+  const limits = LIMITS[opts.action];
+  const normalizedEmail = opts.email?.trim().toLowerCase() ?? null;
+  const normalizedIp = opts.ip?.trim() || null;
+  const prefixedEmail = normalizedEmail ? `${opts.action}:${normalizedEmail}` : null;
+  const prefixedIp = normalizedIp ? `${opts.action}:${normalizedIp}` : null;
 
-  if (normalizedEmail) {
+  if (prefixedEmail && Number.isFinite(limits.email)) {
     const rows = await db.execute<{ count: string }>(sql`
       SELECT COUNT(*)::text AS count
       FROM auth_rate_limit_hits
-      WHERE identifier = ${normalizedEmail}
+      WHERE identifier = ${prefixedEmail}
         AND hit_at > NOW() - (${WINDOW_INTERVAL})::interval
     `);
     const list = (rows as unknown as { rows?: { count: string }[] }).rows ?? [];
-    if (Number(list[0]?.count ?? "0") >= MAX_PER_EMAIL) {
-      return { ok: false, reason: "email" };
-    }
+    if (Number(list[0]?.count ?? "0") >= limits.email) return { ok: false, reason: "email" };
   }
 
-  if (normalizedIp) {
+  if (prefixedIp && Number.isFinite(limits.ip)) {
     const rows = await db.execute<{ count: string }>(sql`
       SELECT COUNT(*)::text AS count
       FROM auth_rate_limit_hits
-      WHERE ip = ${normalizedIp}
+      WHERE ip = ${prefixedIp}
         AND hit_at > NOW() - (${WINDOW_INTERVAL})::interval
     `);
     const list = (rows as unknown as { rows?: { count: string }[] }).rows ?? [];
-    if (Number(list[0]?.count ?? "0") >= MAX_PER_IP) {
-      return { ok: false, reason: "ip" };
-    }
+    if (Number(list[0]?.count ?? "0") >= limits.ip) return { ok: false, reason: "ip" };
   }
 
   await db.insert(authRateLimitHits).values({
-    identifier: normalizedEmail,
-    ip: normalizedIp,
+    identifier: prefixedEmail,
+    ip: prefixedIp,
   });
 
-  // Opportunistic cleanup of rows older than 1h on ~10% of calls.
   if (Math.random() < 0.1) {
     await db.execute(sql`
       DELETE FROM auth_rate_limit_hits
