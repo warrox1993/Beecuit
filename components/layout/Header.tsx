@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { auth } from "@/lib/auth";
 import { Container } from "@/components/ui-primitives/Container";
 import { Logo } from "@/components/brand/Logo";
 import { LocaleSwitcher } from "./LocaleSwitcher";
@@ -7,10 +8,19 @@ import { CartIcon } from "./CartIcon";
 import { NavLink } from "./NavLink";
 import { MobileNav } from "./MobileNav";
 import { HeaderClient } from "./HeaderClient";
+import { HeaderUserMenu } from "./HeaderUserMenu";
 
 export async function Header({ locale }: { locale: string }) {
   setRequestLocale(locale);
   const t = await getTranslations("nav");
+  const session = await auth();
+  const user = session?.user
+    ? {
+        email: session.user.email ?? null,
+        name: session.user.name ?? null,
+        role: session.user.role ?? "customer",
+      }
+    : null;
   return (
     <HeaderClient>
       <Container>
@@ -29,20 +39,18 @@ export async function Header({ locale }: { locale: string }) {
             <NavLink href="/biscuits">{t("biscuits")}</NavLink>
             <NavLink href="/coffrets">{t("coffrets")}</NavLink>
             <NavLink href="/cartes-cadeaux">{t("giftCards")}</NavLink>
-            <NavLink href="/abonnement" comingSoon>
-              {t("abonnement")}
-            </NavLink>
-            <NavLink href="/journal" comingSoon>
-              {t("journal")}
-            </NavLink>
-            <NavLink href="/compte">{t("account")}</NavLink>
+            <NavLink href="/abonnement">{t("abonnement")}</NavLink>
+            <NavLink href="/journal">{t("journal")}</NavLink>
           </nav>
           <div className="flex items-center gap-5">
             <div className="hidden md:block">
               <LocaleSwitcher currentLocale={locale} />
             </div>
             <CartIcon />
-            <MobileNav />
+            <div className="hidden md:block">
+              <HeaderUserMenu user={user} locale={locale} />
+            </div>
+            <MobileNav user={user} locale={locale} />
           </div>
         </div>
       </Container>
