@@ -97,7 +97,9 @@
     "emailPlaceholder": "jouw@email.com",
     "submit": "Stuur de link",
     "checkEmail": "Controleer je inbox — een link wacht op je",
-    "back": "Terug"
+    "back": "Terug",
+    "rateLimitError": "Te veel pogingen, probeer het over enkele minuten opnieuw.",
+    "invalidEmailError": "Ongeldig e-mailadres."
   },
   "account": {
     "title": "Mijn account",

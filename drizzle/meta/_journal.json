@@ -85,6 +85,13 @@
       "when": 1779723079461,
       "tag": "0011_heavy_leopardon",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1780168329439,
+      "tag": "0012_auth_rate_limit",
+      "breakpoints": true
     }
   ]
 }

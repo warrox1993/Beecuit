@@ -97,7 +97,9 @@
     "emailPlaceholder": "your@email.com",
     "submit": "Send link",
     "checkEmail": "Check your inbox — a link is waiting",
-    "back": "Back"
+    "back": "Back",
+    "rateLimitError": "Too many attempts, please try again in a few minutes.",
+    "invalidEmailError": "Invalid email address."
   },
   "account": {
     "title": "My account",

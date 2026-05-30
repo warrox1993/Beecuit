@@ -97,7 +97,9 @@
     "emailPlaceholder": "deine@email.com",
     "submit": "Link senden",
     "checkEmail": "Prüfe deinen Posteingang — ein Link wartet auf dich",
-    "back": "Zurück"
+    "back": "Zurück",
+    "rateLimitError": "Zu viele Versuche, bitte versuche es in einigen Minuten erneut.",
+    "invalidEmailError": "Ungültige E-Mail-Adresse."
   },
   "account": {
     "title": "Mein Konto",

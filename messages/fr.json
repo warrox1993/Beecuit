@@ -97,7 +97,9 @@
     "emailPlaceholder": "ton@email.com",
     "submit": "Envoyer le lien",
     "checkEmail": "Vérifie ta boîte email — un lien t'attend",
-    "back": "Retour"
+    "back": "Retour",
+    "rateLimitError": "Trop de tentatives, réessaie dans quelques minutes.",
+    "invalidEmailError": "Adresse email invalide."
   },
   "account": {
     "title": "Mon compte",
