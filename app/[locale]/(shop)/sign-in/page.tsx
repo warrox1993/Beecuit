@@ -1,78 +1,41 @@
-import { headers } from "next/headers";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { redirect } from "next/navigation";
-import { signIn } from "@/lib/auth";
-import { checkAuthRateLimit, getClientIp } from "@/lib/auth/rate-limit";
-import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 import { Container } from "@/components/ui-primitives/Container";
 import { Heading } from "@/components/ui-primitives/Heading";
 import { Prose } from "@/components/ui-primitives/Prose";
 import { Logo } from "@/components/brand/Logo";
+import { SignInForm } from "@/components/shop/SignInForm";
+import { GoogleSignInButton } from "@/components/shop/GoogleSignInButton";
+import { safeCallbackUrl } from "@/lib/auth/callback-url";
+
+const ERROR_KEYS: Record<string, string> = {
+  invalid: "errorInvalid",
+  "invalid-credentials": "errorInvalidCredentials",
+  "rate-limit": "errorRateLimit",
+  "use-oauth": "errorUseOauth",
+  "oauth-error": "errorOauth",
+};
 
 export default async function SignInPage({
   params,
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ check?: string; error?: string }>;
+  searchParams: Promise<{ error?: string; reset?: string; verified?: string; callbackUrl?: string }>;
 }) {
   const { locale } = await params;
-  const { check, error } = await searchParams;
+  const { error, reset, verified, callbackUrl: rawCallback } = await searchParams;
   setRequestLocale(locale);
   const t = await getTranslations("auth");
 
-  if (check === "email") {
-    return (
-      <section className="bg-cream flex min-h-[80vh] items-center justify-center py-12">
-        <Container variant="narrow" className="max-w-md text-center">
-          <Link
-            href="/"
-            aria-label="Au Fil des Saveurs — Accueil"
-            className="text-warm-brown mb-12 inline-block"
-          >
-            <Logo variant="wordmark" className="h-12 w-auto" />
-          </Link>
-          <div className="border-warm-brown/10 rounded-2xl border bg-white p-8 shadow-sm">
-            <div className="bg-honey/10 mx-auto flex h-16 w-16 items-center justify-center rounded-full text-3xl">
-              📬
-            </div>
-            <Heading as="h2" size="h3" className="mt-6">
-              {t("checkEmail")}
-            </Heading>
-            <Link
-              href="/"
-              className="text-warm-brown hover:text-honey-dark mt-6 inline-block text-sm underline"
-            >
-              {t("back")}
-            </Link>
-          </div>
-        </Container>
-      </section>
-    );
+  const session = await auth();
+  if (session?.user) {
+    redirect(safeCallbackUrl(rawCallback ?? null, locale));
   }
 
-  async function handleSignIn(formData: FormData) {
-    "use server";
-    const email = (formData.get("email") as string | null)?.trim() ?? "";
-    if (!email || !email.includes("@")) {
-      redirect(`/${locale}/sign-in?error=invalid`);
-    }
-    const reqHeaders = await headers();
-    const ip = getClientIp(reqHeaders);
-    const limit = await checkAuthRateLimit({ action: "sign-in", email, ip });
-    if (!limit.ok) {
-      redirect(`/${locale}/sign-in?error=rate-limit`);
-    }
-    await signIn("resend", { email, redirectTo: `/${locale}/compte` });
-  }
-
-  const errorMessage =
-    error === "rate-limit"
-      ? t("rateLimitError")
-      : error === "invalid"
-        ? t("invalidEmailError")
-        : null;
+  const errorKey = error ? ERROR_KEYS[error] : null;
 
   return (
     <section className="bg-cream flex min-h-[80vh] items-center justify-center py-12">
@@ -85,37 +48,50 @@ export default async function SignInPage({
           <Logo variant="wordmark" className="h-12 w-auto" />
         </Link>
         <div className="border-warm-brown/10 rounded-2xl border bg-white p-8 shadow-sm">
-          <Heading as="h2" size="h3">
+          <Heading as="h1" size="h3">
             {t("signInTitle")}
           </Heading>
           <Prose className="mt-3">{t("signInDescription")}</Prose>
-          {errorMessage && (
+
+          {reset === "ok" && (
+            <div className="border-honey-dark/30 bg-honey-dark/5 text-honey-dark mt-4 rounded-md border px-4 py-3 text-sm">
+              {t("toastResetOk")}
+            </div>
+          )}
+          {verified === "ok" && (
+            <div className="border-honey-dark/30 bg-honey-dark/5 text-honey-dark mt-4 rounded-md border px-4 py-3 text-sm">
+              {t("toastVerifiedOk")}
+            </div>
+          )}
+          {errorKey && (
             <div
               role="alert"
               className="border-terracotta/30 bg-terracotta/5 text-terracotta mt-4 rounded-md border px-4 py-3 text-sm"
             >
-              {errorMessage}
+              {t(errorKey)}
             </div>
           )}
-          <form action={handleSignIn} className="mt-6 space-y-4">
-            <label className="block">
-              <span className="text-warm-brown text-sm">{t("emailLabel")}</span>
-              <input
-                type="email"
-                name="email"
-                required
-                autoComplete="email"
-                placeholder={t("emailPlaceholder")}
-                className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 mt-2 block w-full rounded-md border bg-white px-4 py-3 text-sm focus:ring-2 focus:outline-none"
-              />
-            </label>
-            <Button
-              type="submit"
-              className="bg-honey text-cream hover:bg-honey-dark w-full py-6 text-base"
-            >
-              {t("submit")} →
-            </Button>
-          </form>
+
+          <div className="mt-6">
+            <SignInForm locale={locale} callbackUrl={rawCallback} />
+          </div>
+
+          <div className="my-6 flex items-center gap-3">
+            <span className="border-warm-brown/15 flex-1 border-t" />
+            <span className="text-warm-brown/60 text-xs uppercase tracking-wide">
+              {t("signInOrDivider")}
+            </span>
+            <span className="border-warm-brown/15 flex-1 border-t" />
+          </div>
+
+          <GoogleSignInButton callbackUrl={rawCallback ?? `/${locale}/compte`} />
+
+          <p className="text-warm-brown/80 mt-6 text-center text-sm">
+            {t("signInNoAccount")}{" "}
+            <Link href="/sign-up" className="text-honey-dark font-medium underline">
+              {t("signInLinkRegister")}
+            </Link>
+          </p>
         </div>
       </Container>
     </section>
