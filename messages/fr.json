@@ -102,7 +102,14 @@
   "account": {
     "title": "Mon compte",
     "welcome": "Bonjour {name}",
-    "loggedInAs": "Connecté en tant que {email}"
+    "loggedInAs": "Connecté en tant que {email}",
+    "nav": {
+      "dashboard": "Tableau de bord",
+      "orders": "Mes commandes",
+      "addresses": "Mes adresses",
+      "giftCards": "Mes cartes cadeaux",
+      "subscription": "Mon abonnement"
+    }
   },
   "footer": {
     "tagline": "Biscuits artisanaux belges, faits avec amour à Liège.",

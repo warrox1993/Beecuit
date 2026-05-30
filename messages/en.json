@@ -102,7 +102,14 @@
   "account": {
     "title": "My account",
     "welcome": "Hello {name}",
-    "loggedInAs": "Signed in as {email}"
+    "loggedInAs": "Signed in as {email}",
+    "nav": {
+      "dashboard": "Dashboard",
+      "orders": "My orders",
+      "addresses": "My addresses",
+      "giftCards": "My gift cards",
+      "subscription": "My subscription"
+    }
   },
   "footer": {
     "tagline": "Belgian artisan biscuits, baked with love in Liège.",

@@ -102,7 +102,14 @@
   "account": {
     "title": "Mijn account",
     "welcome": "Hallo {name}",
-    "loggedInAs": "Ingelogd als {email}"
+    "loggedInAs": "Ingelogd als {email}",
+    "nav": {
+      "dashboard": "Overzicht",
+      "orders": "Mijn bestellingen",
+      "addresses": "Mijn adressen",
+      "giftCards": "Mijn cadeaubonnen",
+      "subscription": "Mijn abonnement"
+    }
   },
   "footer": {
     "tagline": "Belgische ambachtelijke koekjes, met liefde gebakken in Luik.",

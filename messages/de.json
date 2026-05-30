@@ -102,7 +102,14 @@
   "account": {
     "title": "Mein Konto",
     "welcome": "Hallo {name}",
-    "loggedInAs": "Angemeldet als {email}"
+    "loggedInAs": "Angemeldet als {email}",
+    "nav": {
+      "dashboard": "Übersicht",
+      "orders": "Meine Bestellungen",
+      "addresses": "Meine Adressen",
+      "giftCards": "Meine Geschenkkarten",
+      "subscription": "Mein Abonnement"
+    }
   },
   "footer": {
     "tagline": "Belgische handwerkliche Kekse, mit Liebe in Lüttich gebacken.",
