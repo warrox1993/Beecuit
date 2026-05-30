@@ -14,6 +14,7 @@ import {
   orders,
   subscriptions,
   giftCards,
+  b2bQuoteRequests,
 } from "@/lib/db/schema";
 
 const SENTINEL_EMAIL = (userId: string) => `deleted-${userId}@anon.invalid`;
@@ -124,7 +125,18 @@ export async function purgeUser(userId: string): Promise<void> {
       .where(eq(giftCards.purchaserUserId, userId));
 
     // b2b_quote_requests: no customer userId FK — quotedBy is an admin FK.
-    // Cannot correlate quote rows to a purged customer; no action.
+    // Match on email instead: anonymize rows submitted with the user's email.
+    if (existing.email) {
+      await tx.execute(sql`
+        UPDATE b2b_quote_requests SET
+          contact_name = 'Anonyme',
+          email = ${sentinel},
+          phone = NULL,
+          message = NULL,
+          shipping_address = NULL
+        WHERE email = ${existing.email}
+      `);
+    }
 
     // ── Final: scrub the user row, set tombstone ──
     await tx
