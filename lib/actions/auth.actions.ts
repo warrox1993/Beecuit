@@ -248,3 +248,75 @@ export async function requestPasswordReset(formData: FormData) {
 
   redirect(`/${locale}/forgot-password?sent=1`);
 }
+
+const resetSchema = z
+  .object({
+    token: z.string().min(20).max(200),
+    newPassword: z.string().min(12).max(200),
+    confirmPassword: z.string().min(12).max(200),
+    locale: z.string(),
+  })
+  .refine((d) => d.newPassword === d.confirmPassword, {
+    message: "password-mismatch",
+    path: ["confirmPassword"],
+  });
+
+export async function resetPassword(formData: FormData) {
+  const locale = asLocale(formData.get("locale") as string | null);
+  const parsed = resetSchema.safeParse({
+    token: formData.get("token"),
+    newPassword: formData.get("newPassword"),
+    confirmPassword: formData.get("confirmPassword"),
+    locale,
+  });
+  if (!parsed.success) {
+    const code = parsed.error.issues[0]?.path[0] === "confirmPassword" ? "password-mismatch" : "invalid";
+    const rawToken = (formData.get("token") as string | null) ?? "";
+    redirect(`/${locale}/reset-password/${rawToken}?error=${code}`);
+  }
+  const { token: rawToken, newPassword } = parsed.data;
+
+  const reqHeaders = await headers();
+  const ip = getClientIp(reqHeaders);
+  const limit = await checkAuthRateLimit({ action: "reset", email: null, ip });
+  if (!limit.ok) redirect(`/${locale}/reset-password/${rawToken}?error=rate-limit`);
+
+  const hashed = hashToken(rawToken);
+  const [row] = await db
+    .select({ token: passwordResetTokens.token, userId: passwordResetTokens.userId })
+    .from(passwordResetTokens)
+    .where(eq(passwordResetTokens.token, hashed))
+    .limit(1);
+  if (!row) redirect(`/${locale}/reset-password/${rawToken}?error=expired`);
+
+  const passwordHash = await hashPassword(newPassword);
+
+  await db.transaction(async (tx) => {
+    await tx
+      .update(users)
+      .set({ passwordHash })
+      .where(eq(users.id, row.userId));
+    await tx.delete(passwordResetTokens).where(eq(passwordResetTokens.userId, row.userId));
+    await tx.delete(sessions).where(eq(sessions.userId, row.userId));
+  });
+
+  // Best-effort security advisory
+  const [user] = await db
+    .select({ email: users.email, preferredLocale: users.preferredLocale })
+    .from(users)
+    .where(eq(users.id, row.userId))
+    .limit(1);
+  if (user) {
+    try {
+      await sendEmail({
+        to: user.email,
+        subject: "Ton mot de passe a été modifié",
+        react: PasswordChangedEmail({ locale: asLocale(user.preferredLocale) }),
+      });
+    } catch (e) {
+      console.error("[auth] password-changed email send failed", e);
+    }
+  }
+
+  redirect(`/${locale}/sign-in?reset=ok`);
+}
