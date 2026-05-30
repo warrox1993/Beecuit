@@ -43,10 +43,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async session({ session, user }) {
       if (session.user && user) {
-        session.user.id = user.id;
-        // With DB sessions, `user` is the AdapterUser row — role is already on it.
-        // See next-auth.d.ts which augments AdapterUser to include `role`.
-        session.user.role = (user as { role?: "customer" | "b2b" | "admin" }).role ?? "customer";
+        const dbUser = user as {
+          id: string;
+          role?: "customer" | "b2b" | "admin";
+          preferredLocale?: "fr" | "nl" | "de" | "en";
+        };
+        session.user.id = dbUser.id;
+        session.user.role = dbUser.role ?? "customer";
+        session.user.preferredLocale = dbUser.preferredLocale ?? "fr";
       }
       return session;
     },

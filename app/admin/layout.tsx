@@ -1,23 +1,23 @@
 import { redirect } from "next/navigation";
-import { auth, signOut } from "@/lib/auth";
+import { auth } from "@/lib/auth";
+import { signOutAction } from "@/lib/actions/auth.actions";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { Button } from "@/components/ui/button";
+import { routing } from "@/i18n/routing";
 
 const ENV_BADGE = process.env.NODE_ENV === "production" ? "PROD" : "DEV";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
   if (!session?.user) {
-    redirect("/fr/sign-in?callbackUrl=/admin");
+    redirect(`/${routing.defaultLocale}/sign-in?callbackUrl=/admin`);
   }
   if (session.user.role !== "admin") {
-    redirect("/fr");
+    redirect(`/${session.user.preferredLocale ?? routing.defaultLocale}`);
   }
 
-  async function handleSignOut() {
-    "use server";
-    await signOut({ redirectTo: "/fr" });
-  }
+  const userLocale = session.user.preferredLocale ?? routing.defaultLocale;
+  const handleSignOut = signOutAction.bind(null, userLocale);
 
   return (
     <div className="flex min-h-screen">
