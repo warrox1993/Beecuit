@@ -6,27 +6,56 @@ import {
   integer,
   pgEnum,
   boolean,
+  index,
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
 export const userRole = pgEnum("user_role", ["customer", "b2b", "admin"]);
 export const locale = pgEnum("locale", ["fr", "nl", "de", "en"]);
 
-export const users = pgTable("users", {
-  id: text("id")
-    .primaryKey()
-    .default(sql`gen_random_uuid()`),
-  name: text("name"),
-  email: text("email").notNull().unique(),
-  emailVerified: timestamp("email_verified", { mode: "date" }),
-  image: text("image"),
-  passwordHash: text("password_hash"),
-  role: userRole("role").notNull().default("customer"),
-  preferredLocale: locale("preferred_locale").notNull().default("fr"),
-  newsletterOptIn: boolean("newsletter_opt_in").notNull().default(false),
-  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
-  lastLoginAt: timestamp("last_login_at", { mode: "date" }),
-});
+export const users = pgTable(
+  "users",
+  {
+    id: text("id")
+      .primaryKey()
+      .default(sql`gen_random_uuid()`),
+    name: text("name"),
+    email: text("email").notNull().unique(),
+    emailVerified: timestamp("email_verified", { mode: "date" }),
+    image: text("image"),
+    passwordHash: text("password_hash"),
+    role: userRole("role").notNull().default("customer"),
+    preferredLocale: locale("preferred_locale").notNull().default("fr"),
+    newsletterOptIn: boolean("newsletter_opt_in").notNull().default(false),
+    createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+    lastLoginAt: timestamp("last_login_at", { mode: "date" }),
+    // ── v2 Sprint A : account actions ──
+    deletedAt: timestamp("deleted_at", { mode: "date" }),
+    cancelDeletionToken: text("cancel_deletion_token"),
+    cancelDeletionExpiresAt: timestamp("cancel_deletion_expires_at", { mode: "date" }),
+    pendingEmail: text("pending_email"),
+    pendingEmailToken: text("pending_email_token"),
+    pendingEmailExpiresAt: timestamp("pending_email_expires_at", { mode: "date" }),
+    emailChangeUndoToken: text("email_change_undo_token"),
+    emailChangeUndoExpiresAt: timestamp("email_change_undo_expires_at", { mode: "date" }),
+    emailChangeUndoTo: text("email_change_undo_to"),
+    purgedAt: timestamp("purged_at", { mode: "date" }),
+  },
+  (table) => ({
+    deletedAtIdx: index("users_deleted_at_idx")
+      .on(table.deletedAt)
+      .where(sql`${table.deletedAt} IS NOT NULL`),
+    pendingEmailTokenIdx: index("users_pending_email_token_idx")
+      .on(table.pendingEmailToken)
+      .where(sql`${table.pendingEmailToken} IS NOT NULL`),
+    cancelDeletionTokenIdx: index("users_cancel_deletion_token_idx")
+      .on(table.cancelDeletionToken)
+      .where(sql`${table.cancelDeletionToken} IS NOT NULL`),
+    emailChangeUndoTokenIdx: index("users_email_change_undo_token_idx")
+      .on(table.emailChangeUndoToken)
+      .where(sql`${table.emailChangeUndoToken} IS NOT NULL`),
+  }),
+);
 
 export const accounts = pgTable(
   "accounts",
