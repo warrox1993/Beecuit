@@ -138,3 +138,59 @@ export async function registerWithPassword(formData: FormData) {
   await createDbSession(userId);
   redirect(`/${locale}/compte?welcome=1`);
 }
+
+const signInSchema = z.object({
+  email: z.string().email().max(254),
+  password: z.string().min(1).max(200),
+  callbackUrl: z.string().optional(),
+  locale: z.string(),
+});
+
+export async function signInWithPassword(formData: FormData) {
+  const locale = asLocale(formData.get("locale") as string | null);
+  const parsed = signInSchema.safeParse({
+    email: formData.get("email"),
+    password: formData.get("password"),
+    callbackUrl: formData.get("callbackUrl") ?? undefined,
+    locale,
+  });
+  if (!parsed.success) {
+    redirect(`/${locale}/sign-in?error=invalid`);
+  }
+  const { email, password, callbackUrl } = parsed.data;
+  const normalizedEmail = email.trim().toLowerCase();
+
+  const reqHeaders = await headers();
+  const ip = getClientIp(reqHeaders);
+  const limit = await checkAuthRateLimit({ action: "sign-in", email: normalizedEmail, ip });
+  if (!limit.ok) redirect(`/${locale}/sign-in?error=rate-limit`);
+
+  const [user] = await db
+    .select({
+      id: users.id,
+      passwordHash: users.passwordHash,
+    })
+    .from(users)
+    .where(eq(users.email, normalizedEmail))
+    .limit(1);
+
+  if (!user) {
+    redirect(`/${locale}/sign-in?error=invalid-credentials`);
+  }
+  if (!user.passwordHash) {
+    redirect(`/${locale}/sign-in?error=use-oauth`);
+  }
+
+  const valid = await verifyPassword(password, user.passwordHash);
+  if (!valid) {
+    redirect(`/${locale}/sign-in?error=invalid-credentials`);
+  }
+
+  await createDbSession(user.id);
+  await db
+    .update(users)
+    .set({ lastLoginAt: new Date() })
+    .where(eq(users.id, user.id));
+
+  redirect(safeCallbackUrl(callbackUrl ?? null, locale));
+}
