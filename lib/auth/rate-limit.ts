@@ -3,7 +3,7 @@ import { sql } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { authRateLimitHits } from "@/lib/db/schemas/auth_rate_limit";
 
-export type AuthAction = "sign-in" | "register" | "forgot" | "reset" | "change-password";
+export type AuthAction = "sign-in" | "register" | "forgot" | "reset" | "change-password" | "email-change" | "delete";
 
 const LIMITS: Record<AuthAction, { email: number; ip: number }> = {
   "sign-in": { email: 3, ip: 10 },
@@ -11,9 +11,19 @@ const LIMITS: Record<AuthAction, { email: number; ip: number }> = {
   forgot: { email: 3, ip: 5 },
   reset: { email: Number.POSITIVE_INFINITY, ip: 5 },
   "change-password": { email: 5, ip: Number.POSITIVE_INFINITY },
+  "email-change": { email: 3, ip: 5 },
+  delete: { email: 2, ip: 3 },
 };
 
-const WINDOW_INTERVAL = "15 minutes";
+const WINDOWS: Record<AuthAction, string> = {
+  "sign-in": "15 minutes",
+  register: "15 minutes",
+  forgot: "15 minutes",
+  reset: "15 minutes",
+  "change-password": "15 minutes",
+  "email-change": "15 minutes",
+  delete: "1 hour",
+};
 
 export type AuthRateLimitResult = { ok: true } | { ok: false; reason: "email" | "ip" };
 
@@ -33,7 +43,7 @@ export async function checkAuthRateLimit(opts: {
       SELECT COUNT(*)::text AS count
       FROM auth_rate_limit_hits
       WHERE identifier = ${prefixedEmail}
-        AND hit_at > NOW() - (${WINDOW_INTERVAL})::interval
+        AND hit_at > NOW() - (${WINDOWS[opts.action]})::interval
     `);
     const list = (rows as unknown as { rows?: { count: string }[] }).rows ?? [];
     if (Number(list[0]?.count ?? "0") >= limits.email) return { ok: false, reason: "email" };
@@ -44,7 +54,7 @@ export async function checkAuthRateLimit(opts: {
       SELECT COUNT(*)::text AS count
       FROM auth_rate_limit_hits
       WHERE ip = ${prefixedIp}
-        AND hit_at > NOW() - (${WINDOW_INTERVAL})::interval
+        AND hit_at > NOW() - (${WINDOWS[opts.action]})::interval
     `);
     const list = (rows as unknown as { rows?: { count: string }[] }).rows ?? [];
     if (Number(list[0]?.count ?? "0") >= limits.ip) return { ok: false, reason: "ip" };
