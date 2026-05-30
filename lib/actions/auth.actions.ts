@@ -3,7 +3,7 @@ import { signOut } from "@/lib/auth";
 import { routing } from "@/i18n/routing";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { eq } from "drizzle-orm";
+import { eq, and, gt, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { users, verificationTokens, passwordResetTokens, sessions } from "@/lib/db/schema";
@@ -17,6 +17,10 @@ import { VerifyEmailEmail } from "@/components/email/VerifyEmailEmail";
 import { WelcomeEmail } from "@/components/email/WelcomeEmail";
 import { PasswordResetEmail } from "@/components/email/PasswordResetEmail";
 import { PasswordChangedEmail } from "@/components/email/PasswordChangedEmail";
+import { AccountDeletionRequestedEmail } from "@/components/email/AccountDeletionRequestedEmail";
+import { AccountDeletionCancelledEmail } from "@/components/email/AccountDeletionCancelledEmail";
+import { EmailChangeVerifyEmail } from "@/components/email/EmailChangeVerifyEmail";
+import { EmailChangedNotificationEmail } from "@/components/email/EmailChangedNotificationEmail";
 import { auth } from "@/lib/auth";
 import { env } from "@/lib/env";
 
@@ -470,4 +474,87 @@ export async function updateProfile(formData: FormData) {
     .where(eq(users.id, session.user.id));
 
   redirect(`/${parsed.data.preferredLocale}/compte/profil?profile=ok`);
+}
+
+const emailChangeSchema = z.object({
+  newEmail: z.string().email().max(254),
+  currentPassword: z.string().min(1).max(200),
+  locale: z.string(),
+});
+
+export async function requestEmailChange(formData: FormData) {
+  const locale = asLocale(formData.get("locale") as string | null);
+  const session = await auth();
+  if (!session?.user?.id) redirect(`/${locale}/sign-in`);
+
+  const parsed = emailChangeSchema.safeParse({
+    newEmail: formData.get("newEmail"),
+    currentPassword: formData.get("currentPassword"),
+    locale,
+  });
+  if (!parsed.success) redirect(`/${locale}/compte/profil?email=invalid`);
+
+  const { newEmail, currentPassword } = parsed.data;
+  const normalized = newEmail.trim().toLowerCase();
+
+  const [user] = await db
+    .select({
+      id: users.id,
+      email: users.email,
+      passwordHash: users.passwordHash,
+    })
+    .from(users)
+    .where(and(eq(users.id, session.user.id), isNull(users.purgedAt)))
+    .limit(1);
+  if (!user) redirect(`/${locale}/sign-in`);
+
+  if (normalized === user.email.toLowerCase()) {
+    redirect(`/${locale}/compte/profil?email=same`);
+  }
+  if (!user.passwordHash) {
+    redirect(`/${locale}/compte/profil?email=set-password-first`);
+  }
+
+  const valid = await verifyPassword(currentPassword, user.passwordHash);
+  if (!valid) redirect(`/${locale}/compte/profil?email=wrong-password`);
+
+  const reqHeaders = await headers();
+  const ip = getClientIp(reqHeaders);
+  const limit = await checkAuthRateLimit({
+    action: "email-change",
+    email: user.email,
+    ip,
+  });
+  if (!limit.ok) redirect(`/${locale}/compte/profil?email=rate-limit`);
+
+  // Check new address not taken (by a non-purged user)
+  const [existing] = await db
+    .select({ id: users.id })
+    .from(users)
+    .where(and(eq(users.email, normalized), isNull(users.purgedAt)))
+    .limit(1);
+  if (existing) redirect(`/${locale}/compte/profil?email=taken`);
+
+  const rawToken = generateRawToken();
+  await db
+    .update(users)
+    .set({
+      pendingEmail: normalized,
+      pendingEmailToken: hashToken(rawToken),
+      pendingEmailExpiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+    })
+    .where(eq(users.id, user.id));
+
+  const appBase = env.NEXT_PUBLIC_APP_URL.replace(/\/$/, "");
+  const confirmUrl = `${appBase}/${locale}/confirm-email-change/${rawToken}`;
+  try {
+    await sendEmail({
+      to: normalized,
+      subject: "Confirme ta nouvelle adresse email — Au Fil des Saveurs",
+      react: EmailChangeVerifyEmail({ locale, confirmUrl }),
+    });
+  } catch (e) {
+    console.error("[auth] email-change verify send failed", e);
+  }
+  redirect(`/${locale}/compte/profil?email=verify-sent`);
 }
