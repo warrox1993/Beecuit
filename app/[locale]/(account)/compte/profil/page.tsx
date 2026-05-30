@@ -9,6 +9,8 @@ import { Heading } from "@/components/ui-primitives/Heading";
 import { ChangePasswordForm } from "@/components/account/ChangePasswordForm";
 import { LinkedAccountsBlock } from "@/components/account/LinkedAccountsBlock";
 import { PreferencesBlock } from "@/components/account/PreferencesBlock";
+import { EmailChangeBlock } from "@/components/account/EmailChangeBlock";
+import { DangerZoneBlock } from "@/components/account/DangerZoneBlock";
 import { Link } from "@/i18n/navigation";
 
 const ERROR_KEYS: Record<string, string> = {
@@ -24,10 +26,16 @@ export default async function ProfilPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ error?: string; password?: string; profile?: string }>;
+  searchParams: Promise<{
+    error?: string;
+    password?: string;
+    profile?: string;
+    email?: string;
+    delete?: string;
+  }>;
 }) {
   const { locale } = await params;
-  const { error, password, profile } = await searchParams;
+  const { error, password, profile, email, delete: deleteFlag } = await searchParams;
   setRequestLocale(locale);
   const t = await getTranslations("auth");
   const session = await auth();
@@ -39,6 +47,7 @@ export default async function ProfilPage({
       preferredLocale: users.preferredLocale,
       newsletterOptIn: users.newsletterOptIn,
       email: users.email,
+      pendingEmail: users.pendingEmail,
     })
     .from(users)
     .where(eq(users.id, session!.user!.id))
@@ -62,6 +71,26 @@ export default async function ProfilPage({
         <p className="text-warm-brown/70 text-sm">{user?.email}</p>
       </div>
 
+      {email && (
+        <div
+          role={email === "changed" || email === "verify-sent" || email === "reverted" ? undefined : "alert"}
+          className={
+            email === "changed" || email === "verify-sent" || email === "reverted"
+              ? "border-honey-dark/30 bg-honey-dark/5 text-honey-dark rounded-md border px-4 py-3 text-sm"
+              : "border-terracotta/30 bg-terracotta/5 text-terracotta rounded-md border px-4 py-3 text-sm"
+          }
+        >
+          {t(`emailToast_${email}`)}
+        </div>
+      )}
+      {deleteFlag && (
+        <div
+          role="alert"
+          className="border-terracotta/30 bg-terracotta/5 text-terracotta rounded-md border px-4 py-3 text-sm"
+        >
+          {t(`deleteToast_${deleteFlag}`)}
+        </div>
+      )}
       {(password === "ok" || profile === "ok") && (
         <div className="border-honey-dark/30 bg-honey-dark/5 text-honey-dark rounded-md border px-4 py-3 text-sm">
           {password === "ok" ? t("toastPasswordOk") : "Préférences enregistrées."}
@@ -107,6 +136,27 @@ export default async function ProfilPage({
             preferredLocale={(user?.preferredLocale ?? "fr") as "fr" | "nl" | "de" | "en"}
             newsletterOptIn={user?.newsletterOptIn ?? false}
           />
+        </div>
+      </div>
+
+      <div className="border-warm-brown/10 rounded-xl border bg-white p-6">
+        <h2 className="text-warm-brown text-lg font-medium">{t("emailLabel")}</h2>
+        <div className="mt-4">
+          <EmailChangeBlock
+            locale={locale}
+            currentEmail={user?.email ?? ""}
+            pendingEmail={user?.pendingEmail ?? null}
+          />
+        </div>
+      </div>
+
+      <div className="border-terracotta/30 rounded-xl border bg-white p-6">
+        <div className="text-terracotta mb-3 text-xs font-bold tracking-widest uppercase">
+          {t("dangerZone")}
+        </div>
+        <h2 className="text-warm-brown text-lg font-medium">{t("deleteAccountTitle")}</h2>
+        <div className="mt-4">
+          <DangerZoneBlock locale={locale} hasPassword={!!user?.passwordHash} />
         </div>
       </div>
     </section>
