@@ -18,5 +18,6 @@ export * from "./schemas/subscription_box_items";
 export * from "./schemas/b2b";
 export * from "./schemas/b2b_rate_limit";
 export * from "./schemas/auth_rate_limit";
+export * from "./schemas/password_reset_tokens";
 export * from "./schemas/newsletter";
 export * from "./schemas/journal";

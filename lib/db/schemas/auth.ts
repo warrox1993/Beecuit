@@ -20,6 +20,7 @@ export const users = pgTable("users", {
   email: text("email").notNull().unique(),
   emailVerified: timestamp("email_verified", { mode: "date" }),
   image: text("image"),
+  passwordHash: text("password_hash"),
   role: userRole("role").notNull().default("customer"),
   preferredLocale: locale("preferred_locale").notNull().default("fr"),
   newsletterOptIn: boolean("newsletter_opt_in").notNull().default(false),
