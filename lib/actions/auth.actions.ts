@@ -194,3 +194,57 @@ export async function signInWithPassword(formData: FormData) {
 
   redirect(safeCallbackUrl(callbackUrl ?? null, locale));
 }
+
+const forgotSchema = z.object({
+  email: z.string().email().max(254),
+  locale: z.string(),
+});
+
+export async function requestPasswordReset(formData: FormData) {
+  const locale = asLocale(formData.get("locale") as string | null);
+  const parsed = forgotSchema.safeParse({
+    email: formData.get("email"),
+    locale,
+  });
+  if (!parsed.success) {
+    redirect(`/${locale}/forgot-password?error=invalid`);
+  }
+  const { email } = parsed.data;
+  const normalizedEmail = email.trim().toLowerCase();
+
+  const reqHeaders = await headers();
+  const ip = getClientIp(reqHeaders);
+  const limit = await checkAuthRateLimit({ action: "forgot", email: normalizedEmail, ip });
+  if (!limit.ok) {
+    // still redirect to sent — avoid leaking limit state
+    redirect(`/${locale}/forgot-password?sent=1`);
+  }
+
+  const [user] = await db
+    .select({ id: users.id })
+    .from(users)
+    .where(eq(users.email, normalizedEmail))
+    .limit(1);
+
+  if (user) {
+    const raw = generateRawToken();
+    await db.insert(passwordResetTokens).values({
+      token: hashToken(raw),
+      userId: user.id,
+      expiresAt: new Date(Date.now() + 60 * 60 * 1000), // 1h
+    });
+    const appBase = env.NEXT_PUBLIC_APP_URL.replace(/\/$/, "");
+    const resetUrl = `${appBase}/${locale}/reset-password/${raw}`;
+    try {
+      await sendEmail({
+        to: normalizedEmail,
+        subject: "Réinitialise ton mot de passe — Au Fil des Saveurs",
+        react: PasswordResetEmail({ locale, resetUrl }),
+      });
+    } catch (e) {
+      console.error("[auth] reset email send failed", e);
+    }
+  }
+
+  redirect(`/${locale}/forgot-password?sent=1`);
+}
