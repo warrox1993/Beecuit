@@ -320,3 +320,61 @@ export async function resetPassword(formData: FormData) {
 
   redirect(`/${locale}/sign-in?reset=ok`);
 }
+
+export type VerifyEmailResult =
+  | { ok: true; redirectTo: string }
+  | { ok: false; error: "expired" };
+
+export async function verifyEmail(rawToken: string, locale: string): Promise<VerifyEmailResult> {
+  const safeLocale = asLocale(locale);
+  const hashed = hashToken(rawToken);
+  const [row] = await db
+    .select({ identifier: verificationTokens.identifier, expires: verificationTokens.expires })
+    .from(verificationTokens)
+    .where(eq(verificationTokens.token, hashed))
+    .limit(1);
+  if (!row || row.expires.getTime() < Date.now()) {
+    return { ok: false, error: "expired" };
+  }
+  await db.transaction(async (tx) => {
+    await tx
+      .update(users)
+      .set({ emailVerified: new Date() })
+      .where(eq(users.email, row.identifier));
+    await tx
+      .delete(verificationTokens)
+      .where(eq(verificationTokens.identifier, row.identifier));
+  });
+  return { ok: true, redirectTo: `/${safeLocale}/compte?verified=ok` };
+}
+
+export async function resendEmailVerification(formData: FormData) {
+  const locale = asLocale(formData.get("locale") as string | null);
+  const session = await auth();
+  if (!session?.user?.email) redirect(`/${locale}/sign-in`);
+
+  const email = session.user.email.toLowerCase();
+  const userLocale = asLocale(session.user.preferredLocale ?? locale);
+
+  const reqHeaders = await headers();
+  const ip = getClientIp(reqHeaders);
+  const limit = await checkAuthRateLimit({ action: "forgot", email, ip });
+  if (!limit.ok) redirect(`/${locale}/compte?verify=rate-limit`);
+
+  // Wipe stale tokens, issue a fresh one
+  await db.delete(verificationTokens).where(eq(verificationTokens.identifier, email));
+  const raw = generateRawToken();
+  await db.insert(verificationTokens).values({
+    identifier: email,
+    token: hashToken(raw),
+    expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+  });
+  const appBase = env.NEXT_PUBLIC_APP_URL.replace(/\/$/, "");
+  const verifyUrl = `${appBase}/${userLocale}/verify-email/${raw}`;
+  await sendEmail({
+    to: email,
+    subject: "Confirme ton adresse email — Au Fil des Saveurs",
+    react: VerifyEmailEmail({ locale: userLocale, verifyUrl }),
+  });
+  redirect(`/${locale}/compte?verify=sent`);
+}
