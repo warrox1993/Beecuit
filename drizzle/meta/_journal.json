@@ -99,6 +99,13 @@
       "when": 1780174236958,
       "tag": "0013_auth_password",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1780182083304,
+      "tag": "0014_account_actions",
+      "breakpoints": true
     }
   ]
 }
