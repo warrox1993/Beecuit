@@ -695,3 +695,153 @@ export async function revertEmailChange(
 
   return { ok: true, redirectTo: `/${safeLocale}/sign-in?email=reverted` };
 }
+
+const deletionSchema = z.object({
+  confirmText: z.literal("SUPPRIMER"),
+  currentPassword: z.string().max(200),
+  locale: z.string(),
+});
+
+function humanDate(d: Date, locale: "fr" | "nl" | "de" | "en"): string {
+  return new Intl.DateTimeFormat(locale === "en" ? "en-GB" : `${locale}-BE`, {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(d);
+}
+
+export async function requestAccountDeletion(formData: FormData) {
+  const locale = asLocale(formData.get("locale") as string | null);
+  const session = await auth();
+  if (!session?.user?.id) redirect(`/${locale}/sign-in`);
+
+  const parsed = deletionSchema.safeParse({
+    confirmText: formData.get("confirmText"),
+    currentPassword: formData.get("currentPassword") ?? "",
+    locale,
+  });
+  if (!parsed.success) {
+    redirect(`/${locale}/compte/profil?delete=invalid`);
+  }
+  const { currentPassword } = parsed.data;
+
+  const [user] = await db
+    .select({
+      id: users.id,
+      email: users.email,
+      passwordHash: users.passwordHash,
+    })
+    .from(users)
+    .where(and(eq(users.id, session.user.id), isNull(users.purgedAt)))
+    .limit(1);
+  if (!user) redirect(`/${locale}/sign-in`);
+
+  // If the user has a password, we require it. OAuth-only users can submit
+  // an empty password and rely on confirmText.
+  if (user.passwordHash) {
+    if (!currentPassword) {
+      redirect(`/${locale}/compte/profil?delete=wrong-password`);
+    }
+    const valid = await verifyPassword(currentPassword, user.passwordHash);
+    if (!valid) redirect(`/${locale}/compte/profil?delete=wrong-password`);
+  }
+
+  const reqHeaders = await headers();
+  const ip = getClientIp(reqHeaders);
+  const limit = await checkAuthRateLimit({
+    action: "delete",
+    email: user.email,
+    ip,
+  });
+  if (!limit.ok) redirect(`/${locale}/compte/profil?delete=rate-limit`);
+
+  const rawToken = generateRawToken();
+  const deletedAt = new Date();
+  const expiresAt = new Date(deletedAt.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+  await db.transaction(async (tx) => {
+    await tx
+      .update(users)
+      .set({
+        deletedAt,
+        cancelDeletionToken: hashToken(rawToken),
+        cancelDeletionExpiresAt: expiresAt,
+        // also clear any in-flight pending email so it can't be reused
+        pendingEmail: null,
+        pendingEmailToken: null,
+        pendingEmailExpiresAt: null,
+      })
+      .where(eq(users.id, user.id));
+    await tx.delete(sessions).where(eq(sessions.userId, user.id));
+  });
+
+  // Best-effort Stripe subscription cancellation at period end.
+  // TODO(v2-B): integrate stripe.subscriptions.update(id, { cancel_at_period_end: true }).
+  // Intentionally left as a comment — do NOT add a placeholder helper here.
+
+  const appBase = env.NEXT_PUBLIC_APP_URL.replace(/\/$/, "");
+  const cancelUrl = `${appBase}/${locale}/cancel-deletion/${rawToken}`;
+  try {
+    await sendEmail({
+      to: user.email,
+      subject: "Suppression de compte programmée — Au Fil des Saveurs",
+      react: AccountDeletionRequestedEmail({
+        locale,
+        cancelUrl,
+        expiresHuman: humanDate(expiresAt, locale),
+      }),
+    });
+  } catch (e) {
+    console.error("[auth] deletion-requested email send failed", e);
+  }
+
+  redirect(`/${locale}?deletion=requested`);
+}
+
+export type CancelDeletionResult =
+  | { ok: true; redirectTo: string }
+  | { ok: false; error: "expired" };
+
+export async function cancelAccountDeletion(
+  rawToken: string,
+  locale: string,
+): Promise<CancelDeletionResult> {
+  const safeLocale = asLocale(locale);
+  const hashed = hashToken(rawToken);
+  const [row] = await db
+    .select({
+      id: users.id,
+      email: users.email,
+      preferredLocale: users.preferredLocale,
+      expiresAt: users.cancelDeletionExpiresAt,
+      purgedAt: users.purgedAt,
+    })
+    .from(users)
+    .where(eq(users.cancelDeletionToken, hashed))
+    .limit(1);
+  if (!row || row.purgedAt) return { ok: false, error: "expired" };
+  if (!row.expiresAt || row.expiresAt.getTime() < Date.now()) {
+    return { ok: false, error: "expired" };
+  }
+
+  await db
+    .update(users)
+    .set({
+      deletedAt: null,
+      cancelDeletionToken: null,
+      cancelDeletionExpiresAt: null,
+    })
+    .where(eq(users.id, row.id));
+
+  try {
+    await sendEmail({
+      to: row.email,
+      subject: "Suppression annulée — Au Fil des Saveurs",
+      react: AccountDeletionCancelledEmail({ locale: asLocale(row.preferredLocale) }),
+    });
+  } catch (e) {
+    console.error("[auth] deletion-cancelled email send failed", e);
+  }
+
+  return { ok: true, redirectTo: `/${safeLocale}/sign-in?deletion=cancelled` };
+}
