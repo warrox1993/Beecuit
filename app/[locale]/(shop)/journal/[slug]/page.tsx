@@ -17,6 +17,7 @@ import {
   recipeJsonLd,
   breadcrumbJsonLd,
 } from "@/lib/journal/structured-data";
+import { serializeJsonLd } from "@/lib/seo/json-ld";
 import { env } from "@/lib/env";
 import type { ProseMirrorNode } from "@/lib/journal/prosemirror-types";
 
@@ -104,7 +105,7 @@ export default async function JournalDetailPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
+          __html: serializeJsonLd(
             articleJsonLd(result.article, translation, locale),
           ),
         }}
@@ -112,7 +113,7 @@ export default async function JournalDetailPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
+          __html: serializeJsonLd(
             breadcrumbJsonLd(result.article, translation.title, locale),
           ),
         }}
@@ -123,7 +124,7 @@ export default async function JournalDetailPage({
           return r ? (
             <script
               type="application/ld+json"
-              dangerouslySetInnerHTML={{ __html: JSON.stringify(r) }}
+              dangerouslySetInnerHTML={{ __html: serializeJsonLd(r) }}
             />
           ) : null;
         })()}

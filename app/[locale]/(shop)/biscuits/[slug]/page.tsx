@@ -16,6 +16,7 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 import { buildSlugAlternates } from "@/lib/seo/alternates";
 import { getProductLocaleSlugs } from "@/lib/seo/sitemap-data";
 import { productJsonLd } from "@/lib/seo/structured-data";
+import { serializeJsonLd } from "@/lib/seo/json-ld";
 
 export const dynamic = "force-dynamic";
 
@@ -73,7 +74,7 @@ export default async function ProductPage({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
       <Section py="md">
         <Container>

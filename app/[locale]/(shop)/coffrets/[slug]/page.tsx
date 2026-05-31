@@ -9,6 +9,7 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 import { buildSlugAlternates } from "@/lib/seo/alternates";
 import { getProductLocaleSlugs } from "@/lib/seo/sitemap-data";
 import { coffretJsonLd } from "@/lib/seo/structured-data";
+import { serializeJsonLd } from "@/lib/seo/json-ld";
 
 type Locale = "fr" | "nl" | "en" | "de";
 type Props = { params: Promise<{ locale: string; slug: string }> };
@@ -60,7 +61,7 @@ export default async function CoffretDetailPage({ params }: Props) {
     <Container className="py-12">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
       <div className="grid lg:grid-cols-[1.2fr_1fr] gap-10">
         <div className="bg-cookie/30 aspect-square rounded-2xl overflow-hidden">

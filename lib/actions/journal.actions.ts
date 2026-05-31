@@ -258,7 +258,10 @@ export async function publishArticle(id: string, sendEmail = true) {
   return { ok: true };
 }
 
-export async function sendArticleEmails(articleId: string) {
+// NOT exported: this triggers a mass email to all confirmed subscribers and
+// must never be reachable as a standalone server action. It is only called
+// internally by publishArticle (which is requireAdmin-gated).
+async function sendArticleEmails(articleId: string) {
   const [article] = await db
     .select()
     .from(journalArticles)

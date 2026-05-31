@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { PageTransition } from "@/components/motion/PageTransition";
 import { ConsentProvider } from "@/components/consent/ConsentProvider";
 import { organizationJsonLd } from "@/lib/seo/structured-data";
+import { serializeJsonLd } from "@/lib/seo/json-ld";
 
 // FlyToCart and ToastProvider are non-critical client widgets — load after hydration.
 const FlyToCart = dynamic(() =>
@@ -47,7 +48,7 @@ export default async function LocaleLayout({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(organizationJsonLd()),
+          __html: serializeJsonLd(organizationJsonLd()),
         }}
       />
       <ConsentProvider>

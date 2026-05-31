@@ -323,7 +323,15 @@ export async function resetPassword(formData: FormData) {
   const [row] = await db
     .select({ token: passwordResetTokens.token, userId: passwordResetTokens.userId })
     .from(passwordResetTokens)
-    .where(eq(passwordResetTokens.token, hashed))
+    .where(
+      and(
+        eq(passwordResetTokens.token, hashed),
+        // Re-check expiry server-side: the page-level guard is cosmetic, the
+        // POST action must reject expired tokens to avoid account takeover via
+        // a leaked-but-stale reset link.
+        gt(passwordResetTokens.expiresAt, new Date()),
+      ),
+    )
     .limit(1);
   if (!row) redirect(`/${locale}/reset-password/${rawToken}?error=expired`);
 
