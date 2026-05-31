@@ -10,8 +10,9 @@ vi.mock("next/headers", () => ({ headers: () => Promise.resolve(new Headers({ "x
 vi.mock("@/lib/queries/contact", () => ({ countRecentByIp: vi.fn(async () => 0) }));
 vi.mock("@/lib/auth", () => ({ auth: vi.fn(async () => null) }));
 
-import { submitContactMessage } from "@/lib/actions/contact.actions";
+import { submitContactMessage, adminUpdateMessageStatus } from "@/lib/actions/contact.actions";
 import { countRecentByIp } from "@/lib/queries/contact";
+import { auth } from "@/lib/auth";
 
 function fd(o: Record<string, string>) {
   const f = new FormData();
@@ -54,5 +55,27 @@ describe("submitContactMessage", () => {
     const res = await submitContactMessage(fd(valid));
     expect(res).toEqual({ ok: false, error: "rate-limit" });
     expect(inserted).toHaveLength(0);
+  });
+});
+
+describe("adminUpdateMessageStatus (contrôle d'accès)", () => {
+  const okId = "550e8400-e29b-41d4-a716-446655440000";
+
+  it("rejette un visiteur non authentifié / non-admin", async () => {
+    vi.mocked(auth).mockResolvedValueOnce(null as never);
+    const res = await adminUpdateMessageStatus(fd({ id: okId, status: "read" }));
+    expect(res).toEqual({ ok: false, error: "forbidden" });
+  });
+
+  it("rejette un utilisateur 'customer' (rôle non admin)", async () => {
+    vi.mocked(auth).mockResolvedValueOnce({ user: { role: "customer" } } as never);
+    const res = await adminUpdateMessageStatus(fd({ id: okId, status: "read" }));
+    expect(res).toEqual({ ok: false, error: "forbidden" });
+  });
+
+  it("rejette un id non-uuid même pour un admin (avant tout accès DB)", async () => {
+    vi.mocked(auth).mockResolvedValueOnce({ user: { role: "admin" } } as never);
+    const res = await adminUpdateMessageStatus(fd({ id: "not-a-uuid", status: "read" }));
+    expect(res).toEqual({ ok: false, error: "invalid" });
   });
 });
