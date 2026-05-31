@@ -24,7 +24,7 @@ vi.mock("@/lib/email/client", () => ({
   sendEmail: vi.fn().mockResolvedValue(undefined),
 }));
 
-const { subscribeInputSchema } = await import("@/lib/actions/newsletter.actions");
+const { subscribeInputSchema } = await import("@/lib/actions/newsletter.schema");
 
 describe("subscribeInputSchema", () => {
   it("accepts a valid input", () => {

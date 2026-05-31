@@ -20,7 +20,8 @@ const contactSchema = z.object({
   company: z.string().optional(), // honeypot — doit rester vide
 });
 
-export type ContactResult = { ok: true } | { ok: false; error: string };
+// Type local : un fichier "use server" ne peut exporter que des fonctions async.
+type ContactResult = { ok: true } | { ok: false; error: string };
 
 export async function submitContactMessage(formData: FormData): Promise<ContactResult> {
   const parsed = contactSchema.safeParse({

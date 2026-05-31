@@ -1,5 +1,4 @@
 "use server";
-import { z } from "zod";
 import { randomUUID } from "node:crypto";
 import { db } from "@/lib/db";
 import { newsletterSubscribers } from "@/lib/db/schema";
@@ -7,13 +6,7 @@ import { eq } from "drizzle-orm";
 import { env } from "@/lib/env";
 import { sendEmail } from "@/lib/email/client";
 import { NewsletterConfirmationEmail } from "@/components/email/NewsletterConfirmationEmail";
-
-export const subscribeInputSchema = z.object({
-  email: z.string().email(),
-  locale: z.enum(["fr", "nl", "en", "de"]),
-  journalOptIn: z.boolean().default(false),
-  source: z.enum(["home", "journal_inline", "checkout"]).optional(),
-});
+import { subscribeInputSchema } from "@/lib/actions/newsletter.schema";
 
 export async function subscribeToNewsletter(
   raw: unknown,
