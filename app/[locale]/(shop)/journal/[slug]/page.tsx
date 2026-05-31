@@ -18,6 +18,7 @@ import {
   breadcrumbJsonLd,
 } from "@/lib/journal/structured-data";
 import { serializeJsonLd } from "@/lib/seo/json-ld";
+import { verifyPreviewToken } from "@/lib/journal/preview-token";
 import { env } from "@/lib/env";
 import type { ProseMirrorNode } from "@/lib/journal/prosemirror-types";
 
@@ -77,7 +78,11 @@ export default async function JournalDetailPage({
 
   const result = await getArticleBySlug(slug, locale);
   if (!result) notFound();
-  if (!preview && result.article.status !== "published") notFound();
+  // Preview of a non-published article requires a valid signed HMAC token whose
+  // articleId matches — a bare `?preview=1` must NOT bypass publication status.
+  const previewCheck = preview ? verifyPreviewToken(preview) : { valid: false as const };
+  const previewOk = previewCheck.valid && previewCheck.articleId === result.article.id;
+  if (!previewOk && result.article.status !== "published") notFound();
 
   // Locale fallback: if translation missing for non-FR, redirect to FR with fallback flag
   if (!result.translation && locale !== "fr") {

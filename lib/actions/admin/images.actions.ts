@@ -32,7 +32,11 @@ export async function uploadImage(productId: string, formData: FormData) {
 
 export async function deleteImage(imageId: string, productId: string) {
   await requireAdmin();
-  await db.delete(productImages).where(eq(productImages.id, imageId));
+  // Scope by productId so an image can only be deleted in the context of its own
+  // product (consistent with setPrimaryImage; avoids cross-product deletion).
+  await db
+    .delete(productImages)
+    .where(and(eq(productImages.id, imageId), eq(productImages.productId, productId)));
   revalidatePath(`/admin/produits/${productId}`);
 }
 

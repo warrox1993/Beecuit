@@ -1169,7 +1169,7 @@ export async function confirmDisable2fa(
     react: TwoFactorDisabledEmail({ locale: asLocale(user.preferredLocale) }),
   });
 
-  return { ok: true, redirectTo: `/${locale}/sign-in?2fa=disabled` };
+  return { ok: true, redirectTo: `/${asLocale(locale)}/sign-in?2fa=disabled` };
 }
 
 function authCookieName(): string {

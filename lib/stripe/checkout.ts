@@ -65,7 +65,9 @@ export async function createStripeCheckoutSession(args: {
     customer_email: args.email,
     line_items: productLineItems,
     discounts: args.couponId ? [{ coupon: args.couponId }] : undefined,
-    success_url: `${args.appBaseUrl}/${args.locale}/commande-confirmee/${args.orderNumber}`,
+    // session_id is a capability token verified on the confirmation page so it
+    // can't be reached by enumerating the sequential order number.
+    success_url: `${args.appBaseUrl}/${args.locale}/commande-confirmee/${args.orderNumber}?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${args.appBaseUrl}/${args.locale}/checkout`,
     metadata: { order_id: args.orderId, order_number: args.orderNumber },
   });

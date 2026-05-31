@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { getArticleForAdmin } from "@/lib/journal/queries";
+import { signPreviewToken } from "@/lib/journal/preview-token";
 import { JournalMetaSidebar } from "@/components/admin/journal/JournalMetaSidebar";
 import { JournalLocaleTabs } from "@/components/admin/journal/JournalLocaleTabs";
 import {
@@ -17,9 +19,18 @@ export default async function AdminJournalEditPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  // Guard against a malformed id: the column is uuid, so a non-uuid would throw
+  // a Postgres "invalid input syntax" → 500 instead of a clean 404.
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) {
+    notFound();
+  }
   const data = await getArticleForAdmin(id);
   if (!data) notFound();
   const articleId = data.article.id;
+  // Signed, short-lived preview URL so the admin can view a draft on the public
+  // route (which now requires a valid HMAC token, not a bare ?preview=1).
+  const previewToken = signPreviewToken(articleId, 900);
+  const previewUrl = `/fr/journal/${data.article.slug}?preview=${previewToken}`;
   async function publishAction() {
     "use server";
     await publishArticle(articleId);
@@ -52,6 +63,14 @@ export default async function AdminJournalEditPage({
             )}
           </div>
           <div className="flex flex-wrap items-center gap-2">
+            <Link
+              href={previewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-warm-brown/30 text-warm-brown hover:bg-warm-brown/10 rounded border px-4 py-2 text-sm"
+            >
+              Aperçu
+            </Link>
             {data.article.status === "draft" ? (
               <form action={publishAction}>
                 <button

@@ -94,10 +94,15 @@ export async function checkAuthRateLimit(opts: {
 }
 
 export function getClientIp(headers: Headers): string | null {
+  // Prefer x-real-ip: on Vercel the edge sets it to the true client IP and a
+  // client-supplied value is overwritten, so it can't be forged. Only fall back
+  // to x-forwarded-for (first hop) off-platform / in local dev.
+  const real = headers.get("x-real-ip");
+  if (real?.trim()) return real.trim();
   const xff = headers.get("x-forwarded-for");
   if (xff) {
     const first = xff.split(",")[0];
     return first ? first.trim() : null;
   }
-  return headers.get("x-real-ip");
+  return null;
 }

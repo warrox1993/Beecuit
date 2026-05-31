@@ -63,7 +63,19 @@ export async function listSubscriptionHistory(subscriptionId: string) {
 }
 
 export async function listAllSubscriptions() {
-  return db.select().from(subscriptions).orderBy(desc(subscriptions.createdAt));
+  // Projection: the admin table only shows these 5 columns. Avoid shipping
+  // shippingAddressSnapshot (PII) + stripeCustomerId/stripeSubscriptionId of
+  // every subscriber into the admin page's RSC payload.
+  return db
+    .select({
+      id: subscriptions.id,
+      format: subscriptions.format,
+      engagementMonths: subscriptions.engagementMonths,
+      status: subscriptions.status,
+      startedAt: subscriptions.startedAt,
+    })
+    .from(subscriptions)
+    .orderBy(desc(subscriptions.createdAt));
 }
 
 export async function getSubscriptionById(id: string) {

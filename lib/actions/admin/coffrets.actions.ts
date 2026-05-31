@@ -84,7 +84,9 @@ export async function updateCoffret(raw: unknown): Promise<void> {
       isFeatured: data.isFeatured,
       updatedAt: new Date(),
     })
-    .where(eq(products.id, coffretId));
+    // Guard type='coffret' so a coffret action can't overwrite a biscuit/other
+    // product by passing its id (object-type confusion).
+    .where(and(eq(products.id, coffretId), eq(products.type, "coffret")));
 
   for (const loc of LOCALES) {
     const t = data.translations[loc];
@@ -155,6 +157,6 @@ export async function deleteCoffret(id: string): Promise<void> {
   await db
     .update(products)
     .set({ isActive: false, updatedAt: new Date() })
-    .where(eq(products.id, id));
+    .where(and(eq(products.id, id), eq(products.type, "coffret")));
   revalidatePath("/admin/coffrets");
 }

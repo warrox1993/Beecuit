@@ -1,15 +1,18 @@
 import Link from "next/link";
-import type { InferSelectModel } from "drizzle-orm";
-import type { subscriptions } from "@/lib/db/schema";
+
+// Reduced row shape (the query projects only displayed columns — no PII / Stripe ids).
+type Row = {
+  id: string;
+  format: string;
+  engagementMonths: number;
+  status: string;
+  startedAt: Date | null;
+};
 
 const dt = (d: Date | null) =>
   d ? new Date(d).toLocaleDateString("fr-BE") : "—";
 
-export function SubscriptionTable({
-  rows,
-}: {
-  rows: InferSelectModel<typeof subscriptions>[];
-}) {
+export function SubscriptionTable({ rows }: { rows: Row[] }) {
   return (
     <table className="w-full text-sm">
       <thead>

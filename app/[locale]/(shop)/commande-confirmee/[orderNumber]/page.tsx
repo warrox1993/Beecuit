@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { orders, orderItems } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
+import { auth } from "@/lib/auth";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui-primitives/Container";
@@ -15,10 +16,13 @@ export const dynamic = "force-dynamic";
 
 export default async function ConfirmationPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string; orderNumber: string }>;
+  searchParams: Promise<{ session_id?: string }>;
 }) {
   const { locale, orderNumber } = await params;
+  const { session_id } = await searchParams;
   setRequestLocale(locale);
   const [order] = await db
     .select()
@@ -26,6 +30,16 @@ export default async function ConfirmationPage({
     .where(eq(orders.orderNumber, orderNumber))
     .limit(1);
   if (!order) notFound();
+
+  // Authorize: the order number is sequential and enumerable, so require either
+  // ownership (logged-in buyer) OR the Stripe checkout session_id from the
+  // success_url (covers guest checkout). Otherwise anyone could read others'
+  // order summaries by incrementing the number.
+  const session = await auth();
+  const isOwner = !!order.userId && session?.user?.id === order.userId;
+  const hasSessionToken =
+    !!session_id && !!order.stripeSessionId && session_id === order.stripeSessionId;
+  if (!isOwner && !hasSessionToken) notFound();
   const items = await db.select().from(orderItems).where(eq(orderItems.orderId, order.id));
 
   const eur = (c: number) => (c / 100).toFixed(2);

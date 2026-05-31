@@ -9,6 +9,9 @@ export default async function PrintJournalPage({
   params: Promise<{ locale: "fr" | "nl" | "en" | "de"; slug: string }>;
 }) {
   const { locale, slug } = await params;
+  // Validate locale before it reaches Intl.DateTimeFormat (an invalid BCP-47
+  // string would throw a RangeError → 500 instead of a clean 404).
+  if (!["fr", "nl", "en", "de"].includes(locale)) notFound();
   const result = await getArticleBySlug(slug, locale);
   if (
     !result ||
