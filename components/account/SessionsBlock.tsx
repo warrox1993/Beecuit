@@ -13,7 +13,7 @@ export type SessionRow = {
   isCurrent: boolean;
 };
 
-export function SessionsBlock({ locale, sessions }: { locale: string; sessions: SessionRow[] }) {
+export function SessionsBlock({ sessions }: { sessions: SessionRow[] }) {
   const t = useTranslations("auth");
   const [pending, start] = useTransition();
   const hasOthers = sessions.some((s) => !s.isCurrent);
