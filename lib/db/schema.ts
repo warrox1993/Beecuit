@@ -22,3 +22,4 @@ export * from "./schemas/two_factor_recovery_codes";
 export * from "./schemas/password_reset_tokens";
 export * from "./schemas/newsletter";
 export * from "./schemas/journal";
+export * from "./schemas/contact";
