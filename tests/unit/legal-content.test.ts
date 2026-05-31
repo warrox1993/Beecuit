@@ -54,4 +54,14 @@ describe("getLegalDocument", () => {
     expect(allText).toContain("adresse ip");
     expect(allText).toContain("2fa");
   });
+  it("fournit les 4 pages dans les 4 locales", () => {
+    const keys = ["cgv", "mentions-legales", "confidentialite", "cookies"] as const;
+    for (const k of keys) {
+      for (const l of ["fr", "nl", "de", "en"]) {
+        const d = getLegalDocument(k, l);
+        expect(d.title.length).toBeGreaterThan(0);
+        expect(d.sections.length).toBeGreaterThan(0);
+      }
+    }
+  });
 });

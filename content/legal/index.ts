@@ -11,6 +11,10 @@ import confidentialiteFr from "./confidentialite/fr";
 import confidentialiteNl from "./confidentialite/nl";
 import confidentialiteDe from "./confidentialite/de";
 import confidentialiteEn from "./confidentialite/en";
+import cookiesFr from "./cookies/fr";
+import cookiesNl from "./cookies/nl";
+import cookiesDe from "./cookies/de";
+import cookiesEn from "./cookies/en";
 
 export type LegalPageKey = "cgv" | "mentions-legales" | "confidentialite" | "cookies";
 
@@ -18,8 +22,8 @@ const DOCS: Record<LegalPageKey, Record<string, LegalDocument>> = {
   "mentions-legales": { fr: mentionsFr, nl: mentionsNl, de: mentionsDe, en: mentionsEn },
   cgv: { fr: cgvFr, nl: cgvNl, de: cgvDe, en: cgvEn },
   confidentialite: { fr: confidentialiteFr, nl: confidentialiteNl, de: confidentialiteDe, en: confidentialiteEn },
-  // cookies ajouté dans la tâche suivante
-} as unknown as Record<LegalPageKey, Record<string, LegalDocument>>;
+  cookies: { fr: cookiesFr, nl: cookiesNl, de: cookiesDe, en: cookiesEn },
+};
 
 export function getLegalDocument(key: LegalPageKey, locale: string): LegalDocument {
   const byLocale = DOCS[key];
