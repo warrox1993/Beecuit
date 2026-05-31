@@ -1,9 +1,9 @@
 "use server";
 import { signOut } from "@/lib/auth";
 import { routing } from "@/i18n/routing";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { eq, and, gt, isNull } from "drizzle-orm";
+import { eq, and, gt, isNull, ne } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { users, verificationTokens, passwordResetTokens, sessions, twoFactorRecoveryCodes } from "@/lib/db/schema";
@@ -1132,4 +1132,38 @@ export async function confirmDisable2fa(
     await tx.delete(twoFactorRecoveryCodes).where(eq(twoFactorRecoveryCodes.userId, user.id));
   });
   return { ok: true, redirectTo: `/${locale}/sign-in?2fa=disabled` };
+}
+
+function authCookieName(): string {
+  return process.env.NODE_ENV === "production"
+    ? "__Secure-authjs.session-token"
+    : "authjs.session-token";
+}
+
+export type RevokeResult = { ok: true } | { ok: false; error: string };
+
+export async function revokeSession(formData: FormData): Promise<RevokeResult> {
+  const session = await auth();
+  if (!session?.user?.id) return { ok: false, error: "unauthorized" };
+  const token = String(formData.get("sessionToken") ?? "");
+  if (!token) return { ok: false, error: "invalid" };
+
+  const current = (await cookies()).get(authCookieName())?.value;
+  if (token === current) return { ok: false, error: "cannot-revoke-current" };
+
+  await db
+    .delete(sessions)
+    .where(and(eq(sessions.sessionToken, token), eq(sessions.userId, session.user.id)));
+  return { ok: true };
+}
+
+export async function revokeAllOtherSessions(): Promise<RevokeResult> {
+  const session = await auth();
+  if (!session?.user?.id) return { ok: false, error: "unauthorized" };
+  const current = (await cookies()).get(authCookieName())?.value ?? "";
+
+  await db
+    .delete(sessions)
+    .where(and(eq(sessions.userId, session.user.id), ne(sessions.sessionToken, current)));
+  return { ok: true };
 }
