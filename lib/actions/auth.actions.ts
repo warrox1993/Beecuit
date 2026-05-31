@@ -655,19 +655,34 @@ export async function confirmEmailChange(
   const oldEmail = row.email;
   const undoRaw = generateRawToken();
 
-  await db
-    .update(users)
-    .set({
-      email: row.pendingEmail,
-      emailVerified: new Date(),
-      emailChangeUndoTo: oldEmail,
-      emailChangeUndoToken: hashToken(undoRaw),
-      emailChangeUndoExpiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-      pendingEmail: null,
-      pendingEmailToken: null,
-      pendingEmailExpiresAt: null,
-    })
-    .where(eq(users.id, row.id));
+  try {
+    await db
+      .update(users)
+      .set({
+        email: row.pendingEmail,
+        emailVerified: new Date(),
+        emailChangeUndoTo: oldEmail,
+        emailChangeUndoToken: hashToken(undoRaw),
+        emailChangeUndoExpiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        pendingEmail: null,
+        pendingEmailToken: null,
+        pendingEmailExpiresAt: null,
+      })
+      .where(eq(users.id, row.id));
+  } catch (e) {
+    // 23505 = unique_violation: another account claimed this email between the
+    // race-check above and this write (TOCTOU). The UNIQUE constraint holds — we
+    // just surface it cleanly instead of a raw 500, and clear the pending change.
+    if ((e as { code?: string } | null)?.code === "23505") {
+      await db
+        .update(users)
+        .set({ pendingEmail: null, pendingEmailToken: null, pendingEmailExpiresAt: null })
+        .where(eq(users.id, row.id))
+        .catch(() => {});
+      return { ok: false, error: "taken-race" };
+    }
+    throw e;
+  }
 
   const appBase = env.NEXT_PUBLIC_APP_URL.replace(/\/$/, "");
   const undoUrl = `${appBase}/${safeLocale}/undo-email-change/${undoRaw}`;
@@ -866,14 +881,18 @@ export async function cancelAccountDeletion(
     return { ok: false, error: "expired" };
   }
 
-  await db
+  // Conditional on purgedAt IS NULL so a cancellation can't resurrect an account
+  // the purge cron has already scrubbed (serializes the cancel-vs-purge race).
+  const cancelled = await db
     .update(users)
     .set({
       deletedAt: null,
       cancelDeletionToken: null,
       cancelDeletionExpiresAt: null,
     })
-    .where(eq(users.id, row.id));
+    .where(and(eq(users.id, row.id), isNull(users.purgedAt)))
+    .returning({ id: users.id });
+  if (cancelled.length === 0) return { ok: false, error: "expired" };
 
   try {
     await sendEmail({

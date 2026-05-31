@@ -185,6 +185,9 @@ export async function handleInvoicePaid(invoice: Stripe.Invoice) {
     .limit(1);
 
   if (!box) {
+    // Race guard: two concurrent invoice.paid replays both see `!box`. The
+    // uniqueIndex (subscriptionId, cycleYearMonth) means the 2nd insert would
+    // otherwise throw → 500. onConflictDoNothing + re-select makes it idempotent.
     const [created] = await db
       .insert(subscriptionBoxes)
       .values({
@@ -194,8 +197,25 @@ export async function handleInvoicePaid(invoice: Stripe.Invoice) {
         compositionDeadline: compositionDeadlineFor(cycleYearMonth),
         composedBy: "fallback",
       })
+      .onConflictDoNothing({
+        target: [subscriptionBoxes.subscriptionId, subscriptionBoxes.cycleYearMonth],
+      })
       .returning();
-    box = created!;
+    if (created) {
+      box = created;
+    } else {
+      const [existing] = await db
+        .select()
+        .from(subscriptionBoxes)
+        .where(
+          and(
+            eq(subscriptionBoxes.subscriptionId, sub.id),
+            eq(subscriptionBoxes.cycleYearMonth, cycleYearMonth),
+          ),
+        )
+        .limit(1);
+      box = existing!;
+    }
   }
 
   if (box.status === "shipped") return;

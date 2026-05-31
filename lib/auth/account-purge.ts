@@ -41,14 +41,22 @@ const SENTINEL_EMAIL = (userId: string) => `deleted-${userId}@anon.invalid`;
  *   (cascades only fire on DELETE of the parent, not UPDATE).
  */
 export async function purgeUser(userId: string): Promise<void> {
-  // Check idempotency: skip if already purged.
+  // Idempotency + cancellation guard. The cron's candidate SELECT and this call
+  // are not atomic, so re-read right before scrubbing: skip if already purged OR
+  // if the user CANCELLED their deletion in the meantime (deletedAt cleared).
+  // Never purge a resurrected account.
   const [existing] = await db
-    .select({ id: users.id, email: users.email, purgedAt: users.purgedAt })
+    .select({
+      id: users.id,
+      email: users.email,
+      purgedAt: users.purgedAt,
+      deletedAt: users.deletedAt,
+    })
     .from(users)
     .where(eq(users.id, userId))
     .limit(1);
 
-  if (!existing || existing.purgedAt) return;
+  if (!existing || existing.purgedAt || !existing.deletedAt) return;
 
   const sentinel = SENTINEL_EMAIL(userId);
 

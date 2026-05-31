@@ -24,7 +24,16 @@ vi.mock("@/lib/db", () => {
     select: () => ({
       from: () => ({
         where: () => ({
-          limit: () => Promise.resolve([{ id: "user-x", email: "x@example.test", purgedAt: null }]),
+          limit: () =>
+            Promise.resolve([
+              {
+                id: "user-x",
+                email: "x@example.test",
+                purgedAt: null,
+                // deletion still pending (required by the cancellation-race guard)
+                deletedAt: new Date("2020-01-01"),
+              },
+            ]),
         }),
       }),
     }),

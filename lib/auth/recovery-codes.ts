@@ -45,9 +45,18 @@ export async function consumeRecoveryCode(userId: string, code: string): Promise
       ),
     );
   if (rows.length === 0) return false;
-  await db
+  // Atomically claim the code: the conditional UPDATE re-checks `usedAt IS NULL`
+  // so two concurrent challenges presenting the SAME code can't both succeed
+  // (single-use guarantee). Only the request whose UPDATE affects a row wins.
+  const claimed = await db
     .update(twoFactorRecoveryCodes)
     .set({ usedAt: new Date() })
-    .where(eq(twoFactorRecoveryCodes.id, rows[0]!.id));
-  return true;
+    .where(
+      and(
+        eq(twoFactorRecoveryCodes.id, rows[0]!.id),
+        isNull(twoFactorRecoveryCodes.usedAt),
+      ),
+    )
+    .returning({ id: twoFactorRecoveryCodes.id });
+  return claimed.length > 0;
 }

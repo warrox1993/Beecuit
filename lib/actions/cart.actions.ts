@@ -105,28 +105,37 @@ export async function addGiftCardToCart(rawInput: unknown) {
 
 export async function updateGiftMessage(rawInput: unknown) {
   const { cartItemId, giftMessage } = UpdateGiftMessageSchema.parse(rawInput);
-  const [item] = await db.select().from(cartItems).where(eq(cartItems.id, cartItemId)).limit(1);
+  // Scope the mutation to the caller's own cart (prevents IDOR: editing an
+  // arbitrary cart item by id that belongs to someone else's cart).
+  const cartId = await getActiveCartId();
+  const scope = and(eq(cartItems.id, cartItemId), eq(cartItems.cartId, cartId));
+  const [item] = await db.select().from(cartItems).where(scope).limit(1);
   if (!item) throw new Error("Cart item not found");
   const oldMeta = (item.metadata ?? {}) as Record<string, unknown>;
   await db
     .update(cartItems)
     .set({ metadata: { ...oldMeta, giftMessage } })
-    .where(eq(cartItems.id, cartItemId));
+    .where(scope);
   revalidatePath("/", "layout");
 }
 
 export async function updateQuantity(rawInput: unknown) {
   const { cartItemId, quantity } = UpdateQuantitySchema.parse(rawInput);
+  const cartId = await getActiveCartId();
+  const scope = and(eq(cartItems.id, cartItemId), eq(cartItems.cartId, cartId));
   if (quantity === 0) {
-    await db.delete(cartItems).where(eq(cartItems.id, cartItemId));
+    await db.delete(cartItems).where(scope);
   } else {
-    await db.update(cartItems).set({ quantity }).where(eq(cartItems.id, cartItemId));
+    await db.update(cartItems).set({ quantity }).where(scope);
   }
   revalidatePath("/", "layout");
 }
 
 export async function removeFromCart(cartItemId: string) {
-  await db.delete(cartItems).where(eq(cartItems.id, cartItemId));
+  const cartId = await getActiveCartId();
+  await db
+    .delete(cartItems)
+    .where(and(eq(cartItems.id, cartItemId), eq(cartItems.cartId, cartId)));
   revalidatePath("/", "layout");
 }
 
