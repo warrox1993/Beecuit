@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { eq, and, gt, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/lib/db";
-import { users, verificationTokens, passwordResetTokens, sessions } from "@/lib/db/schema";
+import { users, verificationTokens, passwordResetTokens, sessions, twoFactorRecoveryCodes } from "@/lib/db/schema";
 import { hashPassword, verifyPassword } from "@/lib/auth/password";
 import { generateRawToken, hashToken } from "@/lib/auth/tokens";
 import { createDbSession, destroyCurrentSession } from "@/lib/auth/session";
@@ -21,7 +21,24 @@ import { AccountDeletionRequestedEmail } from "@/components/email/AccountDeletio
 import { AccountDeletionCancelledEmail } from "@/components/email/AccountDeletionCancelledEmail";
 import { EmailChangeVerifyEmail } from "@/components/email/EmailChangeVerifyEmail";
 import { EmailChangedNotificationEmail } from "@/components/email/EmailChangedNotificationEmail";
+import { TwoFactorEnabledEmail } from "@/components/email/TwoFactorEnabledEmail";
+import { Disable2faRequestEmail } from "@/components/email/Disable2faRequestEmail";
 import { auth } from "@/lib/auth";
+import {
+  generateSecret,
+  buildOtpauthUrl,
+  buildQrDataUrl,
+  verifyTotp,
+  encryptSecret,
+  decryptSecret,
+} from "@/lib/auth/totp";
+import { generateRecoveryCodes, consumeRecoveryCode } from "@/lib/auth/recovery-codes";
+import {
+  setPending2faCookie,
+  readPending2faCookie,
+  clearPending2faCookie,
+} from "@/lib/auth/pending-2fa";
+import { captureMetadata } from "@/lib/auth/session-metadata";
 import { env } from "@/lib/env";
 
 type Locale = (typeof routing.locales)[number];
@@ -855,4 +872,75 @@ export async function cancelAccountDeletion(
   }
 
   return { ok: true, redirectTo: `/${safeLocale}/sign-in?deletion=cancelled` };
+}
+
+export type TwoFactorSetup =
+  | { ok: true; otpauthUrl: string; qrDataUrl: string }
+  | { ok: false; error: string };
+
+export async function generateTwoFactorSetup(): Promise<TwoFactorSetup> {
+  const session = await auth();
+  if (!session?.user?.id) return { ok: false, error: "unauthorized" };
+
+  const [user] = await db
+    .select({ email: users.email, passwordHash: users.passwordHash, enabledAt: users.twoFactorEnabledAt })
+    .from(users)
+    .where(eq(users.id, session.user.id))
+    .limit(1);
+  if (!user) return { ok: false, error: "unauthorized" };
+  if (!user.passwordHash) return { ok: false, error: "no-password-yet" };
+  if (user.enabledAt) return { ok: false, error: "already-enabled" };
+
+  const secret = generateSecret();
+  await db
+    .update(users)
+    .set({ twoFactorSecret: encryptSecret(secret) })
+    .where(eq(users.id, session.user.id));
+
+  const otpauthUrl = buildOtpauthUrl(user.email, secret);
+  return { ok: true, otpauthUrl, qrDataUrl: await buildQrDataUrl(otpauthUrl) };
+}
+
+const enable2faSchema = z.object({ code: z.string().min(6).max(10), locale: z.string() });
+
+export type EnableTwoFactorResult =
+  | { ok: true; recoveryCodes: string[] }
+  | { ok: false; error: string };
+
+export async function enableTwoFactor(formData: FormData): Promise<EnableTwoFactorResult> {
+  const session = await auth();
+  if (!session?.user?.id) return { ok: false, error: "unauthorized" };
+  const parsed = enable2faSchema.safeParse({
+    code: formData.get("code"),
+    locale: formData.get("locale"),
+  });
+  if (!parsed.success) return { ok: false, error: "invalid" };
+
+  const [user] = await db
+    .select({ secret: users.twoFactorSecret, enabledAt: users.twoFactorEnabledAt, preferredLocale: users.preferredLocale, email: users.email })
+    .from(users)
+    .where(eq(users.id, session.user.id))
+    .limit(1);
+  if (!user?.secret) return { ok: false, error: "no-setup" };
+  if (user.enabledAt) return { ok: false, error: "already-enabled" };
+  if (!verifyTotp(decryptSecret(user.secret), parsed.data.code)) {
+    return { ok: false, error: "invalid-code" };
+  }
+
+  const { plain, hashes } = generateRecoveryCodes();
+  await db.transaction(async (tx) => {
+    await tx.update(users).set({ twoFactorEnabledAt: new Date() }).where(eq(users.id, session.user!.id));
+    await tx.delete(twoFactorRecoveryCodes).where(eq(twoFactorRecoveryCodes.userId, session.user!.id));
+    await tx.insert(twoFactorRecoveryCodes).values(
+      hashes.map((codeHash) => ({ userId: session.user!.id, codeHash })),
+    );
+  });
+
+  await sendEmail({
+    to: user.email,
+    subject: "Au Fil des Saveurs — 2FA",
+    react: TwoFactorEnabledEmail({ locale: asLocale(user.preferredLocale) }),
+  });
+
+  return { ok: true, recoveryCodes: plain };
 }
