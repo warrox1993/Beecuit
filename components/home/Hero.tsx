@@ -75,12 +75,13 @@ export async function Hero({ locale: _locale }: { locale: string }) {
             <div className="border-cream-gold/45 pointer-events-none absolute top-2 right-2 bottom-[-12px] left-[-12px] rounded-[1.25rem] border md:bottom-[-16px] md:left-[-16px]" />
             <div className="bg-cookie/40 relative aspect-[3/4] w-full overflow-hidden rounded-2xl shadow-[0_30px_60px_-30px_rgba(44,24,16,0.45)]">
               <Image
-                src="https://images.unsplash.com/photo-1522237825450-a0c44eecddb4?fm=jpg&q=75&w=1200&auto=format&fit=crop"
+                // Local asset (placeholder until the client's real photo): no
+                // remote Unsplash round-trip → much faster LCP, especially on
+                // mobile. next/image still serves an optimized AVIF/WebP variant.
+                src="/images/hero-biscuits.webp"
                 alt="Biscuits artisanaux belges sortant du four"
                 fill
                 priority
-                // LCP element — lower quality trims bytes on slow mobile links
-                // without a visible difference on a photo at this size.
                 quality={60}
                 sizes="(min-width: 768px) 40vw, 100vw"
                 className="object-cover"
