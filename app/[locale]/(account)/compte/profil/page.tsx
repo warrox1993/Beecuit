@@ -14,6 +14,7 @@ import { DangerZoneBlock } from "@/components/account/DangerZoneBlock";
 import { TwoFactorBlock } from "@/components/account/TwoFactorBlock";
 import { SessionsBlock, type SessionRow } from "@/components/account/SessionsBlock";
 import { parseUserAgentLabel } from "@/lib/auth/session-metadata";
+import { sessionHandle } from "@/lib/auth/session";
 import { cookies } from "next/headers";
 import { Link } from "@/i18n/navigation";
 
@@ -102,7 +103,9 @@ export default async function ProfilPage({
   const sessionList: SessionRow[] = sessionRows
     .sort((a, b) => (b.lastSeenAt?.getTime() ?? 0) - (a.lastSeenAt?.getTime() ?? 0))
     .map((s) => ({
-      sessionToken: s.sessionToken,
+      // Never expose the raw sessionToken (= bearer cookie) to the client; send
+      // an opaque HMAC handle the server can resolve back for revocation.
+      handle: sessionHandle(s.sessionToken),
       label: parseUserAgentLabel(s.userAgent),
       city: s.city,
       country: s.country,

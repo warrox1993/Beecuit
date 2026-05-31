@@ -6,7 +6,7 @@ import {
   subscriptionBoxes,
   subscriptionBoxItems,
 } from "@/lib/db/schema";
-import { env } from "@/lib/env";
+import { isCronAuthorized } from "@/lib/auth/cron";
 import { fallbackBoxComposition } from "@/lib/subscription/fallback";
 import { FORMAT_SIZES } from "@/lib/subscription/constants";
 import {
@@ -20,8 +20,7 @@ import {
 export const runtime = "nodejs";
 
 export async function GET(req: NextRequest) {
-  const auth = req.headers.get("authorization");
-  if (auth !== `Bearer ${env.CRON_SECRET}`) {
+  if (!isCronAuthorized(req)) {
     return new NextResponse("unauthorized", { status: 401 });
   }
 

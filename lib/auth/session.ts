@@ -1,12 +1,25 @@
 import "server-only";
 import { cookies } from "next/headers";
+import { createHmac } from "node:crypto";
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { sessions } from "@/lib/db/schema";
 import { generateRawToken } from "@/lib/auth/tokens";
+import { env } from "@/lib/env";
 import type { SessionMetadata } from "@/lib/auth/session-metadata";
 
 export const SESSION_TTL_SECONDS = 60 * 60 * 24 * 30; // 30 days
+
+/**
+ * Opaque, non-reversible handle for a session token, safe to send to the client
+ * (e.g. the "active sessions" UI). The raw `sessionToken` IS the bearer cookie
+ * value, so it must never reach the browser DOM — exposing it would defeat the
+ * cookie's httpOnly protection. Revocation resolves the handle back to a token
+ * server-side by recomputing the HMAC over the user's own sessions.
+ */
+export function sessionHandle(token: string): string {
+  return createHmac("sha256", env.AUTH_SECRET).update(token).digest("hex");
+}
 
 function getCookieName(): string {
   return process.env.NODE_ENV === "production"

@@ -10,7 +10,7 @@ import { db } from "@/lib/db";
 import { users, verificationTokens, passwordResetTokens, sessions, twoFactorRecoveryCodes } from "@/lib/db/schema";
 import { hashPassword, verifyPassword } from "@/lib/auth/password";
 import { generateRawToken, hashToken } from "@/lib/auth/tokens";
-import { createDbSession, destroyCurrentSession } from "@/lib/auth/session";
+import { createDbSession, destroyCurrentSession, sessionHandle } from "@/lib/auth/session";
 import { safeCallbackUrl } from "@/lib/auth/callback-url";
 import { checkAuthRateLimit, getClientIp } from "@/lib/auth/rate-limit";
 import { sendEmail } from "@/lib/email/client";
@@ -1164,15 +1164,23 @@ export type RevokeResult = { ok: true } | { ok: false; error: string };
 export async function revokeSession(formData: FormData): Promise<RevokeResult> {
   const session = await auth();
   if (!session?.user?.id) return { ok: false, error: "unauthorized" };
-  const token = String(formData.get("sessionToken") ?? "");
-  if (!token) return { ok: false, error: "invalid" };
+  const handle = String(formData.get("handle") ?? "");
+  if (!handle) return { ok: false, error: "invalid" };
+
+  // Resolve the opaque handle back to a token among THIS user's sessions only.
+  const rows = await db
+    .select({ token: sessions.sessionToken })
+    .from(sessions)
+    .where(eq(sessions.userId, session.user.id));
+  const match = rows.find((r) => sessionHandle(r.token) === handle);
+  if (!match) return { ok: false, error: "invalid" };
 
   const current = (await cookies()).get(authCookieName())?.value;
-  if (token === current) return { ok: false, error: "cannot-revoke-current" };
+  if (match.token === current) return { ok: false, error: "cannot-revoke-current" };
 
   await db
     .delete(sessions)
-    .where(and(eq(sessions.sessionToken, token), eq(sessions.userId, session.user.id)));
+    .where(and(eq(sessions.sessionToken, match.token), eq(sessions.userId, session.user.id)));
   revalidatePath("/compte/profil");
   return { ok: true };
 }

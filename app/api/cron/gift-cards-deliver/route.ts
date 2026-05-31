@@ -3,14 +3,14 @@ import { eq, and, sql } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { giftCards } from "@/lib/db/schema";
 import { env } from "@/lib/env";
+import { isCronAuthorized } from "@/lib/auth/cron";
 import { sendEmail } from "@/lib/email/client";
 import { GiftCardDelivery } from "@/lib/email/templates/GiftCardDelivery";
 
 export const runtime = "nodejs";
 
 export async function GET(req: NextRequest) {
-  const auth = req.headers.get("authorization");
-  if (auth !== `Bearer ${env.CRON_SECRET}`) {
+  if (!isCronAuthorized(req)) {
     return new NextResponse("unauthorized", { status: 401 });
   }
 

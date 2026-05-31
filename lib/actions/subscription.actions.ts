@@ -1,10 +1,15 @@
 "use server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { eq, and } from "drizzle-orm";
+import { eq, and, inArray } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { subscriptions, subscriptionBoxes, subscriptionBoxItems } from "@/lib/db/schema";
+import {
+  subscriptions,
+  subscriptionBoxes,
+  subscriptionBoxItems,
+  products,
+} from "@/lib/db/schema";
 import { stripe } from "@/lib/stripe/client";
 import { env } from "@/lib/env";
 import { getOrCreateStripeCustomer } from "@/lib/subscription/stripe-customer";
@@ -149,6 +154,24 @@ export async function composeBox(raw: unknown) {
     throw new Error(
       `Composition must total ${FORMAT_SIZES[sub.format]} sachets, got ${totalQty}`,
     );
+  }
+
+  // Validate every biscuitId is an ACTIVE biscuit product — the schema only
+  // checks UUID shape, so without this an attacker could compose a box with
+  // arbitrary product ids (coffret/gift-card/inactive) and have them prepared.
+  const biscuitIds = [...new Set(input.items.map((x) => x.biscuitId))];
+  const validBiscuits = await db
+    .select({ id: products.id })
+    .from(products)
+    .where(
+      and(
+        inArray(products.id, biscuitIds),
+        eq(products.type, "biscuit"),
+        eq(products.isActive, true),
+      ),
+    );
+  if (validBiscuits.length !== biscuitIds.length) {
+    throw new Error("Composition contient un biscuit invalide ou indisponible");
   }
 
   // 3. Compare-and-swap on (id, updated_at, status). This single SQL statement is

@@ -5,7 +5,8 @@ import { revokeSession, revokeAllOtherSessions } from "@/lib/actions/auth.action
 import { Button } from "@/components/ui/button";
 
 export type SessionRow = {
-  sessionToken: string;
+  /** Opaque server-resolvable handle (HMAC of the session token) — NOT the token. */
+  handle: string;
   label: string;
   city: string | null;
   country: string | null;
@@ -22,7 +23,7 @@ export function SessionsBlock({ sessions }: { sessions: SessionRow[] }) {
     <div className="space-y-4">
       <ul className="divide-warm-brown/10 divide-y">
         {sessions.map((s) => (
-          <li key={s.sessionToken} className="flex items-center justify-between gap-3 py-3">
+          <li key={s.handle} className="flex items-center justify-between gap-3 py-3">
             <div>
               <p className="text-warm-brown text-sm font-medium">
                 {s.label}
@@ -38,7 +39,7 @@ export function SessionsBlock({ sessions }: { sessions: SessionRow[] }) {
               <form
                 action={(fd) => start(() => revokeSession(fd).then(() => {}))}
               >
-                <input type="hidden" name="sessionToken" value={s.sessionToken} />
+                <input type="hidden" name="handle" value={s.handle} />
                 <button type="submit" disabled={pending} className="text-terracotta text-xs underline">
                   {t("sessionRevoke")}
                 </button>
