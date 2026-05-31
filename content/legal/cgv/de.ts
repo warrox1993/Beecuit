@@ -23,7 +23,7 @@ const doc: LegalDocument = {
     {
       heading: "4. Preise",
       blocks: [
-        { type: "p", text: "Die Preise sind in Euro angegeben, einschließlich aller Steuern (geltende belgische MwSt.), zuzüglich Versandkosten, die vor der Auftragsbestätigung angezeigt werden. [Raison sociale] behält sich das Recht vor, seine Preise jederzeit zu ändern ; die Produkte werden zum zum Zeitpunkt der Bestellung gültigen Tarif berechnet." },
+        { type: "p", text: "Die Preise sind in Euro angegeben, einschließlich aller Steuern (geltende belgische MwSt.), zuzüglich Versandkosten, die vor der Auftragsbestätigung angezeigt werden. [Raison sociale] behält sich das Recht vor, seine Preise jederzeit zu ändern ; die Produkte werden zum Zeitpunkt der Bestellung gültigen Tarif berechnet." },
       ],
     },
     {

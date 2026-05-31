@@ -8,7 +8,7 @@ const doc: LegalDocument = {
   sections: [
     {
       heading: "Verantwortlicher",
-      blocks: [{ type: "p", text: "Verantwortlicher im Sinne der DSGVO ist [Raison sociale], [adresse], erreichbar unter [email de contact]. [Le cas échéant : délégué à la protection des données : [DPO]]." }],
+      blocks: [{ type: "p", text: "Verantwortlicher im Sinne der DSGVO ist [Raison sociale], [adresse], erreichbar unter [email de contact]. [Sofern zutreffend: Datenschutzbeauftragter (DPO)]." }],
     },
     {
       heading: "Erhobene Daten",

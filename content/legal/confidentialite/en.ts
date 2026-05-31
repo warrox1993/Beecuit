@@ -8,7 +8,7 @@ const doc: LegalDocument = {
   sections: [
     {
       heading: "Data controller",
-      blocks: [{ type: "p", text: "The data controller is [Raison sociale], [adresse], reachable at [email de contact]. [Le cas échéant : délégué à la protection des données : [DPO]]." }],
+      blocks: [{ type: "p", text: "The data controller is [Raison sociale], [adresse], reachable at [email de contact]. [If applicable: data protection officer (DPO)]." }],
     },
     {
       heading: "Data collected",

@@ -8,7 +8,7 @@ const doc: LegalDocument = {
   sections: [
     {
       heading: "Verwerkingsverantwoordelijke",
-      blocks: [{ type: "p", text: "De verwerkingsverantwoordelijke is [Raison sociale], [adresse], bereikbaar via [email de contact]. [Le cas échéant : délégué à la protection des données : [DPO]]." }],
+      blocks: [{ type: "p", text: "De verwerkingsverantwoordelijke is [Raison sociale], [adresse], bereikbaar via [email de contact]. [Indien van toepassing: functionaris voor gegevensbescherming (DPO)]." }],
     },
     {
       heading: "Verzamelde gegevens",

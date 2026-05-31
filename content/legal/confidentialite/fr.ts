@@ -8,7 +8,7 @@ const doc: LegalDocument = {
   sections: [
     {
       heading: "Responsable du traitement",
-      blocks: [{ type: "p", text: "Le responsable du traitement est [Raison sociale], [adresse], joignable à [email de contact]. [Le cas échéant : délégué à la protection des données : [DPO]]." }],
+      blocks: [{ type: "p", text: "Le responsable du traitement est [Raison sociale], [adresse], joignable à [email de contact]. [Le cas échéant : délégué à la protection des données (DPO)]." }],
     },
     {
       heading: "Données collectées",
