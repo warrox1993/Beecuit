@@ -1,5 +1,5 @@
 import "server-only";
-import { eq, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { orders, orderItems, giftCards, giftCardRedemptions } from "@/lib/db/schema";
 import { generateGiftCardCode } from "@/lib/gift-cards/code";
@@ -88,22 +88,11 @@ export async function applyGiftCardRedemption(orderId: string): Promise<void> {
   const cardId = meta.giftCardId;
   const deductionCents = meta.giftCardDeductionCents;
 
-  // Atomic decrement protected by WHERE remaining_amount_cents >= deductionCents
-  const updated = await db
-    .update(giftCards)
-    .set({
-      remainingAmountCents: sql`${giftCards.remainingAmountCents} - ${deductionCents}`,
-    })
-    .where(
-      sql`${giftCards.id} = ${cardId} AND ${giftCards.remainingAmountCents} >= ${deductionCents}`,
-    )
-    .returning({ id: giftCards.id });
-  if (updated.length === 0) {
-    throw new Error(
-      "Gift card balance insufficient for redemption (race condition or already used)",
-    );
-  }
-
+  // The balance was already RESERVED (debited) at checkout, before the Stripe
+  // coupon was issued (see createCheckoutSession). On successful payment we only
+  // need to RECORD the redemption — decrementing again would double-charge the
+  // card. Idempotency is guaranteed by the `order.giftCardRedemptionId` guard
+  // above plus the webhook-event dedup table.
   const [red] = await db
     .insert(giftCardRedemptions)
     .values({

@@ -12,7 +12,8 @@ export type AuthAction =
   | "email-change"
   | "delete"
   | "two-factor"
-  | "disable-2fa";
+  | "disable-2fa"
+  | "gift-card";
 
 const LIMITS: Record<AuthAction, { email: number; ip: number }> = {
   "sign-in": { email: 3, ip: 10 },
@@ -24,6 +25,9 @@ const LIMITS: Record<AuthAction, { email: number; ip: number }> = {
   delete: { email: 2, ip: 3 },
   "two-factor": { email: 5, ip: 10 },
   "disable-2fa": { email: 2, ip: 3 },
+  // Throttle gift-card code validation by IP to kill online brute-forcing of
+  // financially-valuable codes (no email dimension — anonymous checkout flow).
+  "gift-card": { email: Number.POSITIVE_INFINITY, ip: 10 },
 };
 
 const WINDOWS: Record<AuthAction, string> = {
@@ -36,6 +40,7 @@ const WINDOWS: Record<AuthAction, string> = {
   delete: "1 hour",
   "two-factor": "15 minutes",
   "disable-2fa": "1 hour",
+  "gift-card": "15 minutes",
 };
 
 export type AuthRateLimitResult = { ok: true } | { ok: false; reason: "email" | "ip" };

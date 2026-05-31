@@ -16,7 +16,9 @@ beforeAll(async () => {
     .values({
       code: "BC-RED1-TEST-CODE",
       initialAmountCents: 5000,
-      remainingAmountCents: 5000,
+      // Balance already RESERVED at checkout (5000 - 2000): applyGiftCardRedemption
+      // now only RECORDS the redemption, it must NOT decrement again.
+      remainingAmountCents: 3000,
       currency: "EUR",
       purchaserEmail: "buyer@test.com",
       recipientEmail: "user@test.com",
@@ -53,10 +55,11 @@ afterAll(async () => {
   await db.delete(giftCards).where(eq(giftCards.id, cardId));
 });
 
-describe("applyGiftCardRedemption", () => {
-  it("decrements balance + creates redemption row + sets orders.gift_card_redemption_id", async () => {
+describe("applyGiftCardRedemption (record-only — balance reserved at checkout)", () => {
+  it("creates redemption row + sets orders.gift_card_redemption_id WITHOUT re-debiting", async () => {
     await applyGiftCardRedemption(orderId);
     const [c] = await db.select().from(giftCards).where(eq(giftCards.id, cardId));
+    // Balance must stay at the already-reserved value (no second decrement).
     expect(c!.remainingAmountCents).toBe(3000);
     const reds = await db
       .select()
@@ -69,31 +72,14 @@ describe("applyGiftCardRedemption", () => {
     expect(o!.giftCardRedemptionId).toBe(reds[0]!.id);
   });
 
-  it("is idempotent (calling twice doesn't double-decrement)", async () => {
+  it("is idempotent (calling twice doesn't create a second redemption)", async () => {
     await applyGiftCardRedemption(orderId);
     const [c] = await db.select().from(giftCards).where(eq(giftCards.id, cardId));
     expect(c!.remainingAmountCents).toBe(3000);
-  });
-
-  it("blocks redemption if balance < deduction (race protection)", async () => {
-    await db
-      .update(giftCards)
-      .set({ remainingAmountCents: 1000 })
-      .where(eq(giftCards.id, cardId));
-    await db
-      .update(orders)
-      .set({
-        giftCardRedemptionId: null,
-        metadata: {
-          giftCardId: cardId,
-          giftCardDeductionCents: 2000,
-          stripeCouponId: "cpn_test_2",
-        },
-      })
-      .where(eq(orders.id, orderId));
-    await db
-      .delete(giftCardRedemptions)
+    const reds = await db
+      .select()
+      .from(giftCardRedemptions)
       .where(eq(giftCardRedemptions.giftCardId, cardId));
-    await expect(applyGiftCardRedemption(orderId)).rejects.toThrow(/insufficient/i);
+    expect(reds).toHaveLength(1);
   });
 });

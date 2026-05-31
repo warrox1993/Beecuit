@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { stripe } from "@/lib/stripe/client";
 import { env } from "@/lib/env";
-import { handleCheckoutCompleted } from "@/lib/stripe/webhook";
+import { handleCheckoutCompleted, handleCheckoutExpired } from "@/lib/stripe/webhook";
 import {
   handleSubscriptionCreated,
   handleSubscriptionUpdated,
@@ -35,6 +35,10 @@ export async function POST(req: NextRequest) {
       } else {
         await handleCheckoutCompleted(event);
       }
+    } else if (event.type === "checkout.session.expired") {
+      // Re-credit reserved gift-card balance on abandoned checkouts (self-guards
+      // on metadata.order_id, so B2B/subscription sessions are no-ops).
+      await handleCheckoutExpired(event.data.object as Stripe.Checkout.Session, event.id);
     } else if (event.type === "customer.subscription.created") {
       await handleSubscriptionCreated(event.data.object);
     } else if (event.type === "customer.subscription.updated") {

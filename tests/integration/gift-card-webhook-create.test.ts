@@ -61,7 +61,7 @@ describe("createGiftCardsForOrder", () => {
       .where(eq(giftCards.purchaseOrderId, orderId));
     expect(cards).toHaveLength(1);
     createdGiftCardId = cards[0]!.id;
-    expect(cards[0]!.code).toMatch(/^BC-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}$/);
+    expect(cards[0]!.code).toMatch(/^BC-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}$/);
     expect(cards[0]!.initialAmountCents).toBe(5000);
     expect(cards[0]!.remainingAmountCents).toBe(5000);
     expect(cards[0]!.recipientEmail).toBe("recipient@test.com");

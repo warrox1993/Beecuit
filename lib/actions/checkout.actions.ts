@@ -1,10 +1,15 @@
 "use server";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { eq, sql } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { carts, orders, orderItems, shippingRates } from "@/lib/db/schema";
 import { auth } from "@/lib/auth";
+import { checkAuthRateLimit, getClientIp } from "@/lib/auth/rate-limit";
+import {
+  reserveGiftCardBalance,
+  refundGiftCardBalance,
+} from "@/lib/gift-cards/reservation";
 import { env } from "@/lib/env";
 import { CheckoutSchema } from "@/lib/validators/checkout";
 import { computeOrderTotals } from "@/lib/totals";
@@ -120,6 +125,13 @@ export async function createCheckoutSession(rawInput: unknown, locale: "fr" | "n
     | { cardId: string; deductionCents: number; code: string }
     | undefined;
   if (input.giftCardCode && !hasGiftCardItem) {
+    // Rate-limit code validation by IP to prevent online brute-forcing of
+    // financially-valuable codes.
+    const ip = getClientIp(await headers());
+    const rl = await checkAuthRateLimit({ action: "gift-card", ip });
+    if (!rl.ok) {
+      throw new Error("Trop de tentatives de carte cadeau, réessaie dans quelques minutes");
+    }
     const { validateGiftCardCode } = await import("@/lib/gift-cards/validation");
     const v = await validateGiftCardCode(input.giftCardCode);
     if (!v.valid) throw new Error(v.error);
@@ -183,9 +195,23 @@ export async function createCheckoutSession(rawInput: unknown, locale: "fr" | "n
   // Create the Stripe coupon JIT, then the Checkout Session; if either fails,
   // delete the coupon to prevent orphans in the Stripe account.
   let couponId: string | undefined;
+  let reservedGiftCard = false;
   let stripeSession: { id: string; url: string | null };
   try {
     if (giftCardValidation) {
+      // Atomically RESERVE the balance BEFORE issuing the Stripe coupon. Without
+      // this, N concurrent checkouts each pass validation and each get a full
+      // coupon for the same card (double-spend). An abandoned/failed checkout
+      // re-credits below (and on checkout.session.expired).
+      const ok = await reserveGiftCardBalance(
+        giftCardValidation.cardId,
+        giftCardValidation.deductionCents,
+      );
+      if (!ok) {
+        throw new Error("Carte cadeau : solde insuffisant ou utilisée simultanément");
+      }
+      reservedGiftCard = true;
+
       const { stripe } = await import("@/lib/stripe/client");
       const coupon = await stripe.coupons.create({
         amount_off: giftCardValidation.deductionCents,
@@ -210,6 +236,25 @@ export async function createCheckoutSession(rawInput: unknown, locale: "fr" | "n
       appBaseUrl: env.NEXT_PUBLIC_APP_URL,
       couponId,
     });
+
+    // Persist the gift-card reservation link on the order INSIDE the try: if this
+    // write fails the catch re-credits the reserved balance. Writing it after the
+    // try would leak the reservation (no giftCardId metadata → never re-credited
+    // nor redeemed).
+    await db
+      .update(orders)
+      .set({
+        stripeSessionId: stripeSession.id,
+        metadata:
+          giftCardValidation && couponId
+            ? {
+                giftCardId: giftCardValidation.cardId,
+                giftCardDeductionCents: giftCardValidation.deductionCents,
+                stripeCouponId: couponId,
+              }
+            : {},
+      })
+      .where(eq(orders.id, order.id));
   } catch (e) {
     if (couponId) {
       const { stripe } = await import("@/lib/stripe/client");
@@ -217,23 +262,18 @@ export async function createCheckoutSession(rawInput: unknown, locale: "fr" | "n
         console.error("[checkout] failed to delete orphan coupon", couponId, delErr),
       );
     }
+    // Re-credit the reserved balance: this checkout never reached Stripe, so the
+    // card must not stay debited.
+    if (reservedGiftCard && giftCardValidation) {
+      await refundGiftCardBalance(
+        giftCardValidation.cardId,
+        giftCardValidation.deductionCents,
+      ).catch((rcErr) =>
+        console.error("[checkout] failed to re-credit gift card reservation", rcErr),
+      );
+    }
     throw e;
   }
-
-  await db
-    .update(orders)
-    .set({
-      stripeSessionId: stripeSession.id,
-      metadata:
-        giftCardValidation && couponId
-          ? {
-              giftCardId: giftCardValidation.cardId,
-              giftCardDeductionCents: giftCardValidation.deductionCents,
-              stripeCouponId: couponId,
-            }
-          : {},
-    })
-    .where(eq(orders.id, order.id));
 
   redirect(stripeSession.url!);
 }
