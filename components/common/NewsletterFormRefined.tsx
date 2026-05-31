@@ -87,9 +87,10 @@ export function NewsletterFormRefined({
           onChange={(e) => setEmail(e.target.value)}
           onBlur={() => setTouched(true)}
           placeholder={placeholder}
+          aria-required="true"
           aria-invalid={showError}
           aria-describedby={showError ? "newsletter-refined-email-error" : undefined}
-          className="text-warm-brown placeholder:text-warm-brown/40 flex-1 bg-transparent py-3 text-base focus:outline-none"
+          className="text-warm-brown placeholder:text-warm-brown/60 flex-1 bg-transparent py-3 text-base focus:outline-none"
         />
         {/* Inline validation icon */}
         {showSuccess && (

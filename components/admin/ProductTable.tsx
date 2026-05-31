@@ -38,7 +38,11 @@ export function ProductTable({ rows }: { rows: Row[] }) {
               <td className="py-2">
                 {r.primaryImageUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={r.primaryImageUrl} alt="" className="h-12 w-12 rounded object-cover" />
+                  <img
+                    src={r.primaryImageUrl}
+                    alt={`Aperçu : ${r.nameFr ?? "produit"}`}
+                    className="h-12 w-12 rounded object-cover"
+                  />
                 ) : (
                   <div className="bg-soft-rose h-12 w-12 rounded" />
                 )}

@@ -67,6 +67,7 @@ export const FormField = forwardRef<HTMLInputElement, Props>(function FormField(
           id={id}
           placeholder={placeholder}
           aria-invalid={state === "error"}
+          aria-required={rest.required || undefined}
           aria-describedby={hint ? `${id}-hint` : undefined}
           className={cn(
             "text-warm-brown placeholder:text-transparent peer w-full bg-transparent focus:outline-none",

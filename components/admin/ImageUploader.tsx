@@ -10,16 +10,22 @@ export function ImageUploader({ productId, images }: { productId: string; images
   return (
     <div className="space-y-3">
       <div className="grid grid-cols-4 gap-2">
-        {images.map((img) => (
+        {images.map((img, i) => (
           <div
             key={img.id}
             className={`group relative overflow-hidden rounded border ${img.isPrimary ? "border-honey ring-honey ring-2" : "border-warm-brown/20"}`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={img.url} alt="" className="aspect-square w-full object-cover" />
+            <img
+              src={img.url}
+              alt={`Image produit ${i + 1}${img.isPrimary ? " (principale)" : ""}`}
+              className="aspect-square w-full object-cover"
+            />
             <div className="absolute inset-x-0 bottom-0 flex gap-1 bg-black/50 p-1 text-xs text-white opacity-0 group-hover:opacity-100">
               <button
                 type="button"
+                aria-label="Définir comme image principale"
+                title="Définir comme image principale"
                 onClick={() =>
                   start(async () => {
                     await setPrimaryImage(img.id, productId);
@@ -31,6 +37,8 @@ export function ImageUploader({ productId, images }: { productId: string; images
               </button>
               <button
                 type="button"
+                aria-label="Supprimer cette image"
+                title="Supprimer cette image"
                 onClick={() =>
                   start(async () => {
                     await deleteImage(img.id, productId);

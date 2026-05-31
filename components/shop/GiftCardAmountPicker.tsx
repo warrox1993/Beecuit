@@ -20,6 +20,8 @@ export function GiftCardAmountPicker({
             key={cents}
             type="button"
             onClick={() => onChange(cents)}
+            aria-label={`Montant ${cents / 100} €`}
+            aria-pressed={active}
             className={`rounded-xl border-2 p-4 text-center transition-colors ${
               active ? "border-honey bg-honey/10" : "border-cookie/30 bg-white"
             }`}
