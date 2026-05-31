@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import dynamic from "next/dynamic";
 import { PageTransition } from "@/components/motion/PageTransition";
+import { ConsentProvider } from "@/components/consent/ConsentProvider";
 
 // FlyToCart and ToastProvider are non-critical client widgets — load after hydration.
 const FlyToCart = dynamic(() =>
@@ -11,6 +12,12 @@ const FlyToCart = dynamic(() =>
 );
 const ToastProvider = dynamic(() =>
   import("@/components/motion/ToastProvider").then((m) => ({ default: m.ToastProvider })),
+);
+const CookieConsentBanner = dynamic(() =>
+  import("@/components/consent/CookieConsentBanner").then((m) => ({ default: m.CookieConsentBanner })),
+);
+const ConsentScripts = dynamic(() =>
+  import("@/components/consent/ConsentScripts").then((m) => ({ default: m.ConsentScripts })),
 );
 
 export function generateStaticParams() {
@@ -35,9 +42,13 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <PageTransition>{children}</PageTransition>
-      <FlyToCart />
-      <ToastProvider />
+      <ConsentProvider>
+        <PageTransition>{children}</PageTransition>
+        <FlyToCart />
+        <ToastProvider />
+        <CookieConsentBanner />
+        <ConsentScripts />
+      </ConsentProvider>
     </NextIntlClientProvider>
   );
 }

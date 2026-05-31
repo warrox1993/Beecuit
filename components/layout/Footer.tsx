@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { NewsletterForm } from "@/components/common/NewsletterForm";
 import { Logo } from "@/components/brand/Logo";
 import { RopeDivider } from "@/components/brand/Ornaments";
+import { ManageCookiesButton } from "@/components/consent/ManageCookiesButton";
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
@@ -157,6 +158,9 @@ export async function Footer({ locale }: { locale: string }) {
                   <Link href="/cookies" className="hover:text-honey-dark transition-colors">
                     {t("links.cookies")}
                   </Link>
+                </li>
+                <li>
+                  <ManageCookiesButton className="hover:text-honey-dark transition-colors" />
                 </li>
               </ul>
             </div>
