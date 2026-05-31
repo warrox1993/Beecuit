@@ -944,3 +944,67 @@ export async function enableTwoFactor(formData: FormData): Promise<EnableTwoFact
 
   return { ok: true, recoveryCodes: plain };
 }
+
+const disable2faSchema = z.object({ password: z.string().min(1).max(200), locale: z.string() });
+
+export type Disable2faResult = { ok: true } | { ok: false; error: string };
+
+export async function disableTwoFactor(formData: FormData): Promise<Disable2faResult> {
+  const session = await auth();
+  if (!session?.user?.id) return { ok: false, error: "unauthorized" };
+  const parsed = disable2faSchema.safeParse({
+    password: formData.get("password"),
+    locale: formData.get("locale"),
+  });
+  if (!parsed.success) return { ok: false, error: "invalid" };
+
+  const [user] = await db
+    .select({ passwordHash: users.passwordHash })
+    .from(users)
+    .where(eq(users.id, session.user.id))
+    .limit(1);
+  if (!user?.passwordHash || !(await verifyPassword(parsed.data.password, user.passwordHash))) {
+    return { ok: false, error: "wrong-password" };
+  }
+
+  await db.transaction(async (tx) => {
+    await tx
+      .update(users)
+      .set({
+        twoFactorSecret: null,
+        twoFactorEnabledAt: null,
+        twoFactorDisableToken: null,
+        twoFactorDisableExpiresAt: null,
+      })
+      .where(eq(users.id, session.user!.id));
+    await tx.delete(twoFactorRecoveryCodes).where(eq(twoFactorRecoveryCodes.userId, session.user!.id));
+  });
+  return { ok: true };
+}
+
+export type RegenerateResult = { ok: true; recoveryCodes: string[] } | { ok: false; error: string };
+
+export async function regenerateRecoveryCodes(formData: FormData): Promise<RegenerateResult> {
+  const session = await auth();
+  if (!session?.user?.id) return { ok: false, error: "unauthorized" };
+  const password = String(formData.get("password") ?? "");
+
+  const [user] = await db
+    .select({ passwordHash: users.passwordHash, enabledAt: users.twoFactorEnabledAt })
+    .from(users)
+    .where(eq(users.id, session.user.id))
+    .limit(1);
+  if (!user?.enabledAt) return { ok: false, error: "not-enabled" };
+  if (!user.passwordHash || !(await verifyPassword(password, user.passwordHash))) {
+    return { ok: false, error: "wrong-password" };
+  }
+
+  const { plain, hashes } = generateRecoveryCodes();
+  await db.transaction(async (tx) => {
+    await tx.delete(twoFactorRecoveryCodes).where(eq(twoFactorRecoveryCodes.userId, session.user!.id));
+    await tx.insert(twoFactorRecoveryCodes).values(
+      hashes.map((codeHash) => ({ userId: session.user!.id, codeHash })),
+    );
+  });
+  return { ok: true, recoveryCodes: plain };
+}
