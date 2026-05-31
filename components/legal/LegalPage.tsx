@@ -10,7 +10,11 @@ import type { LegalBlock } from "@/content/legal/types";
 
 function BlockView({ block }: { block: LegalBlock }) {
   if (block.type === "subheading") {
-    return <h3 className="text-warm-brown mt-6 text-base font-semibold">{block.text}</h3>;
+    return (
+      <h3 className="text-warm-brown mt-6 text-base font-semibold">
+        <PlaceholderText text={block.text} />
+      </h3>
+    );
   }
   if (block.type === "list") {
     return (
@@ -40,7 +44,9 @@ export async function LegalPage({ pageKey, locale }: { pageKey: LegalPageKey; lo
         <Heading as="h1" size="h1" className="mt-3">
           {doc.title}
         </Heading>
-        <p className="text-warm-brown/50 mt-3 text-xs">{doc.lastUpdatedLabel}</p>
+        <p className="text-warm-brown/50 mt-3 text-xs">
+          <PlaceholderText text={doc.lastUpdatedLabel} />
+        </p>
         {doc.intro && (
           <Prose className="mt-6">
             <p>
