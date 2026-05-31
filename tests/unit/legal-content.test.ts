@@ -43,4 +43,9 @@ describe("getLegalDocument", () => {
       expect(getLegalDocument("mentions-legales", l).sections.length).toBeGreaterThan(0);
     }
   });
+  it("renvoie les CGV avec les 12 sections en FR", () => {
+    const d = getLegalDocument("cgv", "fr");
+    expect(d.title).toBe("Conditions générales de vente");
+    expect(d.sections).toHaveLength(12);
+  });
 });
