@@ -1,12 +1,14 @@
 "use client";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { changePassword } from "@/lib/actions/auth.actions";
 import { Button } from "@/components/ui/button";
+import { PasswordStrengthMeter } from "@/components/auth/PasswordStrengthMeter";
 
 export function ChangePasswordForm({ locale }: { locale: string }) {
   const t = useTranslations("auth");
   const [pending, start] = useTransition();
+  const [pw, setPw] = useState("");
   return (
     <form
       action={(fd) => start(() => changePassword(fd))}
@@ -32,8 +34,11 @@ export function ChangePasswordForm({ locale }: { locale: string }) {
           required
           minLength={12}
           autoComplete="new-password"
+          value={pw}
+          onChange={(e) => setPw(e.target.value)}
           className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 mt-2 block w-full rounded-md border bg-white px-4 py-3 text-sm focus:ring-2 focus:outline-none"
         />
+        <PasswordStrengthMeter password={pw} />
         <span className="text-warm-brown/60 mt-1 block text-xs">{t("passwordHint")}</span>
       </label>
       <label className="block">

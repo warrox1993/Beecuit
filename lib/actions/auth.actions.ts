@@ -40,6 +40,7 @@ import {
 } from "@/lib/auth/pending-2fa";
 import { captureMetadata } from "@/lib/auth/session-metadata";
 import { env } from "@/lib/env";
+import { checkPasswordBreached as hibpCheck } from "@/lib/auth/hibp";
 
 type Locale = (typeof routing.locales)[number];
 
@@ -1166,4 +1167,10 @@ export async function revokeAllOtherSessions(): Promise<RevokeResult> {
     .delete(sessions)
     .where(and(eq(sessions.userId, session.user.id), ne(sessions.sessionToken, current)));
   return { ok: true };
+}
+
+export async function checkPasswordBreached(password: string): Promise<{ breached: boolean }> {
+  if (!password || password.length < 4) return { breached: false };
+  const res = await hibpCheck(password);
+  return { breached: res.breached };
 }
