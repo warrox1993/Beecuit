@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Container } from "@/components/ui-primitives/Container";
 import { Section } from "@/components/ui-primitives/Section";
@@ -11,6 +12,8 @@ import {
 } from "@/lib/queries/catalog";
 import { CategoryFilter } from "@/components/shop/CategoryFilter";
 import { ProductCard } from "@/components/shop/ProductCard";
+import { ProductGridSkeleton } from "@/components/shop/ProductCardSkeleton";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 export const dynamic = "force-dynamic";
 
@@ -26,11 +29,6 @@ export default async function CatalogPage({
   setRequestLocale(locale);
   const t = await getTranslations("catalog");
 
-  const [cats, prods] = await Promise.all([
-    listActiveCategoriesForLocale(locale as Locale),
-    listProductsForLocale(locale as Locale, categorie),
-  ]);
-
   return (
     <>
       <Section py="md" bg="surface-elev">
@@ -44,44 +42,84 @@ export default async function CatalogPage({
       </Section>
       <Section py="md">
         <Container>
-          <div className="flex flex-col gap-10 md:flex-row">
-            <CategoryFilter
-              categories={cats}
-              activeSlug={categorie}
-              allLabel={t("filterAll")}
-              variant="sidebar"
-            />
-            <div className="flex-1">
-              <CategoryFilter
-                categories={cats}
-                activeSlug={categorie}
-                allLabel={t("filterAll")}
-                variant="chips"
-              />
-              {prods.length === 0 ? (
-                <p className="text-warm-brown/70 py-12 text-center">Aucun biscuit trouvé.</p>
-              ) : (
-                <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                  {prods.map((p) => (
-                    <ProductCard
-                      key={p.id}
-                      slug={p.slug}
-                      name={p.name}
-                      primaryImageUrl={p.primaryImageUrl}
-                      categoryName={p.categoryName}
-                      basePriceCents={p.basePriceCents}
-                      stockQuantity={p.stockQuantity}
-                      outOfStockLabel={t("outOfStock")}
-                      type={p.type}
-                      displayedPriceCents={p.displayedPriceCents}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
+          {/* Le skeleton vit ici (Suspense interne) plutôt que dans un loading.tsx
+              de segment, sinon la frontière Suspense couvrirait aussi /[slug] et
+              ferait flusher un statut 200 avant le notFound() des fiches. */}
+          <Suspense fallback={<CatalogResultsSkeleton />}>
+            <CatalogResults locale={locale} categorie={categorie} />
+          </Suspense>
         </Container>
       </Section>
     </>
+  );
+}
+
+async function CatalogResults({
+  locale,
+  categorie,
+}: {
+  locale: string;
+  categorie?: string;
+}) {
+  const t = await getTranslations("catalog");
+  const [cats, prods] = await Promise.all([
+    listActiveCategoriesForLocale(locale as Locale),
+    listProductsForLocale(locale as Locale, categorie),
+  ]);
+
+  return (
+    <div className="flex flex-col gap-10 md:flex-row">
+      <CategoryFilter
+        categories={cats}
+        activeSlug={categorie}
+        allLabel={t("filterAll")}
+        variant="sidebar"
+      />
+      <div className="flex-1">
+        <CategoryFilter
+          categories={cats}
+          activeSlug={categorie}
+          allLabel={t("filterAll")}
+          variant="chips"
+        />
+        {prods.length === 0 ? (
+          <p className="text-warm-brown/70 py-12 text-center">Aucun biscuit trouvé.</p>
+        ) : (
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {prods.map((p) => (
+              <ProductCard
+                key={p.id}
+                slug={p.slug}
+                name={p.name}
+                primaryImageUrl={p.primaryImageUrl}
+                categoryName={p.categoryName}
+                basePriceCents={p.basePriceCents}
+                stockQuantity={p.stockQuantity}
+                outOfStockLabel={t("outOfStock")}
+                type={p.type}
+                displayedPriceCents={p.displayedPriceCents}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function CatalogResultsSkeleton() {
+  return (
+    <div className="md:flex md:gap-10">
+      <div className="hidden md:block md:w-60">
+        <div className="space-y-3">
+          {Array.from({ length: 5 }, (_, i) => (
+            <Skeleton key={i} className="h-9 w-32 rounded-full" />
+          ))}
+        </div>
+      </div>
+      <div className="flex-1">
+        <ProductGridSkeleton count={6} />
+      </div>
+    </div>
   );
 }

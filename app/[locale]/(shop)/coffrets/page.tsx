@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import { setRequestLocale } from "next-intl/server";
 import { listCoffretsForLocale, type Locale } from "@/lib/queries/catalog";
 import { CoffretCard } from "@/components/shop/CoffretCard";
+import { CoffretGridSkeleton } from "@/components/shop/CoffretCardSkeleton";
 import { Container } from "@/components/ui-primitives/Container";
 
 export default async function CoffretsPage({
@@ -10,7 +12,6 @@ export default async function CoffretsPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const coffrets = await listCoffretsForLocale(locale as Locale);
 
   return (
     <Container className="py-12">
@@ -27,11 +28,22 @@ export default async function CoffretsPage({
         </p>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {coffrets.map((c) => (
-          <CoffretCard key={c.id} locale={locale} coffret={c} />
-        ))}
-      </div>
+      {/* Suspense interne (et non loading.tsx de segment) pour ne pas couvrir
+          /coffrets/[slug] — sinon un statut 200 serait flushé avant notFound(). */}
+      <Suspense fallback={<CoffretGridSkeleton count={3} />}>
+        <CoffretsGrid locale={locale} />
+      </Suspense>
     </Container>
+  );
+}
+
+async function CoffretsGrid({ locale }: { locale: string }) {
+  const coffrets = await listCoffretsForLocale(locale as Locale);
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {coffrets.map((c) => (
+        <CoffretCard key={c.id} locale={locale} coffret={c} />
+      ))}
+    </div>
   );
 }
