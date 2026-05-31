@@ -2,6 +2,12 @@
   "name": "au-fil-des-saveurs",
   "version": "0.1.0",
   "private": true,
+  "//browserslist": "Modern targets only — drops Next.js legacy polyfills (Array.at, Object.hasOwn, etc.) that recent browsers don't need. Safe for a 2026 launch.",
+  "browserslist": [
+    "last 2 years",
+    "not dead",
+    "not op_mini all"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",

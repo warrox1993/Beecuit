@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { Eyebrow } from "@/components/ui-primitives/Eyebrow";
 import { CornerScallop } from "@/components/brand/Ornaments";
@@ -37,11 +38,12 @@ export function ProductCard(p: Props) {
         {/* Image */}
         <div className="bg-cookie/30 ring-warm-brown/5 group-hover:ring-honey-dark/30 relative z-10 aspect-[4/5] overflow-hidden rounded-2xl ring-1 transition-all duration-300">
           {p.primaryImageUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={p.primaryImageUrl}
               alt={p.name}
-              className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+              fill
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center text-6xl opacity-30">
