@@ -3,6 +3,7 @@ import { signOut } from "@/lib/auth";
 import { routing } from "@/i18n/routing";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { eq, and, gt, isNull, ne } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/lib/db";
@@ -22,6 +23,7 @@ import { AccountDeletionCancelledEmail } from "@/components/email/AccountDeletio
 import { EmailChangeVerifyEmail } from "@/components/email/EmailChangeVerifyEmail";
 import { EmailChangedNotificationEmail } from "@/components/email/EmailChangedNotificationEmail";
 import { TwoFactorEnabledEmail } from "@/components/email/TwoFactorEnabledEmail";
+import { TwoFactorDisabledEmail } from "@/components/email/TwoFactorDisabledEmail";
 import { Disable2faRequestEmail } from "@/components/email/Disable2faRequestEmail";
 import { auth } from "@/lib/auth";
 import {
@@ -157,7 +159,7 @@ export async function registerWithPassword(formData: FormData) {
     // welcome is non-critical; verify already sent above
   }
 
-  await createDbSession(userId);
+  await createDbSession(userId, captureMetadata(reqHeaders));
   redirect(`/${locale}/compte?welcome=1`);
 }
 
@@ -1040,11 +1042,12 @@ export async function verifyTwoFactorChallenge(formData: FormData) {
   if (!limit.ok) redirect(`/${locale}/sign-in/2fa?error=rate-limit&locale=${locale}`);
 
   const [user] = await db
-    .select({ id: users.id, secret: users.twoFactorSecret, enabledAt: users.twoFactorEnabledAt })
+    .select({ id: users.id, secret: users.twoFactorSecret, enabledAt: users.twoFactorEnabledAt, deletedAt: users.deletedAt, purgedAt: users.purgedAt })
     .from(users)
     .where(eq(users.id, pending!.userId))
     .limit(1);
   if (!user?.enabledAt || !user.secret) redirect(`/${locale}/sign-in?error=2fa-expired`);
+  if (user.deletedAt || user.purgedAt) redirect(`/${locale}/sign-in?error=2fa-expired`);
 
   const code = parsed.data.code.trim();
   const totpOk = verifyTotp(decryptSecret(user.secret), code);
@@ -1108,7 +1111,7 @@ export async function confirmDisable2fa(
 ): Promise<ConfirmDisable2faResult> {
   const hashed = hashToken(rawToken);
   const [user] = await db
-    .select({ id: users.id })
+    .select({ id: users.id, email: users.email, preferredLocale: users.preferredLocale })
     .from(users)
     .where(
       and(
@@ -1132,6 +1135,13 @@ export async function confirmDisable2fa(
       .where(eq(users.id, user.id));
     await tx.delete(twoFactorRecoveryCodes).where(eq(twoFactorRecoveryCodes.userId, user.id));
   });
+
+  await sendEmail({
+    to: user.email,
+    subject: "Au Fil des Saveurs — 2FA",
+    react: TwoFactorDisabledEmail({ locale: asLocale(user.preferredLocale) }),
+  });
+
   return { ok: true, redirectTo: `/${locale}/sign-in?2fa=disabled` };
 }
 
@@ -1155,6 +1165,7 @@ export async function revokeSession(formData: FormData): Promise<RevokeResult> {
   await db
     .delete(sessions)
     .where(and(eq(sessions.sessionToken, token), eq(sessions.userId, session.user.id)));
+  revalidatePath("/compte/profil");
   return { ok: true };
 }
 
@@ -1166,6 +1177,7 @@ export async function revokeAllOtherSessions(): Promise<RevokeResult> {
   await db
     .delete(sessions)
     .where(and(eq(sessions.userId, session.user.id), ne(sessions.sessionToken, current)));
+  revalidatePath("/compte/profil");
   return { ok: true };
 }
 
