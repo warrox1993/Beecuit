@@ -40,6 +40,11 @@ export const users = pgTable(
     emailChangeUndoExpiresAt: timestamp("email_change_undo_expires_at", { mode: "date" }),
     emailChangeUndoTo: text("email_change_undo_to"),
     purgedAt: timestamp("purged_at", { mode: "date" }),
+    // ── v2 Sprint B : 2FA ──
+    twoFactorSecret: text("two_factor_secret"),
+    twoFactorEnabledAt: timestamp("two_factor_enabled_at", { mode: "date" }),
+    twoFactorDisableToken: text("two_factor_disable_token"),
+    twoFactorDisableExpiresAt: timestamp("two_factor_disable_expires_at", { mode: "date" }),
   },
   (table) => ({
     deletedAtIdx: index("users_deleted_at_idx")
@@ -54,6 +59,9 @@ export const users = pgTable(
     emailChangeUndoTokenIdx: index("users_email_change_undo_token_idx")
       .on(table.emailChangeUndoToken)
       .where(sql`${table.emailChangeUndoToken} IS NOT NULL`),
+    twoFactorDisableTokenIdx: index("users_2fa_disable_token_idx")
+      .on(table.twoFactorDisableToken)
+      .where(sql`${table.twoFactorDisableToken} IS NOT NULL`),
   }),
 );
 
@@ -85,6 +93,13 @@ export const sessions = pgTable("sessions", {
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
+  // ── v2 Sprint B : session metadata ──
+  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  lastSeenAt: timestamp("last_seen_at", { mode: "date" }),
+  userAgent: text("user_agent"),
+  ip: text("ip"),
+  city: text("city"),
+  country: text("country"),
 });
 
 export const verificationTokens = pgTable(
