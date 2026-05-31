@@ -25,3 +25,22 @@ describe("renderWithPlaceholders", () => {
     ]);
   });
 });
+
+import { getLegalDocument } from "@/content/legal";
+
+describe("getLegalDocument", () => {
+  it("renvoie le document mentions-legales en FR", () => {
+    const d = getLegalDocument("mentions-legales", "fr");
+    expect(d.title).toBe("Mentions légales");
+    expect(d.sections.length).toBeGreaterThan(0);
+  });
+  it("retombe sur le FR pour une locale inconnue", () => {
+    const d = getLegalDocument("mentions-legales", "xx");
+    expect(d.title).toBe("Mentions légales");
+  });
+  it("a une version par locale supportée", () => {
+    for (const l of ["fr", "nl", "de", "en"]) {
+      expect(getLegalDocument("mentions-legales", l).sections.length).toBeGreaterThan(0);
+    }
+  });
+});
