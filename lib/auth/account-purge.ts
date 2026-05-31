@@ -7,6 +7,7 @@ import {
   sessions,
   verificationTokens,
   passwordResetTokens,
+  twoFactorRecoveryCodes,
   addresses,
   carts,
   cartItems,
@@ -65,6 +66,7 @@ export async function purgeUser(userId: string): Promise<void> {
     await tx.delete(accounts).where(eq(accounts.userId, userId));
     await tx.delete(sessions).where(eq(sessions.userId, userId));
     await tx.delete(passwordResetTokens).where(eq(passwordResetTokens.userId, userId));
+    await tx.delete(twoFactorRecoveryCodes).where(eq(twoFactorRecoveryCodes.userId, userId));
 
     if (existing.email) {
       await tx
@@ -156,6 +158,10 @@ export async function purgeUser(userId: string): Promise<void> {
         emailChangeUndoToken: null,
         emailChangeUndoExpiresAt: null,
         emailChangeUndoTo: null,
+        twoFactorSecret: null,
+        twoFactorEnabledAt: null,
+        twoFactorDisableToken: null,
+        twoFactorDisableExpiresAt: null,
         purgedAt: new Date(),
       })
       .where(eq(users.id, userId));
