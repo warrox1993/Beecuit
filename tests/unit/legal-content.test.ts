@@ -48,4 +48,10 @@ describe("getLegalDocument", () => {
     expect(d.title).toBe("Conditions générales de vente");
     expect(d.sections).toHaveLength(12);
   });
+  it("mentionne IP de session et 2FA dans la politique de confidentialité FR", () => {
+    const d = getLegalDocument("confidentialite", "fr");
+    const allText = JSON.stringify(d).toLowerCase();
+    expect(allText).toContain("adresse ip");
+    expect(allText).toContain("2fa");
+  });
 });
