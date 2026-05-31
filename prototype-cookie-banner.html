@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Prototype — Bandeau biscuit qui craque · Au Fil des Saveurs</title>
+<style>
+  :root{
+    --cream:#fbf6ee; --cream-2:#f3e8d4; --honey:#a8731b; --honey-dark:#8a5f16;
+    --brown:#3d2817; --brown-soft:#5a4030; --gold-1:#e7b15a; --gold-2:#cf933a; --gold-edge:#7a5320;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; font-family:Georgia, "Times New Roman", serif; color:var(--brown);
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #fffaf2, var(--cream)) ,
+      var(--cream);
+    min-height:100%; display:flex; align-items:flex-end; justify-content:center;
+  }
+  .stage-note{
+    position:fixed; top:18px; left:0; right:0; text-align:center; color:var(--brown-soft);
+    font-size:13px; letter-spacing:.04em;
+  }
+  .stage-note b{color:var(--honey-dark)}
+  .replay{
+    position:fixed; top:46px; left:50%; transform:translateX(-50%);
+    background:var(--honey); color:var(--cream); border:none; border-radius:999px;
+    padding:9px 18px; font:600 13px Georgia,serif; cursor:pointer; letter-spacing:.03em;
+    box-shadow:0 6px 16px rgba(168,115,27,.28);
+  }
+  .replay:hover{background:var(--honey-dark)}
+
+  /* ---- Banner ---- */
+  .banner{
+    position:relative; margin-bottom:28px; width:min(620px, calc(100vw - 32px));
+    background:linear-gradient(180deg,#fffdf9, #fdf7ec);
+    border:1px solid rgba(168,115,27,.18);
+    border-radius:22px;
+    box-shadow:0 18px 50px -12px rgba(61,40,23,.30), 0 2px 0 rgba(255,255,255,.7) inset;
+    padding:22px 26px 22px 22px;
+    display:grid; grid-template-columns:150px 1fr; gap:8px 22px; align-items:center;
+    opacity:0; transform:translateY(40px) scale(.96);
+    animation:bannerIn .5s cubic-bezier(.2,.8,.2,1) .05s forwards;
+    overflow:hidden;
+  }
+  @keyframes bannerIn{to{opacity:1; transform:translateY(0) scale(1)}}
+
+  .crumb-tray{position:absolute; left:0; top:0; width:170px; height:100%; pointer-events:none}
+
+  /* ---- Cookie ---- */
+  .cookie-wrap{
+    grid-row:1 / span 2; align-self:center; justify-self:center;
+    width:140px; height:140px; position:relative;
+  }
+  .cookie-svg{width:100%; height:100%; display:block; overflow:visible;
+    transform:translateY(-46px); opacity:0;
+    animation:cookieDrop .55s cubic-bezier(.34,1.4,.5,1) .12s forwards;
+  }
+  @keyframes cookieDrop{
+    0%{opacity:0; transform:translateY(-46px) rotate(-8deg)}
+    70%{opacity:1}
+    85%{transform:translateY(3px) rotate(1deg) scale(1.02,.98)} /* squash on impact */
+    100%{opacity:1; transform:translateY(0) rotate(0)}
+  }
+  /* the two halves separate after the drop+impact (~0.75s) */
+  .half-left{transform-origin:50% 50%; animation:crackLeft .7s cubic-bezier(.3,.7,.3,1) .8s forwards}
+  .half-right{transform-origin:50% 50%; animation:crackRight .7s cubic-bezier(.3,.7,.3,1) .8s forwards}
+  @keyframes crackLeft{
+    0%{transform:translateX(0) rotate(0)}
+    30%{transform:translateX(-1px) rotate(0)}    /* tiny tremble before splitting */
+    100%{transform:translate(-13px,4px) rotate(-7deg)}
+  }
+  @keyframes crackRight{
+    0%{transform:translateX(0) rotate(0)}
+    30%{transform:translateX(1px) rotate(0)}
+    100%{transform:translate(13px,5px) rotate(7deg)}
+  }
+
+  /* ---- Content (revealed) ---- */
+  .content{opacity:0; transform:translateY(8px);
+    animation:contentIn .5s ease .95s forwards}
+  @keyframes contentIn{to{opacity:1; transform:translateY(0)}}
+  .eyebrow{font:600 11px Georgia,serif; letter-spacing:.18em; text-transform:uppercase; color:var(--honey-dark); margin:0 0 6px}
+  .script{font-family:"Snell Roundhand","Pinyon Script",cursive; color:var(--honey); font-size:15px}
+  .title{margin:0 0 6px; font-size:19px; color:var(--brown); font-weight:600}
+  .desc{margin:0 0 14px; font-size:13.5px; line-height:1.5; color:var(--brown-soft)}
+  .desc a{color:var(--honey-dark); text-decoration:underline}
+  .actions{display:flex; flex-wrap:wrap; gap:9px}
+  button.act{font:600 13px Georgia,serif; border-radius:999px; padding:9px 16px; cursor:pointer; border:1px solid transparent; transition:.15s}
+  .accept{background:var(--honey); color:var(--cream)} .accept:hover{background:var(--honey-dark)}
+  .reject{background:#fff; color:var(--brown); border-color:rgba(61,40,23,.2)} .reject:hover{background:#faf3e6}
+  .custom{background:transparent; color:var(--honey-dark); text-decoration:underline; padding:9px 8px}
+
+  .crumb{position:absolute; border-radius:50%; background:radial-gradient(circle at 35% 30%, #c98f3f, #8a5f16); box-shadow:0 1px 0 rgba(0,0,0,.15)}
+</style>
+</head>
+<body>
+  <div class="stage-note">Prototype d'animation — <b>le biscuit tombe, se fend en deux et laisse des miettes</b>. Clique sur « Rejouer ».</div>
+  <button class="replay" onclick="play()">↻ Rejouer l'animation</button>
+
+  <div id="banner" class="banner">
+    <div class="crumb-tray" id="crumbTray"></div>
+
+    <div class="cookie-wrap">
+      <svg class="cookie-svg" id="cookieSvg" viewBox="-72 -72 144 144" aria-label="Biscuit qui craque">
+        <defs>
+          <radialGradient id="dough" cx="42%" cy="38%" r="70%">
+            <stop offset="0%" stop-color="#eabf72"/>
+            <stop offset="55%" stop-color="#d59a3e"/>
+            <stop offset="100%" stop-color="#a9731f"/>
+          </radialGradient>
+          <radialGradient id="doughR" cx="58%" cy="38%" r="70%">
+            <stop offset="0%" stop-color="#e7ba6a"/>
+            <stop offset="55%" stop-color="#cf9339"/>
+            <stop offset="100%" stop-color="#a06d1d"/>
+          </radialGradient>
+          <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#3d2817" flood-opacity="0.28"/>
+          </filter>
+        </defs>
+
+        <!-- crumbs bed shadow under cookie -->
+        <ellipse cx="0" cy="60" rx="46" ry="8" fill="#3d2817" opacity="0.12"/>
+
+        <g filter="url(#soft)">
+          <!-- LEFT HALF: outer-left arc + shared jagged crack -->
+          <g class="half-left">
+            <path d="M0,-60 A60,60 0 0,0 0,60 L6,45 L-5,30 L5,15 L-6,0 L5,-15 L-5,-30 L6,-45 Z"
+                  fill="url(#dough)" stroke="#7a5320" stroke-width="2.5" stroke-linejoin="round"/>
+            <!-- baked rim highlight -->
+            <path d="M0,-60 A60,60 0 0,0 0,60" fill="none" stroke="#f3d49a" stroke-width="2" opacity="0.5" stroke-linecap="round"/>
+            <!-- chocolate chips (left) -->
+            <ellipse cx="-30" cy="-18" rx="7" ry="6" fill="#5a371a"/>
+            <ellipse cx="-18" cy="22" rx="6" ry="5.5" fill="#4a2c14"/>
+            <ellipse cx="-40" cy="14" rx="5" ry="4.5" fill="#5a371a"/>
+            <ellipse cx="-22" cy="-40" rx="4.5" ry="4" fill="#4a2c14"/>
+            <!-- sugar speckles -->
+            <circle cx="-12" cy="-8" r="1.4" fill="#fbe7c0" opacity=".8"/>
+            <circle cx="-34" cy="-2" r="1.2" fill="#fbe7c0" opacity=".7"/>
+            <circle cx="-26" cy="40" r="1.3" fill="#fbe7c0" opacity=".7"/>
+          </g>
+
+          <!-- RIGHT HALF -->
+          <g class="half-right">
+            <path d="M0,-60 A60,60 0 0,1 0,60 L6,45 L-5,30 L5,15 L-6,0 L5,-15 L-5,-30 L6,-45 Z"
+                  fill="url(#doughR)" stroke="#7a5320" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M0,-60 A60,60 0 0,1 0,60" fill="none" stroke="#f3d49a" stroke-width="2" opacity="0.45" stroke-linecap="round"/>
+            <ellipse cx="30" cy="-22" rx="7" ry="6" fill="#5a371a"/>
+            <ellipse cx="20" cy="20" rx="6" ry="5.5" fill="#4a2c14"/>
+            <ellipse cx="40" cy="6" rx="5" ry="4.5" fill="#5a371a"/>
+            <ellipse cx="26" cy="44" rx="4.5" ry="4" fill="#4a2c14"/>
+            <circle cx="16" cy="-6" r="1.4" fill="#fbe7c0" opacity=".8"/>
+            <circle cx="34" cy="-12" r="1.2" fill="#fbe7c0" opacity=".7"/>
+            <circle cx="24" cy="-38" r="1.3" fill="#fbe7c0" opacity=".7"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="content">
+      <p class="eyebrow">Au Fil des Saveurs · <span class="script">cookies</span></p>
+      <h2 class="title">On utilise quelques cookies 🍪</h2>
+      <p class="desc">Les essentiels font tourner la boutique (panier, connexion). Avec ton accord, on aimerait aussi mesurer l'audience. <a href="#">En savoir plus</a></p>
+      <div class="actions">
+        <button class="act accept">Tout accepter</button>
+        <button class="act reject">Refuser</button>
+        <button class="act custom">Personnaliser</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const tray = document.getElementById('crumbTray');
+  // cookie centre within the banner ≈ left tray, vertically centered
+  function spawnCrumbs(){
+    const cx = 75, cy = 78;          // approx crack point (px) inside crumb-tray
+    const n = 9;
+    for(let i=0;i<n;i++){
+      const c = document.createElement('span');
+      c.className = 'crumb';
+      const size = 3 + Math.random()*4;
+      c.style.width = size+'px'; c.style.height = size+'px';
+      c.style.left = (cx + (Math.random()*22-11)) + 'px';
+      c.style.top  = (cy + (Math.random()*8-4)) + 'px';
+      tray.appendChild(c);
+      const dx = (Math.random()*46-23);
+      const dy = 40 + Math.random()*46;
+      const rot = (Math.random()*180-90);
+      const dur = 650 + Math.random()*450;
+      c.animate([
+        {transform:'translate(0,0) rotate(0)', opacity:1},
+        {transform:`translate(${dx*0.5}px, ${dy*0.45}px) rotate(${rot*0.5}deg)`, opacity:1, offset:.55},
+        {transform:`translate(${dx}px, ${dy}px) rotate(${rot}deg)`, opacity:0}
+      ], {duration:dur, easing:'cubic-bezier(.3,.6,.4,1)', fill:'forwards', delay: 60 + Math.random()*120});
+      setTimeout(()=>c.remove(), dur+400);
+    }
+  }
+
+  function play(){
+    const b = document.getElementById('banner');
+    // restart CSS animations by cloning
+    const fresh = b.cloneNode(true);
+    b.replaceWith(fresh);
+    fresh.id = 'banner';
+    // crumbs fire when the crack happens (~0.8s + a touch)
+    setTimeout(spawnCrumbs, 980);
+  }
+  // initial run
+  setTimeout(spawnCrumbs, 980);
+</script>
+</body>
+</html>
