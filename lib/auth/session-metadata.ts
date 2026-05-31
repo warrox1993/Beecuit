@@ -37,12 +37,22 @@ export function parseUserAgentLabel(ua: string | null): string {
   return `${browser} · ${os}`;
 }
 
+function safeCity(rawCity: string | null): string | null {
+  if (!rawCity) return null;
+  // Vercel sends well-formed values, but a malformed/spoofed percent-sequence
+  // would make decodeURIComponent throw — never break session creation for it.
+  try {
+    return decodeURIComponent(rawCity);
+  } catch {
+    return rawCity;
+  }
+}
+
 export function captureMetadata(headers: Headers): SessionMetadata {
-  const rawCity = headers.get("x-vercel-ip-city");
   return {
     userAgent: headers.get("user-agent"),
     ip: getClientIp(headers),
-    city: rawCity ? decodeURIComponent(rawCity) : null,
+    city: safeCity(headers.get("x-vercel-ip-city")),
     country: headers.get("x-vercel-ip-country"),
   };
 }
