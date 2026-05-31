@@ -1,10 +1,27 @@
 import { Suspense } from "react";
-import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { listCoffretsForLocale, type Locale } from "@/lib/queries/catalog";
 import { CoffretCard } from "@/components/shop/CoffretCard";
 import { CoffretGridSkeleton } from "@/components/shop/CoffretCardSkeleton";
 import { Container } from "@/components/ui-primitives/Container";
 import { EmptyState } from "@/components/common/EmptyState";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "seo.coffrets" });
+  return buildPageMetadata({
+    title: t("title"),
+    description: t("description"),
+    path: "/coffrets",
+    locale,
+  });
+}
 
 export default async function CoffretsPage({
   params,

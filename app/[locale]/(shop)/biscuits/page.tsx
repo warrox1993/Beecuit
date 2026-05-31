@@ -1,5 +1,7 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { Container } from "@/components/ui-primitives/Container";
 import { Section } from "@/components/ui-primitives/Section";
 import { Eyebrow } from "@/components/ui-primitives/Eyebrow";
@@ -16,6 +18,21 @@ import { ProductGridSkeleton } from "@/components/shop/ProductCardSkeleton";
 import { Skeleton } from "@/components/ui/Skeleton";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "seo.biscuits" });
+  return buildPageMetadata({
+    title: t("title"),
+    description: t("description"),
+    path: "/biscuits",
+    locale,
+  });
+}
 
 export default async function CatalogPage({
   params,

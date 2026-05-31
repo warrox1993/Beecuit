@@ -1,5 +1,7 @@
 import Image from "next/image";
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui-primitives/Container";
 import { Section } from "@/components/ui-primitives/Section";
@@ -33,6 +35,21 @@ const SECTIONS = [
     side: "left" as const,
   },
 ] as const;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "seo.histoire" });
+  return buildPageMetadata({
+    title: t("title"),
+    description: t("description"),
+    path: "/notre-histoire",
+    locale,
+  });
+}
 
 export default async function NotreHistoirePage({
   params,

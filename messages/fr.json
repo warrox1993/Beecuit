@@ -472,5 +472,27 @@
     "body": "La page que vous cherchez n'existe pas ou a été déplacée. Découvrez plutôt nos biscuits.",
     "home": "Retour à l'accueil",
     "cta": "Voir les biscuits"
+  },
+  "seo": {
+    "home": {
+      "title": "Biscuits artisanaux belges",
+      "description": "Spéculoos, rochers coco et biscuits à l'avoine façonnés à la main dans nos ateliers de Liège. Livraison en Belgique et en Europe."
+    },
+    "biscuits": {
+      "title": "Nos biscuits artisanaux",
+      "description": "Découvrez notre collection de biscuits façonnés à la main : spéculoos, rochers à la noix de coco et biscuits à l'avoine."
+    },
+    "coffrets": {
+      "title": "Coffrets cadeaux gourmands",
+      "description": "Des coffrets de biscuits artisanaux à offrir, assemblés à la commande dans nos ateliers de Liège."
+    },
+    "journal": {
+      "title": "Le Journal",
+      "description": "Recettes, histoires d'atelier et inspirations gourmandes de la maison Au Fil des Saveurs."
+    },
+    "histoire": {
+      "title": "Notre histoire",
+      "description": "L'histoire d'une biscuiterie artisanale belge : le temps, le geste et les ingrédients qui font nos biscuits."
+    }
   }
 }

@@ -1,4 +1,6 @@
+import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { listPublishedArticles, getFeaturedArticle } from "@/lib/journal/queries";
 import { JournalCard } from "@/components/journal/JournalCard";
 import { JournalFeaturedHero } from "@/components/journal/JournalFeaturedHero";
@@ -6,6 +8,21 @@ import { JournalCategoryFilter } from "@/components/journal/JournalCategoryFilte
 import { EmptyState } from "@/components/common/EmptyState";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "seo.journal" });
+  return buildPageMetadata({
+    title: t("title"),
+    description: t("description"),
+    path: "/journal",
+    locale,
+  });
+}
 
 export default async function JournalPage({
   params,

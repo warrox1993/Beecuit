@@ -12,6 +12,10 @@ import { TrustIndicators } from "@/components/shop/TrustIndicators";
 import { RelatedProducts } from "@/components/shop/RelatedProducts";
 import { PairingSuggestions } from "@/components/shop/PairingSuggestions";
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
+import { buildSlugAlternates } from "@/lib/seo/alternates";
+import { getProductLocaleSlugs } from "@/lib/seo/sitemap-data";
+import { productJsonLd } from "@/lib/seo/structured-data";
 
 export const dynamic = "force-dynamic";
 
@@ -23,7 +27,16 @@ export async function generateMetadata({
   const { locale, slug } = await params;
   const p = await getProductBySlug(locale as Locale, slug);
   if (!p) return {};
-  return { title: p.seoTitle, description: p.seoDescription };
+  const meta = buildPageMetadata({
+    title: p.seoTitle || p.name,
+    description: p.seoDescription || p.shortDescription || "",
+    path: `/biscuits/${slug}`,
+    locale,
+    image: p.images[0]?.url,
+  });
+  const slugs = await getProductLocaleSlugs(p.id);
+  meta.alternates = buildSlugAlternates(locale, "/biscuits", slugs);
+  return meta;
 }
 
 export default async function ProductPage({
@@ -37,11 +50,31 @@ export default async function ProductPage({
   const product = await getProductBySlug(locale as Locale, slug);
   if (!product) notFound();
 
+  const jsonLd = productJsonLd(
+    {
+      id: product.id,
+      sku: product.sku,
+      name: product.name,
+      slug: product.slug,
+      shortDescription: product.shortDescription,
+      seoDescription: product.seoDescription,
+      basePriceCents: product.basePriceCents,
+      stockQuantity: product.stockQuantity,
+      images: product.images,
+      weightGrams: product.weightGrams,
+    },
+    locale as "fr" | "nl" | "de" | "en",
+  );
+
   const priceEur = (product.basePriceCents / 100).toFixed(2);
   const isOut = product.stockQuantity <= 0;
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Section py="md">
         <Container>
           <article className="grid grid-cols-1 gap-12 md:grid-cols-[3fr_2fr]">

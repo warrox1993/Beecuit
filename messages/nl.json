@@ -472,5 +472,27 @@
     "body": "De pagina die u zoekt bestaat niet of is verplaatst. Ontdek liever onze koekjes.",
     "home": "Terug naar de startpagina",
     "cta": "Bekijk de koekjes"
+  },
+  "seo": {
+    "home": {
+      "title": "Belgische ambachtelijke koekjes",
+      "description": "Speculoos, kokosrotsjes en haverkoekjes, met de hand gemaakt in ons atelier in Luik. Levering in België en Europa."
+    },
+    "biscuits": {
+      "title": "Onze ambachtelijke koekjes",
+      "description": "Ontdek onze collectie handgemaakte koekjes: speculoos, kokosrotsjes en haverkoekjes."
+    },
+    "coffrets": {
+      "title": "Gastronomische geschenkdozen",
+      "description": "Geschenkdozen met ambachtelijke koekjes, op bestelling samengesteld in ons atelier in Luik."
+    },
+    "journal": {
+      "title": "Het Journaal",
+      "description": "Recepten, atelierverhalen en lekkere inspiratie van Au Fil des Saveurs."
+    },
+    "histoire": {
+      "title": "Ons verhaal",
+      "description": "Het verhaal van een Belgische ambachtelijke biscuiterie: de tijd, het vakmanschap en de ingrediënten achter onze koekjes."
+    }
   }
 }

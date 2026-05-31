@@ -5,6 +5,7 @@ import { routing } from "@/i18n/routing";
 import dynamic from "next/dynamic";
 import { PageTransition } from "@/components/motion/PageTransition";
 import { ConsentProvider } from "@/components/consent/ConsentProvider";
+import { organizationJsonLd } from "@/lib/seo/structured-data";
 
 // FlyToCart and ToastProvider are non-critical client widgets — load after hydration.
 const FlyToCart = dynamic(() =>
@@ -42,6 +43,13 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
+      {/* Sitewide Organization JSON-LD for Google Knowledge Graph. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(organizationJsonLd()),
+        }}
+      />
       <ConsentProvider>
         <PageTransition>{children}</PageTransition>
         <FlyToCart />

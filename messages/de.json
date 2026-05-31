@@ -472,5 +472,27 @@
     "body": "Die gesuchte Seite existiert nicht oder wurde verschoben. Entdecken Sie stattdessen unsere Kekse.",
     "home": "Zurück zur Startseite",
     "cta": "Kekse ansehen"
+  },
+  "seo": {
+    "home": {
+      "title": "Belgisches handwerkliches Gebäck",
+      "description": "Spekulatius, Kokosmakronen und Haferkekse, von Hand gefertigt in unserer Manufaktur in Lüttich. Lieferung in Belgien und Europa."
+    },
+    "biscuits": {
+      "title": "Unser handwerkliches Gebäck",
+      "description": "Entdecken Sie unsere handgefertigten Kekse: Spekulatius, Kokosmakronen und Haferkekse."
+    },
+    "coffrets": {
+      "title": "Feine Geschenkboxen",
+      "description": "Geschenkboxen mit handwerklichem Gebäck, auf Bestellung in unserer Manufaktur in Lüttich zusammengestellt."
+    },
+    "journal": {
+      "title": "Das Journal",
+      "description": "Rezepte, Ateliergeschichten und genussvolle Inspirationen von Au Fil des Saveurs."
+    },
+    "histoire": {
+      "title": "Unsere Geschichte",
+      "description": "Die Geschichte einer belgischen handwerklichen Biskuiterie: Zeit, Handwerk und Zutaten hinter unserem Gebäck."
+    }
   }
 }

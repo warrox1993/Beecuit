@@ -1,4 +1,6 @@
-import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { Hero } from "@/components/home/Hero";
 import { FeaturedProducts } from "@/components/home/FeaturedProducts";
 import { StoryTeaser } from "@/components/home/StoryTeaser";
@@ -7,6 +9,21 @@ import { JournalFeatured } from "@/components/journal/JournalFeatured";
 import { InstagramGrid } from "@/components/home/InstagramGrid";
 import { NewsletterCTA } from "@/components/home/NewsletterCTA";
 import { Reveal } from "@/components/motion/Reveal";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "seo.home" });
+  return buildPageMetadata({
+    title: t("title"),
+    description: t("description"),
+    path: "",
+    locale,
+  });
+}
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

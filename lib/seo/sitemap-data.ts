@@ -37,6 +37,29 @@ export async function listBiscuitSitemapRows(): Promise<SitemapSlugRow[]> {
 }
 
 /**
+ * Returns the locale → slug map for a single product (biscuit or coffret),
+ * used to build correct per-locale hreflang alternates on detail pages.
+ */
+export async function getProductLocaleSlugs(
+  productId: string,
+): Promise<Partial<Record<SupportedLocale, string>>> {
+  const rows = await db
+    .select({
+      locale: productTranslations.locale,
+      slug: productTranslations.slug,
+    })
+    .from(productTranslations)
+    .where(eq(productTranslations.productId, productId));
+  const out: Partial<Record<SupportedLocale, string>> = {};
+  for (const r of rows) {
+    if ((SUPPORTED_LOCALES as readonly string[]).includes(r.locale)) {
+      out[r.locale as SupportedLocale] = r.slug;
+    }
+  }
+  return out;
+}
+
+/**
  * Returns one row per (coffret, locale) for every active coffret.
  */
 export async function listCoffretSitemapRows(): Promise<SitemapSlugRow[]> {
