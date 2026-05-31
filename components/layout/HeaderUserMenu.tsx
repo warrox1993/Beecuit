@@ -1,8 +1,9 @@
 "use client";
 import { useTransition } from "react";
 import { useTranslations } from "next-intl";
-import { LogOut, ShoppingBag, MapPin, Gift, Repeat, LayoutDashboard, User } from "lucide-react";
+import { LogOut, ShoppingBag, MapPin, Gift, Repeat, LayoutDashboard, User, Shield } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import NextLink from "next/link";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -78,6 +79,20 @@ export function HeaderUserMenu({
           )}
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-warm-brown/10" />
+        {user.role === "admin" && (
+          <>
+            <DropdownMenuItem
+              asChild
+              className="text-terracotta focus:bg-terracotta/10 focus:text-terracotta cursor-pointer gap-2 font-medium"
+            >
+              <NextLink href="/admin">
+                <Shield className="h-4 w-4" aria-hidden />
+                {t("adminPanel")}
+              </NextLink>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator className="bg-warm-brown/10" />
+          </>
+        )}
         <DropdownMenuItem asChild className="text-warm-brown focus:bg-honey/10 focus:text-honey-dark cursor-pointer gap-2">
           <Link href="/compte">
             <LayoutDashboard className="h-4 w-4" aria-hidden />
