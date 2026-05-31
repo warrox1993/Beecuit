@@ -79,6 +79,9 @@ export async function Hero({ locale: _locale }: { locale: string }) {
                 alt="Biscuits artisanaux belges sortant du four"
                 fill
                 priority
+                // LCP element — lower quality trims bytes on slow mobile links
+                // without a visible difference on a photo at this size.
+                quality={60}
                 sizes="(min-width: 768px) 40vw, 100vw"
                 className="object-cover"
               />
