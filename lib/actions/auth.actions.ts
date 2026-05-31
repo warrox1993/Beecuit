@@ -192,6 +192,7 @@ export async function signInWithPassword(formData: FormData) {
       passwordHash: users.passwordHash,
       deletedAt: users.deletedAt,
       purgedAt: users.purgedAt,
+      twoFactorEnabledAt: users.twoFactorEnabledAt,
     })
     .from(users)
     .where(eq(users.email, normalizedEmail))
@@ -218,12 +219,14 @@ export async function signInWithPassword(formData: FormData) {
     redirect(`/${locale}/sign-in?error=invalid-credentials`);
   }
 
-  await createDbSession(user.id);
-  await db
-    .update(users)
-    .set({ lastLoginAt: new Date() })
-    .where(eq(users.id, user.id));
+  if (user.twoFactorEnabledAt) {
+    await setPending2faCookie(user.id);
+    const cb = callbackUrl ? `&callbackUrl=${encodeURIComponent(callbackUrl)}` : "";
+    redirect(`/${locale}/sign-in/2fa?locale=${locale}${cb}`);
+  }
 
+  await createDbSession(user.id, captureMetadata(reqHeaders));
+  await db.update(users).set({ lastLoginAt: new Date() }).where(eq(users.id, user.id));
   redirect(safeCallbackUrl(callbackUrl ?? null, locale));
 }
 
@@ -1007,4 +1010,50 @@ export async function regenerateRecoveryCodes(formData: FormData): Promise<Regen
     );
   });
   return { ok: true, recoveryCodes: plain };
+}
+
+const verify2faSchema = z.object({
+  code: z.string().min(6).max(20),
+  locale: z.string(),
+  callbackUrl: z.string().optional(),
+});
+
+export async function verifyTwoFactorChallenge(formData: FormData) {
+  const locale = asLocale(formData.get("locale") as string | null);
+  const pending = await readPending2faCookie();
+  if (!pending) redirect(`/${locale}/sign-in?error=2fa-expired`);
+
+  const parsed = verify2faSchema.safeParse({
+    code: formData.get("code"),
+    locale,
+    callbackUrl: formData.get("callbackUrl") ?? undefined,
+  });
+  if (!parsed.success) redirect(`/${locale}/sign-in/2fa?error=invalid&locale=${locale}`);
+
+  const reqHeaders = await headers();
+  const limit = await checkAuthRateLimit({
+    action: "two-factor",
+    email: pending!.userId,
+    ip: getClientIp(reqHeaders),
+  });
+  if (!limit.ok) redirect(`/${locale}/sign-in/2fa?error=rate-limit&locale=${locale}`);
+
+  const [user] = await db
+    .select({ id: users.id, secret: users.twoFactorSecret, enabledAt: users.twoFactorEnabledAt })
+    .from(users)
+    .where(eq(users.id, pending!.userId))
+    .limit(1);
+  if (!user?.enabledAt || !user.secret) redirect(`/${locale}/sign-in?error=2fa-expired`);
+
+  const code = parsed.data.code.trim();
+  const totpOk = verifyTotp(decryptSecret(user.secret), code);
+  const recoveryOk = totpOk ? false : await consumeRecoveryCode(user.id, code);
+  if (!totpOk && !recoveryOk) {
+    redirect(`/${locale}/sign-in/2fa?error=invalid-code&locale=${locale}`);
+  }
+
+  await createDbSession(user.id, captureMetadata(reqHeaders));
+  await clearPending2faCookie();
+  await db.update(users).set({ lastLoginAt: new Date() }).where(eq(users.id, user.id));
+  redirect(safeCallbackUrl(parsed.data.callbackUrl ?? null, locale));
 }
