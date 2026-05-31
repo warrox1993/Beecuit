@@ -392,10 +392,22 @@
   "legal": {
     "eyebrow": "Informations légales",
     "seo": {
-      "cgv": { "title": "Conditions générales de vente — Au Fil des Saveurs", "description": "Les conditions générales de vente de la boutique Au Fil des Saveurs." },
-      "mentions-legales": { "title": "Mentions légales — Au Fil des Saveurs", "description": "Mentions légales et informations sur l'éditeur du site Au Fil des Saveurs." },
-      "confidentialite": { "title": "Politique de confidentialité — Au Fil des Saveurs", "description": "Comment Au Fil des Saveurs traite et protège vos données personnelles (RGPD)." },
-      "cookies": { "title": "Politique de cookies — Au Fil des Saveurs", "description": "L'usage des cookies sur le site Au Fil des Saveurs." }
+      "cgv": {
+        "title": "Conditions générales de vente — Au Fil des Saveurs",
+        "description": "Les conditions générales de vente de la boutique Au Fil des Saveurs."
+      },
+      "mentions-legales": {
+        "title": "Mentions légales — Au Fil des Saveurs",
+        "description": "Mentions légales et informations sur l'éditeur du site Au Fil des Saveurs."
+      },
+      "confidentialite": {
+        "title": "Politique de confidentialité — Au Fil des Saveurs",
+        "description": "Comment Au Fil des Saveurs traite et protège vos données personnelles (RGPD)."
+      },
+      "cookies": {
+        "title": "Politique de cookies — Au Fil des Saveurs",
+        "description": "L'usage des cookies sur le site Au Fil des Saveurs."
+      }
     }
   },
   "consent": {
@@ -413,5 +425,39 @@
     "catNecessary": "Strictement nécessaires",
     "catAnalytics": "Mesure d'audience",
     "catMarketing": "Marketing"
+  },
+  "contact": {
+    "seoTitle": "Contact — Au Fil des Saveurs",
+    "seoDescription": "Une question ? Écris-nous, on répond avec plaisir.",
+    "eyebrow": "Parlons-en",
+    "title": "Contactez-nous",
+    "intro": "Une question sur une commande, une envie de coffret sur mesure, un projet professionnel ? Écris-nous — on adore échanger autour de nos biscuits.",
+    "formName": "Ton nom",
+    "formEmail": "Ton email",
+    "formReason": "Sujet",
+    "formMessage": "Ton message",
+    "formSubmit": "Envoyer le message",
+    "formSuccess": "Merci ! Ton message est bien arrivé, on te répond au plus vite.",
+    "formError_invalid": "Vérifie les champs : tous sont requis (message d'au moins 10 caractères).",
+    "formError_rate-limit": "Tu as déjà envoyé plusieurs messages. Réessaie dans quelques minutes.",
+    "reason_order": "Ma commande",
+    "reason_b2b": "Professionnels / B2B",
+    "reason_press": "Presse",
+    "reason_delivery": "Livraison",
+    "reason_other": "Autre",
+    "coordAddress": "Adresse",
+    "coordEmail": "Email",
+    "coordPhone": "Téléphone",
+    "coordHours": "Horaires",
+    "mapDirections": "Voir l'itinéraire",
+    "faqTitle": "Comment peut-on t'aider ?",
+    "faq_order_title": "Une commande",
+    "faq_order_body": "Question sur une commande en cours, une modification, un suivi ? Indique ton numéro de commande dans le message.",
+    "faq_b2b_title": "Professionnels",
+    "faq_b2b_body": "Revendeur, événement, cadeau d'entreprise ? Parle-nous de ton projet, on construit une offre sur mesure.",
+    "faq_press_title": "Presse",
+    "faq_press_body": "Journaliste ou créateur de contenu ? On partage volontiers visuels et histoire de la maison.",
+    "faq_delivery_title": "Livraison",
+    "faq_delivery_body": "Un souci avec un colis ? Décris-nous la situation, on règle ça rapidement."
   }
 }

@@ -392,10 +392,22 @@
   "legal": {
     "eyebrow": "Juridische informatie",
     "seo": {
-      "cgv": { "title": "Algemene verkoopvoorwaarden — Au Fil des Saveurs", "description": "De algemene verkoopvoorwaarden van de winkel Au Fil des Saveurs." },
-      "mentions-legales": { "title": "Wettelijke vermeldingen — Au Fil des Saveurs", "description": "Wettelijke vermeldingen en informatie over de uitgever van de website Au Fil des Saveurs." },
-      "confidentialite": { "title": "Privacybeleid — Au Fil des Saveurs", "description": "Hoe Au Fil des Saveurs uw persoonsgegevens verwerkt en beschermt (AVG)." },
-      "cookies": { "title": "Cookiebeleid — Au Fil des Saveurs", "description": "Hoe de website Au Fil des Saveurs gebruikmaakt van cookies." }
+      "cgv": {
+        "title": "Algemene verkoopvoorwaarden — Au Fil des Saveurs",
+        "description": "De algemene verkoopvoorwaarden van de winkel Au Fil des Saveurs."
+      },
+      "mentions-legales": {
+        "title": "Wettelijke vermeldingen — Au Fil des Saveurs",
+        "description": "Wettelijke vermeldingen en informatie over de uitgever van de website Au Fil des Saveurs."
+      },
+      "confidentialite": {
+        "title": "Privacybeleid — Au Fil des Saveurs",
+        "description": "Hoe Au Fil des Saveurs uw persoonsgegevens verwerkt en beschermt (AVG)."
+      },
+      "cookies": {
+        "title": "Cookiebeleid — Au Fil des Saveurs",
+        "description": "Hoe de website Au Fil des Saveurs gebruikmaakt van cookies."
+      }
     }
   },
   "consent": {
@@ -413,5 +425,39 @@
     "catNecessary": "Strikt noodzakelijk",
     "catAnalytics": "Bezoekmeting",
     "catMarketing": "Marketing"
+  },
+  "contact": {
+    "seoTitle": "Contact — Au Fil des Saveurs",
+    "seoDescription": "Een vraag? Schrijf ons, we antwoorden graag.",
+    "eyebrow": "Laten we praten",
+    "title": "Neem contact op",
+    "intro": "Een vraag over een bestelling, een gepersonaliseerde cadeaudoos, een professioneel project? Schrijf ons — we praten graag over onze koekjes.",
+    "formName": "Jouw naam",
+    "formEmail": "Jouw e-mail",
+    "formReason": "Onderwerp",
+    "formMessage": "Jouw bericht",
+    "formSubmit": "Bericht versturen",
+    "formSuccess": "Bedankt! Je bericht is goed ontvangen, we antwoorden zo snel mogelijk.",
+    "formError_invalid": "Controleer de velden: alle zijn verplicht (bericht van minstens 10 tekens).",
+    "formError_rate-limit": "Je hebt al meerdere berichten verzonden. Probeer het over een paar minuten opnieuw.",
+    "reason_order": "Mijn bestelling",
+    "reason_b2b": "Professionelen / B2B",
+    "reason_press": "Pers",
+    "reason_delivery": "Levering",
+    "reason_other": "Andere",
+    "coordAddress": "Adres",
+    "coordEmail": "E-mail",
+    "coordPhone": "Telefoon",
+    "coordHours": "Openingsuren",
+    "mapDirections": "Route bekijken",
+    "faqTitle": "Hoe kunnen we je helpen?",
+    "faq_order_title": "Een bestelling",
+    "faq_order_body": "Vraag over een lopende bestelling, een wijziging, een opvolging? Vermeld je bestelnummer in het bericht.",
+    "faq_b2b_title": "Professionelen",
+    "faq_b2b_body": "Wederverkoper, evenement, bedrijfscadeau? Vertel ons over je project, we bouwen een aanbod op maat.",
+    "faq_press_title": "Pers",
+    "faq_press_body": "Journalist of contentmaker? We delen graag beelden en het verhaal van het huis.",
+    "faq_delivery_title": "Levering",
+    "faq_delivery_body": "Een probleem met een pakket? Beschrijf ons de situatie, we lossen het snel op."
   }
 }

@@ -392,10 +392,22 @@
   "legal": {
     "eyebrow": "Rechtliche Informationen",
     "seo": {
-      "cgv": { "title": "Allgemeine Geschäftsbedingungen — Au Fil des Saveurs", "description": "Die allgemeinen Geschäftsbedingungen des Shops Au Fil des Saveurs." },
-      "mentions-legales": { "title": "Impressum — Au Fil des Saveurs", "description": "Impressum und Herausgeberinformationen der Website Au Fil des Saveurs." },
-      "confidentialite": { "title": "Datenschutzerklärung — Au Fil des Saveurs", "description": "Wie Au Fil des Saveurs Ihre personenbezogenen Daten verarbeitet und schützt (DSGVO)." },
-      "cookies": { "title": "Cookie-Richtlinie — Au Fil des Saveurs", "description": "Wie die Website Au Fil des Saveurs Cookies verwendet." }
+      "cgv": {
+        "title": "Allgemeine Geschäftsbedingungen — Au Fil des Saveurs",
+        "description": "Die allgemeinen Geschäftsbedingungen des Shops Au Fil des Saveurs."
+      },
+      "mentions-legales": {
+        "title": "Impressum — Au Fil des Saveurs",
+        "description": "Impressum und Herausgeberinformationen der Website Au Fil des Saveurs."
+      },
+      "confidentialite": {
+        "title": "Datenschutzerklärung — Au Fil des Saveurs",
+        "description": "Wie Au Fil des Saveurs Ihre personenbezogenen Daten verarbeitet und schützt (DSGVO)."
+      },
+      "cookies": {
+        "title": "Cookie-Richtlinie — Au Fil des Saveurs",
+        "description": "Wie die Website Au Fil des Saveurs Cookies verwendet."
+      }
     }
   },
   "consent": {
@@ -413,5 +425,39 @@
     "catNecessary": "Unbedingt erforderlich",
     "catAnalytics": "Besuchsmessung",
     "catMarketing": "Marketing"
+  },
+  "contact": {
+    "seoTitle": "Kontakt — Au Fil des Saveurs",
+    "seoDescription": "Eine Frage? Schreib uns, wir helfen gerne.",
+    "eyebrow": "Lass uns reden",
+    "title": "Kontakt",
+    "intro": "Eine Frage zu einer Bestellung, eine individuelle Geschenkbox, ein Geschäftsprojekt? Schreib uns — wir reden gerne über unsere Kekse.",
+    "formName": "Dein Name",
+    "formEmail": "Deine E-Mail",
+    "formReason": "Betreff",
+    "formMessage": "Deine Nachricht",
+    "formSubmit": "Nachricht senden",
+    "formSuccess": "Danke! Deine Nachricht ist angekommen, wir antworten so schnell wie möglich.",
+    "formError_invalid": "Überprüfe die Felder: Alle sind erforderlich (Nachricht mit mindestens 10 Zeichen).",
+    "formError_rate-limit": "Du hast bereits mehrere Nachrichten gesendet. Versuche es in ein paar Minuten erneut.",
+    "reason_order": "Meine Bestellung",
+    "reason_b2b": "Profis / B2B",
+    "reason_press": "Presse",
+    "reason_delivery": "Lieferung",
+    "reason_other": "Sonstiges",
+    "coordAddress": "Adresse",
+    "coordEmail": "E-Mail",
+    "coordPhone": "Telefon",
+    "coordHours": "Öffnungszeiten",
+    "mapDirections": "Route ansehen",
+    "faqTitle": "Wie können wir dir helfen?",
+    "faq_order_title": "Eine Bestellung",
+    "faq_order_body": "Frage zu einer laufenden Bestellung, einer Änderung, einer Sendungsverfolgung? Gib deine Bestellnummer in der Nachricht an.",
+    "faq_b2b_title": "Profis",
+    "faq_b2b_body": "Händler, Veranstaltung, Firmengeschenk? Erzähl uns von deinem Projekt, wir erstellen ein maßgeschneidertes Angebot.",
+    "faq_press_title": "Presse",
+    "faq_press_body": "Journalist oder Content-Creator? Wir teilen gerne Bildmaterial und die Geschichte des Hauses.",
+    "faq_delivery_title": "Lieferung",
+    "faq_delivery_body": "Ein Problem mit einem Paket? Beschreib uns die Situation, wir lösen es schnell."
   }
 }
