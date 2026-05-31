@@ -397,5 +397,21 @@
       "confidentialite": { "title": "Datenschutzerklärung — Au Fil des Saveurs", "description": "Wie Au Fil des Saveurs Ihre personenbezogenen Daten verarbeitet und schützt (DSGVO)." },
       "cookies": { "title": "Cookie-Richtlinie — Au Fil des Saveurs", "description": "Wie die Website Au Fil des Saveurs Cookies verwendet." }
     }
+  },
+  "consent": {
+    "eyebrow": "Au Fil des Saveurs · Cookies",
+    "title": "Wir verwenden ein paar Cookies 🍪",
+    "description": "Die notwendigen halten den Shop am Laufen (Warenkorb, Anmeldung). Mit deiner Zustimmung möchten wir auch die Besuche messen.",
+    "learnMore": "Mehr erfahren",
+    "acceptAll": "Alle akzeptieren",
+    "reject": "Ablehnen",
+    "customize": "Anpassen",
+    "save": "Meine Auswahl speichern",
+    "back": "Zurück",
+    "manage": "Cookies verwalten",
+    "alwaysOn": "Immer aktiv",
+    "catNecessary": "Unbedingt erforderlich",
+    "catAnalytics": "Besuchsmessung",
+    "catMarketing": "Marketing"
   }
 }

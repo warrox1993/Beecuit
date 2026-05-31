@@ -397,5 +397,21 @@
       "confidentialite": { "title": "Politique de confidentialité — Au Fil des Saveurs", "description": "Comment Au Fil des Saveurs traite et protège vos données personnelles (RGPD)." },
       "cookies": { "title": "Politique de cookies — Au Fil des Saveurs", "description": "L'usage des cookies sur le site Au Fil des Saveurs." }
     }
+  },
+  "consent": {
+    "eyebrow": "Au Fil des Saveurs · cookies",
+    "title": "On utilise quelques cookies 🍪",
+    "description": "Les essentiels font tourner la boutique (panier, connexion). Avec ton accord, on aimerait aussi mesurer l'audience.",
+    "learnMore": "En savoir plus",
+    "acceptAll": "Tout accepter",
+    "reject": "Refuser",
+    "customize": "Personnaliser",
+    "save": "Enregistrer mes choix",
+    "back": "Retour",
+    "manage": "Gérer les cookies",
+    "alwaysOn": "Toujours actif",
+    "catNecessary": "Strictement nécessaires",
+    "catAnalytics": "Mesure d'audience",
+    "catMarketing": "Marketing"
   }
 }
