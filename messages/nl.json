@@ -460,5 +460,17 @@
     "faq_press_body": "Journalist of contentmaker? We delen graag beelden en het verhaal van het huis.",
     "faq_delivery_title": "Levering",
     "faq_delivery_body": "Een probleem met een pakket? Beschrijf ons de situatie, we lossen het snel op."
+  },
+  "error": {
+    "title": "Er is een fout opgetreden",
+    "body": "Er ging iets mis aan onze kant. Probeer het opnieuw of ga terug naar de startpagina.",
+    "retry": "Opnieuw proberen",
+    "home": "Terug naar de startpagina"
+  },
+  "notFound": {
+    "title": "Pagina niet gevonden",
+    "body": "De pagina die u zoekt bestaat niet of is verplaatst. Ontdek liever onze koekjes.",
+    "home": "Terug naar de startpagina",
+    "cta": "Bekijk de koekjes"
   }
 }

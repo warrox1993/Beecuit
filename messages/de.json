@@ -460,5 +460,17 @@
     "faq_press_body": "Journalist oder Content-Creator? Wir teilen gerne Bildmaterial und die Geschichte des Hauses.",
     "faq_delivery_title": "Lieferung",
     "faq_delivery_body": "Ein Problem mit einem Paket? Beschreib uns die Situation, wir lösen es schnell."
+  },
+  "error": {
+    "title": "Ein Fehler ist aufgetreten",
+    "body": "Auf unserer Seite ist etwas schiefgelaufen. Sie können es erneut versuchen oder zur Startseite zurückkehren.",
+    "retry": "Erneut versuchen",
+    "home": "Zurück zur Startseite"
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "body": "Die gesuchte Seite existiert nicht oder wurde verschoben. Entdecken Sie stattdessen unsere Kekse.",
+    "home": "Zurück zur Startseite",
+    "cta": "Kekse ansehen"
   }
 }

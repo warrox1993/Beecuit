@@ -460,5 +460,17 @@
     "faq_press_body": "Journalist or content creator? We're glad to share visuals and the story of the house.",
     "faq_delivery_title": "Delivery",
     "faq_delivery_body": "A problem with a parcel? Describe the situation and we'll sort it out quickly."
+  },
+  "error": {
+    "title": "Something went wrong",
+    "body": "Something went wrong on our end. You can try again or return to the homepage.",
+    "retry": "Try again",
+    "home": "Back to home"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "The page you're looking for doesn't exist or has been moved. Discover our biscuits instead.",
+    "home": "Back to home",
+    "cta": "Browse biscuits"
   }
 }

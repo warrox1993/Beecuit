@@ -4,6 +4,7 @@ import { listCoffretsForLocale, type Locale } from "@/lib/queries/catalog";
 import { CoffretCard } from "@/components/shop/CoffretCard";
 import { CoffretGridSkeleton } from "@/components/shop/CoffretCardSkeleton";
 import { Container } from "@/components/ui-primitives/Container";
+import { EmptyState } from "@/components/common/EmptyState";
 
 export default async function CoffretsPage({
   params,
@@ -39,6 +40,16 @@ export default async function CoffretsPage({
 
 async function CoffretsGrid({ locale }: { locale: string }) {
   const coffrets = await listCoffretsForLocale(locale as Locale);
+
+  if (coffrets.length === 0) {
+    return (
+      <EmptyState
+        title="Aucun coffret disponible"
+        description="Nos coffrets reviennent bientôt — en attendant, découvrez nos biscuits à l'unité."
+      />
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {coffrets.map((c) => (

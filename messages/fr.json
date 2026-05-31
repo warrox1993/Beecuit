@@ -460,5 +460,17 @@
     "faq_press_body": "Journaliste ou créateur de contenu ? On partage volontiers visuels et histoire de la maison.",
     "faq_delivery_title": "Livraison",
     "faq_delivery_body": "Un souci avec un colis ? Décris-nous la situation, on règle ça rapidement."
+  },
+  "error": {
+    "title": "Une erreur est survenue",
+    "body": "Quelque chose s'est mal passé de notre côté. Vous pouvez réessayer ou revenir à l'accueil.",
+    "retry": "Réessayer",
+    "home": "Retour à l'accueil"
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "body": "La page que vous cherchez n'existe pas ou a été déplacée. Découvrez plutôt nos biscuits.",
+    "home": "Retour à l'accueil",
+    "cta": "Voir les biscuits"
   }
 }
