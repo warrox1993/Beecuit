@@ -81,7 +81,7 @@ export function TwoFactorBlock({ locale, enabled }: { locale: string; enabled: b
             className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 mt-2 block w-full rounded-md border bg-white px-4 py-3 tracking-widest focus:ring-2 focus:outline-none"
           />
         </label>
-        {error && <p className="text-terracotta text-sm">{error}</p>}
+        {error && <p role="alert" className="text-terracotta text-sm">{error}</p>}
         <Button type="submit" disabled={pending}>{t("twoFactorVerifyEnable")}</Button>
       </form>
     );
@@ -90,16 +90,17 @@ export function TwoFactorBlock({ locale, enabled }: { locale: string; enabled: b
   // State (d): enabled
   if (isEnabled) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-4" aria-busy={pending || undefined}>
         <p className="text-honey-dark text-sm">✓ {t("twoFactorActive")}</p>
         <form
-          action={(fd) =>
+          action={(fd) => {
+            setError(null);
             start(async () => {
               const r = await regenerateRecoveryCodes(fd);
               if (r.ok) setCodes(r.recoveryCodes);
               else setError(t(`twoFactorError_${r.error}` as Parameters<typeof t>[0]));
-            })
-          }
+            });
+          }}
           className="flex flex-wrap items-end gap-3"
         >
           <input type="hidden" name="locale" value={locale} />
@@ -110,13 +111,14 @@ export function TwoFactorBlock({ locale, enabled }: { locale: string; enabled: b
           <Button type="submit" variant="outline" disabled={pending}>{t("twoFactorRegenerate")}</Button>
         </form>
         <form
-          action={(fd) =>
+          action={(fd) => {
+            setError(null);
             start(async () => {
               const r = await disableTwoFactor(fd);
               if (r.ok) setIsEnabled(false);
               else setError(t(`twoFactorError_${r.error}` as Parameters<typeof t>[0]));
-            })
-          }
+            });
+          }}
           className="flex flex-wrap items-end gap-3"
         >
           <input type="hidden" name="locale" value={locale} />
@@ -126,7 +128,7 @@ export function TwoFactorBlock({ locale, enabled }: { locale: string; enabled: b
           </label>
           <Button type="submit" variant="outline" disabled={pending}>{t("twoFactorDisable")}</Button>
         </form>
-        {error && <p className="text-terracotta text-sm">{error}</p>}
+        {error && <p role="alert" className="text-terracotta text-sm">{error}</p>}
       </div>
     );
   }
