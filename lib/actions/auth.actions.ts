@@ -1057,3 +1057,79 @@ export async function verifyTwoFactorChallenge(formData: FormData) {
   await db.update(users).set({ lastLoginAt: new Date() }).where(eq(users.id, user.id));
   redirect(safeCallbackUrl(parsed.data.callbackUrl ?? null, locale));
 }
+
+export async function requestDisable2faEmail(formData: FormData) {
+  const locale = asLocale(formData.get("locale") as string | null);
+  const pending = await readPending2faCookie();
+  if (!pending) redirect(`/${locale}/sign-in?error=2fa-expired`);
+
+  const reqHeaders = await headers();
+  const limit = await checkAuthRateLimit({
+    action: "disable-2fa",
+    email: pending!.userId,
+    ip: getClientIp(reqHeaders),
+  });
+  if (!limit.ok) redirect(`/${locale}/sign-in/2fa?sent=1&locale=${locale}`);
+
+  const [user] = await db
+    .select({ email: users.email, preferredLocale: users.preferredLocale, enabledAt: users.twoFactorEnabledAt })
+    .from(users)
+    .where(eq(users.id, pending!.userId))
+    .limit(1);
+
+  if (user?.enabledAt) {
+    const raw = generateRawToken();
+    await db
+      .update(users)
+      .set({
+        twoFactorDisableToken: hashToken(raw),
+        twoFactorDisableExpiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      })
+      .where(eq(users.id, pending!.userId));
+    const base = env.NEXT_PUBLIC_APP_URL;
+    await sendEmail({
+      to: user.email,
+      subject: "Au Fil des Saveurs — 2FA",
+      react: Disable2faRequestEmail({
+        locale: asLocale(user.preferredLocale),
+        disableUrl: `${base}/${locale}/disable-2fa/${raw}`,
+      }),
+    });
+  }
+  redirect(`/${locale}/sign-in/2fa?sent=1&locale=${locale}`);
+}
+
+export type ConfirmDisable2faResult = { ok: true; redirectTo: string } | { ok: false; error: string };
+
+export async function confirmDisable2fa(
+  rawToken: string,
+  locale: string,
+): Promise<ConfirmDisable2faResult> {
+  const hashed = hashToken(rawToken);
+  const [user] = await db
+    .select({ id: users.id })
+    .from(users)
+    .where(
+      and(
+        eq(users.twoFactorDisableToken, hashed),
+        gt(users.twoFactorDisableExpiresAt, new Date()),
+        isNull(users.purgedAt),
+      ),
+    )
+    .limit(1);
+  if (!user) return { ok: false, error: "expired" };
+
+  await db.transaction(async (tx) => {
+    await tx
+      .update(users)
+      .set({
+        twoFactorSecret: null,
+        twoFactorEnabledAt: null,
+        twoFactorDisableToken: null,
+        twoFactorDisableExpiresAt: null,
+      })
+      .where(eq(users.id, user.id));
+    await tx.delete(twoFactorRecoveryCodes).where(eq(twoFactorRecoveryCodes.userId, user.id));
+  });
+  return { ok: true, redirectTo: `/${locale}/sign-in?2fa=disabled` };
+}
