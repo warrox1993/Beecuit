@@ -3,7 +3,16 @@ import { sql } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { authRateLimitHits } from "@/lib/db/schemas/auth_rate_limit";
 
-export type AuthAction = "sign-in" | "register" | "forgot" | "reset" | "change-password" | "email-change" | "delete";
+export type AuthAction =
+  | "sign-in"
+  | "register"
+  | "forgot"
+  | "reset"
+  | "change-password"
+  | "email-change"
+  | "delete"
+  | "two-factor"
+  | "disable-2fa";
 
 const LIMITS: Record<AuthAction, { email: number; ip: number }> = {
   "sign-in": { email: 3, ip: 10 },
@@ -13,6 +22,8 @@ const LIMITS: Record<AuthAction, { email: number; ip: number }> = {
   "change-password": { email: 5, ip: Number.POSITIVE_INFINITY },
   "email-change": { email: 3, ip: 5 },
   delete: { email: 2, ip: 3 },
+  "two-factor": { email: 5, ip: 10 },
+  "disable-2fa": { email: 2, ip: 3 },
 };
 
 const WINDOWS: Record<AuthAction, string> = {
@@ -23,6 +34,8 @@ const WINDOWS: Record<AuthAction, string> = {
   "change-password": "15 minutes",
   "email-change": "15 minutes",
   delete: "1 hour",
+  "two-factor": "15 minutes",
+  "disable-2fa": "1 hour",
 };
 
 export type AuthRateLimitResult = { ok: true } | { ok: false; reason: "email" | "ip" };
