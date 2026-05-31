@@ -18,7 +18,7 @@ export function SignUpForm({ locale }: { locale: string }) {
     >
       <input type="hidden" name="locale" value={locale} />
       <label className="block">
-        <span className="text-warm-brown text-sm">{t("emailLabel")}</span>
+        <span className="text-warm-brown text-sm">{t("emailLabel")}<span aria-hidden="true" className="text-terracotta ml-0.5">*</span></span>
         <input
           type="email"
           name="email"
@@ -31,7 +31,7 @@ export function SignUpForm({ locale }: { locale: string }) {
         />
       </label>
       <label className="block">
-        <span className="text-warm-brown text-sm">{t("passwordLabel")}</span>
+        <span className="text-warm-brown text-sm">{t("passwordLabel")}<span aria-hidden="true" className="text-terracotta ml-0.5">*</span></span>
         <input
           type="password"
           name="password"
@@ -46,7 +46,7 @@ export function SignUpForm({ locale }: { locale: string }) {
         <span className="text-warm-brown/60 mt-1 block text-xs">{t("passwordHint")}</span>
       </label>
       <label className="block">
-        <span className="text-warm-brown text-sm">{t("confirmPasswordLabel")}</span>
+        <span className="text-warm-brown text-sm">{t("confirmPasswordLabel")}<span aria-hidden="true" className="text-terracotta ml-0.5">*</span></span>
         <input
           type="password"
           name="confirmPassword"

@@ -493,6 +493,18 @@
     "histoire": {
       "title": "Our story",
       "description": "The story of a Belgian artisan biscuit house: the time, craft and ingredients behind our biscuits."
+    },
+    "abonnement": {
+      "title": "Monthly biscuit subscription",
+      "description": "Receive a box of artisan biscuits made to your taste every month. Delivered on the 1st, no commitment."
+    },
+    "cartesCadeaux": {
+      "title": "Gift cards",
+      "description": "Gift our artisan biscuits with a digital gift card, emailed on the date you choose. Valid for 12 months."
+    },
+    "entreprises": {
+      "title": "Corporate gifts & B2B",
+      "description": "Artisan biscuit boxes for your corporate gifts, seminars and client events. Custom quote."
     }
   }
 }

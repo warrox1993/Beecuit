@@ -493,6 +493,18 @@
     "histoire": {
       "title": "Unsere Geschichte",
       "description": "Die Geschichte einer belgischen handwerklichen Biskuiterie: Zeit, Handwerk und Zutaten hinter unserem Gebäck."
+    },
+    "abonnement": {
+      "title": "Monatliches Keks-Abo",
+      "description": "Erhalten Sie jeden Monat eine Box mit handwerklichem Gebäck nach Ihrem Geschmack. Lieferung am 1. des Monats, ohne Verpflichtung."
+    },
+    "cartesCadeaux": {
+      "title": "Geschenkgutscheine",
+      "description": "Verschenken Sie unser handwerkliches Gebäck mit einem digitalen Gutschein, per E-Mail zum Wunschtermin. 12 Monate gültig."
+    },
+    "entreprises": {
+      "title": "Firmengeschenke & B2B",
+      "description": "Boxen mit handwerklichem Gebäck für Firmengeschenke, Seminare und Kundenevents. Individuelles Angebot."
     }
   }
 }

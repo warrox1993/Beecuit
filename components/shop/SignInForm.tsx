@@ -23,7 +23,7 @@ export function SignInForm({
       <input type="hidden" name="locale" value={locale} />
       {callbackUrl && <input type="hidden" name="callbackUrl" value={callbackUrl} />}
       <label className="block">
-        <span className="text-warm-brown text-sm">{t("emailLabel")}</span>
+        <span className="text-warm-brown text-sm">{t("emailLabel")}<span aria-hidden="true" className="text-terracotta ml-0.5">*</span></span>
         <input
           type="email"
           name="email"
@@ -35,7 +35,7 @@ export function SignInForm({
       </label>
       <label className="block">
         <div className="flex items-baseline justify-between">
-          <span className="text-warm-brown text-sm">{t("passwordLabel")}</span>
+          <span className="text-warm-brown text-sm">{t("passwordLabel")}<span aria-hidden="true" className="text-terracotta ml-0.5">*</span></span>
           <Link
             href="/forgot-password"
             className="text-warm-brown/70 hover:text-honey-dark text-xs underline"

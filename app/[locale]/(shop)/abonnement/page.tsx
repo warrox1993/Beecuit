@@ -1,6 +1,23 @@
-import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
+import { setRequestLocale, getTranslations } from "next-intl/server";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { SubscriptionPricingTable } from "@/components/shop/SubscriptionPricingTable";
 import { Container } from "@/components/ui-primitives/Container";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "seo.abonnement" });
+  return buildPageMetadata({
+    title: t("title"),
+    description: t("description"),
+    path: "/abonnement",
+    locale,
+  });
+}
 
 export default async function AbonnementPage({
   params,

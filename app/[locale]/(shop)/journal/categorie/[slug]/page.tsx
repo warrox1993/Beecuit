@@ -1,5 +1,7 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { listPublishedArticles } from "@/lib/journal/queries";
 import { JournalCard } from "@/components/journal/JournalCard";
 import { JournalCategoryFilter } from "@/components/journal/JournalCategoryFilter";
@@ -7,6 +9,25 @@ import { EmptyState } from "@/components/common/EmptyState";
 
 const VALID_CATEGORIES = ["recettes", "savoir-faire", "saisons", "atelier"] as const;
 type Category = (typeof VALID_CATEGORIES)[number];
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: "fr" | "nl" | "en" | "de"; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  if (!VALID_CATEGORIES.includes(slug as (typeof VALID_CATEGORIES)[number])) {
+    return {};
+  }
+  const tCat = await getTranslations({ locale, namespace: "journal.categories" });
+  const tSeo = await getTranslations({ locale, namespace: "seo.journal" });
+  return buildPageMetadata({
+    title: `${tCat(slug)} — ${tSeo("title")}`,
+    description: tSeo("description"),
+    path: `/journal/categorie/${slug}`,
+    locale,
+  });
+}
 
 export const dynamic = "force-dynamic";
 

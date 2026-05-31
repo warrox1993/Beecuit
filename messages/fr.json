@@ -493,6 +493,18 @@
     "histoire": {
       "title": "Notre histoire",
       "description": "L'histoire d'une biscuiterie artisanale belge : le temps, le geste et les ingrédients qui font nos biscuits."
+    },
+    "abonnement": {
+      "title": "Abonnement biscuits mensuel",
+      "description": "Recevez chaque mois une box de biscuits artisanaux composée à votre goût. Livraison le 1er du mois, sans engagement."
+    },
+    "cartesCadeaux": {
+      "title": "Cartes cadeaux",
+      "description": "Offrez nos biscuits artisanaux avec une carte cadeau numérique, envoyée par email à la date de votre choix. Valable 12 mois."
+    },
+    "entreprises": {
+      "title": "Cadeaux d'affaires & B2B",
+      "description": "Coffrets de biscuits artisanaux pour vos cadeaux d'affaires, séminaires et événements clients. Devis sur mesure."
     }
   }
 }

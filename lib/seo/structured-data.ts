@@ -60,11 +60,25 @@ export function organizationJsonLd() {
       "@type": "ContactPoint",
       contactType: "customer service",
       email: BUSINESS_CONTACT.email,
-      telephone: BUSINESS_CONTACT.telephone,
+      // Only publish the phone once a real number replaces the placeholder —
+      // emitting a fake telephone as structured data is worse than omitting it.
+      ...(isRealPhone(BUSINESS_CONTACT.telephone)
+        ? { telephone: BUSINESS_CONTACT.telephone }
+        : {}),
       availableLanguage: ["French", "Dutch", "German", "English"],
       areaServed: ["BE", "FR", "LU", "NL", "DE"],
     },
   } as const;
+}
+
+/**
+ * A telephone is "real" once it drops the placeholder's `000` run. A run of
+ * 3+ consecutive zeros doesn't occur in real Belgian numbers (no area code or
+ * subscriber segment is `000`), so it cleanly flags the `+32 4 000 00 00`
+ * placeholder without false-positives on legit numbers like `+32 2 800 00 12`.
+ */
+function isRealPhone(phone: string): boolean {
+  return !/0{3,}/.test(phone);
 }
 
 /**

@@ -1,7 +1,24 @@
+import type { Metadata } from "next";
 import Image from "next/image";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { GiftCardForm } from "@/components/shop/GiftCardForm";
 import { Container } from "@/components/ui-primitives/Container";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "seo.cartesCadeaux" });
+  return buildPageMetadata({
+    title: t("title"),
+    description: t("description"),
+    path: "/cartes-cadeaux",
+    locale,
+  });
+}
 
 export default async function CartesCadeauxPage({
   params,

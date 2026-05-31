@@ -493,6 +493,18 @@
     "histoire": {
       "title": "Ons verhaal",
       "description": "Het verhaal van een Belgische ambachtelijke biscuiterie: de tijd, het vakmanschap en de ingrediënten achter onze koekjes."
+    },
+    "abonnement": {
+      "title": "Maandelijks koekjesabonnement",
+      "description": "Ontvang elke maand een box ambachtelijke koekjes naar jouw smaak. Levering op de 1e van de maand, zonder verplichting."
+    },
+    "cartesCadeaux": {
+      "title": "Cadeaubonnen",
+      "description": "Schenk onze ambachtelijke koekjes met een digitale cadeaubon, per e-mail verzonden op de datum naar keuze. 12 maanden geldig."
+    },
+    "entreprises": {
+      "title": "Zakelijke geschenken & B2B",
+      "description": "Ambachtelijke koekjesdozen voor uw zakelijke geschenken, seminaries en klantenevenementen. Offerte op maat."
     }
   }
 }

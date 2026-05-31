@@ -6,21 +6,80 @@ import { Link } from "@/i18n/navigation";
 import { useConsent } from "@/components/consent/ConsentProvider";
 import { CrackingCookie } from "@/components/consent/CrackingCookie";
 
+/** Sélecteur des éléments nativement focusables (hors tabindex="-1"). */
+const FOCUSABLE_SELECTOR =
+  'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+/** Retourne les éléments focusables visibles à l'intérieur d'un conteneur. */
+function getFocusableElements(container: HTMLElement): HTMLElement[] {
+  return Array.from(
+    container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+  ).filter((el) => !el.hasAttribute("disabled") && el.offsetParent !== null);
+}
+
 export function CookieConsentBanner() {
   const t = useTranslations("consent");
   const { consent, showBanner, prefsOpen, acceptAll, rejectAll, save, openPreferences, closePreferences } = useConsent();
   const [analytics, setAnalytics] = useState(false);
   const [marketing, setMarketing] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
+  /** Élément focalisé avant l'ouverture des préférences — restauré à la fermeture. */
+  const previousFocusRef = useRef<HTMLElement | null>(null);
 
   const visible = showBanner || prefsOpen;
 
-  // À l'ouverture du panneau, pré-remplir avec le choix déjà enregistré + déplacer le focus.
+  // À l'ouverture du panneau : pré-remplir les choix, mémoriser le focus actuel,
+  // déplacer le focus dans le dialog, et installer le focus trap.
+  // À la fermeture : restaurer le focus sur l'élément d'origine.
   useEffect(() => {
     if (prefsOpen) {
       setAnalytics(consent?.analytics ?? false);
       setMarketing(consent?.marketing ?? false);
-      dialogRef.current?.focus();
+
+      // Mémoriser l'élément actif avant l'ouverture (ex. bouton « Personnaliser »).
+      previousFocusRef.current = document.activeElement as HTMLElement | null;
+
+      // Mettre le focus dans le dialog (premier focusable, ou le conteneur).
+      const focusables = dialogRef.current ? getFocusableElements(dialogRef.current) : [];
+      const firstFocusable = focusables[0];
+      if (firstFocusable) {
+        firstFocusable.focus();
+      } else {
+        dialogRef.current?.focus();
+      }
+
+      // Handler du focus trap : cycle Tab / Shift+Tab à l'intérieur du dialog.
+      const handleTrapKeyDown = (e: KeyboardEvent) => {
+        if (e.key !== "Tab") return;
+        const elements = dialogRef.current ? getFocusableElements(dialogRef.current) : [];
+        const first = elements[0];
+        const last = elements[elements.length - 1];
+        if (!first || !last) return;
+        if (e.shiftKey) {
+          // Shift+Tab depuis le premier → aller au dernier.
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          // Tab depuis le dernier → revenir au premier.
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      };
+
+      document.addEventListener("keydown", handleTrapKeyDown);
+      return () => {
+        document.removeEventListener("keydown", handleTrapKeyDown);
+      };
+    } else {
+      // Restaurer le focus à la fermeture des préférences.
+      if (previousFocusRef.current) {
+        previousFocusRef.current.focus();
+        previousFocusRef.current = null;
+      }
     }
   }, [prefsOpen, consent]);
 

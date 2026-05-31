@@ -1,5 +1,22 @@
-import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
+import { setRequestLocale, getTranslations } from "next-intl/server";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { B2BQuoteForm } from "@/components/shop/B2BQuoteForm";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "seo.entreprises" });
+  return buildPageMetadata({
+    title: t("title"),
+    description: t("description"),
+    path: "/entreprises",
+    locale,
+  });
+}
 
 export default async function EntreprisesPage({
   params,
