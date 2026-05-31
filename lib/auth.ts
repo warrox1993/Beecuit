@@ -1,19 +1,39 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { eq } from "drizzle-orm";
+import { headers } from "next/headers";
 import { db } from "@/lib/db";
 import { accounts, sessions, users, verificationTokens } from "@/lib/db/schema";
 import { env } from "@/lib/env";
+import { captureMetadata } from "@/lib/auth/session-metadata";
 
 const googleConfigured = !!(env.AUTH_GOOGLE_ID && env.AUTH_GOOGLE_SECRET);
 
+const baseAdapter = DrizzleAdapter(db, {
+  usersTable: users,
+  accountsTable: accounts,
+  sessionsTable: sessions,
+  verificationTokensTable: verificationTokens,
+});
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: DrizzleAdapter(db, {
-    usersTable: users,
-    accountsTable: accounts,
-    sessionsTable: sessions,
-    verificationTokensTable: verificationTokens,
-  }),
+  adapter: {
+    ...baseAdapter,
+    async createSession(data) {
+      const session = await baseAdapter.createSession!(data);
+      try {
+        const meta = captureMetadata(await headers());
+        await db
+          .update(sessions)
+          .set({ lastSeenAt: new Date(), ...meta })
+          .where(eq(sessions.sessionToken, session.sessionToken));
+      } catch {
+        // header access can fail in non-request contexts — metadata is best-effort
+      }
+      return session;
+    },
+  },
   session: { strategy: "database" },
   providers: googleConfigured
     ? [
