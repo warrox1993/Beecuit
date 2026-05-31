@@ -388,5 +388,14 @@
       "cta": "Lire l'article",
       "all": "Tous les articles"
     }
+  },
+  "legal": {
+    "eyebrow": "Informations légales",
+    "seo": {
+      "cgv": { "title": "Conditions générales de vente — Au Fil des Saveurs", "description": "Les conditions générales de vente de la boutique Au Fil des Saveurs." },
+      "mentions-legales": { "title": "Mentions légales — Au Fil des Saveurs", "description": "Mentions légales et informations sur l'éditeur du site Au Fil des Saveurs." },
+      "confidentialite": { "title": "Politique de confidentialité — Au Fil des Saveurs", "description": "Comment Au Fil des Saveurs traite et protège vos données personnelles (RGPD)." },
+      "cookies": { "title": "Politique de cookies — Au Fil des Saveurs", "description": "L'usage des cookies sur le site Au Fil des Saveurs." }
+    }
   }
 }

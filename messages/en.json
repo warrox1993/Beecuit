@@ -388,5 +388,14 @@
       "cta": "Read the article",
       "all": "All articles"
     }
+  },
+  "legal": {
+    "eyebrow": "Legal information",
+    "seo": {
+      "cgv": { "title": "Terms and conditions of sale — Au Fil des Saveurs", "description": "The terms and conditions of sale of the Au Fil des Saveurs shop." },
+      "mentions-legales": { "title": "Legal notice — Au Fil des Saveurs", "description": "Legal notice and publisher information for the Au Fil des Saveurs website." },
+      "confidentialite": { "title": "Privacy policy — Au Fil des Saveurs", "description": "How Au Fil des Saveurs processes and protects your personal data (GDPR)." },
+      "cookies": { "title": "Cookie policy — Au Fil des Saveurs", "description": "How the Au Fil des Saveurs website uses cookies." }
+    }
   }
 }

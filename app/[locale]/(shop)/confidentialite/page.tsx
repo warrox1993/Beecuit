@@ -1,5 +1,11 @@
-import { setRequestLocale } from "next-intl/server";
-import { ComingSoonPage } from "@/components/common/ComingSoonPage";
+import { setRequestLocale, getTranslations } from "next-intl/server";
+import { LegalPage } from "@/components/legal/LegalPage";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "legal.seo.confidentialite" });
+  return { title: t("title"), description: t("description") };
+}
 
 export default async function ConfidentialitePage({
   params,
@@ -8,5 +14,5 @@ export default async function ConfidentialitePage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  return <ComingSoonPage pageKey="confidentialite" />;
+  return <LegalPage pageKey="confidentialite" locale={locale} />;
 }

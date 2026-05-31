@@ -388,5 +388,14 @@
       "cta": "Lees het artikel",
       "all": "Alle artikelen"
     }
+  },
+  "legal": {
+    "eyebrow": "Juridische informatie",
+    "seo": {
+      "cgv": { "title": "Algemene verkoopvoorwaarden — Au Fil des Saveurs", "description": "De algemene verkoopvoorwaarden van de winkel Au Fil des Saveurs." },
+      "mentions-legales": { "title": "Wettelijke vermeldingen — Au Fil des Saveurs", "description": "Wettelijke vermeldingen en informatie over de uitgever van de website Au Fil des Saveurs." },
+      "confidentialite": { "title": "Privacybeleid — Au Fil des Saveurs", "description": "Hoe Au Fil des Saveurs uw persoonsgegevens verwerkt en beschermt (AVG)." },
+      "cookies": { "title": "Cookiebeleid — Au Fil des Saveurs", "description": "Hoe de website Au Fil des Saveurs gebruikmaakt van cookies." }
+    }
   }
 }
