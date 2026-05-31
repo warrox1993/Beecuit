@@ -3,7 +3,7 @@ import { redirect } from "@/i18n/navigation";
 import { eq } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { users, accounts } from "@/lib/db/schema";
+import { users, accounts, sessions } from "@/lib/db/schema";
 import { Eyebrow } from "@/components/ui-primitives/Eyebrow";
 import { Heading } from "@/components/ui-primitives/Heading";
 import { ChangePasswordForm } from "@/components/account/ChangePasswordForm";
@@ -11,6 +11,10 @@ import { LinkedAccountsBlock } from "@/components/account/LinkedAccountsBlock";
 import { PreferencesBlock } from "@/components/account/PreferencesBlock";
 import { EmailChangeBlock } from "@/components/account/EmailChangeBlock";
 import { DangerZoneBlock } from "@/components/account/DangerZoneBlock";
+import { TwoFactorBlock } from "@/components/account/TwoFactorBlock";
+import { SessionsBlock, type SessionRow } from "@/components/account/SessionsBlock";
+import { parseUserAgentLabel } from "@/lib/auth/session-metadata";
+import { cookies } from "next/headers";
 import { Link } from "@/i18n/navigation";
 
 const ERROR_KEYS: Record<string, string> = {
@@ -48,6 +52,7 @@ export default async function ProfilPage({
       newsletterOptIn: users.newsletterOptIn,
       email: users.email,
       pendingEmail: users.pendingEmail,
+      twoFactorEnabledAt: users.twoFactorEnabledAt,
     })
     .from(users)
     .where(eq(users.id, session!.user!.id))
@@ -59,6 +64,51 @@ export default async function ProfilPage({
     .where(eq(accounts.userId, session!.user!.id))
     .limit(1);
   const googleLinked = linkedGoogle.length > 0;
+
+  const cookieName =
+    process.env.NODE_ENV === "production"
+      ? "__Secure-authjs.session-token"
+      : "authjs.session-token";
+  const currentToken = (await cookies()).get(cookieName)?.value ?? "";
+
+  const sessionRows = await db
+    .select({
+      sessionToken: sessions.sessionToken,
+      userAgent: sessions.userAgent,
+      city: sessions.city,
+      country: sessions.country,
+      lastSeenAt: sessions.lastSeenAt,
+      createdAt: sessions.createdAt,
+    })
+    .from(sessions)
+    .where(eq(sessions.userId, session!.user!.id));
+
+  // Lazy throttled last_seen refresh for the current session (≤ once / 15 min).
+  const currentRow = sessionRows.find((s) => s.sessionToken === currentToken);
+  if (currentRow && (!currentRow.lastSeenAt || currentRow.lastSeenAt < new Date(Date.now() - 15 * 60 * 1000))) {
+    await db.update(sessions).set({ lastSeenAt: new Date() }).where(eq(sessions.sessionToken, currentToken));
+  }
+
+  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
+  function lastSeenLabel(d: Date | null): string {
+    if (!d) return "";
+    const mins = Math.round((d.getTime() - Date.now()) / 60000);
+    if (mins > -60) return rtf.format(mins, "minute");
+    const hours = Math.round(mins / 60);
+    if (hours > -24) return rtf.format(hours, "hour");
+    return rtf.format(Math.round(hours / 24), "day");
+  }
+
+  const sessionList: SessionRow[] = sessionRows
+    .sort((a, b) => (b.lastSeenAt?.getTime() ?? 0) - (a.lastSeenAt?.getTime() ?? 0))
+    .map((s) => ({
+      sessionToken: s.sessionToken,
+      label: parseUserAgentLabel(s.userAgent),
+      city: s.city,
+      country: s.country,
+      lastSeenLabel: lastSeenLabel(s.lastSeenAt ?? s.createdAt),
+      isCurrent: s.sessionToken === currentToken,
+    }));
 
   const errorKey = error ? ERROR_KEYS[error] : null;
   return (
@@ -147,6 +197,20 @@ export default async function ProfilPage({
             currentEmail={user?.email ?? ""}
             pendingEmail={user?.pendingEmail ?? null}
           />
+        </div>
+      </div>
+
+      <div id="securite" className="border-warm-brown/10 rounded-xl border bg-white p-6">
+        <h2 className="text-warm-brown text-lg font-medium">{t("twoFactorLabel")}</h2>
+        <div className="mt-4">
+          <TwoFactorBlock locale={locale} enabled={!!user?.twoFactorEnabledAt} />
+        </div>
+      </div>
+
+      <div className="border-warm-brown/10 rounded-xl border bg-white p-6">
+        <h2 className="text-warm-brown text-lg font-medium">{t("sessionsLabel")}</h2>
+        <div className="mt-4">
+          <SessionsBlock sessions={sessionList} />
         </div>
       </div>
 
