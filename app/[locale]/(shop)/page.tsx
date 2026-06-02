@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { localBusinessJsonLd } from "@/lib/seo/structured-data";
+import { serializeJsonLd } from "@/lib/seo/json-ld";
 import { Hero } from "@/components/home/Hero";
 import { FeaturedProducts } from "@/components/home/FeaturedProducts";
 import { StoryTeaser } from "@/components/home/StoryTeaser";
@@ -30,6 +32,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   setRequestLocale(locale);
   return (
     <>
+      {/* LocalBusiness (Bakery) JSON-LD — homepage only. Feeds Google local
+          pack / Maps and "biscuiterie à Liège" generative answers. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeJsonLd(localBusinessJsonLd()),
+        }}
+      />
       {/* Hero rendered without Reveal — above the fold should not flicker */}
       <Hero locale={locale} />
       <Reveal>

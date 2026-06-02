@@ -27,6 +27,12 @@ const STATIC_ENTRIES: StaticEntry[] = [
   { path: "/cartes-cadeaux", changeFrequency: "monthly", priority: 0.8 },
   { path: "/entreprises", changeFrequency: "monthly", priority: 0.7 },
   { path: "/notre-histoire", changeFrequency: "yearly", priority: 0.6 },
+  { path: "/journal", changeFrequency: "weekly", priority: 0.6 },
+  // Journal category index pages (static slugs, localized hreflang).
+  { path: "/journal/categorie/recettes", changeFrequency: "weekly", priority: 0.5 },
+  { path: "/journal/categorie/savoir-faire", changeFrequency: "weekly", priority: 0.5 },
+  { path: "/journal/categorie/saisons", changeFrequency: "weekly", priority: 0.5 },
+  { path: "/journal/categorie/atelier", changeFrequency: "weekly", priority: 0.5 },
   { path: "/contact", changeFrequency: "yearly", priority: 0.5 },
   { path: "/sign-in", changeFrequency: "yearly", priority: 0.3 },
   // Legal

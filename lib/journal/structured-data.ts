@@ -20,6 +20,14 @@ export type StructuredTranslation = {
   recipeSteps: Array<{ n: number; text: string }> | null;
 };
 
+/** Map an app locale to a BCP-47 language tag for `inLanguage`. */
+const LOCALE_BCP47: Record<string, string> = {
+  fr: "fr-BE",
+  nl: "nl-BE",
+  de: "de-BE",
+  en: "en",
+};
+
 export function articleJsonLd(
   article: StructuredArticle,
   t: StructuredTranslation,
@@ -29,6 +37,7 @@ export function articleJsonLd(
     "@context": "https://schema.org",
     "@type": "Article",
     headline: t.title,
+    inLanguage: LOCALE_BCP47[locale] ?? locale,
     image: [article.coverImage],
     datePublished: article.publishedAt?.toISOString(),
     dateModified: article.updatedAt.toISOString(),

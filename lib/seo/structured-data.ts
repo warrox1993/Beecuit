@@ -82,8 +82,16 @@ function isRealPhone(phone: string): boolean {
 }
 
 /**
- * `LocalBusiness` (typed as `Bakery`) — emit when the site has a single
- * primary brick-and-mortar location.
+ * `LocalBusiness` (typed as `Bakery`) — emit on the homepage when the site has
+ * a single primary brick-and-mortar location in Liège. This is the schema that
+ * feeds Google's local pack / Maps panel and is one of the most heavily used
+ * entity types by generative engines for "near me" / city-scoped answers.
+ *
+ * Guards:
+ *  - the placeholder telephone (`+32 4 000 00 00`) is omitted until a real
+ *    number is supplied (emitting a fake phone is worse than omitting it);
+ *  - opening hours are omitted until confirmed by the client — publishing wrong
+ *    hours is actively harmful in the local pack.
  */
 export function localBusinessJsonLd() {
   return {
@@ -95,7 +103,11 @@ export function localBusinessJsonLd() {
     url: SITE_URL,
     image: `${SITE_URL}/opengraph-image`,
     priceRange: "€€",
-    telephone: BUSINESS_CONTACT.telephone,
+    currenciesAccepted: "EUR",
+    servesCuisine: "Bakery",
+    ...(isRealPhone(BUSINESS_CONTACT.telephone)
+      ? { telephone: BUSINESS_CONTACT.telephone }
+      : {}),
     email: BUSINESS_CONTACT.email,
     address: {
       "@type": "PostalAddress",
@@ -106,14 +118,9 @@ export function localBusinessJsonLd() {
       latitude: BUSINESS_GEO.latitude,
       longitude: BUSINESS_GEO.longitude,
     },
-    // Placeholder until real opening hours are confirmed.
-    openingHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        opens: "10:00",
-        closes: "18:00",
-      },
+    areaServed: [
+      { "@type": "City", name: "Liège" },
+      { "@type": "Country", name: "Belgique" },
     ],
     sameAs: [SOCIAL_LINKS.instagram, SOCIAL_LINKS.facebook],
   } as const;
@@ -211,6 +218,29 @@ export function coffretJsonLd(product: ProductLike, locale: SupportedLocale) {
         "@id": `${SITE_URL}/#organization`,
       },
     },
+  } as const;
+}
+
+/**
+ * `FAQPage` JSON-LD — accepts genuine question/answer pairs.
+ *
+ * Note: as of mid-2026 Google no longer renders FAQ rich snippets for most
+ * sites, but generative engines (ChatGPT, Perplexity, Gemini, Claude) still
+ * actively parse FAQPage markup when extracting answers — so it remains a
+ * high-value GEO signal. Keep answers factual and free of marketing copy.
+ */
+export function faqPageJsonLd(items: { question: string; answer: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
   } as const;
 }
 

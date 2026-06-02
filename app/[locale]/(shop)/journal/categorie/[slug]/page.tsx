@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { breadcrumbJsonLd } from "@/lib/seo/structured-data";
+import { serializeJsonLd } from "@/lib/seo/json-ld";
 import { listPublishedArticles } from "@/lib/journal/queries";
 import { JournalCard } from "@/components/journal/JournalCard";
 import { JournalCategoryFilter } from "@/components/journal/JournalCategoryFilter";
@@ -42,6 +44,7 @@ export default async function JournalCategoryPage({
   const { page } = await searchParams;
   setRequestLocale(locale);
   const t = await getTranslations("journal");
+  const tNav = await getTranslations("nav");
 
   if (!VALID_CATEGORIES.includes(slug as Category)) notFound();
   const category = slug as Category;
@@ -55,8 +58,18 @@ export default async function JournalCategoryPage({
     offset: (pageNum - 1) * PAGE_SIZE,
   });
 
+  const breadcrumb = breadcrumbJsonLd([
+    { name: tNav("home"), url: `/${locale}` },
+    { name: t("title"), url: `/${locale}/journal` },
+    { name: t(`categories.${category}`), url: `/${locale}/journal/categorie/${category}` },
+  ]);
+
   return (
     <section className="container mx-auto px-4 py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumb) }}
+      />
       <header className="mb-12 text-center">
         <h1 className="text-warm-brown font-display text-5xl">{t("title")}</h1>
         <p className="text-warm-brown/70 mx-auto mt-4 max-w-xl">{t(`categories.${category}`)}</p>

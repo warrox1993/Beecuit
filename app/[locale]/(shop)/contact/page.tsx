@@ -1,4 +1,7 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
+import { buildPageMetadata } from "@/lib/seo/metadata";
+import { faqPageJsonLd } from "@/lib/seo/structured-data";
+import { serializeJsonLd } from "@/lib/seo/json-ld";
 import { Section } from "@/components/ui-primitives/Section";
 import { Container } from "@/components/ui-primitives/Container";
 import { Eyebrow } from "@/components/ui-primitives/Eyebrow";
@@ -12,15 +15,31 @@ import { ContactFaq } from "@/components/contact/ContactFaq";
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "contact" });
-  return { title: t("seoTitle"), description: t("seoDescription") };
+  return buildPageMetadata({
+    title: t("seoTitle"),
+    description: t("seoDescription"),
+    path: "/contact",
+    locale,
+  });
 }
 
 export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("contact");
+  const faqItems = (["order", "b2b", "press", "delivery"] as const).map((k) => ({
+    question: t(`faq_${k}_title` as Parameters<typeof t>[0]),
+    answer: t(`faq_${k}_body` as Parameters<typeof t>[0]),
+  }));
   return (
     <Section py="lg">
+      {/* FAQPage JSON-LD — read by generative engines for answer extraction. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeJsonLd(faqPageJsonLd(faqItems)),
+        }}
+      />
       <Container variant="narrow">
         <div className="text-center">
           <Eyebrow>{t("eyebrow")}</Eyebrow>
