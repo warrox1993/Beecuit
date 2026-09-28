@@ -18,11 +18,7 @@ export async function generateMetadata({
   });
 }
 
-export default async function EntreprisesPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function EntreprisesPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
 
@@ -33,8 +29,8 @@ export default async function EntreprisesPage({
           Au Fil des Saveurs pour les entreprises
         </h1>
         <p className="text-lg text-amber-800">
-          Cadeaux d&apos;affaires, séminaires, événements clients : on compose un devis sur
-          mesure rien que pour vous.
+          Cadeaux d&apos;affaires, séminaires, événements clients : on compose un devis sur mesure
+          rien que pour vous.
         </p>
       </header>
 

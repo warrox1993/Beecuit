@@ -74,21 +74,18 @@ export function BoxComposer({
 
   return (
     <div className="space-y-6">
-      <div className="bg-honey/10 border border-honey/30 rounded-xl p-4">
+      <div className="bg-honey/10 border-honey/30 rounded-xl border p-4">
         <p className="text-warm-brown font-semibold">
           {total} / {boxSize} biscuits sélectionnés (
           {remaining > 0 ? `${remaining} restants` : "complet"})
         </p>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
         {biscuits.map((b) => {
           const qty = picks[b.id] ?? 0;
           return (
-            <div
-              key={b.id}
-              className="bg-white border border-cookie/30 rounded-xl overflow-hidden"
-            >
-              <div className="relative aspect-[4/3] bg-cookie/30">
+            <div key={b.id} className="border-cookie/30 overflow-hidden rounded-xl border bg-white">
+              <div className="bg-cookie/30 relative aspect-[4/3]">
                 {b.primaryImageUrl ? (
                   <Image
                     src={b.primaryImageUrl}
@@ -104,13 +101,13 @@ export function BoxComposer({
                 )}
               </div>
               <div className="p-3">
-                <p className="font-semibold text-sm text-warm-brown">{b.name}</p>
-                <div className="flex items-center justify-between mt-2">
+                <p className="text-warm-brown text-sm font-semibold">{b.name}</p>
+                <div className="mt-2 flex items-center justify-between">
                   <button
                     type="button"
                     onClick={() => dec(b.id)}
                     disabled={qty === 0 || pending}
-                    className="w-8 h-8 rounded-full border border-cookie/30 disabled:opacity-30"
+                    className="border-cookie/30 h-8 w-8 rounded-full border disabled:opacity-30"
                   >
                     −
                   </button>
@@ -119,7 +116,7 @@ export function BoxComposer({
                     type="button"
                     onClick={() => inc(b.id)}
                     disabled={remaining === 0 || pending}
-                    className="w-8 h-8 rounded-full border border-cookie/30 disabled:opacity-30"
+                    className="border-cookie/30 h-8 w-8 rounded-full border disabled:opacity-30"
                   >
                     +
                   </button>

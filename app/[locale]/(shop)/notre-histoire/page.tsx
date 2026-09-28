@@ -113,10 +113,7 @@ export default async function NotreHistoirePage({
                   </Heading>
                   <Prose>{t(`${key}Body` as "section1Body")}</Prose>
                   <figure className="mt-4 max-w-[40ch]">
-                    <RopeDivider
-                      variant="straight"
-                      className="text-honey-dark/50 w-14"
-                    />
+                    <RopeDivider variant="straight" className="text-honey-dark/50 w-14" />
                     <blockquote className="text-warm-brown/90 font-display mt-3 text-[1.25rem] leading-snug italic md:text-[1.4rem]">
                       « {t(`${key}Quote` as "section1Quote")} »
                     </blockquote>

@@ -10,11 +10,7 @@ import { cn } from "@/lib/utils";
  * shadow. CSS transitions handle the animation; reduced-motion users still
  * get the sizing but without smooth easing.
  */
-export function HeaderClient({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export function HeaderClient({ children }: { children: ReactNode }) {
   const [shrunk, setShrunk] = useState(false);
 
   useEffect(() => {

@@ -14,10 +14,7 @@ function escape(s: string) {
     .replace(/'/g, "&apos;");
 }
 
-export async function GET(
-  _req: Request,
-  ctx: { params: Promise<{ locale: string }> },
-) {
+export async function GET(_req: Request, ctx: { params: Promise<{ locale: string }> }) {
   const { locale } = await ctx.params;
   if (!SUPPORTED.has(locale)) return new Response("Not found", { status: 404 });
 
@@ -26,8 +23,7 @@ export async function GET(
     limit: 20,
   });
   const base = env.NEXT_PUBLIC_APP_URL;
-  const updated =
-    articles[0]?.publishedAt?.toISOString() ?? new Date().toISOString();
+  const updated = articles[0]?.publishedAt?.toISOString() ?? new Date().toISOString();
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">

@@ -1,12 +1,6 @@
 import { Html, Head, Body, Container, Heading, Text } from "@react-email/components";
 
-export function B2BQuoteRejected({
-  contactName,
-  reason,
-}: {
-  contactName: string;
-  reason: string;
-}) {
+export function B2BQuoteRejected({ contactName, reason }: { contactName: string; reason: string }) {
   return (
     <Html>
       <Head />

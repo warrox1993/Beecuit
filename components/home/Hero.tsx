@@ -22,10 +22,7 @@ export async function Hero({ locale: _locale }: { locale: string }) {
           {/* — Text column — */}
           <div className="relative">
             {/* Mini rope flourish above the eyebrow */}
-            <RopeDivider
-              variant="straight"
-              className="text-honey-dark/70 mb-4 w-12"
-            />
+            <RopeDivider variant="straight" className="text-honey-dark/70 mb-4 w-12" />
             <p className="text-text-accent text-[0.7rem] font-semibold tracking-[0.22em] uppercase">
               {t("heroSubEyebrow")}
             </p>

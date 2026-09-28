@@ -6,13 +6,11 @@ export function GiftCardReveal({ code }: { code: string }) {
   const masked = code.replace(/[0-9A-F]/g, "*");
   return (
     <div className="flex items-center gap-2">
-      <code className="font-mono text-sm tracking-wider">
-        {shown ? code : masked}
-      </code>
+      <code className="font-mono text-sm tracking-wider">{shown ? code : masked}</code>
       <button
         type="button"
         onClick={() => setShown((s) => !s)}
-        className="text-xs underline text-warm-brown/60 hover:text-honey-dark"
+        className="text-warm-brown/60 hover:text-honey-dark text-xs underline"
       >
         {shown ? "Masquer" : "Voir"}
       </button>
@@ -20,7 +18,7 @@ export function GiftCardReveal({ code }: { code: string }) {
         <button
           type="button"
           onClick={() => navigator.clipboard.writeText(code)}
-          className="text-xs underline text-warm-brown/60 hover:text-honey-dark"
+          className="text-warm-brown/60 hover:text-honey-dark text-xs underline"
         >
           Copier
         </button>

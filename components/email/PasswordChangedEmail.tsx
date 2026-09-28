@@ -11,12 +11,14 @@ const STRINGS: Record<Locale, { heading: string; body: string; warning: string }
   nl: {
     heading: "Je wachtwoord is gewijzigd",
     body: "Je hebt zojuist het wachtwoord van je Au Fil des Saveurs-account bijgewerkt. Al je sessies zijn om veiligheidsredenen afgemeld.",
-    warning: "Was jij dit niet? Stel je wachtwoord onmiddellijk opnieuw in en neem contact met ons op.",
+    warning:
+      "Was jij dit niet? Stel je wachtwoord onmiddellijk opnieuw in en neem contact met ons op.",
   },
   de: {
     heading: "Dein Passwort wurde geändert",
     body: "Du hast soeben das Passwort deines Au Fil des Saveurs-Kontos aktualisiert. Alle Sitzungen wurden aus Sicherheitsgründen abgemeldet.",
-    warning: "Solltest du das nicht gewesen sein, setze dein Passwort sofort zurück und kontaktiere uns.",
+    warning:
+      "Solltest du das nicht gewesen sein, setze dein Passwort sofort zurück und kontaktiere uns.",
   },
   en: {
     heading: "Your password was changed",
@@ -28,13 +30,17 @@ const STRINGS: Record<Locale, { heading: string; body: string; warning: string }
 export function PasswordChangedEmail({ locale }: { locale: Locale }) {
   const s = STRINGS[locale];
   return (
-    <div style={{ fontFamily: "Georgia, serif", background: "#fbf6ee", color: "#3d2817", padding: 32 }}>
+    <div
+      style={{ fontFamily: "Georgia, serif", background: "#fbf6ee", color: "#3d2817", padding: 32 }}
+    >
       <div style={{ fontFamily: "Snell Roundhand, cursive", color: "#a8731b", fontSize: 24 }}>
         Au fil des saveurs
       </div>
       <h1 style={{ fontSize: 26, marginTop: 12, marginBottom: 8, fontWeight: 500 }}>{s.heading}</h1>
       <p style={{ color: "#5a4030", fontSize: 16, lineHeight: 1.5, marginTop: 16 }}>{s.body}</p>
-      <p style={{ color: "#a13b1f", fontSize: 14, lineHeight: 1.5, marginTop: 16, fontWeight: 600 }}>
+      <p
+        style={{ color: "#a13b1f", fontSize: 14, lineHeight: 1.5, marginTop: 16, fontWeight: 600 }}
+      >
         {s.warning}
       </p>
     </div>

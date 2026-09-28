@@ -74,14 +74,9 @@ export function CoffretCompositionEditor({
             const unit = b?.basePriceCents ?? 0;
             const line = unit * entry.quantity;
             return (
-              <li
-                key={entry.biscuitId}
-                className="flex items-center gap-3 px-3 py-2 text-sm"
-              >
+              <li key={entry.biscuitId} className="flex items-center gap-3 px-3 py-2 text-sm">
                 <div className="min-w-0 flex-1">
-                  <div className="text-warm-brown truncate">
-                    {b?.name ?? "(biscuit supprimé)"}
-                  </div>
+                  <div className="text-warm-brown truncate">{b?.name ?? "(biscuit supprimé)"}</div>
                   <div className="text-warm-brown/60 font-mono text-xs">
                     {b?.sku ?? "—"} · {fmt(unit)} / unité
                   </div>
@@ -130,19 +125,13 @@ export function CoffretCompositionEditor({
             </option>
           ))}
         </select>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={addBiscuit}
-          disabled={!picker}
-          size="sm"
-        >
+        <Button type="button" variant="outline" onClick={addBiscuit} disabled={!picker} size="sm">
           + Ajouter
         </Button>
       </div>
 
       <div className="border-warm-brown/10 flex items-center justify-between border-t pt-2 text-sm">
-        <span className="text-warm-brown/70 text-xs uppercase tracking-wider">
+        <span className="text-warm-brown/70 text-xs tracking-wider uppercase">
           Sous-total des biscuits
         </span>
         <span className="font-mono text-base font-semibold">{fmt(subtotalCents)}</span>

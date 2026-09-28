@@ -34,9 +34,9 @@ async function main() {
   if (!url) throw new Error("DATABASE_URL manquant");
   const sql = neon(url);
 
-  const journal = JSON.parse(
-    readFileSync(join(DRIZZLE_DIR, "meta", "_journal.json"), "utf8"),
-  ) as { entries: JournalEntry[] };
+  const journal = JSON.parse(readFileSync(join(DRIZZLE_DIR, "meta", "_journal.json"), "utf8")) as {
+    entries: JournalEntry[];
+  };
   const entry = journal.entries.find((e) => e.tag === tag);
   if (!entry) throw new Error(`Migration ${tag} absente du journal`);
 
@@ -77,12 +77,15 @@ async function main() {
 
   // Enregistrer le suivi (style drizzle : hash sha256 du fichier + when du journal).
   const hash = createHash("sha256").update(content).digest("hex");
-  const existing = await sql`SELECT 1 FROM drizzle.__drizzle_migrations WHERE created_at = ${entry.when}`;
+  const existing =
+    await sql`SELECT 1 FROM drizzle.__drizzle_migrations WHERE created_at = ${entry.when}`;
   if (existing.length === 0) {
     await sql`INSERT INTO drizzle.__drizzle_migrations (hash, created_at) VALUES (${hash}, ${entry.when})`;
   }
 
-  console.log(`\n✓ ${tag} : ${executed} appliquée(s), ${skipped} déjà présente(s). Suivi enregistré.`);
+  console.log(
+    `\n✓ ${tag} : ${executed} appliquée(s), ${skipped} déjà présente(s). Suivi enregistré.`,
+  );
 }
 
 main().catch((err) => {

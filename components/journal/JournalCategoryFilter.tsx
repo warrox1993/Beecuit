@@ -23,9 +23,7 @@ export function JournalCategoryFilter({
   return (
     <nav className="my-8 flex flex-wrap justify-center gap-2" aria-label="Catégories">
       {cats.map((c) => {
-        const href = c.slug
-          ? `/${locale}/journal/categorie/${c.slug}`
-          : `/${locale}/journal`;
+        const href = c.slug ? `/${locale}/journal/categorie/${c.slug}` : `/${locale}/journal`;
         const isActive = c.slug === (active ?? null);
         return (
           <Link

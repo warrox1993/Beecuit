@@ -35,10 +35,7 @@ export async function listActiveCategoriesForLocale(locale: Locale) {
 export async function listProductsForLocale(locale: Locale, categorySlug?: string) {
   // Biscuit catalog only. Coffrets and gift cards have their own pages
   // (/coffrets and /cartes-cadeaux).
-  const baseWhere = and(
-    eq(products.isActive, true),
-    sql`${products.type} = 'biscuit'`,
-  );
+  const baseWhere = and(eq(products.isActive, true), sql`${products.type} = 'biscuit'`);
   const where = categorySlug
     ? and(
         baseWhere,

@@ -16,37 +16,31 @@ export function PackagingTierSelector({
     onChange?.(next);
   };
   return (
-    <div className="bg-white border border-cookie/40 rounded-xl p-4 my-3">
-      <label className="block text-sm font-semibold mb-2 text-warm-brown">
-        📦 Emballage
-      </label>
+    <div className="border-cookie/40 my-3 rounded-xl border bg-white p-4">
+      <label className="text-warm-brown mb-2 block text-sm font-semibold">📦 Emballage</label>
       <input type="hidden" name={name} value={v} />
       <div className="grid grid-cols-2 gap-2">
         <button
           type="button"
           onClick={() => set("standard")}
-          className={`text-left p-3 rounded-lg border-2 transition-colors ${
-            v === "standard"
-              ? "border-honey bg-honey/10"
-              : "border-cookie/30"
+          className={`rounded-lg border-2 p-3 text-left transition-colors ${
+            v === "standard" ? "border-honey bg-honey/10" : "border-cookie/30"
           }`}
         >
-          <div className="font-semibold text-sm">Standard</div>
-          <div className="text-xs text-warm-brown/70">Carton recyclé</div>
-          <div className="text-xs text-honey-dark mt-1">Inclus</div>
+          <div className="text-sm font-semibold">Standard</div>
+          <div className="text-warm-brown/70 text-xs">Carton recyclé</div>
+          <div className="text-honey-dark mt-1 text-xs">Inclus</div>
         </button>
         <button
           type="button"
           onClick={() => set("premium")}
-          className={`text-left p-3 rounded-lg border-2 transition-colors ${
-            v === "premium"
-              ? "border-honey bg-honey/10"
-              : "border-cookie/30"
+          className={`rounded-lg border-2 p-3 text-left transition-colors ${
+            v === "premium" ? "border-honey bg-honey/10" : "border-cookie/30"
           }`}
         >
-          <div className="font-semibold text-sm">Premium</div>
-          <div className="text-xs text-warm-brown/70">Cire d&apos;abeille + ruban</div>
-          <div className="text-xs text-honey-dark mt-1">+ 2,50 €</div>
+          <div className="text-sm font-semibold">Premium</div>
+          <div className="text-warm-brown/70 text-xs">Cire d&apos;abeille + ruban</div>
+          <div className="text-honey-dark mt-1 text-xs">+ 2,50 €</div>
         </button>
       </div>
     </div>

@@ -1,12 +1,4 @@
-import {
-  Html,
-  Head,
-  Body,
-  Container,
-  Heading,
-  Text,
-  Hr,
-} from "@react-email/components";
+import { Html, Head, Body, Container, Heading, Text, Hr } from "@react-email/components";
 
 type Biscuit = { name: string; quantity: number };
 
@@ -36,16 +28,12 @@ export function SubscriptionBoxShipped({
           <Heading style={{ color: "#E4A11B", fontSize: 28, margin: 0 }}>
             Au Fil des Saveurs
           </Heading>
-          <Text style={{ fontSize: 18 }}>
-            {recipientName ? `${recipientName},` : "Bonjour,"}
-          </Text>
+          <Text style={{ fontSize: 18 }}>{recipientName ? `${recipientName},` : "Bonjour,"}</Text>
           <Text>
             Ta box de <strong>{cycleYearMonth}</strong> est en route !
           </Text>
           <Hr />
-          <Text style={{ fontSize: 13, color: "#8B6F47", margin: "4px 0" }}>
-            Contenu :
-          </Text>
+          <Text style={{ fontSize: 13, color: "#8B6F47", margin: "4px 0" }}>Contenu :</Text>
           <ul style={{ margin: "4px 0 0 16px", padding: 0 }}>
             {biscuits.map((b, i) => (
               <li key={i} style={{ fontSize: 13, color: "#5C4A38" }}>
@@ -56,10 +44,7 @@ export function SubscriptionBoxShipped({
           <Hr />
           <Text style={{ fontSize: 12, color: "#888" }}>
             Suivi disponible dans ton{" "}
-            <a
-              href={`${appBaseUrl}/fr/compte/commandes`}
-              style={{ color: "#D4A574" }}
-            >
+            <a href={`${appBaseUrl}/fr/compte/commandes`} style={{ color: "#D4A574" }}>
               espace commandes
             </a>
             .

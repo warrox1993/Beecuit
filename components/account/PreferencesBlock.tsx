@@ -35,12 +35,8 @@ export function PreferencesBlock({
           <option value="de">Deutsch</option>
         </select>
       </label>
-      <label className="flex items-center gap-2 text-sm text-warm-brown">
-        <input
-          type="checkbox"
-          name="newsletterOptIn"
-          defaultChecked={newsletterOptIn}
-        />
+      <label className="text-warm-brown flex items-center gap-2 text-sm">
+        <input type="checkbox" name="newsletterOptIn" defaultChecked={newsletterOptIn} />
         <span>{t("signUpNewsletter")}</span>
       </label>
       <Button type="submit" disabled={pending} variant="outline">

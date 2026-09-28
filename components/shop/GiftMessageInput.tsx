@@ -12,10 +12,9 @@ export function GiftMessageInput({
 }) {
   const [v, setV] = useState(value ?? "");
   return (
-    <div className="bg-white border border-cookie/40 rounded-xl p-4 my-3">
-      <label className="block text-sm font-semibold mb-2 text-warm-brown">
-        ✉️ Message cadeau{" "}
-        <span className="font-normal text-warm-brown/60">(optionnel)</span>
+    <div className="border-cookie/40 my-3 rounded-xl border bg-white p-4">
+      <label className="text-warm-brown mb-2 block text-sm font-semibold">
+        ✉️ Message cadeau <span className="text-warm-brown/60 font-normal">(optionnel)</span>
       </label>
       <textarea
         name={name}
@@ -27,11 +26,9 @@ export function GiftMessageInput({
         maxLength={200}
         rows={3}
         placeholder="Joyeux anniversaire Mamie..."
-        className="w-full border border-cookie/30 rounded p-2 text-sm focus:border-honey focus:outline-none"
+        className="border-cookie/30 focus:border-honey w-full rounded border p-2 text-sm focus:outline-none"
       />
-      <div className="text-xs text-warm-brown/60 text-right mt-1">
-        {v.length}/200
-      </div>
+      <div className="text-warm-brown/60 mt-1 text-right text-xs">{v.length}/200</div>
     </div>
   );
 }

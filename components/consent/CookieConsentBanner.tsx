@@ -12,14 +12,23 @@ const FOCUSABLE_SELECTOR =
 
 /** Retourne les éléments focusables visibles à l'intérieur d'un conteneur. */
 function getFocusableElements(container: HTMLElement): HTMLElement[] {
-  return Array.from(
-    container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
-  ).filter((el) => !el.hasAttribute("disabled") && el.offsetParent !== null);
+  return Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter(
+    (el) => !el.hasAttribute("disabled") && el.offsetParent !== null,
+  );
 }
 
 export function CookieConsentBanner() {
   const t = useTranslations("consent");
-  const { consent, showBanner, prefsOpen, acceptAll, rejectAll, save, openPreferences, closePreferences } = useConsent();
+  const {
+    consent,
+    showBanner,
+    prefsOpen,
+    acceptAll,
+    rejectAll,
+    save,
+    openPreferences,
+    closePreferences,
+  } = useConsent();
   const [analytics, setAnalytics] = useState(false);
   const [marketing, setMarketing] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -123,13 +132,22 @@ export function CookieConsentBanner() {
 
               {!prefsOpen ? (
                 <div className="mt-3.5 flex flex-wrap gap-2.5 max-sm:justify-center">
-                  <button onClick={acceptAll} className="bg-honey text-cream hover:bg-honey-dark rounded-full px-4 py-2 text-sm font-semibold">
+                  <button
+                    onClick={acceptAll}
+                    className="bg-honey text-cream hover:bg-honey-dark rounded-full px-4 py-2 text-sm font-semibold"
+                  >
                     {t("acceptAll")}
                   </button>
-                  <button onClick={rejectAll} className="border-warm-brown/20 text-warm-brown hover:bg-honey/5 rounded-full border px-4 py-2 text-sm font-semibold">
+                  <button
+                    onClick={rejectAll}
+                    className="border-warm-brown/20 text-warm-brown hover:bg-honey/5 rounded-full border px-4 py-2 text-sm font-semibold"
+                  >
                     {t("reject")}
                   </button>
-                  <button onClick={openPreferences} className="text-honey-dark px-2 py-2 text-sm font-semibold underline">
+                  <button
+                    onClick={openPreferences}
+                    className="text-honey-dark px-2 py-2 text-sm font-semibold underline"
+                  >
                     {t("customize")}
                   </button>
                 </div>
@@ -142,22 +160,36 @@ export function CookieConsentBanner() {
                     </li>
                     <li className="text-warm-brown/80 flex items-center justify-between gap-3 text-sm">
                       <label className="flex items-center gap-2">
-                        <input type="checkbox" checked={analytics} onChange={(e) => setAnalytics(e.target.checked)} />
+                        <input
+                          type="checkbox"
+                          checked={analytics}
+                          onChange={(e) => setAnalytics(e.target.checked)}
+                        />
                         {t("catAnalytics")}
                       </label>
                     </li>
                     <li className="text-warm-brown/80 flex items-center justify-between gap-3 text-sm">
                       <label className="flex items-center gap-2">
-                        <input type="checkbox" checked={marketing} onChange={(e) => setMarketing(e.target.checked)} />
+                        <input
+                          type="checkbox"
+                          checked={marketing}
+                          onChange={(e) => setMarketing(e.target.checked)}
+                        />
                         {t("catMarketing")}
                       </label>
                     </li>
                   </ul>
                   <div className="mt-3 flex flex-wrap gap-2.5 max-sm:justify-center">
-                    <button onClick={() => save({ analytics, marketing })} className="bg-honey text-cream hover:bg-honey-dark rounded-full px-4 py-2 text-sm font-semibold">
+                    <button
+                      onClick={() => save({ analytics, marketing })}
+                      className="bg-honey text-cream hover:bg-honey-dark rounded-full px-4 py-2 text-sm font-semibold"
+                    >
                       {t("save")}
                     </button>
-                    <button onClick={closePreferences} className="text-warm-brown/60 px-2 py-2 text-sm underline">
+                    <button
+                      onClick={closePreferences}
+                      className="text-warm-brown/60 px-2 py-2 text-sm underline"
+                    >
                       {t("back")}
                     </button>
                   </div>

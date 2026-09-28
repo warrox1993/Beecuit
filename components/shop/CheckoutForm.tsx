@@ -86,7 +86,11 @@ export function CheckoutForm({
       <label htmlFor={id} className="block">
         <span className="text-warm-brown mb-1 block text-xs font-medium">
           {label}
-          {required && <span aria-hidden className="text-terracotta ml-0.5">*</span>}
+          {required && (
+            <span aria-hidden className="text-terracotta ml-0.5">
+              *
+            </span>
+          )}
         </span>
         <input
           id={id}
@@ -140,7 +144,10 @@ export function CheckoutForm({
         </legend>
         <label htmlFor={emailId} className="block">
           <span className="text-warm-brown mb-1 block text-xs font-medium">
-            Adresse email <span aria-hidden className="text-terracotta ml-0.5">*</span>
+            Adresse email{" "}
+            <span aria-hidden className="text-terracotta ml-0.5">
+              *
+            </span>
           </span>
           <input
             id={emailId}
@@ -223,13 +230,7 @@ export function CheckoutForm({
           Livraison
         </legend>
         <label className="border-warm-brown/20 flex items-center gap-3 rounded-md border bg-white p-4 text-sm">
-          <input
-            type="radio"
-            name="shipping-method"
-            value="bpost_express_24h"
-            checked
-            readOnly
-          />
+          <input type="radio" name="shipping-method" value="bpost_express_24h" checked readOnly />
           <span className="text-warm-brown">bpost Express 24h — tarif calculé selon poids</span>
         </label>
       </fieldset>

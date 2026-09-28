@@ -24,9 +24,7 @@ function addMonths(d: Date, months: number): Date {
  * into the project's address snapshot shape used by orders and subscriptions.
  * Returns null if no usable address is present.
  */
-function customerToAddressSnapshot(
-  customer: Stripe.Customer,
-): Record<string, unknown> | null {
+function customerToAddressSnapshot(customer: Stripe.Customer): Record<string, unknown> | null {
   const shipping = customer.shipping;
   if (shipping?.address && shipping.address.line1) {
     const a = shipping.address;
@@ -77,8 +75,7 @@ export async function handleSubscriptionCreated(sub: Stripe.Subscription) {
   const startedAt = new Date(sub.created * 1000);
   const engagementEndsAt = engagementMonths > 0 ? addMonths(startedAt, engagementMonths) : null;
 
-  const customerId =
-    typeof sub.customer === "string" ? sub.customer : sub.customer.id;
+  const customerId = typeof sub.customer === "string" ? sub.customer : sub.customer.id;
 
   // Fetch the Stripe Customer to capture the shipping address collected during Checkout.
   // Without this, the first monthly box order would ship with an empty address until the
@@ -150,9 +147,7 @@ export async function handleInvoicePaid(invoice: Stripe.Invoice) {
     payment_intent?: string | { id: string };
   };
   const subId =
-    typeof invAny.subscription === "string"
-      ? invAny.subscription
-      : invAny.subscription?.id;
+    typeof invAny.subscription === "string" ? invAny.subscription : invAny.subscription?.id;
   if (!subId) return;
 
   const [sub] = await db
@@ -288,9 +283,7 @@ export async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
     payment_intent?: string | { id: string };
   };
   const subId =
-    typeof invAny.subscription === "string"
-      ? invAny.subscription
-      : invAny.subscription?.id;
+    typeof invAny.subscription === "string" ? invAny.subscription : invAny.subscription?.id;
   if (!subId) return;
   await db
     .update(subscriptions)

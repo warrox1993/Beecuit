@@ -136,9 +136,7 @@ export async function adminSetQuote(input: AdminSetQuoteInput): Promise<Result> 
   } catch (e) {
     // Roll back Stripe objects so we don't leave orphan live PaymentLink/Product
     // referencing a quote row that never recorded them.
-    await stripe.paymentLinks
-      .update(stripeRes.paymentLinkId, { active: false })
-      .catch(() => {});
+    await stripe.paymentLinks.update(stripeRes.paymentLinkId, { active: false }).catch(() => {});
     await stripe.products.update(stripeRes.productId, { active: false }).catch(() => {});
     console.error("[b2b] DB update failed after Stripe creation, deactivated Stripe objects", e);
     return { ok: false, error: "Database error; quote not saved. Please retry." };

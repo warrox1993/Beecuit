@@ -28,7 +28,7 @@ export default async function VerifyEmailPage({
         >
           <Logo variant="wordmark" className="h-12 w-auto" />
         </Link>
-        <div className="border-warm-brown/10 rounded-2xl border bg-white p-8 shadow-sm text-center">
+        <div className="border-warm-brown/10 rounded-2xl border bg-white p-8 text-center shadow-sm">
           <Heading as="h1" size="h3">
             {t("verifyExpired")}
           </Heading>

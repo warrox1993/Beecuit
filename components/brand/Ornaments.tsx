@@ -106,12 +106,7 @@ export function CornerScallop({
   className?: string;
 }) {
   return (
-    <svg
-      viewBox="0 0 40 40"
-      className={cn("h-10 w-10", className)}
-      role="presentation"
-      aria-hidden
-    >
+    <svg viewBox="0 0 40 40" className={cn("h-10 w-10", className)} role="presentation" aria-hidden>
       <g transform={CORNER_TRANSFORM[corner]}>
         {/* L-shaped scallop ornament — small dome arcs forming a corner */}
         <path
@@ -140,12 +135,7 @@ export function CornerScallop({
  */
 export function DotFlourish({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 60 8"
-      className={cn("h-2 w-15", className)}
-      role="presentation"
-      aria-hidden
-    >
+    <svg viewBox="0 0 60 8" className={cn("h-2 w-15", className)} role="presentation" aria-hidden>
       <path d="M6 4 L 10 1 L 14 4 L 10 7 Z" fill="currentColor" />
       <circle cx="30" cy="4" r="1.5" fill="currentColor" />
       <path d="M46 4 L 50 1 L 54 4 L 50 7 Z" fill="currentColor" />

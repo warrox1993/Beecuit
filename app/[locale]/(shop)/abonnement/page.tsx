@@ -19,26 +19,22 @@ export async function generateMetadata({
   });
 }
 
-export default async function AbonnementPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function AbonnementPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
 
   return (
     <Container className="py-12">
-      <header className="mb-10 text-center max-w-2xl mx-auto">
-        <p className="text-xs uppercase tracking-widest text-warm-brown/60 mb-2">
+      <header className="mx-auto mb-10 max-w-2xl text-center">
+        <p className="text-warm-brown/60 mb-2 text-xs tracking-widest uppercase">
           Abonnement mensuel
         </p>
-        <h1 className="text-4xl md:text-5xl font-display text-warm-brown">
+        <h1 className="font-display text-warm-brown text-4xl md:text-5xl">
           Ta box Au Fil des Saveurs chaque mois
         </h1>
-        <p className="mt-3 text-warm-brown/70">
-          Choisis ta formule, compose ta box chaque mois, on livre.
-          Tous les abonnés reçoivent leur box le 1er du mois.
+        <p className="text-warm-brown/70 mt-3">
+          Choisis ta formule, compose ta box chaque mois, on livre. Tous les abonnés reçoivent leur
+          box le 1er du mois.
         </p>
       </header>
       <SubscriptionPricingTable locale={locale} />

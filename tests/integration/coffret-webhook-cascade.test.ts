@@ -13,11 +13,7 @@ let biscuitId: string;
 let initialStock: number;
 
 beforeAll(async () => {
-  const [b] = await db
-    .select()
-    .from(products)
-    .where(eq(products.type, "biscuit"))
-    .limit(1);
+  const [b] = await db.select().from(products).where(eq(products.type, "biscuit")).limit(1);
   if (!b) throw new Error("Need a biscuit in DB");
   biscuitId = b.id;
   initialStock = b.stockQuantity;
@@ -25,10 +21,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await db
-    .update(products)
-    .set({ stockQuantity: initialStock })
-    .where(eq(products.id, biscuitId));
+  await db.update(products).set({ stockQuantity: initialStock }).where(eq(products.id, biscuitId));
 });
 
 describe("decrementCoffretStockCascade", () => {
@@ -44,11 +37,7 @@ describe("decrementCoffretStockCascade", () => {
         },
       },
     ]);
-    const [updated] = await db
-      .select()
-      .from(products)
-      .where(eq(products.id, biscuitId))
-      .limit(1);
+    const [updated] = await db.select().from(products).where(eq(products.id, biscuitId)).limit(1);
     expect(updated!.stockQuantity).toBe(100 - 2 * 3); // 94
   });
 
@@ -59,11 +48,7 @@ describe("decrementCoffretStockCascade", () => {
       { quantity: 5, metadata: null },
       { quantity: 5, metadata: { type: "biscuit" } as unknown },
     ]);
-    const [updated] = await db
-      .select()
-      .from(products)
-      .where(eq(products.id, biscuitId))
-      .limit(1);
+    const [updated] = await db.select().from(products).where(eq(products.id, biscuitId)).limit(1);
     expect(updated!.stockQuantity).toBe(50); // untouched
   });
 
@@ -78,11 +63,7 @@ describe("decrementCoffretStockCascade", () => {
         },
       },
     ]);
-    const [updated] = await db
-      .select()
-      .from(products)
-      .where(eq(products.id, biscuitId))
-      .limit(1);
+    const [updated] = await db.select().from(products).where(eq(products.id, biscuitId)).limit(1);
     expect(updated!.stockQuantity).toBe(0);
   });
 });

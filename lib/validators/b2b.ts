@@ -6,11 +6,7 @@ export const CreateB2BQuoteSchema = z.object({
   email: z.string().trim().email("Email invalide").max(254),
   phone: z.string().trim().max(40).optional().or(z.literal("")),
   vatNumber: z.string().trim().max(40).optional().or(z.literal("")),
-  requestedProducts: z
-    .string()
-    .trim()
-    .min(10, "Décris ta demande (10 caractères min)")
-    .max(5000),
+  requestedProducts: z.string().trim().min(10, "Décris ta demande (10 caractères min)").max(5000),
   targetQuantity: z.coerce.number().int().positive().max(100000).optional(),
   targetDeliveryDate: z
     .string()

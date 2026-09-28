@@ -13,7 +13,11 @@ let coffretId: string;
 let cartId: string;
 
 beforeAll(async () => {
-  const [row] = await db.select({ id: products.id }).from(products).where(eq(products.type, "coffret")).limit(1);
+  const [row] = await db
+    .select({ id: products.id })
+    .from(products)
+    .where(eq(products.type, "coffret"))
+    .limit(1);
   if (!row) throw new Error("Need at least 1 coffret in DB");
   coffretId = row.id;
   // Ensure test user exists (FK target for carts.user_id)
@@ -34,10 +38,18 @@ describe("addToCart with coffret metadata (integration)", () => {
       quantity: 1,
       metadata: { type: "coffret", giftMessage: "Joyeux anniv !", packagingTier: "premium" },
     });
-    const rows = await db.select().from(cartItems).innerJoin(carts, eq(carts.id, cartItems.cartId)).where(eq(carts.userId, userId));
+    const rows = await db
+      .select()
+      .from(cartItems)
+      .innerJoin(carts, eq(carts.id, cartItems.cartId))
+      .where(eq(carts.userId, userId));
     expect(rows).toHaveLength(1);
     cartId = rows[0]!.carts.id;
-    expect(rows[0]!.cart_items.metadata).toEqual({ type: "coffret", giftMessage: "Joyeux anniv !", packagingTier: "premium" });
+    expect(rows[0]!.cart_items.metadata).toEqual({
+      type: "coffret",
+      giftMessage: "Joyeux anniv !",
+      packagingTier: "premium",
+    });
   });
 
   it("creates 2 separate rows when same coffret added with different metadata", async () => {
@@ -47,7 +59,11 @@ describe("addToCart with coffret metadata (integration)", () => {
       quantity: 1,
       metadata: { type: "coffret", giftMessage: "Pour papa", packagingTier: "standard" },
     });
-    const rows = await db.select().from(cartItems).innerJoin(carts, eq(carts.id, cartItems.cartId)).where(eq(carts.userId, userId));
+    const rows = await db
+      .select()
+      .from(cartItems)
+      .innerJoin(carts, eq(carts.id, cartItems.cartId))
+      .where(eq(carts.userId, userId));
     expect(rows.length).toBeGreaterThanOrEqual(2);
   });
 });

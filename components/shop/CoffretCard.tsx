@@ -75,9 +75,7 @@ export async function CoffretCard({ locale, coffret }: Props) {
 
           {/* — Composition reveal overlay (hover/focus on desktop, always on touch) — */}
           {breakdownNames.length > 0 && (
-            <div
-              className="bg-brand-chocolate/85 text-cream-gold pointer-events-none absolute right-3 bottom-3 left-3 max-h-0 overflow-hidden rounded-xl opacity-0 backdrop-blur-sm transition-all duration-400 ease-out group-hover:max-h-44 group-hover:opacity-100 group-focus-within:max-h-44 group-focus-within:opacity-100 motion-reduce:max-h-44 motion-reduce:opacity-100 [@media(hover:none)]:max-h-44 [@media(hover:none)]:opacity-100"
-            >
+            <div className="bg-brand-chocolate/85 text-cream-gold pointer-events-none absolute right-3 bottom-3 left-3 max-h-0 overflow-hidden rounded-xl opacity-0 backdrop-blur-sm transition-all duration-400 ease-out group-focus-within:max-h-44 group-focus-within:opacity-100 group-hover:max-h-44 group-hover:opacity-100 motion-reduce:max-h-44 motion-reduce:opacity-100 [@media(hover:none)]:max-h-44 [@media(hover:none)]:opacity-100">
               <div className="p-3 text-left">
                 <p className="font-script mb-1 text-base">{includesLabel}</p>
                 <ul className="text-cream space-y-0.5 text-[0.78rem] leading-tight">
@@ -107,7 +105,7 @@ export async function CoffretCard({ locale, coffret }: Props) {
             {coffret.shortDescription}
           </p>
           <div className="mt-4 flex items-baseline justify-between">
-            <span className="text-honey-dark border-honey-dark/30 group-hover:border-honey-dark/70 group-hover:bg-honey-dark/5 inline-flex items-baseline rounded-full border px-3 py-1 font-display text-[1rem] transition-colors">
+            <span className="text-honey-dark border-honey-dark/30 group-hover:border-honey-dark/70 group-hover:bg-honey-dark/5 font-display inline-flex items-baseline rounded-full border px-3 py-1 text-[1rem] transition-colors">
               {fmt(coffret.price.totalCents)}
             </span>
             {coffret.price.discountCents > 0 && (

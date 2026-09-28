@@ -27,7 +27,9 @@ export function SessionsBlock({ sessions }: { sessions: SessionRow[] }) {
             <div>
               <p className="text-warm-brown text-sm font-medium">
                 {s.label}
-                {s.isCurrent && <span className="text-honey-dark ml-2 text-xs">· {t("sessionCurrent")}</span>}
+                {s.isCurrent && (
+                  <span className="text-honey-dark ml-2 text-xs">· {t("sessionCurrent")}</span>
+                )}
               </p>
               <p className="text-warm-brown/60 text-xs">
                 {[s.city, s.country].filter(Boolean).join(", ")}
@@ -36,11 +38,13 @@ export function SessionsBlock({ sessions }: { sessions: SessionRow[] }) {
               </p>
             </div>
             {!s.isCurrent && (
-              <form
-                action={(fd) => start(() => revokeSession(fd).then(() => {}))}
-              >
+              <form action={(fd) => start(() => revokeSession(fd).then(() => {}))}>
                 <input type="hidden" name="handle" value={s.handle} />
-                <button type="submit" disabled={pending} className="text-terracotta text-xs underline">
+                <button
+                  type="submit"
+                  disabled={pending}
+                  className="text-terracotta text-xs underline"
+                >
                   {t("sessionRevoke")}
                 </button>
               </form>
@@ -50,7 +54,9 @@ export function SessionsBlock({ sessions }: { sessions: SessionRow[] }) {
       </ul>
       {hasOthers && (
         <form action={() => start(() => revokeAllOtherSessions().then(() => {}))}>
-          <Button type="submit" variant="outline" disabled={pending}>{t("sessionRevokeAllOthers")}</Button>
+          <Button type="submit" variant="outline" disabled={pending}>
+            {t("sessionRevokeAllOthers")}
+          </Button>
         </form>
       )}
     </div>

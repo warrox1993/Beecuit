@@ -22,9 +22,9 @@ export function JournalMetaSidebar({ article }: { article: Article }) {
   const [pinterestImage, setPinterestImage] = useState(article.pinterestImage ?? "");
   const [recipePrepMin, setRecipePrepMin] = useState<number | "">(article.recipePrepMin ?? "");
   const [recipeCookMin, setRecipeCookMin] = useState<number | "">(article.recipeCookMin ?? "");
-  const [recipeDifficulty, setRecipeDifficulty] = useState<
-    "facile" | "moyen" | "avance" | ""
-  >(article.recipeDifficulty ?? "");
+  const [recipeDifficulty, setRecipeDifficulty] = useState<"facile" | "moyen" | "avance" | "">(
+    article.recipeDifficulty ?? "",
+  );
   const [featuredProductSlugs, setFeaturedProductSlugs] = useState(
     article.featuredProductSlugs.join(", "),
   );
@@ -78,11 +78,7 @@ export function JournalMetaSidebar({ article }: { article: Article }) {
                 const url = await downsizeAndUpload(file, uploadToBlob);
                 setCoverImage(url);
               } catch (err) {
-                setMsg(
-                  err instanceof Error
-                    ? `Erreur upload : ${err.message}`
-                    : "Erreur upload",
-                );
+                setMsg(err instanceof Error ? `Erreur upload : ${err.message}` : "Erreur upload");
               } finally {
                 setUploadingCover(false);
                 if (coverInputRef.current) coverInputRef.current.value = "";
@@ -111,9 +107,7 @@ export function JournalMetaSidebar({ article }: { article: Article }) {
       </label>
 
       <div className="block text-sm">
-        <span className="text-warm-brown font-medium">
-          Image Pinterest (URL, optionnel)
-        </span>
+        <span className="text-warm-brown font-medium">Image Pinterest (URL, optionnel)</span>
         <div className="mt-1 flex gap-2">
           <input
             type="url"
@@ -134,11 +128,7 @@ export function JournalMetaSidebar({ article }: { article: Article }) {
                 const url = await downsizeAndUpload(file, uploadToBlob);
                 setPinterestImage(url);
               } catch (err) {
-                setMsg(
-                  err instanceof Error
-                    ? `Erreur upload : ${err.message}`
-                    : "Erreur upload",
-                );
+                setMsg(err instanceof Error ? `Erreur upload : ${err.message}` : "Erreur upload");
               } finally {
                 setUploadingPinterest(false);
                 if (pinterestInputRef.current) pinterestInputRef.current.value = "";
@@ -256,10 +246,7 @@ async function loadImage(file: File): Promise<HTMLImageElement> {
   });
 }
 
-async function downsizeAndUpload(
-  file: File,
-  uploadFn: typeof uploadToBlob,
-): Promise<string> {
+async function downsizeAndUpload(file: File, uploadFn: typeof uploadToBlob): Promise<string> {
   const img = await loadImage(file);
   const canvas = document.createElement("canvas");
   const maxW = 2000;
@@ -280,10 +267,7 @@ async function downsizeAndUpload(
     );
   });
   const fd = new FormData();
-  fd.append(
-    "file",
-    new File([blob], file.name.replace(/\.\w+$/, ".jpg"), { type: "image/jpeg" }),
-  );
+  fd.append("file", new File([blob], file.name.replace(/\.\w+$/, ".jpg"), { type: "image/jpeg" }));
   const result = await uploadFn(fd);
   return result.url;
 }

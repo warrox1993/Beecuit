@@ -48,9 +48,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await db
-    .delete(giftCardRedemptions)
-    .where(eq(giftCardRedemptions.giftCardId, cardId));
+  await db.delete(giftCardRedemptions).where(eq(giftCardRedemptions.giftCardId, cardId));
   await db.delete(orders).where(eq(orders.id, orderId));
   await db.delete(giftCards).where(eq(giftCards.id, cardId));
 });

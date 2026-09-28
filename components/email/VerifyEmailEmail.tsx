@@ -2,15 +2,18 @@ import * as React from "react";
 
 type Locale = "fr" | "nl" | "de" | "en";
 
-const STRINGS: Record<Locale, {
-  preheader: string;
-  heading: string;
-  body: string;
-  cta: string;
-  fallback: string;
-  expires: string;
-  ignore: string;
-}> = {
+const STRINGS: Record<
+  Locale,
+  {
+    preheader: string;
+    heading: string;
+    body: string;
+    cta: string;
+    fallback: string;
+    expires: string;
+    ignore: string;
+  }
+> = {
   fr: {
     preheader: "Confirme ton adresse email",
     heading: "Confirme ton adresse email",
@@ -52,11 +55,15 @@ const STRINGS: Record<Locale, {
 export function VerifyEmailEmail({ locale, verifyUrl }: { locale: Locale; verifyUrl: string }) {
   const s = STRINGS[locale];
   return (
-    <div style={{ fontFamily: "Georgia, serif", background: "#fbf6ee", color: "#3d2817", padding: 32 }}>
+    <div
+      style={{ fontFamily: "Georgia, serif", background: "#fbf6ee", color: "#3d2817", padding: 32 }}
+    >
       <div style={{ fontFamily: "Snell Roundhand, cursive", color: "#a8731b", fontSize: 24 }}>
         Au fil des saveurs
       </div>
-      <h1 style={{ fontSize: 26, color: "#3d2817", marginTop: 12, marginBottom: 8, fontWeight: 500 }}>
+      <h1
+        style={{ fontSize: 26, color: "#3d2817", marginTop: 12, marginBottom: 8, fontWeight: 500 }}
+      >
         {s.heading}
       </h1>
       <p style={{ color: "#5a4030", fontSize: 16, lineHeight: 1.5, marginTop: 16 }}>{s.body}</p>

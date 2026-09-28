@@ -12,7 +12,13 @@ const FORBIDDEN = [
   "speculoos",
 ];
 
-const LABELS = ["strengthVeryWeak", "strengthWeak", "strengthFair", "strengthGood", "strengthStrong"];
+const LABELS = [
+  "strengthVeryWeak",
+  "strengthWeak",
+  "strengthFair",
+  "strengthGood",
+  "strengthStrong",
+];
 
 export function scorePassword(password: string, opts?: { email?: string }): StrengthResult {
   const pw = password ?? "";

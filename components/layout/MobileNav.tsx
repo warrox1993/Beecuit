@@ -39,10 +39,7 @@ export function MobileNav({
         side="right"
         className="bg-cream-light border-warm-brown/15 flex w-80 flex-col border-l"
       >
-        <div
-          aria-hidden
-          className="bg-warm-brown/20 mx-auto mt-2 h-1 w-12 rounded-full"
-        />
+        <div aria-hidden className="bg-warm-brown/20 mx-auto mt-2 h-1 w-12 rounded-full" />
         <SheetHeader className="px-5 pt-3 pb-1">
           <SheetTitle asChild>
             <span className="inline-flex items-center">

@@ -95,11 +95,7 @@ export async function getCartContents(cartId: string, locale: Locale): Promise<C
         coffretBreakdown = p.breakdown;
         coffretDiscountPercent = p.discountPercent;
         // Narrow metadata to coffret variant (gift_card variant has no packagingTier)
-        if (
-          r.metadata &&
-          "packagingTier" in r.metadata &&
-          r.metadata.packagingTier === "premium"
-        ) {
+        if (r.metadata && "packagingTier" in r.metadata && r.metadata.packagingTier === "premium") {
           unitPriceCents += PREMIUM_PACKAGING_SURCHARGE_CENTS;
         }
       }

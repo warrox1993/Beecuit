@@ -11,7 +11,9 @@ export const b2bQuoteStatus = pgEnum("b2b_quote_status", [
 ]);
 
 export const b2bQuoteRequests = pgTable("b2b_quote_requests", {
-  id: text("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: text("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   companyName: text("company_name").notNull(),
   contactName: text("contact_name").notNull(),
   email: text("email").notNull(),

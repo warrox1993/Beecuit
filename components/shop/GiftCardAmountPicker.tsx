@@ -1,8 +1,5 @@
 "use client";
-import {
-  GIFT_CARD_AMOUNTS_CENTS,
-  type GiftCardAmountCents,
-} from "@/lib/gift-cards/constants";
+import { GIFT_CARD_AMOUNTS_CENTS, type GiftCardAmountCents } from "@/lib/gift-cards/constants";
 
 export function GiftCardAmountPicker({
   value,
@@ -12,7 +9,7 @@ export function GiftCardAmountPicker({
   onChange: (v: GiftCardAmountCents) => void;
 }) {
   return (
-    <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
+    <div className="grid grid-cols-3 gap-3 sm:grid-cols-5">
       {GIFT_CARD_AMOUNTS_CENTS.map((cents) => {
         const active = cents === value;
         return (
@@ -26,9 +23,7 @@ export function GiftCardAmountPicker({
               active ? "border-honey bg-honey/10" : "border-cookie/30 bg-white"
             }`}
           >
-            <div className="font-display text-2xl text-warm-brown">
-              {cents / 100} €
-            </div>
+            <div className="font-display text-warm-brown text-2xl">{cents / 100} €</div>
           </button>
         );
       })}

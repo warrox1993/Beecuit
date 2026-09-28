@@ -86,8 +86,14 @@ export default async function ProfilPage({
 
   // Lazy throttled last_seen refresh for the current session (≤ once / 15 min).
   const currentRow = sessionRows.find((s) => s.sessionToken === currentToken);
-  if (currentRow && (!currentRow.lastSeenAt || currentRow.lastSeenAt < new Date(Date.now() - 15 * 60 * 1000))) {
-    await db.update(sessions).set({ lastSeenAt: new Date() }).where(eq(sessions.sessionToken, currentToken));
+  if (
+    currentRow &&
+    (!currentRow.lastSeenAt || currentRow.lastSeenAt < new Date(Date.now() - 15 * 60 * 1000))
+  ) {
+    await db
+      .update(sessions)
+      .set({ lastSeenAt: new Date() })
+      .where(eq(sessions.sessionToken, currentToken));
   }
 
   const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
@@ -126,7 +132,11 @@ export default async function ProfilPage({
 
       {email && (
         <div
-          role={email === "changed" || email === "verify-sent" || email === "reverted" ? undefined : "alert"}
+          role={
+            email === "changed" || email === "verify-sent" || email === "reverted"
+              ? undefined
+              : "alert"
+          }
           className={
             email === "changed" || email === "verify-sent" || email === "reverted"
               ? "border-honey-dark/30 bg-honey-dark/5 text-honey-dark rounded-md border px-4 py-3 text-sm"

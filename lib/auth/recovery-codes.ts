@@ -51,12 +51,7 @@ export async function consumeRecoveryCode(userId: string, code: string): Promise
   const claimed = await db
     .update(twoFactorRecoveryCodes)
     .set({ usedAt: new Date() })
-    .where(
-      and(
-        eq(twoFactorRecoveryCodes.id, rows[0]!.id),
-        isNull(twoFactorRecoveryCodes.usedAt),
-      ),
-    )
+    .where(and(eq(twoFactorRecoveryCodes.id, rows[0]!.id), isNull(twoFactorRecoveryCodes.usedAt)))
     .returning({ id: twoFactorRecoveryCodes.id });
   return claimed.length > 0;
 }

@@ -3,10 +3,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { journalArticles, journalArticleTranslations } from "@/lib/db/schema";
 import { SITE_URL, SUPPORTED_LOCALES, type SupportedLocale } from "@/lib/seo/site";
-import {
-  listBiscuitSitemapRows,
-  listCoffretSitemapRows,
-} from "@/lib/seo/sitemap-data";
+import { listBiscuitSitemapRows, listCoffretSitemapRows } from "@/lib/seo/sitemap-data";
 
 // We rebuild on each request — the catalog is small (<100 SKUs × 4 locales).
 export const dynamic = "force-dynamic";
@@ -81,10 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const dynamicEntries: MetadataRoute.Sitemap = [];
 
-  const groupAndEmit = (
-    rows: typeof biscuitRows,
-    pathPrefix: "/biscuits" | "/coffrets",
-  ) => {
+  const groupAndEmit = (rows: typeof biscuitRows, pathPrefix: "/biscuits" | "/coffrets") => {
     const byProduct = new Map<string, typeof rows>();
     for (const r of rows) {
       const list = byProduct.get(r.productId) ?? [];

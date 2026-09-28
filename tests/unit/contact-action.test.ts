@@ -3,10 +3,17 @@ import { describe, expect, it, vi, beforeEach } from "vitest";
 const inserted: unknown[] = [];
 vi.mock("@/lib/db", () => ({
   db: {
-    insert: () => ({ values: (v: unknown) => { inserted.push(v); return Promise.resolve(); } }),
+    insert: () => ({
+      values: (v: unknown) => {
+        inserted.push(v);
+        return Promise.resolve();
+      },
+    }),
   },
 }));
-vi.mock("next/headers", () => ({ headers: () => Promise.resolve(new Headers({ "x-forwarded-for": "9.9.9.9" })) }));
+vi.mock("next/headers", () => ({
+  headers: () => Promise.resolve(new Headers({ "x-forwarded-for": "9.9.9.9" })),
+}));
 vi.mock("@/lib/queries/contact", () => ({ countRecentByIp: vi.fn(async () => 0) }));
 vi.mock("@/lib/auth", () => ({ auth: vi.fn(async () => null) }));
 
@@ -19,9 +26,18 @@ function fd(o: Record<string, string>) {
   for (const [k, v] of Object.entries(o)) f.set(k, v);
   return f;
 }
-const valid = { name: "Jean", email: "JEAN@Example.com", reason: "order", message: "Bonjour, une question sur ma commande.", locale: "fr" };
+const valid = {
+  name: "Jean",
+  email: "JEAN@Example.com",
+  reason: "order",
+  message: "Bonjour, une question sur ma commande.",
+  locale: "fr",
+};
 
-beforeEach(() => { inserted.length = 0; vi.mocked(countRecentByIp).mockResolvedValue(0); });
+beforeEach(() => {
+  inserted.length = 0;
+  vi.mocked(countRecentByIp).mockResolvedValue(0);
+});
 
 describe("submitContactMessage", () => {
   it("insère un message valide (email normalisé) et renvoie ok", async () => {

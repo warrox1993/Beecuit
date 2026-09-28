@@ -7,10 +7,7 @@ import { sendEmail } from "@/lib/email/client";
 import { OrderConfirmation } from "@/lib/email/templates/OrderConfirmation";
 import { decrementCoffretStockCascade } from "@/lib/coffret/stock-cascade";
 import { refundGiftCardBalance } from "@/lib/gift-cards/reservation";
-import {
-  createGiftCardsForOrder,
-  applyGiftCardRedemption,
-} from "@/lib/stripe/gift-card-webhook";
+import { createGiftCardsForOrder, applyGiftCardRedemption } from "@/lib/stripe/gift-card-webhook";
 
 /**
  * `checkout.session.expired` — a checkout was abandoned and Stripe expired it.

@@ -46,7 +46,7 @@ export async function InstagramGrid() {
             <a
               key={i}
               href="https://instagram.com/aufildessaveurs"
-              className="relative aspect-square overflow-hidden rounded-lg bg-cookie/40 transition-opacity hover:opacity-80"
+              className="bg-cookie/40 relative aspect-square overflow-hidden rounded-lg transition-opacity hover:opacity-80"
               aria-label={`Instagram post ${i + 1}`}
             >
               <Image

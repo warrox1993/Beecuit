@@ -56,7 +56,7 @@ export function NewsletterForm() {
           type="submit"
           disabled={pending}
           aria-busy={pending || undefined}
-          className="bg-honey text-cream hover:bg-honey-dark focus-visible:ring-2 focus-visible:ring-honey-dark/40"
+          className="bg-honey text-cream hover:bg-honey-dark focus-visible:ring-honey-dark/40 focus-visible:ring-2"
         >
           {pending ? "..." : "S'inscrire"}
         </Button>

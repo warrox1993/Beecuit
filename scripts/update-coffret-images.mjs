@@ -20,8 +20,7 @@ const env = Object.fromEntries(
 );
 const sql = neon(env.DATABASE_URL);
 
-const u = (id) =>
-  `https://images.unsplash.com/photo-${id}?fm=jpg&q=75&w=1200&auto=format&fit=crop`;
+const u = (id) => `https://images.unsplash.com/photo-${id}?fm=jpg&q=75&w=1200&auto=format&fit=crop`;
 
 const MAPPING = {
   "COF-DECO-005": {

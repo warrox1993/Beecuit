@@ -4,9 +4,7 @@ export const CreateSubscriptionCheckoutSchema = z.object({
   format: z.enum(["mini", "classique", "famille"]),
   engagement: z.union([z.literal(0), z.literal(6), z.literal(12)]),
 });
-export type CreateSubscriptionCheckoutInput = z.infer<
-  typeof CreateSubscriptionCheckoutSchema
->;
+export type CreateSubscriptionCheckoutInput = z.infer<typeof CreateSubscriptionCheckoutSchema>;
 
 export const ComposeBoxSchema = z.object({
   boxId: z.string().uuid(),

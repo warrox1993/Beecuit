@@ -7,7 +7,11 @@ import { eq, sql, and } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { carts, cartItems, products } from "@/lib/db/schema";
 import { auth } from "@/lib/auth";
-import { AddToCartSchema, UpdateQuantitySchema, UpdateGiftMessageSchema } from "@/lib/validators/cart";
+import {
+  AddToCartSchema,
+  UpdateQuantitySchema,
+  UpdateGiftMessageSchema,
+} from "@/lib/validators/cart";
 import { AddGiftCardToCartSchema } from "@/lib/validators/gift-card";
 import { GIFT_CARD_SKUS, type GiftCardAmountCents } from "@/lib/gift-cards/constants";
 import { getOrCreateCartForSessionToken, getOrCreateCartForUser } from "@/lib/queries/cart";
@@ -50,7 +54,13 @@ export async function addToCart(rawInput: unknown) {
     const [existing] = await db
       .select()
       .from(cartItems)
-      .where(and(eq(cartItems.cartId, cartId), eq(cartItems.productId, input.productId), sql`metadata IS NULL`))
+      .where(
+        and(
+          eq(cartItems.cartId, cartId),
+          eq(cartItems.productId, input.productId),
+          sql`metadata IS NULL`,
+        ),
+      )
       .limit(1);
     if (existing) {
       const newQty = Math.min(existing.quantity + input.quantity, prod.stockQuantity);
@@ -82,7 +92,8 @@ export async function addGiftCardToCart(rawInput: unknown) {
   if (!sku) throw new Error("Invalid gift card amount");
 
   const [prod] = await db.select().from(products).where(eq(products.sku, sku)).limit(1);
-  if (!prod) throw new Error(`Gift card product ${sku} not found (run seed-gift-card-products.mjs)`);
+  if (!prod)
+    throw new Error(`Gift card product ${sku} not found (run seed-gift-card-products.mjs)`);
 
   const cartId = await getActiveCartId();
 
@@ -133,9 +144,7 @@ export async function updateQuantity(rawInput: unknown) {
 
 export async function removeFromCart(cartItemId: string) {
   const cartId = await getActiveCartId();
-  await db
-    .delete(cartItems)
-    .where(and(eq(cartItems.id, cartItemId), eq(cartItems.cartId, cartId)));
+  await db.delete(cartItems).where(and(eq(cartItems.id, cartItemId), eq(cartItems.cartId, cartId)));
   revalidatePath("/", "layout");
 }
 

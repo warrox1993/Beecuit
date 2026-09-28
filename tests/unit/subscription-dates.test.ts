@@ -32,14 +32,10 @@ describe("currentYearMonth / nextYearMonth", () => {
 
 describe("compositionDeadlineFor", () => {
   it("returns 25th of the month BEFORE the given cycleYearMonth", () => {
-    expect(compositionDeadlineFor("2026-07").toISOString()).toBe(
-      "2026-06-25T00:00:00.000Z",
-    );
+    expect(compositionDeadlineFor("2026-07").toISOString()).toBe("2026-06-25T00:00:00.000Z");
   });
   it("handles January cycle → December previous year deadline", () => {
-    expect(compositionDeadlineFor("2026-01").toISOString()).toBe(
-      "2025-12-25T00:00:00.000Z",
-    );
+    expect(compositionDeadlineFor("2026-01").toISOString()).toBe("2025-12-25T00:00:00.000Z");
   });
 });
 

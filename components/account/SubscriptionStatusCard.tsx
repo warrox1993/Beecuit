@@ -16,26 +16,22 @@ export function SubscriptionStatusCard({
 }: {
   subscription: InferSelectModel<typeof subscriptions>;
 }) {
-  const fmtDate = (d: Date | null) =>
-    d ? new Date(d).toLocaleDateString("fr-BE") : "—";
+  const fmtDate = (d: Date | null) => (d ? new Date(d).toLocaleDateString("fr-BE") : "—");
   return (
-    <div className="bg-white border border-cookie/30 rounded-2xl p-6 space-y-3">
+    <div className="border-cookie/30 space-y-3 rounded-2xl border bg-white p-6">
       <div className="flex items-center justify-between">
-        <span className="text-xs uppercase tracking-widest text-warm-brown/60">
-          Statut
-        </span>
-        <span className="bg-honey/20 text-honey-dark text-xs px-3 py-1 rounded">
+        <span className="text-warm-brown/60 text-xs tracking-widest uppercase">Statut</span>
+        <span className="bg-honey/20 text-honey-dark rounded px-3 py-1 text-xs">
           {STATUS_LABEL[s.status] ?? s.status}
         </span>
       </div>
       <div>
-        <p className="font-display text-2xl text-warm-brown">
+        <p className="font-display text-warm-brown text-2xl">
           {s.format[0]!.toUpperCase() + s.format.slice(1)} (
           {FORMAT_SIZES[s.format as keyof typeof FORMAT_SIZES]} sachets/mois)
         </p>
-        <p className="text-sm text-warm-brown/70">
-          Engagement :{" "}
-          {s.engagementMonths === 0 ? "Sans" : `${s.engagementMonths} mois`}
+        <p className="text-warm-brown/70 text-sm">
+          Engagement : {s.engagementMonths === 0 ? "Sans" : `${s.engagementMonths} mois`}
         </p>
       </div>
       <div className="grid grid-cols-2 gap-4 text-sm">
@@ -45,9 +41,7 @@ export function SubscriptionStatusCard({
         </div>
         {s.engagementEndsAt && (
           <div>
-            <p className="text-warm-brown/60 text-xs">
-              Fin d&apos;engagement
-            </p>
+            <p className="text-warm-brown/60 text-xs">Fin d&apos;engagement</p>
             <p>{fmtDate(s.engagementEndsAt)}</p>
           </div>
         )}

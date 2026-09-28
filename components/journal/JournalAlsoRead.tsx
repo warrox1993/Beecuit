@@ -23,9 +23,7 @@ export async function JournalAlsoRead({
   const t = await getTranslations("journal");
   return (
     <section className="container mx-auto my-16 px-4">
-      <h2 className="text-warm-brown font-display mb-8 text-center text-3xl">
-        {t("alsoRead")}
-      </h2>
+      <h2 className="text-warm-brown font-display mb-8 text-center text-3xl">{t("alsoRead")}</h2>
       <div className="grid gap-8 md:grid-cols-3">
         {articles.map((a) => (
           <JournalCard key={a.id} article={a} locale={locale} />

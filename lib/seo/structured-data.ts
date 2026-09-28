@@ -62,9 +62,7 @@ export function organizationJsonLd() {
       email: BUSINESS_CONTACT.email,
       // Only publish the phone once a real number replaces the placeholder —
       // emitting a fake telephone as structured data is worse than omitting it.
-      ...(isRealPhone(BUSINESS_CONTACT.telephone)
-        ? { telephone: BUSINESS_CONTACT.telephone }
-        : {}),
+      ...(isRealPhone(BUSINESS_CONTACT.telephone) ? { telephone: BUSINESS_CONTACT.telephone } : {}),
       availableLanguage: ["French", "Dutch", "German", "English"],
       areaServed: ["BE", "FR", "LU", "NL", "DE"],
     },
@@ -105,9 +103,7 @@ export function localBusinessJsonLd() {
     priceRange: "€€",
     currenciesAccepted: "EUR",
     servesCuisine: "Bakery",
-    ...(isRealPhone(BUSINESS_CONTACT.telephone)
-      ? { telephone: BUSINESS_CONTACT.telephone }
-      : {}),
+    ...(isRealPhone(BUSINESS_CONTACT.telephone) ? { telephone: BUSINESS_CONTACT.telephone } : {}),
     email: BUSINESS_CONTACT.email,
     address: {
       "@type": "PostalAddress",
@@ -139,17 +135,14 @@ export function productJsonLd(product: ProductLike, locale: SupportedLocale) {
   const url = `${SITE_URL}/${locale}/biscuits/${product.slug}`;
   const priceEur = (product.basePriceCents / 100).toFixed(2);
   const availability =
-    product.stockQuantity > 0
-      ? "https://schema.org/InStock"
-      : "https://schema.org/OutOfStock";
+    product.stockQuantity > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock";
 
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     "@id": `${url}#product`,
     name: product.name,
-    description:
-      product.seoDescription || product.shortDescription || product.name,
+    description: product.seoDescription || product.shortDescription || product.name,
     sku: product.sku,
     mpn: product.sku,
     image: product.images.map((i) => toAbsoluteUrl(i.url)),
@@ -189,17 +182,14 @@ export function coffretJsonLd(product: ProductLike, locale: SupportedLocale) {
   const url = `${SITE_URL}/${locale}/coffrets/${product.slug}`;
   const priceEur = (product.basePriceCents / 100).toFixed(2);
   const availability =
-    product.stockQuantity > 0
-      ? "https://schema.org/InStock"
-      : "https://schema.org/OutOfStock";
+    product.stockQuantity > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock";
 
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     "@id": `${url}#product`,
     name: product.name,
-    description:
-      product.seoDescription || product.shortDescription || product.name,
+    description: product.seoDescription || product.shortDescription || product.name,
     sku: product.sku,
     mpn: product.sku,
     image: product.images.map((i) => toAbsoluteUrl(i.url)),

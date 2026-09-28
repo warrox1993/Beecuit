@@ -1,11 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { and, eq, sql } from "drizzle-orm";
 import { db } from "@/lib/db";
-import {
-  subscriptions,
-  subscriptionBoxes,
-  subscriptionBoxItems,
-} from "@/lib/db/schema";
+import { subscriptions, subscriptionBoxes, subscriptionBoxItems } from "@/lib/db/schema";
 import { isCronAuthorized } from "@/lib/auth/cron";
 import { fallbackBoxComposition } from "@/lib/subscription/fallback";
 import { FORMAT_SIZES } from "@/lib/subscription/constants";
@@ -56,10 +52,7 @@ export async function GET(req: NextRequest) {
     const composing = await db
       .select({ box: subscriptionBoxes, sub: subscriptions })
       .from(subscriptionBoxes)
-      .innerJoin(
-        subscriptions,
-        eq(subscriptions.id, subscriptionBoxes.subscriptionId),
-      )
+      .innerJoin(subscriptions, eq(subscriptions.id, subscriptionBoxes.subscriptionId))
       .where(
         and(
           eq(subscriptionBoxes.cycleYearMonth, nextMonth),

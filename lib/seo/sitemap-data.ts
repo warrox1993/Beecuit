@@ -25,15 +25,11 @@ export async function listBiscuitSitemapRows(): Promise<SitemapSlugRow[]> {
       updatedAt: products.updatedAt,
     })
     .from(products)
-    .innerJoin(
-      productTranslations,
-      eq(productTranslations.productId, products.id),
-    )
+    .innerJoin(productTranslations, eq(productTranslations.productId, products.id))
     .where(and(eq(products.isActive, true), sql`${products.type} = 'biscuit'`));
-  return rows
-    .filter((r): r is SitemapSlugRow =>
-      (SUPPORTED_LOCALES as readonly string[]).includes(r.locale),
-    );
+  return rows.filter((r): r is SitemapSlugRow =>
+    (SUPPORTED_LOCALES as readonly string[]).includes(r.locale),
+  );
 }
 
 /**
@@ -71,10 +67,7 @@ export async function listCoffretSitemapRows(): Promise<SitemapSlugRow[]> {
       updatedAt: products.updatedAt,
     })
     .from(products)
-    .innerJoin(
-      productTranslations,
-      eq(productTranslations.productId, products.id),
-    )
+    .innerJoin(productTranslations, eq(productTranslations.productId, products.id))
     .where(and(eq(products.isActive, true), sql`${products.type} = 'coffret'`));
   return rows.filter((r): r is SitemapSlugRow =>
     (SUPPORTED_LOCALES as readonly string[]).includes(r.locale),

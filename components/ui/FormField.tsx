@@ -23,7 +23,16 @@ type Props = Omit<InputHTMLAttributes<HTMLInputElement>, "size"> & {
  *   <FormField label="Code postal" state="error" hint="Code postal invalide" />
  */
 export const FormField = forwardRef<HTMLInputElement, Props>(function FormField(
-  { label, state = "default", hint, size = "md", className, id: idProp, placeholder = " ", ...rest },
+  {
+    label,
+    state = "default",
+    hint,
+    size = "md",
+    className,
+    id: idProp,
+    placeholder = " ",
+    ...rest
+  },
   ref,
 ) {
   const autoId = useId();
@@ -70,7 +79,7 @@ export const FormField = forwardRef<HTMLInputElement, Props>(function FormField(
           aria-required={rest.required || undefined}
           aria-describedby={hint ? `${id}-hint` : undefined}
           className={cn(
-            "text-warm-brown placeholder:text-transparent peer w-full bg-transparent focus:outline-none",
+            "text-warm-brown peer w-full bg-transparent placeholder:text-transparent focus:outline-none",
             sizeCls,
           )}
           {...rest}

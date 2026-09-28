@@ -18,7 +18,12 @@ export function ResetPasswordForm({ locale, token }: { locale: string; token: st
       <input type="hidden" name="locale" value={locale} />
       <input type="hidden" name="token" value={token} />
       <label className="block">
-        <span className="text-warm-brown text-sm">{t("newPasswordLabel")}<span aria-hidden="true" className="text-terracotta ml-0.5">*</span></span>
+        <span className="text-warm-brown text-sm">
+          {t("newPasswordLabel")}
+          <span aria-hidden="true" className="text-terracotta ml-0.5">
+            *
+          </span>
+        </span>
         <input
           type="password"
           name="newPassword"
@@ -33,7 +38,12 @@ export function ResetPasswordForm({ locale, token }: { locale: string; token: st
         <span className="text-warm-brown/60 mt-1 block text-xs">{t("passwordHint")}</span>
       </label>
       <label className="block">
-        <span className="text-warm-brown text-sm">{t("confirmPasswordLabel")}<span aria-hidden="true" className="text-terracotta ml-0.5">*</span></span>
+        <span className="text-warm-brown text-sm">
+          {t("confirmPasswordLabel")}
+          <span aria-hidden="true" className="text-terracotta ml-0.5">
+            *
+          </span>
+        </span>
         <input
           type="password"
           name="confirmPassword"

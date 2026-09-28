@@ -60,7 +60,7 @@ export default async function SignUpPage({
           </div>
           <div className="my-6 flex items-center gap-3">
             <span className="border-warm-brown/15 flex-1 border-t" />
-            <span className="text-warm-brown/60 text-xs uppercase tracking-wide">
+            <span className="text-warm-brown/60 text-xs tracking-wide uppercase">
               {t("signInOrDivider")}
             </span>
             <span className="border-warm-brown/15 flex-1 border-t" />

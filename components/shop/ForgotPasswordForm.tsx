@@ -15,7 +15,12 @@ export function ForgotPasswordForm({ locale }: { locale: string }) {
     >
       <input type="hidden" name="locale" value={locale} />
       <label className="block">
-        <span className="text-warm-brown text-sm">{t("emailLabel")}<span aria-hidden="true" className="text-terracotta ml-0.5">*</span></span>
+        <span className="text-warm-brown text-sm">
+          {t("emailLabel")}
+          <span aria-hidden="true" className="text-terracotta ml-0.5">
+            *
+          </span>
+        </span>
         <input
           type="email"
           name="email"

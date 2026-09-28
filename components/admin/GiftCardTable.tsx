@@ -17,8 +17,7 @@ type Row = {
 };
 
 const fmt = (c: number) => `${(c / 100).toFixed(2).replace(".", ",")} €`;
-const dt = (d: Date | null) =>
-  d ? new Date(d).toLocaleDateString("fr-BE") : "—";
+const dt = (d: Date | null) => (d ? new Date(d).toLocaleDateString("fr-BE") : "—");
 
 function status(r: Row): string {
   const now = Date.now();
@@ -35,7 +34,7 @@ export function GiftCardTable({ rows }: { rows: Row[] }) {
   return (
     <table className="w-full text-sm">
       <thead>
-        <tr className="text-left text-warm-brown/60 text-xs uppercase tracking-wider">
+        <tr className="text-warm-brown/60 text-left text-xs tracking-wider uppercase">
           <th className="py-2">Code</th>
           <th>Montant</th>
           <th>Solde</th>
@@ -45,7 +44,7 @@ export function GiftCardTable({ rows }: { rows: Row[] }) {
           <th></th>
         </tr>
       </thead>
-      <tbody className="divide-y divide-cookie/30">
+      <tbody className="divide-cookie/30 divide-y">
         {rows.map((r) => (
           <tr key={r.id}>
             <td className="py-2 font-mono text-xs">{r.code}</td>
@@ -65,7 +64,7 @@ export function GiftCardTable({ rows }: { rows: Row[] }) {
                       router.refresh();
                     })
                   }
-                  className="text-xs text-terracotta underline"
+                  className="text-terracotta text-xs underline"
                 >
                   Désactiver
                 </button>

@@ -2,21 +2,25 @@ import * as React from "react";
 
 type Locale = "fr" | "nl" | "de" | "en";
 
-const STRINGS: Record<Locale, {
-  heading: string;
-  body: string;
-  cta: string;
-  fallback: string;
-  expires: string;
-  ignore: string;
-}> = {
+const STRINGS: Record<
+  Locale,
+  {
+    heading: string;
+    body: string;
+    cta: string;
+    fallback: string;
+    expires: string;
+    ignore: string;
+  }
+> = {
   fr: {
     heading: "Réinitialise ton mot de passe",
     body: "On a reçu une demande pour réinitialiser le mot de passe de ton compte Au Fil des Saveurs.",
     cta: "Choisir un nouveau mot de passe",
     fallback: "Si le bouton ne fonctionne pas, copie-colle cette adresse dans ton navigateur :",
     expires: "Ce lien est valable 1 heure.",
-    ignore: "Si tu n'as pas fait cette demande, ignore cet email — ton mot de passe restera inchangé.",
+    ignore:
+      "Si tu n'as pas fait cette demande, ignore cet email — ton mot de passe restera inchangé.",
   },
   nl: {
     heading: "Stel je wachtwoord opnieuw in",
@@ -24,7 +28,8 @@ const STRINGS: Record<Locale, {
     cta: "Een nieuw wachtwoord kiezen",
     fallback: "Als de knop niet werkt, kopieer en plak deze link in je browser:",
     expires: "Deze link is 1 uur geldig.",
-    ignore: "Als jij deze aanvraag niet hebt gedaan, kun je deze e-mail negeren — je wachtwoord blijft hetzelfde.",
+    ignore:
+      "Als jij deze aanvraag niet hebt gedaan, kun je deze e-mail negeren — je wachtwoord blijft hetzelfde.",
   },
   de: {
     heading: "Setze dein Passwort zurück",
@@ -32,7 +37,8 @@ const STRINGS: Record<Locale, {
     cta: "Neues Passwort wählen",
     fallback: "Falls der Button nicht funktioniert, kopiere diese Adresse in deinen Browser:",
     expires: "Dieser Link ist 1 Stunde gültig.",
-    ignore: "Solltest du diese Anfrage nicht gestellt haben, ignoriere diese E-Mail — dein Passwort bleibt unverändert.",
+    ignore:
+      "Solltest du diese Anfrage nicht gestellt haben, ignoriere diese E-Mail — dein Passwort bleibt unverändert.",
   },
   en: {
     heading: "Reset your password",
@@ -40,14 +46,17 @@ const STRINGS: Record<Locale, {
     cta: "Choose a new password",
     fallback: "If the button doesn't work, copy and paste this link into your browser:",
     expires: "This link is valid for 1 hour.",
-    ignore: "If you didn't make this request, just ignore this email — your password will remain unchanged.",
+    ignore:
+      "If you didn't make this request, just ignore this email — your password will remain unchanged.",
   },
 };
 
 export function PasswordResetEmail({ locale, resetUrl }: { locale: Locale; resetUrl: string }) {
   const s = STRINGS[locale];
   return (
-    <div style={{ fontFamily: "Georgia, serif", background: "#fbf6ee", color: "#3d2817", padding: 32 }}>
+    <div
+      style={{ fontFamily: "Georgia, serif", background: "#fbf6ee", color: "#3d2817", padding: 32 }}
+    >
       <div style={{ fontFamily: "Snell Roundhand, cursive", color: "#a8731b", fontSize: 24 }}>
         Au fil des saveurs
       </div>

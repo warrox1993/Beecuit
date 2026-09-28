@@ -23,26 +23,18 @@ export async function generateMetadata({
   });
 }
 
-export default async function CoffretsPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function CoffretsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
 
   return (
     <Container className="py-12">
       <header className="mb-10 text-center">
-        <p className="text-xs uppercase tracking-widest text-warm-brown/60 mb-2">
-          Nos coffrets
-        </p>
-        <h1 className="text-4xl md:text-5xl font-display text-warm-brown">
-          Coffrets cadeaux
-        </h1>
-        <p className="mt-3 max-w-2xl mx-auto text-warm-brown/70">
-          Des sélections de biscuits artisanaux à offrir, assemblées à la
-          commande dans nos ateliers de Liège.
+        <p className="text-warm-brown/60 mb-2 text-xs tracking-widest uppercase">Nos coffrets</p>
+        <h1 className="font-display text-warm-brown text-4xl md:text-5xl">Coffrets cadeaux</h1>
+        <p className="text-warm-brown/70 mx-auto mt-3 max-w-2xl">
+          Des sélections de biscuits artisanaux à offrir, assemblées à la commande dans nos ateliers
+          de Liège.
         </p>
       </header>
 
@@ -68,7 +60,7 @@ async function CoffretsGrid({ locale }: { locale: string }) {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {coffrets.map((c) => (
         <CoffretCard key={c.id} locale={locale} coffret={c} />
       ))}

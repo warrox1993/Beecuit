@@ -4,12 +4,7 @@ import { revalidatePath } from "next/cache";
 import { eq, and, inArray } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import {
-  subscriptions,
-  subscriptionBoxes,
-  subscriptionBoxItems,
-  products,
-} from "@/lib/db/schema";
+import { subscriptions, subscriptionBoxes, subscriptionBoxItems, products } from "@/lib/db/schema";
 import { stripe } from "@/lib/stripe/client";
 import { env } from "@/lib/env";
 import { getOrCreateStripeCustomer } from "@/lib/subscription/stripe-customer";
@@ -151,9 +146,7 @@ export async function composeBox(raw: unknown) {
 
   const totalQty = input.items.reduce((s, x) => s + x.quantity, 0);
   if (totalQty !== FORMAT_SIZES[sub.format]) {
-    throw new Error(
-      `Composition must total ${FORMAT_SIZES[sub.format]} sachets, got ${totalQty}`,
-    );
+    throw new Error(`Composition must total ${FORMAT_SIZES[sub.format]} sachets, got ${totalQty}`);
   }
 
   // Validate every biscuitId is an ACTIVE biscuit product — the schema only

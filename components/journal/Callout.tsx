@@ -12,9 +12,5 @@ export function Callout({
     astuce: "bg-honey/10 border-honey/40",
     attention: "bg-terracotta/10 border-terracotta/40",
   } as const;
-  return (
-    <div className={`my-6 rounded border-l-4 p-4 ${styles[variant]}`}>
-      {children}
-    </div>
-  );
+  return <div className={`my-6 rounded border-l-4 p-4 ${styles[variant]}`}>{children}</div>;
 }

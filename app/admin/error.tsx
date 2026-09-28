@@ -20,18 +20,12 @@ export default function AdminError({
 
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 p-8 text-center">
-      <h1 className="text-warm-brown font-display text-2xl">
-        Une erreur est survenue
-      </h1>
+      <h1 className="text-warm-brown font-display text-2xl">Une erreur est survenue</h1>
       <p className="text-warm-brown/70 max-w-md text-sm">
-        Une erreur est survenue dans le tableau de bord. Réessayez ou revenez à
-        l&apos;accueil de l&apos;administration.
+        Une erreur est survenue dans le tableau de bord. Réessayez ou revenez à l&apos;accueil de
+        l&apos;administration.
       </p>
-      {error.digest && (
-        <p className="text-warm-brown/40 font-mono text-xs">
-          Réf : {error.digest}
-        </p>
-      )}
+      {error.digest && <p className="text-warm-brown/40 font-mono text-xs">Réf : {error.digest}</p>}
       <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
         <button
           onClick={reset}

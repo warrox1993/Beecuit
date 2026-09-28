@@ -32,6 +32,9 @@ export const subscriptionBoxes = pgTable(
     updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
   },
   (t) => ({
-    uniqueSubMonth: uniqueIndex("uniq_subscription_box_month").on(t.subscriptionId, t.cycleYearMonth),
+    uniqueSubMonth: uniqueIndex("uniq_subscription_box_month").on(
+      t.subscriptionId,
+      t.cycleYearMonth,
+    ),
   }),
 );

@@ -6,10 +6,7 @@ import { db } from "@/lib/db";
 import { carts, orders, orderItems, shippingRates } from "@/lib/db/schema";
 import { auth } from "@/lib/auth";
 import { checkAuthRateLimit, getClientIp } from "@/lib/auth/rate-limit";
-import {
-  reserveGiftCardBalance,
-  refundGiftCardBalance,
-} from "@/lib/gift-cards/reservation";
+import { reserveGiftCardBalance, refundGiftCardBalance } from "@/lib/gift-cards/reservation";
 import { env } from "@/lib/env";
 import { CheckoutSchema } from "@/lib/validators/checkout";
 import { computeOrderTotals } from "@/lib/totals";
@@ -23,8 +20,8 @@ import { isCoffretAvailable } from "@/lib/coffret/availability";
 function buildOrderItemMetadata(i: CartLine) {
   if (i.type === "coffret") {
     const m = i.metadata && "packagingTier" in (i.metadata ?? {}) ? i.metadata : null;
-    const giftMessage = m && "giftMessage" in m ? m.giftMessage ?? null : null;
-    const packagingTier = m && "packagingTier" in m ? m.packagingTier ?? "standard" : "standard";
+    const giftMessage = m && "giftMessage" in m ? (m.giftMessage ?? null) : null;
+    const packagingTier = m && "packagingTier" in m ? (m.packagingTier ?? "standard") : "standard";
     return {
       type: "coffret" as const,
       giftMessage,
@@ -53,7 +50,12 @@ function buildOrderItemMetadata(i: CartLine) {
 }
 
 function lineItemName(i: CartLine): string {
-  if (i.type === "coffret" && i.metadata && "packagingTier" in i.metadata && i.metadata.packagingTier === "premium") {
+  if (
+    i.type === "coffret" &&
+    i.metadata &&
+    "packagingTier" in i.metadata &&
+    i.metadata.packagingTier === "premium"
+  ) {
     return `${i.name} (emballage premium)`;
   }
   return i.name;
@@ -121,9 +123,7 @@ export async function createCheckoutSession(rawInput: unknown, locale: "fr" | "n
   // Validate eagerly but defer coupon creation until just before createStripeCheckoutSession
   // to minimize the orphaned-coupon window.
   const hasGiftCardItem = items.some((i) => i.type === "gift_card");
-  let giftCardValidation:
-    | { cardId: string; deductionCents: number; code: string }
-    | undefined;
+  let giftCardValidation: { cardId: string; deductionCents: number; code: string } | undefined;
   if (input.giftCardCode && !hasGiftCardItem) {
     // Rate-limit code validation by IP to prevent online brute-forcing of
     // financially-valuable codes.
@@ -258,9 +258,11 @@ export async function createCheckoutSession(rawInput: unknown, locale: "fr" | "n
   } catch (e) {
     if (couponId) {
       const { stripe } = await import("@/lib/stripe/client");
-      await stripe.coupons.del(couponId).catch((delErr) =>
-        console.error("[checkout] failed to delete orphan coupon", couponId, delErr),
-      );
+      await stripe.coupons
+        .del(couponId)
+        .catch((delErr) =>
+          console.error("[checkout] failed to delete orphan coupon", couponId, delErr),
+        );
     }
     // Re-credit the reserved balance: this checkout never reached Stripe, so the
     // card must not stay debited.

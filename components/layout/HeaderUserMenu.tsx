@@ -1,7 +1,16 @@
 "use client";
 import { useTransition } from "react";
 import { useTranslations } from "next-intl";
-import { LogOut, ShoppingBag, MapPin, Gift, Repeat, LayoutDashboard, User, Shield } from "lucide-react";
+import {
+  LogOut,
+  ShoppingBag,
+  MapPin,
+  Gift,
+  Repeat,
+  LayoutDashboard,
+  User,
+  Shield,
+} from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import NextLink from "next/link";
 import {
@@ -47,7 +56,7 @@ export function HeaderUserMenu({
       <DropdownMenuTrigger
         aria-label={t("account")}
         className={cn(
-          "border-warm-brown/15 text-warm-brown hover:border-honey/60 hover:text-honey-dark focus-visible:ring-honey/40 group/avatar flex h-9 w-9 items-center justify-center rounded-full border bg-cream-light text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:outline-none",
+          "border-warm-brown/15 text-warm-brown hover:border-honey/60 hover:text-honey-dark focus-visible:ring-honey/40 group/avatar bg-cream-light flex h-9 w-9 items-center justify-center rounded-full border text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:outline-none",
           pending && "opacity-60",
         )}
       >
@@ -93,37 +102,55 @@ export function HeaderUserMenu({
             <DropdownMenuSeparator className="bg-warm-brown/10" />
           </>
         )}
-        <DropdownMenuItem asChild className="text-warm-brown focus:bg-honey/10 focus:text-honey-dark cursor-pointer gap-2">
+        <DropdownMenuItem
+          asChild
+          className="text-warm-brown focus:bg-honey/10 focus:text-honey-dark cursor-pointer gap-2"
+        >
           <Link href="/compte">
             <LayoutDashboard className="h-4 w-4" aria-hidden />
             {tAccount("dashboard")}
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild className="text-warm-brown focus:bg-honey/10 focus:text-honey-dark cursor-pointer gap-2">
+        <DropdownMenuItem
+          asChild
+          className="text-warm-brown focus:bg-honey/10 focus:text-honey-dark cursor-pointer gap-2"
+        >
           <Link href="/compte/commandes">
             <ShoppingBag className="h-4 w-4" aria-hidden />
             {tAccount("orders")}
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild className="text-warm-brown focus:bg-honey/10 focus:text-honey-dark cursor-pointer gap-2">
+        <DropdownMenuItem
+          asChild
+          className="text-warm-brown focus:bg-honey/10 focus:text-honey-dark cursor-pointer gap-2"
+        >
           <Link href="/compte/adresses">
             <MapPin className="h-4 w-4" aria-hidden />
             {tAccount("addresses")}
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild className="text-warm-brown focus:bg-honey/10 focus:text-honey-dark cursor-pointer gap-2">
+        <DropdownMenuItem
+          asChild
+          className="text-warm-brown focus:bg-honey/10 focus:text-honey-dark cursor-pointer gap-2"
+        >
           <Link href="/compte/cartes-cadeaux">
             <Gift className="h-4 w-4" aria-hidden />
             {tAccount("giftCards")}
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild className="text-warm-brown focus:bg-honey/10 focus:text-honey-dark cursor-pointer gap-2">
+        <DropdownMenuItem
+          asChild
+          className="text-warm-brown focus:bg-honey/10 focus:text-honey-dark cursor-pointer gap-2"
+        >
           <Link href="/compte/abonnement">
             <Repeat className="h-4 w-4" aria-hidden />
             {tAccount("subscription")}
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild className="text-warm-brown focus:bg-honey/10 focus:text-honey-dark cursor-pointer gap-2">
+        <DropdownMenuItem
+          asChild
+          className="text-warm-brown focus:bg-honey/10 focus:text-honey-dark cursor-pointer gap-2"
+        >
           <Link href="/compte/profil">
             <User className="h-4 w-4" aria-hidden />
             {tAccount("profile")}

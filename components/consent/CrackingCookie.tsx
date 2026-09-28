@@ -2,14 +2,21 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useMemo } from "react";
 
-const LEFT_PATH =
-  "M0,-60 A60,60 0 0,0 0,60 L6,45 L-5,30 L5,15 L-6,0 L5,-15 L-5,-30 L6,-45 Z";
-const RIGHT_PATH =
-  "M0,-60 A60,60 0 0,1 0,60 L6,45 L-5,30 L5,15 L-6,0 L5,-15 L-5,-30 L6,-45 Z";
+const LEFT_PATH = "M0,-60 A60,60 0 0,0 0,60 L6,45 L-5,30 L5,15 L-6,0 L5,-15 L-5,-30 L6,-45 Z";
+const RIGHT_PATH = "M0,-60 A60,60 0 0,1 0,60 L6,45 L-5,30 L5,15 L-6,0 L5,-15 L-5,-30 L6,-45 Z";
 const ARC_LEFT = "M0,-60 A60,60 0 0,0 0,60";
 const ARC_RIGHT = "M0,-60 A60,60 0 0,1 0,60";
 
-type Crumb = { id: number; x: number; size: number; dx: number; dy: number; rot: number; delay: number; dur: number };
+type Crumb = {
+  id: number;
+  x: number;
+  size: number;
+  dx: number;
+  dy: number;
+  rot: number;
+  delay: number;
+  dur: number;
+};
 
 export function CrackingCookie({ size = 132 }: { size?: number }) {
   const reduce = useReducedMotion();
@@ -74,8 +81,21 @@ export function CrackingCookie({ size = 132 }: { size?: number }) {
             animate={reduce ? undefined : { x: -13, y: 4, rotate: -7 }}
             transition={halfTransition}
           >
-            <path d={LEFT_PATH} fill="url(#cc-dough)" stroke="#7a5320" strokeWidth="2.5" strokeLinejoin="round" />
-            <path d={ARC_LEFT} fill="none" stroke="#f3d49a" strokeWidth="2" opacity="0.5" strokeLinecap="round" />
+            <path
+              d={LEFT_PATH}
+              fill="url(#cc-dough)"
+              stroke="#7a5320"
+              strokeWidth="2.5"
+              strokeLinejoin="round"
+            />
+            <path
+              d={ARC_LEFT}
+              fill="none"
+              stroke="#f3d49a"
+              strokeWidth="2"
+              opacity="0.5"
+              strokeLinecap="round"
+            />
             <ellipse cx="-30" cy="-18" rx="7" ry="6" fill="#5a371a" />
             <ellipse cx="-18" cy="22" rx="6" ry="5.5" fill="#4a2c14" />
             <ellipse cx="-40" cy="14" rx="5" ry="4.5" fill="#5a371a" />
@@ -89,8 +109,21 @@ export function CrackingCookie({ size = 132 }: { size?: number }) {
             animate={reduce ? undefined : { x: 13, y: 5, rotate: 7 }}
             transition={halfTransition}
           >
-            <path d={RIGHT_PATH} fill="url(#cc-doughR)" stroke="#7a5320" strokeWidth="2.5" strokeLinejoin="round" />
-            <path d={ARC_RIGHT} fill="none" stroke="#f3d49a" strokeWidth="2" opacity="0.45" strokeLinecap="round" />
+            <path
+              d={RIGHT_PATH}
+              fill="url(#cc-doughR)"
+              stroke="#7a5320"
+              strokeWidth="2.5"
+              strokeLinejoin="round"
+            />
+            <path
+              d={ARC_RIGHT}
+              fill="none"
+              stroke="#f3d49a"
+              strokeWidth="2"
+              opacity="0.45"
+              strokeLinecap="round"
+            />
             <ellipse cx="30" cy="-22" rx="7" ry="6" fill="#5a371a" />
             <ellipse cx="20" cy="20" rx="6" ry="5.5" fill="#4a2c14" />
             <ellipse cx="40" cy="6" rx="5" ry="4.5" fill="#5a371a" />

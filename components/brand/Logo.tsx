@@ -185,13 +185,7 @@ function ChefToque({ cx, cy, size }: { cx: number; cy: number; size: number }) {
  */
 function RopeOrnamentTop() {
   return (
-    <g
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1}
-      strokeLinecap="round"
-      opacity={0.55}
-    >
+    <g fill="none" stroke="currentColor" strokeWidth={1} strokeLinecap="round" opacity={0.55}>
       {/* Main arch */}
       <path d="M 50 70 Q 120 30 190 70" />
       {/* Inner shorter arch echo */}
@@ -208,13 +202,7 @@ function RopeOrnamentTop() {
  */
 function RopeOrnamentBottom() {
   return (
-    <g
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1}
-      strokeLinecap="round"
-      opacity={0.55}
-    >
+    <g fill="none" stroke="currentColor" strokeWidth={1} strokeLinecap="round" opacity={0.55}>
       <path d="M 50 215 Q 120 235 190 215" />
       <path d="M 75 215 Q 120 225 165 215" opacity={0.7} />
       <path d="M 50 215 q -4 3 -2 7 q 2 3 5 1" />

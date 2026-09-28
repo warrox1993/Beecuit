@@ -21,9 +21,7 @@ export async function reserveGiftCardBalance(
     .set({
       remainingAmountCents: sql`${giftCards.remainingAmountCents} - ${amountCents}`,
     })
-    .where(
-      sql`${giftCards.id} = ${cardId} AND ${giftCards.remainingAmountCents} >= ${amountCents}`,
-    )
+    .where(sql`${giftCards.id} = ${cardId} AND ${giftCards.remainingAmountCents} >= ${amountCents}`)
     .returning({ id: giftCards.id });
   return rows.length > 0;
 }
@@ -32,10 +30,7 @@ export async function reserveGiftCardBalance(
  * Re-credit a previously reserved amount when a checkout is abandoned, fails, or
  * expires before payment, so a legitimate customer never loses their balance.
  */
-export async function refundGiftCardBalance(
-  cardId: string,
-  amountCents: number,
-): Promise<void> {
+export async function refundGiftCardBalance(cardId: string, amountCents: number): Promise<void> {
   await db
     .update(giftCards)
     .set({

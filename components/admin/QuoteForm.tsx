@@ -3,13 +3,7 @@
 import { useState, useTransition } from "react";
 import { adminSetQuote } from "@/lib/actions/b2b.actions";
 
-export function QuoteForm({
-  quoteId,
-  defaultEmail,
-}: {
-  quoteId: string;
-  defaultEmail: string;
-}) {
+export function QuoteForm({ quoteId, defaultEmail }: { quoteId: string; defaultEmail: string }) {
   const [pending, start] = useTransition();
   const [error, setError] = useState<string | null>(null);
 

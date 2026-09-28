@@ -1,13 +1,30 @@
 import Link from "next/link";
 
-type Row = { id: string; name: string; email: string; reason: string; status: string; createdAt: Date };
+type Row = {
+  id: string;
+  name: string;
+  email: string;
+  reason: string;
+  status: string;
+  createdAt: Date;
+};
 
 const STATUS_LABELS: Record<string, string> = { new: "Nouveau", read: "Lu", archived: "Archivé" };
-const REASON_LABELS: Record<string, string> = { order: "Commande", b2b: "Professionnels", press: "Presse", delivery: "Livraison", other: "Autre" };
+const REASON_LABELS: Record<string, string> = {
+  order: "Commande",
+  b2b: "Professionnels",
+  press: "Presse",
+  delivery: "Livraison",
+  other: "Autre",
+};
 
 export function MessagesTable({ rows }: { rows: Row[] }) {
   if (rows.length === 0) {
-    return <p className="rounded border border-dashed border-amber-200 p-6 text-amber-800">Aucun message.</p>;
+    return (
+      <p className="rounded border border-dashed border-amber-200 p-6 text-amber-800">
+        Aucun message.
+      </p>
+    );
   }
   return (
     <div className="overflow-x-auto rounded-lg border border-amber-200 bg-white">
@@ -31,7 +48,9 @@ export function MessagesTable({ rows }: { rows: Row[] }) {
               <td className="px-3 py-2">{r.createdAt.toLocaleDateString("fr-BE")}</td>
               <td className="px-3 py-2">{STATUS_LABELS[r.status] ?? r.status}</td>
               <td className="px-3 py-2">
-                <Link className="text-amber-700 underline" href={`/admin/messages/${r.id}`}>Ouvrir</Link>
+                <Link className="text-amber-700 underline" href={`/admin/messages/${r.id}`}>
+                  Ouvrir
+                </Link>
               </td>
             </tr>
           ))}

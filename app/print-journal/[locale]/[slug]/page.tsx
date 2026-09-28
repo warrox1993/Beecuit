@@ -13,20 +13,14 @@ export default async function PrintJournalPage({
   // string would throw a RangeError → 500 instead of a clean 404).
   if (!["fr", "nl", "en", "de"].includes(locale)) notFound();
   const result = await getArticleBySlug(slug, locale);
-  if (
-    !result ||
-    result.article.category !== "recettes" ||
-    result.article.status !== "published"
-  ) {
+  if (!result || result.article.category !== "recettes" || result.article.status !== "published") {
     notFound();
   }
   const t = result.translation ?? result.fallback;
   if (!t) notFound();
 
   const dateLabel = result.article.publishedAt
-    ? new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(
-        result.article.publishedAt,
-      )
+    ? new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(result.article.publishedAt)
     : "";
 
   return (
@@ -72,17 +66,14 @@ export default async function PrintJournalPage({
         )) ?? null}
       </ul>
       <h2>Étapes</h2>
-      <ol>
-        {t.recipeSteps?.map((s) => <li key={s.n}>{s.text}</li>) ?? null}
-      </ol>
+      <ol>{t.recipeSteps?.map((s) => <li key={s.n}>{s.text}</li>) ?? null}</ol>
       <hr />
       <footer>
         aufildessaveurs.be/{locale}/journal/{slug} · © Au Fil des Saveurs
       </footer>
       <script
         dangerouslySetInnerHTML={{
-          __html:
-            "window.addEventListener('load', () => setTimeout(() => window.print(), 200));",
+          __html: "window.addEventListener('load', () => setTimeout(() => window.print(), 200));",
         }}
       />
     </article>

@@ -34,7 +34,7 @@ export function JournalCard({
     <Link
       href={`/${locale}/journal/${article.slug}`}
       prefetch
-      className="group block overflow-hidden rounded-lg border border-warm-brown/10 bg-white transition hover:border-honey/40 hover:shadow-md"
+      className="group border-warm-brown/10 hover:border-honey/40 block overflow-hidden rounded-lg border bg-white transition hover:shadow-md"
     >
       <div className="relative aspect-[16/9] overflow-hidden">
         <Image
@@ -46,7 +46,7 @@ export function JournalCard({
         />
       </div>
       <div className="p-5">
-        <div className="text-warm-brown/60 text-xs uppercase tracking-wider">
+        <div className="text-warm-brown/60 text-xs tracking-wider uppercase">
           {categoryLabel} · {article.readingMinutes} min
         </div>
         <h3 className="text-warm-brown font-display mt-2 line-clamp-2 text-xl">
@@ -55,9 +55,7 @@ export function JournalCard({
         <p className="text-warm-brown/70 mt-2 line-clamp-3 text-sm">
           {article.translation.excerpt}
         </p>
-        {dateLabel && (
-          <div className="text-warm-brown/50 mt-3 text-xs italic">{dateLabel}</div>
-        )}
+        {dateLabel && <div className="text-warm-brown/50 mt-3 text-xs italic">{dateLabel}</div>}
       </div>
     </Link>
   );

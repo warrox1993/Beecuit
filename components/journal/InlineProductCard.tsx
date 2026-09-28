@@ -11,8 +11,7 @@ export async function InlineProductCard({ slug }: { slug: string }) {
   const product = await getProductBySlug("fr", slug);
   if (!product) return null;
 
-  const primary =
-    product.images.find((i) => i.isPrimary) ?? product.images[0] ?? null;
+  const primary = product.images.find((i) => i.isPrimary) ?? product.images[0] ?? null;
 
   return (
     <Link

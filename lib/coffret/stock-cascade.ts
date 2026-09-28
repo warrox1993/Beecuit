@@ -19,9 +19,7 @@ type OrderItemForCascade = {
 
 // Decrements biscuit stocks for every coffret order_item, cascading through the snapshot.
 // Safe to call on a mixed order — biscuit items are skipped.
-export async function decrementCoffretStockCascade(
-  items: OrderItemForCascade[],
-): Promise<void> {
+export async function decrementCoffretStockCascade(items: OrderItemForCascade[]): Promise<void> {
   for (const item of items) {
     const meta = item.metadata as CoffretOrderItemMetadata | null;
     if (meta?.type !== "coffret" || !meta.snapshot?.biscuits) continue;

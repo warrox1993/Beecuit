@@ -52,9 +52,7 @@ export function AddToCartButton({
     const fromX = rect.left + rect.width / 2;
     const fromY = rect.top + rect.height / 2;
     if (typeof window !== "undefined") {
-      window.dispatchEvent(
-        new CustomEvent("afds:fly-to-cart", { detail: { fromX, fromY } }),
-      );
+      window.dispatchEvent(new CustomEvent("afds:fly-to-cart", { detail: { fromX, fromY } }));
     }
     startTransition(async () => {
       try {
@@ -73,12 +71,12 @@ export function AddToCartButton({
     <Button
       ref={btnRef}
       className={
-        "flex-1 w-full transition-colors " +
+        "w-full flex-1 transition-colors " +
         (feedback === "success"
-          ? "bg-leaf text-cream hover:bg-leaf "
+          ? "bg-leaf text-cream hover:bg-leaf"
           : feedback === "error"
-            ? "bg-terracotta text-cream hover:bg-terracotta animate-[afds-shake_0.4s_ease-in-out_1] "
-            : "bg-honey text-cream hover:bg-honey-dark ")
+            ? "bg-terracotta text-cream hover:bg-terracotta animate-[afds-shake_0.4s_ease-in-out_1]"
+            : "bg-honey text-cream hover:bg-honey-dark")
       }
       disabled={pending || feedback === "success"}
       onClick={handleClick}
@@ -90,7 +88,14 @@ export function AddToCartButton({
         </span>
       ) : feedback === "success" ? (
         <span className="inline-flex items-center gap-2">
-          <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
+          <svg
+            viewBox="0 0 24 24"
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            aria-hidden
+          >
             <path d="M5 12 L 10 17 L 19 7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           <span>Ajouté</span>

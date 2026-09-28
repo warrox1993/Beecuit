@@ -2,10 +2,7 @@ import { describe, it, expect, beforeEach, afterAll } from "vitest";
 import { db } from "@/lib/db";
 import { giftCards } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
-import {
-  reserveGiftCardBalance,
-  refundGiftCardBalance,
-} from "@/lib/gift-cards/reservation";
+import { reserveGiftCardBalance, refundGiftCardBalance } from "@/lib/gift-cards/reservation";
 
 let cardId: string;
 
