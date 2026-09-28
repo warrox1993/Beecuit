@@ -1,5 +1,5 @@
 import "server-only";
-import { randomBytes, createHash } from "node:crypto";
+import { randomInt, createHash } from "node:crypto";
 import { and, eq, isNull } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { twoFactorRecoveryCodes } from "@/lib/db/schema";
@@ -7,10 +7,12 @@ import { twoFactorRecoveryCodes } from "@/lib/db/schema";
 const CODE_COUNT = 10;
 const ALPHABET = "abcdefghijklmnopqrstuvwxyz0123456789";
 
+// Tirage uniforme : `randomInt` (CSPRNG) rejette les valeurs hors intervalle au lieu
+// d'appliquer un modulo. L'ancien `octet % 36` favorisait « a » à « d » (256 = 7 × 36 + 4 :
+// probabilité 8/256 au lieu de 7/256), ce qui réduisait l'entropie des codes.
 function randomBlock(): string {
-  const bytes = randomBytes(4);
   let out = "";
-  for (let i = 0; i < 4; i++) out += ALPHABET[bytes[i]! % ALPHABET.length];
+  for (let i = 0; i < 4; i++) out += ALPHABET[randomInt(ALPHABET.length)];
   return out;
 }
 
