@@ -92,6 +92,7 @@
   },
   "pnpm": {
     "overrides": {
+      "@auth/core@0": "0.41.3",
       "@babel/core@7": "^7.29.6",
       "baseline-browser-mapping@2": "2.11.25",
       "body-parser@2": "^2.3.0",
