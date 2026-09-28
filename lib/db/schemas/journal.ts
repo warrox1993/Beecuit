@@ -60,9 +60,8 @@ export const journalArticleTranslations = pgTable(
     seoTitle: text("seo_title"),
     seoDescription: text("seo_description"),
     recipeYieldLabel: text("recipe_yield_label"),
-    recipeIngredients: jsonb("recipe_ingredients").$type<
-      Array<{ name: string; qty: string; unit: string }>
-    >(),
+    recipeIngredients:
+      jsonb("recipe_ingredients").$type<Array<{ name: string; qty: string; unit: string }>>(),
     recipeSteps: jsonb("recipe_steps").$type<Array<{ n: number; text: string }>>(),
   },
   (t) => ({

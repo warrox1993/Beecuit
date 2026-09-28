@@ -2,21 +2,25 @@ import * as React from "react";
 
 type Locale = "fr" | "nl" | "de" | "en";
 
-const STRINGS: Record<Locale, {
-  heading: string;
-  body: string;
-  cta: string;
-  fallback: string;
-  expires: string;
-  ignore: string;
-}> = {
+const STRINGS: Record<
+  Locale,
+  {
+    heading: string;
+    body: string;
+    cta: string;
+    fallback: string;
+    expires: string;
+    ignore: string;
+  }
+> = {
   fr: {
     heading: "Ton compte sera supprimé dans 30 jours",
     body: "Tu as demandé la suppression de ton compte Au Fil des Saveurs. Tes données seront effacées le {expiresHuman}. Tu peux annuler à tout moment d'ici là.",
     cta: "Annuler la suppression",
     fallback: "Si le bouton ne fonctionne pas, copie-colle cette adresse dans ton navigateur :",
     expires: "Ce lien est valable 30 jours.",
-    ignore: "Si tu n'as pas demandé cette suppression, clique sur le bouton immédiatement et change ton mot de passe.",
+    ignore:
+      "Si tu n'as pas demandé cette suppression, clique sur le bouton immédiatement et change ton mot de passe.",
   },
   nl: {
     heading: "Je account wordt over 30 dagen verwijderd",
@@ -24,7 +28,8 @@ const STRINGS: Record<Locale, {
     cta: "Verwijdering annuleren",
     fallback: "Als de knop niet werkt, kopieer en plak deze link in je browser:",
     expires: "Deze link is 30 dagen geldig.",
-    ignore: "Heb jij deze verwijdering niet aangevraagd? Klik direct op de knop en wijzig je wachtwoord.",
+    ignore:
+      "Heb jij deze verwijdering niet aangevraagd? Klik direct op de knop en wijzig je wachtwoord.",
   },
   de: {
     heading: "Dein Konto wird in 30 Tagen gelöscht",
@@ -32,7 +37,8 @@ const STRINGS: Record<Locale, {
     cta: "Löschung abbrechen",
     fallback: "Falls der Button nicht funktioniert, kopiere diese Adresse in deinen Browser:",
     expires: "Dieser Link ist 30 Tage gültig.",
-    ignore: "Solltest du die Löschung nicht angefordert haben, klicke sofort auf den Button und ändere dein Passwort.",
+    ignore:
+      "Solltest du die Löschung nicht angefordert haben, klicke sofort auf den Button und ändere dein Passwort.",
   },
   en: {
     heading: "Your account will be deleted in 30 days",
@@ -40,7 +46,8 @@ const STRINGS: Record<Locale, {
     cta: "Cancel deletion",
     fallback: "If the button doesn't work, copy and paste this link into your browser:",
     expires: "This link is valid for 30 days.",
-    ignore: "If you didn't request this deletion, click the button immediately and change your password.",
+    ignore:
+      "If you didn't request this deletion, click the button immediately and change your password.",
   },
 };
 
@@ -55,7 +62,9 @@ export function AccountDeletionRequestedEmail({
 }) {
   const s = STRINGS[locale];
   return (
-    <div style={{ fontFamily: "Georgia, serif", background: "#fbf6ee", color: "#3d2817", padding: 32 }}>
+    <div
+      style={{ fontFamily: "Georgia, serif", background: "#fbf6ee", color: "#3d2817", padding: 32 }}
+    >
       <div style={{ fontFamily: "Snell Roundhand, cursive", color: "#a8731b", fontSize: 24 }}>
         Au fil des saveurs
       </div>

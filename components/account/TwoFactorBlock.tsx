@@ -69,7 +69,14 @@ export function TwoFactorBlock({ locale, enabled }: { locale: string; enabled: b
       <form action={submitEnable} className="space-y-4" aria-busy={pending || undefined}>
         <input type="hidden" name="locale" value={locale} />
         <p className="text-warm-brown text-sm">{t("twoFactorScanHint")}</p>
-        <Image src={qr} alt="QR" width={200} height={200} className="rounded-md border" unoptimized />
+        <Image
+          src={qr}
+          alt="QR"
+          width={200}
+          height={200}
+          className="rounded-md border"
+          unoptimized
+        />
         <label className="block">
           <span className="text-warm-brown text-sm">{t("twoFactorCodeLabel")}</span>
           <input
@@ -81,8 +88,14 @@ export function TwoFactorBlock({ locale, enabled }: { locale: string; enabled: b
             className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 mt-2 block w-full rounded-md border bg-white px-4 py-3 tracking-widest focus:ring-2 focus:outline-none"
           />
         </label>
-        {error && <p role="alert" className="text-terracotta text-sm">{error}</p>}
-        <Button type="submit" disabled={pending}>{t("twoFactorVerifyEnable")}</Button>
+        {error && (
+          <p role="alert" className="text-terracotta text-sm">
+            {error}
+          </p>
+        )}
+        <Button type="submit" disabled={pending}>
+          {t("twoFactorVerifyEnable")}
+        </Button>
       </form>
     );
   }
@@ -106,9 +119,17 @@ export function TwoFactorBlock({ locale, enabled }: { locale: string; enabled: b
           <input type="hidden" name="locale" value={locale} />
           <label className="block">
             <span className="text-warm-brown text-sm">{t("currentPasswordLabel")}</span>
-            <input type="password" name="password" required autoComplete="current-password" className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 mt-2 block rounded-md border bg-white px-4 py-2 text-sm focus:ring-2 focus:outline-none" />
+            <input
+              type="password"
+              name="password"
+              required
+              autoComplete="current-password"
+              className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 mt-2 block rounded-md border bg-white px-4 py-2 text-sm focus:ring-2 focus:outline-none"
+            />
           </label>
-          <Button type="submit" variant="outline" disabled={pending}>{t("twoFactorRegenerate")}</Button>
+          <Button type="submit" variant="outline" disabled={pending}>
+            {t("twoFactorRegenerate")}
+          </Button>
         </form>
         <form
           action={(fd) => {
@@ -124,11 +145,23 @@ export function TwoFactorBlock({ locale, enabled }: { locale: string; enabled: b
           <input type="hidden" name="locale" value={locale} />
           <label className="block">
             <span className="text-warm-brown text-sm">{t("currentPasswordLabel")}</span>
-            <input type="password" name="password" required autoComplete="current-password" className="border-warm-brown/20 focus:border-terracotta focus:ring-terracotta/30 mt-2 block rounded-md border bg-white px-4 py-2 text-sm focus:ring-2 focus:outline-none" />
+            <input
+              type="password"
+              name="password"
+              required
+              autoComplete="current-password"
+              className="border-warm-brown/20 focus:border-terracotta focus:ring-terracotta/30 mt-2 block rounded-md border bg-white px-4 py-2 text-sm focus:ring-2 focus:outline-none"
+            />
           </label>
-          <Button type="submit" variant="outline" disabled={pending}>{t("twoFactorDisable")}</Button>
+          <Button type="submit" variant="outline" disabled={pending}>
+            {t("twoFactorDisable")}
+          </Button>
         </form>
-        {error && <p role="alert" className="text-terracotta text-sm">{error}</p>}
+        {error && (
+          <p role="alert" className="text-terracotta text-sm">
+            {error}
+          </p>
+        )}
       </div>
     );
   }
@@ -138,7 +171,9 @@ export function TwoFactorBlock({ locale, enabled }: { locale: string; enabled: b
     <div className="space-y-3">
       <p className="text-warm-brown/70 text-sm">{t("twoFactorIntro")}</p>
       {error && <p className="text-terracotta text-sm">{error}</p>}
-      <Button onClick={beginSetup} disabled={pending}>{t("twoFactorEnable")}</Button>
+      <Button onClick={beginSetup} disabled={pending}>
+        {t("twoFactorEnable")}
+      </Button>
     </div>
   );
 }

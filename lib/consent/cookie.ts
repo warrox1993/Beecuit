@@ -18,7 +18,11 @@ export function parseConsent(raw: string | null | undefined): ConsentState | nul
     if (typeof o !== "object" || o === null) return null;
     const r = o as Record<string, unknown>;
     if (r.v !== CONSENT_VERSION) return null;
-    if (typeof r.analytics !== "boolean" || typeof r.marketing !== "boolean" || typeof r.ts !== "number") {
+    if (
+      typeof r.analytics !== "boolean" ||
+      typeof r.marketing !== "boolean" ||
+      typeof r.ts !== "number"
+    ) {
       return null;
     }
     if (Date.now() - r.ts > CONSENT_MAX_AGE_SECONDS * 1000) return null; // expiré

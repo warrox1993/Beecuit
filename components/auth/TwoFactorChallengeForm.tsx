@@ -4,12 +4,22 @@ import { useTranslations } from "next-intl";
 import { verifyTwoFactorChallenge, requestDisable2faEmail } from "@/lib/actions/auth.actions";
 import { Button } from "@/components/ui/button";
 
-export function TwoFactorChallengeForm({ locale, callbackUrl }: { locale: string; callbackUrl: string | null }) {
+export function TwoFactorChallengeForm({
+  locale,
+  callbackUrl,
+}: {
+  locale: string;
+  callbackUrl: string | null;
+}) {
   const t = useTranslations("auth");
   const [pending, start] = useTransition();
   return (
     <div className="space-y-6">
-      <form action={(fd) => start(() => verifyTwoFactorChallenge(fd))} className="space-y-4" aria-busy={pending || undefined}>
+      <form
+        action={(fd) => start(() => verifyTwoFactorChallenge(fd))}
+        className="space-y-4"
+        aria-busy={pending || undefined}
+      >
         <input type="hidden" name="locale" value={locale} />
         {callbackUrl && <input type="hidden" name="callbackUrl" value={callbackUrl} />}
         <label className="block">
@@ -26,7 +36,9 @@ export function TwoFactorChallengeForm({ locale, callbackUrl }: { locale: string
           />
         </label>
         <p className="text-warm-brown/60 text-xs">{t("twoFactorRecoveryHint")}</p>
-        <Button type="submit" disabled={pending} className="w-full">{t("twoFactorVerify")}</Button>
+        <Button type="submit" disabled={pending} className="w-full">
+          {t("twoFactorVerify")}
+        </Button>
       </form>
       <form action={(fd) => start(() => requestDisable2faEmail(fd))} className="text-center">
         <input type="hidden" name="locale" value={locale} />

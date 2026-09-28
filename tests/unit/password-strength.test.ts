@@ -16,6 +16,8 @@ describe("scorePassword", () => {
   });
 
   it("penalises the email local-part", () => {
-    expect(scorePassword("Jean12345678", { email: "jean@example.com" }).score).toBeLessThanOrEqual(1);
+    expect(scorePassword("Jean12345678", { email: "jean@example.com" }).score).toBeLessThanOrEqual(
+      1,
+    );
   });
 });

@@ -13,11 +13,7 @@ const STATUS_LABELS: Record<string, string> = {
   expired: "Expiré",
 };
 
-export default async function AdminDevisDetail({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function AdminDevisDetail({ params }: { params: Promise<{ id: string }> }) {
   const session = await auth();
   if (session?.user?.role !== "admin") redirect("/");
   const { id } = await params;
@@ -54,13 +50,13 @@ export default async function AdminDevisDetail({
           <Field label="Soumis le" value={quote.createdAt.toLocaleString("fr-BE")} />
         </dl>
         <h3 className="mt-4 mb-1 text-sm font-semibold">Produits demandés</h3>
-        <p className="whitespace-pre-wrap rounded bg-amber-50 p-3 text-sm">
+        <p className="rounded bg-amber-50 p-3 text-sm whitespace-pre-wrap">
           {quote.requestedProducts}
         </p>
         {quote.message && (
           <>
             <h3 className="mt-4 mb-1 text-sm font-semibold">Message</h3>
-            <p className="whitespace-pre-wrap rounded bg-amber-50 p-3 text-sm">{quote.message}</p>
+            <p className="rounded bg-amber-50 p-3 text-sm whitespace-pre-wrap">{quote.message}</p>
           </>
         )}
       </section>
@@ -110,7 +106,7 @@ export default async function AdminDevisDetail({
             </p>
           )}
           {quote.quoteDescription && (
-            <p className="mt-3 whitespace-pre-wrap rounded bg-amber-50 p-3 text-sm">
+            <p className="mt-3 rounded bg-amber-50 p-3 text-sm whitespace-pre-wrap">
               {quote.quoteDescription}
             </p>
           )}
@@ -124,8 +120,8 @@ export default async function AdminDevisDetail({
         <section className="rounded-lg border border-green-200 bg-green-50 p-6">
           <h2 className="mb-2 text-lg font-semibold text-green-900">Payé</h2>
           <p className="text-sm text-green-800">
-            Payé le {quote.paidAt?.toLocaleString("fr-BE")} —{" "}
-            {(quote.quotedAmountCents ?? 0) / 100} €.
+            Payé le {quote.paidAt?.toLocaleString("fr-BE")} — {(quote.quotedAmountCents ?? 0) / 100}{" "}
+            €.
           </p>
         </section>
       )}
@@ -134,7 +130,7 @@ export default async function AdminDevisDetail({
         <section className="rounded-lg border border-red-200 bg-red-50 p-6">
           <h2 className="mb-2 text-lg font-semibold text-red-900">Refusé</h2>
           {quote.rejectedReason && (
-            <p className="whitespace-pre-wrap text-sm text-red-800">{quote.rejectedReason}</p>
+            <p className="text-sm whitespace-pre-wrap text-red-800">{quote.rejectedReason}</p>
           )}
         </section>
       )}
@@ -142,7 +138,7 @@ export default async function AdminDevisDetail({
       {quote.adminNotes && (
         <section className="rounded-lg border border-gray-200 bg-gray-50 p-6">
           <h2 className="mb-2 text-sm font-semibold text-gray-700">Notes internes</h2>
-          <p className="whitespace-pre-wrap text-sm text-gray-700">{quote.adminNotes}</p>
+          <p className="text-sm whitespace-pre-wrap text-gray-700">{quote.adminNotes}</p>
         </section>
       )}
     </div>
@@ -152,7 +148,7 @@ export default async function AdminDevisDetail({
 function Field({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <dt className="text-xs uppercase tracking-wide text-amber-700">{label}</dt>
+      <dt className="text-xs tracking-wide text-amber-700 uppercase">{label}</dt>
       <dd className="text-amber-900">{value}</dd>
     </div>
   );

@@ -16,18 +16,10 @@ export async function listQuoteRequests(opts?: { status?: string; limit?: number
       .orderBy(desc(b2bQuoteRequests.createdAt))
       .limit(limit);
   }
-  return db
-    .select()
-    .from(b2bQuoteRequests)
-    .orderBy(desc(b2bQuoteRequests.createdAt))
-    .limit(limit);
+  return db.select().from(b2bQuoteRequests).orderBy(desc(b2bQuoteRequests.createdAt)).limit(limit);
 }
 
 export async function getQuoteRequest(id: string) {
-  const rows = await db
-    .select()
-    .from(b2bQuoteRequests)
-    .where(eq(b2bQuoteRequests.id, id))
-    .limit(1);
+  const rows = await db.select().from(b2bQuoteRequests).where(eq(b2bQuoteRequests.id, id)).limit(1);
   return rows[0] ?? null;
 }

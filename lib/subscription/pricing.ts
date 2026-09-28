@@ -22,9 +22,6 @@ const PRICE_MAP: Record<SubscriptionFormat, Record<Tier, string>> = {
   },
 };
 
-export function getStripePriceId(
-  format: SubscriptionFormat,
-  engagement: EngagementMonths,
-): string {
+export function getStripePriceId(format: SubscriptionFormat, engagement: EngagementMonths): string {
   return PRICE_MAP[format][ENGAGEMENT_KEY[engagement]];
 }

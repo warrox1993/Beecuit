@@ -30,10 +30,7 @@ function nodeText(node: ProseMirrorNode): string {
   return "";
 }
 
-export function renderArticleBody(
-  node: ProseMirrorNode,
-  key = "root",
-): ReactNode {
+export function renderArticleBody(node: ProseMirrorNode, key = "root"): ReactNode {
   switch (node.type) {
     case "doc":
       return (
@@ -54,7 +51,7 @@ export function renderArticleBody(
     case "heading": {
       const text = (node.content ?? []).map(nodeText).join("");
       const id = toSlug(text);
-      const Tag = (`h${node.attrs.level}`) as "h2" | "h3";
+      const Tag = `h${node.attrs.level}` as "h2" | "h3";
       return (
         <Tag id={id}>
           {node.content?.map((c, i) => (
@@ -99,19 +96,10 @@ export function renderArticleBody(
       );
     case "image":
       return (
-        <Figure
-          src={node.attrs.src}
-          alt={node.attrs.alt ?? ""}
-          caption={node.attrs.caption}
-        />
+        <Figure src={node.attrs.src} alt={node.attrs.alt ?? ""} caption={node.attrs.caption} />
       );
     case "video-embed":
-      return (
-        <VideoEmbed
-          provider={node.attrs.provider}
-          videoId={node.attrs.videoId}
-        />
-      );
+      return <VideoEmbed provider={node.attrs.provider} videoId={node.attrs.videoId} />;
     case "video-upload":
       return (
         <video

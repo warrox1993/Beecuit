@@ -1,10 +1,5 @@
 import { ImageResponse } from "next/og";
-import {
-  OG_COLORS,
-  OG_CONTENT_TYPE,
-  OG_FONT_STACK,
-  OG_SIZE,
-} from "@/lib/seo/og-image";
+import { OG_COLORS, OG_CONTENT_TYPE, OG_FONT_STACK, OG_SIZE } from "@/lib/seo/og-image";
 import { SITE_NAME, SITE_TAGLINE } from "@/lib/seo/site";
 
 // Route segment config — see https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image
@@ -24,139 +19,137 @@ export const contentType = OG_CONTENT_TYPE;
  */
 export default function OpenGraphImage() {
   return new ImageResponse(
-    (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        background: `linear-gradient(135deg, ${OG_COLORS.cream} 0%, ${OG_COLORS.creamGold} 100%)`,
+        fontFamily: OG_FONT_STACK.display,
+        color: OG_COLORS.warmBrown,
+        position: "relative",
+        padding: "80px",
+      }}
+    >
+      {/* Top gold rule */}
       <div
         style={{
-          width: "100%",
-          height: "100%",
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: `linear-gradient(135deg, ${OG_COLORS.cream} 0%, ${OG_COLORS.creamGold} 100%)`,
-          fontFamily: OG_FONT_STACK.display,
-          color: OG_COLORS.warmBrown,
-          position: "relative",
-          padding: "80px",
+          gap: "24px",
+          marginBottom: "48px",
         }}
       >
-        {/* Top gold rule */}
         <div
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "24px",
-            marginBottom: "48px",
+            width: "180px",
+            height: "1px",
+            background: OG_COLORS.honeyDark,
           }}
-        >
-          <div
-            style={{
-              width: "180px",
-              height: "1px",
-              background: OG_COLORS.honeyDark,
-            }}
-          />
-          <div
-            style={{
-              width: "12px",
-              height: "12px",
-              transform: "rotate(45deg)",
-              background: OG_COLORS.honey,
-            }}
-          />
-          <div
-            style={{
-              width: "180px",
-              height: "1px",
-              background: OG_COLORS.honeyDark,
-            }}
-          />
-        </div>
-
-        {/* Script overline */}
+        />
         <div
           style={{
-            display: "flex",
-            fontFamily: OG_FONT_STACK.script,
-            fontSize: "56px",
-            color: OG_COLORS.honeyDark,
-            marginBottom: "16px",
-            lineHeight: 1,
+            width: "12px",
+            height: "12px",
+            transform: "rotate(45deg)",
+            background: OG_COLORS.honey,
           }}
-        >
-          Maison artisanale
-        </div>
-
-        {/* Wordmark */}
+        />
         <div
           style={{
-            display: "flex",
-            fontSize: "104px",
-            fontWeight: 600,
-            letterSpacing: "-0.02em",
-            textAlign: "center",
-            lineHeight: 1.05,
+            width: "180px",
+            height: "1px",
+            background: OG_COLORS.honeyDark,
           }}
-        >
-          {SITE_NAME}
-        </div>
-
-        {/* Tagline */}
-        <div
-          style={{
-            display: "flex",
-            fontFamily: OG_FONT_STACK.sans,
-            fontSize: "30px",
-            color: OG_COLORS.warmBrown,
-            opacity: 0.78,
-            marginTop: "28px",
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-          }}
-        >
-          {SITE_TAGLINE}
-        </div>
-
-        {/* Bottom gold rule */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "24px",
-            marginTop: "56px",
-          }}
-        >
-          <div
-            style={{
-              width: "120px",
-              height: "1px",
-              background: OG_COLORS.honeyDark,
-            }}
-          />
-          <div
-            style={{
-              fontFamily: OG_FONT_STACK.sans,
-              fontSize: "18px",
-              letterSpacing: "0.32em",
-              color: OG_COLORS.terracotta,
-              textTransform: "uppercase",
-              display: "flex",
-            }}
-          >
-            Liège · Belgique
-          </div>
-          <div
-            style={{
-              width: "120px",
-              height: "1px",
-              background: OG_COLORS.honeyDark,
-            }}
-          />
-        </div>
+        />
       </div>
-    ),
+
+      {/* Script overline */}
+      <div
+        style={{
+          display: "flex",
+          fontFamily: OG_FONT_STACK.script,
+          fontSize: "56px",
+          color: OG_COLORS.honeyDark,
+          marginBottom: "16px",
+          lineHeight: 1,
+        }}
+      >
+        Maison artisanale
+      </div>
+
+      {/* Wordmark */}
+      <div
+        style={{
+          display: "flex",
+          fontSize: "104px",
+          fontWeight: 600,
+          letterSpacing: "-0.02em",
+          textAlign: "center",
+          lineHeight: 1.05,
+        }}
+      >
+        {SITE_NAME}
+      </div>
+
+      {/* Tagline */}
+      <div
+        style={{
+          display: "flex",
+          fontFamily: OG_FONT_STACK.sans,
+          fontSize: "30px",
+          color: OG_COLORS.warmBrown,
+          opacity: 0.78,
+          marginTop: "28px",
+          letterSpacing: "0.18em",
+          textTransform: "uppercase",
+        }}
+      >
+        {SITE_TAGLINE}
+      </div>
+
+      {/* Bottom gold rule */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "24px",
+          marginTop: "56px",
+        }}
+      >
+        <div
+          style={{
+            width: "120px",
+            height: "1px",
+            background: OG_COLORS.honeyDark,
+          }}
+        />
+        <div
+          style={{
+            fontFamily: OG_FONT_STACK.sans,
+            fontSize: "18px",
+            letterSpacing: "0.32em",
+            color: OG_COLORS.terracotta,
+            textTransform: "uppercase",
+            display: "flex",
+          }}
+        >
+          Liège · Belgique
+        </div>
+        <div
+          style={{
+            width: "120px",
+            height: "1px",
+            background: OG_COLORS.honeyDark,
+          }}
+        />
+      </div>
+    </div>,
     {
       ...size,
     },

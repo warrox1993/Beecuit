@@ -8,7 +8,14 @@ import { ManageCookiesButton } from "@/components/consent/ManageCookiesButton";
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      aria-hidden
+    >
       <rect x="3" y="3" width="18" height="18" rx="5" />
       <circle cx="12" cy="12" r="4" />
       <circle cx="17.5" cy="6.5" r="0.75" fill="currentColor" stroke="none" />
@@ -41,10 +48,7 @@ export async function Footer({ locale }: { locale: string }) {
         <div className="grid grid-cols-1 gap-12 py-12 md:grid-cols-[5fr_3fr_4fr] md:gap-16">
           {/* — Col 1: logo + bio + address — */}
           <div>
-            <Logo
-              variant="full"
-              className="text-warm-brown -ml-2 h-32 w-auto md:-ml-4 md:h-36"
-            />
+            <Logo variant="full" className="text-warm-brown -ml-2 h-32 w-auto md:-ml-4 md:h-36" />
             <p className="text-warm-brown/85 mt-2 max-w-[36ch] text-sm leading-relaxed">
               {t("bio")}
             </p>
@@ -147,10 +151,7 @@ export async function Footer({ locale }: { locale: string }) {
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/confidentialite"
-                    className="hover:text-honey-dark transition-colors"
-                  >
+                  <Link href="/confidentialite" className="hover:text-honey-dark transition-colors">
                     {t("links.privacy")}
                   </Link>
                 </li>

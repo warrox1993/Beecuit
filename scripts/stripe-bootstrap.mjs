@@ -4,7 +4,9 @@ import Stripe from "stripe";
 const apiKey = process.env.STRIPE_API_KEY;
 if (!apiKey) {
   console.error("ERROR: set STRIPE_API_KEY env var before running.");
-  console.error("  PowerShell: $env:STRIPE_API_KEY = \"rk_test_...\"; node scripts/stripe-bootstrap.mjs");
+  console.error(
+    '  PowerShell: $env:STRIPE_API_KEY = "rk_test_..."; node scripts/stripe-bootstrap.mjs',
+  );
   process.exit(1);
 }
 
@@ -48,7 +50,9 @@ async function createWebhookEndpoint() {
   if (dup) {
     console.log(`  ↳ already exists: ${dup.id}`);
     console.log("  ↳ NOTE: signing secret only returned on creation.");
-    console.log("    If you don't have whsec_ saved, delete this endpoint in Dashboard and re-run.");
+    console.log(
+      "    If you don't have whsec_ saved, delete this endpoint in Dashboard and re-run.",
+    );
     results.webhook_id = dup.id;
     results.webhook_secret = "<existing — re-create if missing>";
     return;
@@ -68,7 +72,9 @@ async function listPaymentMethods() {
   try {
     const cfgs = await stripe.paymentMethodConfigurations.list({ limit: 10 });
     if (cfgs.data.length === 0) {
-      console.log("  ↳ no payment_method_configurations found (legacy account-level config in use)");
+      console.log(
+        "  ↳ no payment_method_configurations found (legacy account-level config in use)",
+      );
       results.bancontact = "UNKNOWN — check Dashboard → Settings → Payment methods";
       return;
     }

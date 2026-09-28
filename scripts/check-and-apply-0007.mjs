@@ -4,7 +4,8 @@ import { readFileSync } from "node:fs";
 
 const sql = neon(process.env.DATABASE_URL);
 
-const check = await sql`SELECT table_name FROM information_schema.tables WHERE table_name = 'b2b_quote_requests'`;
+const check =
+  await sql`SELECT table_name FROM information_schema.tables WHERE table_name = 'b2b_quote_requests'`;
 if (check.length > 0) {
   console.log("✓ b2b_quote_requests already exists — skipping");
   process.exit(0);
@@ -32,7 +33,8 @@ for (const stmt of statements) {
 }
 
 // Record in drizzle's __drizzle_migrations table so subsequent drizzle-kit ops know it's applied
-const drizzleSchemaCheck = await sql`SELECT 1 FROM information_schema.schemata WHERE schema_name = 'drizzle'`;
+const drizzleSchemaCheck =
+  await sql`SELECT 1 FROM information_schema.schemata WHERE schema_name = 'drizzle'`;
 if (drizzleSchemaCheck.length === 0) {
   await sql`CREATE SCHEMA IF NOT EXISTS drizzle`;
 }

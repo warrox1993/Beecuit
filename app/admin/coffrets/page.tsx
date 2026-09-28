@@ -1,10 +1,6 @@
 import Link from "next/link";
 import { db } from "@/lib/db";
-import {
-  products,
-  productTranslations,
-  coffretContents,
-} from "@/lib/db/schema";
+import { products, productTranslations, coffretContents } from "@/lib/db/schema";
 import { and, eq, sql } from "drizzle-orm";
 import { Button } from "@/components/ui/button";
 import { isCoffretAvailable } from "@/lib/coffret/availability";

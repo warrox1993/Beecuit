@@ -19,7 +19,10 @@ export type CoffretPrice = {
   }>;
 };
 
-export async function computeCoffretPrice(coffretId: string, locale: Locale): Promise<CoffretPrice> {
+export async function computeCoffretPrice(
+  coffretId: string,
+  locale: Locale,
+): Promise<CoffretPrice> {
   const rows = await db
     .select({
       biscuitId: coffretContents.biscuitId,

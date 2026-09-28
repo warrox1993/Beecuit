@@ -41,9 +41,7 @@ describe("renderArticleBody", () => {
   it("renders callout with variant text", () => {
     const doc: ProseMirrorNode = {
       type: "doc",
-      content: [
-        { type: "callout", attrs: { variant: "astuce", text: "Pro tip" } },
-      ],
+      content: [{ type: "callout", attrs: { variant: "astuce", text: "Pro tip" } }],
     };
     const html = renderToString(<>{renderArticleBody(doc)}</>);
     expect(html).toContain("Pro tip");

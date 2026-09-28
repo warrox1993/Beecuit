@@ -48,8 +48,8 @@ export function GiftCardDelivery({
             {recipientName ? `Bonjour ${recipientName},` : "Bonjour,"}
           </Text>
           <Text>
-            <strong>{purchaserEmail}</strong> t&apos;a offert une carte cadeau
-            Au Fil des Saveurs de <strong>{amount}</strong>.
+            <strong>{purchaserEmail}</strong> t&apos;a offert une carte cadeau Au Fil des Saveurs de{" "}
+            <strong>{amount}</strong>.
           </Text>
           {message && (
             <Section
@@ -60,9 +60,7 @@ export function GiftCardDelivery({
                 margin: "16px 0",
               }}
             >
-              <Text style={{ fontStyle: "italic", margin: 0 }}>
-                « {message} »
-              </Text>
+              <Text style={{ fontStyle: "italic", margin: 0 }}>« {message} »</Text>
             </Section>
           )}
           <Section
@@ -74,9 +72,7 @@ export function GiftCardDelivery({
               margin: "24px 0",
             }}
           >
-            <Text style={{ fontSize: 12, color: "#8B6F47", margin: "0 0 8px" }}>
-              TON CODE
-            </Text>
+            <Text style={{ fontSize: 12, color: "#8B6F47", margin: "0 0 8px" }}>TON CODE</Text>
             <Text
               style={{
                 fontFamily: "monospace",

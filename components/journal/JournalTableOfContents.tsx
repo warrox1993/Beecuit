@@ -6,9 +6,7 @@ import type { ProseMirrorNode } from "@/lib/journal/prosemirror-types";
 
 function extractH2s(node: ProseMirrorNode, out: string[] = []): string[] {
   if (node.type === "heading" && node.attrs.level === 2) {
-    const text = (node.content ?? [])
-      .map((c) => ("text" in c ? c.text : ""))
-      .join("");
+    const text = (node.content ?? []).map((c) => ("text" in c ? c.text : "")).join("");
     if (text) out.push(text);
   }
   if ("content" in node && Array.isArray(node.content)) {
@@ -43,7 +41,7 @@ export function JournalTableOfContents({ body }: { body: ProseMirrorNode }) {
 
   return (
     <nav className="sticky top-24 hidden text-sm lg:block" aria-label={t("tableOfContents")}>
-      <div className="text-warm-brown/60 mb-2 text-xs uppercase tracking-wider">
+      <div className="text-warm-brown/60 mb-2 text-xs tracking-wider uppercase">
         {t("tableOfContents")}
       </div>
       <ul className="space-y-1">

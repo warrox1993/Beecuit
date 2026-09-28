@@ -24,7 +24,11 @@ export default async function AdminMessagesPage({
             { v: "read", label: "Lus" },
             { v: "archived", label: "Archivés" },
           ].map((f) => (
-            <a key={f.v} href={f.v ? `/admin/messages?status=${f.v}` : "/admin/messages"} className="text-amber-700 underline">
+            <a
+              key={f.v}
+              href={f.v ? `/admin/messages?status=${f.v}` : "/admin/messages"}
+              className="text-amber-700 underline"
+            >
               {f.label}
             </a>
           ))}

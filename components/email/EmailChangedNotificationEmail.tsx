@@ -2,21 +2,25 @@ import * as React from "react";
 
 type Locale = "fr" | "nl" | "de" | "en";
 
-const STRINGS: Record<Locale, {
-  heading: string;
-  body: string;
-  cta: string;
-  fallback: string;
-  expires: string;
-  warning: string;
-}> = {
+const STRINGS: Record<
+  Locale,
+  {
+    heading: string;
+    body: string;
+    cta: string;
+    fallback: string;
+    expires: string;
+    warning: string;
+  }
+> = {
   fr: {
     heading: "Ton adresse email a été modifiée",
     body: "L'adresse email de ton compte Au Fil des Saveurs a été modifiée vers {newEmail}. Tu n'as plus rien à faire.",
     cta: "Si ce n'est pas toi, annuler le changement",
     fallback: "Si le bouton ne fonctionne pas, copie-colle cette adresse dans ton navigateur :",
     expires: "Le lien d'annulation est valable 7 jours.",
-    warning: "Si tu n'es pas à l'origine de ce changement, clique immédiatement sur le bouton ci-dessus. Cela révoquera également toutes les sessions actives.",
+    warning:
+      "Si tu n'es pas à l'origine de ce changement, clique immédiatement sur le bouton ci-dessus. Cela révoquera également toutes les sessions actives.",
   },
   nl: {
     heading: "Je e-mailadres is gewijzigd",
@@ -24,7 +28,8 @@ const STRINGS: Record<Locale, {
     cta: "Niet jij? Wijziging annuleren",
     fallback: "Als de knop niet werkt, kopieer en plak deze link in je browser:",
     expires: "De annuleringslink is 7 dagen geldig.",
-    warning: "Heb jij deze wijziging niet aangevraagd? Klik direct op de knop hierboven. Daarmee worden ook alle actieve sessies ingetrokken.",
+    warning:
+      "Heb jij deze wijziging niet aangevraagd? Klik direct op de knop hierboven. Daarmee worden ook alle actieve sessies ingetrokken.",
   },
   de: {
     heading: "Deine E-Mail-Adresse wurde geändert",
@@ -32,7 +37,8 @@ const STRINGS: Record<Locale, {
     cta: "Nicht du? Änderung rückgängig machen",
     fallback: "Falls der Button nicht funktioniert, kopiere diese Adresse in deinen Browser:",
     expires: "Der Rücksetzlink ist 7 Tage gültig.",
-    warning: "Solltest du diese Änderung nicht ausgelöst haben, klicke sofort auf den Button oben. Damit werden auch alle aktiven Sitzungen abgemeldet.",
+    warning:
+      "Solltest du diese Änderung nicht ausgelöst haben, klicke sofort auf den Button oben. Damit werden auch alle aktiven Sitzungen abgemeldet.",
   },
   en: {
     heading: "Your email address was changed",
@@ -40,7 +46,8 @@ const STRINGS: Record<Locale, {
     cta: "Wasn't you? Undo the change",
     fallback: "If the button doesn't work, copy and paste this link into your browser:",
     expires: "The undo link is valid for 7 days.",
-    warning: "If you didn't make this change, click the button above immediately. It will also revoke all active sessions.",
+    warning:
+      "If you didn't make this change, click the button above immediately. It will also revoke all active sessions.",
   },
 };
 
@@ -55,7 +62,9 @@ export function EmailChangedNotificationEmail({
 }) {
   const s = STRINGS[locale];
   return (
-    <div style={{ fontFamily: "Georgia, serif", background: "#fbf6ee", color: "#3d2817", padding: 32 }}>
+    <div
+      style={{ fontFamily: "Georgia, serif", background: "#fbf6ee", color: "#3d2817", padding: 32 }}
+    >
       <div style={{ fontFamily: "Snell Roundhand, cursive", color: "#a8731b", fontSize: 24 }}>
         Au fil des saveurs
       </div>

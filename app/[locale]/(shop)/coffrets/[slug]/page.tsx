@@ -52,10 +52,7 @@ export default async function CoffretDetailPage({ params }: Props) {
     locale as "fr" | "nl" | "de" | "en",
   );
 
-  const totalUnits = coffret.price.breakdown.reduce(
-    (a, b) => a + b.quantity,
-    0,
-  );
+  const totalUnits = coffret.price.breakdown.reduce((a, b) => a + b.quantity, 0);
 
   return (
     <Container className="py-12">
@@ -63,20 +60,18 @@ export default async function CoffretDetailPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
-      <div className="grid lg:grid-cols-[1.2fr_1fr] gap-10">
-        <div className="bg-cookie/30 aspect-square rounded-2xl overflow-hidden">
+      <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
+        <div className="bg-cookie/30 aspect-square overflow-hidden rounded-2xl">
           {coffret.images[0]?.url ? (
             <Image
               src={coffret.images[0].url}
               alt={coffret.images[0].altText ?? coffret.name}
               width={800}
               height={800}
-              className="object-cover w-full h-full"
+              className="h-full w-full object-cover"
             />
           ) : (
-            <div className="flex items-center justify-center h-full text-9xl opacity-30">
-              📦
-            </div>
+            <div className="flex h-full items-center justify-center text-9xl opacity-30">📦</div>
           )}
         </div>
 
@@ -84,19 +79,19 @@ export default async function CoffretDetailPage({ params }: Props) {
       </div>
 
       <section className="mt-16">
-        <p className="text-xs uppercase tracking-widest text-warm-brown/60 mb-2">
+        <p className="text-warm-brown/60 mb-2 text-xs tracking-widest uppercase">
           Ce coffret contient
         </p>
-        <h2 className="text-2xl font-display text-warm-brown mb-6">
+        <h2 className="font-display text-warm-brown mb-6 text-2xl">
           {totalUnits} biscuits sélectionnés
         </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
           {coffret.price.breakdown.map((b) => (
             <div
               key={b.biscuitId}
-              className="bg-white rounded-xl overflow-hidden border border-cookie/40"
+              className="border-cookie/40 overflow-hidden rounded-xl border bg-white"
             >
-              <div className="relative aspect-[4/3] bg-cookie/30">
+              <div className="bg-cookie/30 relative aspect-[4/3]">
                 {b.primaryImageUrl ? (
                   <Image
                     src={b.primaryImageUrl}
@@ -112,12 +107,9 @@ export default async function CoffretDetailPage({ params }: Props) {
                 )}
               </div>
               <div className="p-3">
-                <div className="font-semibold text-sm text-warm-brown">
-                  {b.name}
-                </div>
-                <div className="text-xs text-warm-brown/70">
-                  ×{b.quantity} ·{" "}
-                  {(b.unitPriceCents / 100).toFixed(2).replace(".", ",")} €
+                <div className="text-warm-brown text-sm font-semibold">{b.name}</div>
+                <div className="text-warm-brown/70 text-xs">
+                  ×{b.quantity} · {(b.unitPriceCents / 100).toFixed(2).replace(".", ",")} €
                   l&apos;unité
                 </div>
               </div>

@@ -39,9 +39,7 @@ export default async function AccountPage({
 
   return (
     <section>
-      {!user?.emailVerified && (
-        <EmailNotVerifiedBanner locale={locale} sent={verify === "sent"} />
-      )}
+      {!user?.emailVerified && <EmailNotVerifiedBanner locale={locale} sent={verify === "sent"} />}
       {welcome === "1" && (
         <div className="border-honey-dark/30 bg-honey-dark/5 text-honey-dark mb-6 rounded-md border px-4 py-3 text-sm">
           {tAuth("toastWelcome")}

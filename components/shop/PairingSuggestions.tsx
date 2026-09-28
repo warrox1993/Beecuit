@@ -26,7 +26,7 @@ export function PairingSuggestions({
 }) {
   const pairings = getPairingsForCategory(categorySlug);
   return (
-    <section className="mt-12 rounded-3xl bg-surface-elevated border border-warm-brown/10 px-6 py-10 md:px-10 md:py-12">
+    <section className="bg-surface-elevated border-warm-brown/10 mt-12 rounded-3xl border px-6 py-10 md:px-10 md:py-12">
       <header className="mb-8 text-center">
         <DotFlourish className="text-honey-dark/55 mx-auto mb-3 h-2 w-14" />
         <h2 className="font-display text-warm-brown text-[1.5rem] leading-tight">
@@ -51,7 +51,7 @@ function PairingCard({ pairing, index }: { pairing: Pairing; index: number }) {
     <article
       role="group"
       aria-label={`${pairing.label} — ${pairing.hint}`}
-      className="group bg-warm-brown ring-cream-gold/30 hover:ring-cream-gold/60 relative aspect-[3/4] overflow-hidden rounded-2xl shadow-[0_8px_24px_-12px_rgba(44,24,16,0.45)] ring-1 ring-inset transition-shadow duration-500 hover:shadow-[0_16px_40px_-16px_rgba(44,24,16,0.55)]"
+      className="group bg-warm-brown ring-cream-gold/30 hover:ring-cream-gold/60 relative aspect-[3/4] overflow-hidden rounded-2xl shadow-[0_8px_24px_-12px_rgba(44,24,16,0.45)] ring-1 transition-shadow duration-500 ring-inset hover:shadow-[0_16px_40px_-16px_rgba(44,24,16,0.55)]"
     >
       <Image
         src={pairing.imageUrl}
@@ -68,19 +68,19 @@ function PairingCard({ pairing, index }: { pairing: Pairing; index: number }) {
       {/* Watermark Pinyon en haut à droite */}
       <span
         aria-hidden
-        className="font-script text-honey-dark/20 absolute top-2 right-4 select-none text-[5rem] leading-none"
+        className="font-script text-honey-dark/20 absolute top-2 right-4 text-[5rem] leading-none select-none"
       >
         {roman}
       </span>
       {/* Texte ancré bottom-left */}
-      <div className="absolute inset-x-0 bottom-0 px-5 pb-5 pt-12">
-        <p className="text-cream-gold/85 mb-2 text-[0.65rem] uppercase tracking-[0.25em]">
+      <div className="absolute inset-x-0 bottom-0 px-5 pt-12 pb-5">
+        <p className="text-cream-gold/85 mb-2 text-[0.65rem] tracking-[0.25em] uppercase">
           Accord {roman}
         </p>
         <h3 className="font-display text-cream-light text-[1.25rem] leading-tight">
           {pairing.label}
         </h3>
-        <p className="font-display text-cream-light/80 mt-1.5 text-sm italic leading-snug">
+        <p className="font-display text-cream-light/80 mt-1.5 text-sm leading-snug italic">
           {pairing.hint}
         </p>
       </div>

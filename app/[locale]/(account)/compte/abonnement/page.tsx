@@ -24,16 +24,9 @@ export default async function CompteAbonnementPage({
   if (!sub) {
     return (
       <Container className="py-12">
-        <h1 className="text-3xl font-display text-warm-brown mb-4">
-          Mon abonnement
-        </h1>
-        <p className="text-warm-brown/70 mb-6">
-          Tu n&apos;as pas encore d&apos;abonnement actif.
-        </p>
-        <Link
-          href={`/${locale}/abonnement`}
-          className="text-honey-dark underline"
-        >
+        <h1 className="font-display text-warm-brown mb-4 text-3xl">Mon abonnement</h1>
+        <p className="text-warm-brown/70 mb-6">Tu n&apos;as pas encore d&apos;abonnement actif.</p>
+        <Link href={`/${locale}/abonnement`} className="text-honey-dark underline">
           Découvrir les formules →
         </Link>
       </Container>
@@ -41,20 +34,20 @@ export default async function CompteAbonnementPage({
   }
 
   return (
-    <Container className="py-12 space-y-8">
-      <h1 className="text-3xl font-display text-warm-brown">Mon abonnement</h1>
+    <Container className="space-y-8 py-12">
+      <h1 className="font-display text-warm-brown text-3xl">Mon abonnement</h1>
       <SubscriptionStatusCard subscription={sub} />
       <SubscriptionActions subscription={sub} locale={locale} />
       <div className="space-y-2 text-sm">
         <Link
           href={`/${locale}/compte/abonnement/prochaine-box`}
-          className="text-honey-dark underline block"
+          className="text-honey-dark block underline"
         >
           Composer ma prochaine box →
         </Link>
         <Link
           href={`/${locale}/compte/abonnement/historique`}
-          className="text-honey-dark underline block"
+          className="text-honey-dark block underline"
         >
           Historique de mes box →
         </Link>

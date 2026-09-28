@@ -42,10 +42,7 @@ export function FlyToCart() {
         typeof crypto !== "undefined" && "randomUUID" in crypto
           ? crypto.randomUUID()
           : `${Date.now()}-${Math.random()}`;
-      setTokens((cur) => [
-        ...cur,
-        { id, fromX: e.detail.fromX, fromY: e.detail.fromY, toX, toY },
-      ]);
+      setTokens((cur) => [...cur, { id, fromX: e.detail.fromX, fromY: e.detail.fromY, toX, toY }]);
       // Cart bump
       anchor.animate(
         [
@@ -104,8 +101,7 @@ export function FlyToCart() {
                 borderRadius: "50%",
                 background:
                   "radial-gradient(circle at 35% 30%, #f4c87a 0%, #c9a368 55%, #8b6a2e 100%)",
-                boxShadow:
-                  "0 4px 12px rgba(176,122,14,0.4), inset 0 -2px 4px rgba(74,51,42,0.35)",
+                boxShadow: "0 4px 12px rgba(176,122,14,0.4), inset 0 -2px 4px rgba(74,51,42,0.35)",
               }}
             />
           );

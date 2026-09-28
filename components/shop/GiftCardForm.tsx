@@ -4,18 +4,13 @@ import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { GiftCardAmountPicker } from "./GiftCardAmountPicker";
 import { addGiftCardToCart } from "@/lib/actions/cart.actions";
-import {
-  GIFT_CARD_AMOUNTS_CENTS,
-  type GiftCardAmountCents,
-} from "@/lib/gift-cards/constants";
+import { GIFT_CARD_AMOUNTS_CENTS, type GiftCardAmountCents } from "@/lib/gift-cards/constants";
 
 export function GiftCardForm() {
   const router = useRouter();
   const [pending, start] = useTransition();
   const [err, setErr] = useState<string | null>(null);
-  const [amount, setAmount] = useState<GiftCardAmountCents>(
-    GIFT_CARD_AMOUNTS_CENTS[1],
-  );
+  const [amount, setAmount] = useState<GiftCardAmountCents>(GIFT_CARD_AMOUNTS_CENTS[1]);
   const [recipientEmail, setRecipientEmail] = useState("");
   const [recipientName, setRecipientName] = useState("");
   const [message, setMessage] = useState("");
@@ -45,13 +40,11 @@ export function GiftCardForm() {
       className="space-y-6"
     >
       <div>
-        <label className="block text-sm font-semibold text-warm-brown mb-3">
-          Montant
-        </label>
+        <label className="text-warm-brown mb-3 block text-sm font-semibold">Montant</label>
         <GiftCardAmountPicker value={amount} onChange={setAmount} />
       </div>
       <div>
-        <label className="block text-sm font-semibold text-warm-brown mb-2">
+        <label className="text-warm-brown mb-2 block text-sm font-semibold">
           Email du destinataire
         </label>
         <input
@@ -59,43 +52,37 @@ export function GiftCardForm() {
           type="email"
           value={recipientEmail}
           onChange={(e) => setRecipientEmail(e.target.value)}
-          className="w-full border border-cookie/30 rounded-lg px-3 py-2"
+          className="border-cookie/30 w-full rounded-lg border px-3 py-2"
           placeholder="marie@exemple.be"
         />
       </div>
       <div>
-        <label className="block text-sm font-semibold text-warm-brown mb-2">
-          Nom du destinataire{" "}
-          <span className="font-normal text-warm-brown/60">(optionnel)</span>
+        <label className="text-warm-brown mb-2 block text-sm font-semibold">
+          Nom du destinataire <span className="text-warm-brown/60 font-normal">(optionnel)</span>
         </label>
         <input
           type="text"
           value={recipientName}
           onChange={(e) => setRecipientName(e.target.value)}
           maxLength={120}
-          className="w-full border border-cookie/30 rounded-lg px-3 py-2"
+          className="border-cookie/30 w-full rounded-lg border px-3 py-2"
         />
       </div>
       <div>
-        <label className="block text-sm font-semibold text-warm-brown mb-2">
-          Message{" "}
-          <span className="font-normal text-warm-brown/60">
-            (optionnel, 500 max)
-          </span>
+        <label className="text-warm-brown mb-2 block text-sm font-semibold">
+          Message <span className="text-warm-brown/60 font-normal">(optionnel, 500 max)</span>
         </label>
         <textarea
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           maxLength={500}
           rows={4}
-          className="w-full border border-cookie/30 rounded-lg px-3 py-2"
+          className="border-cookie/30 w-full rounded-lg border px-3 py-2"
         />
-        <div className="text-xs text-warm-brown/60 text-right mt-1">
-          {message.length}/500
-        </div>
+        <div className="text-warm-brown/60 mt-1 text-right text-xs">{message.length}/500</div>
       </div>
       <div>
-        <label className="block text-sm font-semibold text-warm-brown mb-2">
+        <label className="text-warm-brown mb-2 block text-sm font-semibold">
           Date d&apos;envoi
         </label>
         <input
@@ -104,9 +91,9 @@ export function GiftCardForm() {
           min={todayISO}
           value={deliveryDate}
           onChange={(e) => setDeliveryDate(e.target.value)}
-          className="border border-cookie/30 rounded-lg px-3 py-2"
+          className="border-cookie/30 rounded-lg border px-3 py-2"
         />
-        <div className="text-xs text-warm-brown/60 mt-1">
+        <div className="text-warm-brown/60 mt-1 text-xs">
           L&apos;email partira à 09:00 UTC le jour choisi.
         </div>
       </div>
@@ -114,7 +101,7 @@ export function GiftCardForm() {
       <Button
         type="submit"
         disabled={pending || !recipientEmail}
-        className="bg-honey text-cream hover:bg-honey-dark px-6 py-6 text-base w-full"
+        className="bg-honey text-cream hover:bg-honey-dark w-full px-6 py-6 text-base"
       >
         {pending ? "..." : `Ajouter au panier — ${amount / 100} €`}
       </Button>

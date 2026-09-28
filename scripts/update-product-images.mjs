@@ -24,22 +24,40 @@ const MAPPING = {
   "BCT-COOK-CHOC-250": {
     alt: "Cookies pépites chocolat sur plan de travail bois",
     urls: [
-      u("1499636136210-6f4ee915583e", "M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hvY29sYXRlJTIwY2hpcCUyMGNvb2tpZXN8ZW58MHx8MHx8fDA%3D"),
-      u("1558961363-fa8fdf82db35", "M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2hvY29sYXRlJTIwY2hpcCUyMGNvb2tpZXN8ZW58MHx8MHx8fDA%3D"),
+      u(
+        "1499636136210-6f4ee915583e",
+        "M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hvY29sYXRlJTIwY2hpcCUyMGNvb2tpZXN8ZW58MHx8MHx8fDA%3D",
+      ),
+      u(
+        "1558961363-fa8fdf82db35",
+        "M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2hvY29sYXRlJTIwY2hpcCUyMGNvb2tpZXN8ZW58MHx8MHx8fDA%3D",
+      ),
     ],
   },
   "BCT-FLOR-AMAN-200": {
     alt: "Florentins aux amandes nappés de chocolat noir",
     urls: [
-      u("1743623173731-37b6d72a01c2", "M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZmxvcmVudGluZSUyMGNvb2tpZXxlbnwwfHwwfHx8MA%3D%3D"),
-      u("1726733969863-c5544cde7186", "M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZmxvcmVudGluZSUyMGNvb2tpZXxlbnwwfHwwfHx8MA%3D%3D"),
+      u(
+        "1743623173731-37b6d72a01c2",
+        "M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZmxvcmVudGluZSUyMGNvb2tpZXxlbnwwfHwwfHx8MA%3D%3D",
+      ),
+      u(
+        "1726733969863-c5544cde7186",
+        "M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZmxvcmVudGluZSUyMGNvb2tpZXxlbnwwfHwwfHx8MA%3D%3D",
+      ),
     ],
   },
   "BCT-GALE-BEUR-150": {
     alt: "Galettes pur beurre fermier, dorées",
     urls: [
-      u("1611082191524-1c049443f288", "M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnV0dGVyJTIwY29va2llfGVufDB8fDB8fHww"),
-      u("1511730609347-730e2da3da59", "M3wxMjA3fDB8MHxzZWFyY2h8M3x8YnV0dGVyJTIwY29va2llfGVufDB8fDB8fHww"),
+      u(
+        "1611082191524-1c049443f288",
+        "M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnV0dGVyJTIwY29va2llfGVufDB8fDB8fHww",
+      ),
+      u(
+        "1511730609347-730e2da3da59",
+        "M3wxMjA3fDB8MHxzZWFyY2h8M3x8YnV0dGVyJTIwY29va2llfGVufDB8fDB8fHww",
+      ),
     ],
   },
   "BCT-MACA-NOIS-006": {
@@ -52,8 +70,14 @@ const MAPPING = {
   "BCT-SABL-CHOC-180": {
     alt: "Sablés fondants au chocolat noir belge",
     urls: [
-      u("1694349494624-386eb9c633bb", "M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hvY29sYXRlJTIwc2hvcnRicmVhZHxlbnwwfHwwfHx8MA%3D%3D"),
-      u("1573829831297-2038252d19e3", "M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2hvY29sYXRlJTIwc2hvcnRicmVhZHxlbnwwfHwwfHx8MA%3D%3D"),
+      u(
+        "1694349494624-386eb9c633bb",
+        "M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hvY29sYXRlJTIwc2hvcnRicmVhZHxlbnwwfHwwfHx8MA%3D%3D",
+      ),
+      u(
+        "1573829831297-2038252d19e3",
+        "M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2hvY29sYXRlJTIwc2hvcnRicmVhZHxlbnwwfHwwfHx8MA%3D%3D",
+      ),
     ],
   },
   "BCT-SPEC-200": {
@@ -74,8 +98,14 @@ const MAPPING = {
   "BCT-SPRI-VANI-200": {
     alt: "Sablés Spritz en forme d'étoile, parfumés à la vanille",
     urls: [
-      u("1643493969852-38c266c2333d", "M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3ByaXR6JTIwY29va2llfGVufDB8fDB8fHww"),
-      u("1643493969809-63c876a7a582", "M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3ByaXR6JTIwY29va2llfGVufDB8fDB8fHww"),
+      u(
+        "1643493969852-38c266c2333d",
+        "M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3ByaXR6JTIwY29va2llfGVufDB8fDB8fHww",
+      ),
+      u(
+        "1643493969809-63c876a7a582",
+        "M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3ByaXR6JTIwY29va2llfGVufDB8fDB8fHww",
+      ),
     ],
   },
 };

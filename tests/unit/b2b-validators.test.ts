@@ -47,7 +47,9 @@ describe("CreateB2BQuoteSchema", () => {
   });
 
   it("rejects requestedProducts too short", () => {
-    expect(CreateB2BQuoteSchema.safeParse({ ...valid, requestedProducts: "a" }).success).toBe(false);
+    expect(CreateB2BQuoteSchema.safeParse({ ...valid, requestedProducts: "a" }).success).toBe(
+      false,
+    );
   });
 });
 
@@ -82,11 +84,9 @@ describe("AdminSetQuoteSchema", () => {
 
 describe("AdminRejectQuoteSchema", () => {
   it("requires non-empty reason", () => {
-    expect(
-      AdminRejectQuoteSchema.safeParse({ quoteId: "abc", reason: "Hors zone" }).success,
-    ).toBe(true);
-    expect(
-      AdminRejectQuoteSchema.safeParse({ quoteId: "abc", reason: "" }).success,
-    ).toBe(false);
+    expect(AdminRejectQuoteSchema.safeParse({ quoteId: "abc", reason: "Hors zone" }).success).toBe(
+      true,
+    );
+    expect(AdminRejectQuoteSchema.safeParse({ quoteId: "abc", reason: "" }).success).toBe(false);
   });
 });

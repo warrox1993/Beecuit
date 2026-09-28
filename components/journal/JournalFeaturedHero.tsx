@@ -36,18 +36,16 @@ export function JournalFeaturedHero({
         </div>
       </Link>
       <div>
-        <div className="text-warm-brown/60 text-xs uppercase tracking-wider">
+        <div className="text-warm-brown/60 text-xs tracking-wider uppercase">
           {article.category} · {article.readingMinutes} min
         </div>
         <h2 className="text-warm-brown font-display mt-3 line-clamp-2 text-4xl">
           {article.translation.title}
         </h2>
-        <p className="text-warm-brown/80 mt-3 line-clamp-3">
-          {article.translation.excerpt}
-        </p>
+        <p className="text-warm-brown/80 mt-3 line-clamp-3">{article.translation.excerpt}</p>
         <Link
           href={`/${locale}/journal/${article.slug}`}
-          className="mt-6 inline-block rounded border border-warm-brown px-6 py-3 text-sm text-warm-brown transition hover:bg-warm-brown hover:text-cream"
+          className="border-warm-brown text-warm-brown hover:bg-warm-brown hover:text-cream mt-6 inline-block rounded border px-6 py-3 text-sm transition"
         >
           Lire l&apos;article
         </Link>

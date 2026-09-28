@@ -1,14 +1,6 @@
 import Image from "next/image";
 
-export function Figure({
-  src,
-  alt,
-  caption,
-}: {
-  src: string;
-  alt: string;
-  caption?: string;
-}) {
+export function Figure({ src, alt, caption }: { src: string; alt: string; caption?: string }) {
   return (
     <figure className="my-6">
       <Image

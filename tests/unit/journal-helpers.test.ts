@@ -4,8 +4,7 @@ import { describe, it, expect, vi } from "vitest";
 // vi.hoisted runs before all import statements at module evaluation.
 vi.hoisted(() => {
   process.env.SKIP_ENV_VALIDATION = "true";
-  process.env.JOURNAL_PREVIEW_SECRET ??=
-    "test-journal-preview-secret-not-used-in-prod-32chars";
+  process.env.JOURNAL_PREVIEW_SECRET ??= "test-journal-preview-secret-not-used-in-prod-32chars";
 });
 
 import { calculateReadingMinutes } from "@/lib/journal/reading-time";

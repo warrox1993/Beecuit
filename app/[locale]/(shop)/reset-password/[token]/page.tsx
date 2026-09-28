@@ -32,7 +32,9 @@ export default async function ResetPasswordPage({
   const [row] = await db
     .select({ token: passwordResetTokens.token })
     .from(passwordResetTokens)
-    .where(and(eq(passwordResetTokens.token, hashed), gt(passwordResetTokens.expiresAt, new Date())))
+    .where(
+      and(eq(passwordResetTokens.token, hashed), gt(passwordResetTokens.expiresAt, new Date())),
+    )
     .limit(1);
 
   return (

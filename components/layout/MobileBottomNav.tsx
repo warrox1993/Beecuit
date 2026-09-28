@@ -78,7 +78,14 @@ export function MobileBottomNav() {
 
 function ShopIcon({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className} aria-hidden>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      className={className}
+      aria-hidden
+    >
       <path d="M5 9 h14 l-1 11 H6 z" strokeLinejoin="round" />
       <path d="M9 9 V6 a3 3 0 0 1 6 0 V9" />
     </svg>
@@ -87,7 +94,14 @@ function ShopIcon({ className }: { className?: string }) {
 
 function GiftIcon({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className} aria-hidden>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      className={className}
+      aria-hidden
+    >
       <rect x="3" y="9" width="18" height="11" rx="1.5" />
       <path d="M3 14 H21" />
       <path d="M12 9 V20" />
@@ -98,7 +112,14 @@ function GiftIcon({ className }: { className?: string }) {
 
 function BasketIcon({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className} aria-hidden>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      className={className}
+      aria-hidden
+    >
       <path d="M4 7 L 7 19 H 17 L 20 7 Z" strokeLinejoin="round" />
       <path d="M8 7 L 12 3 L 16 7" strokeLinecap="round" strokeLinejoin="round" />
       <circle cx="9" cy="13" r="0.8" fill="currentColor" />
@@ -109,7 +130,14 @@ function BasketIcon({ className }: { className?: string }) {
 
 function UserIcon({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className} aria-hidden>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      className={className}
+      aria-hidden
+    >
       <circle cx="12" cy="8" r="3.5" />
       <path d="M5 20 c0-3.5 3.5-6 7-6 s7 2.5 7 6" strokeLinecap="round" />
     </svg>

@@ -12,28 +12,25 @@ export default async function AdminGiftCardsPage({
   const rows = await listAllGiftCards({
     search: q,
     statusFilter:
-      status === "pending" ||
-      status === "delivered" ||
-      status === "used" ||
-      status === "expired"
+      status === "pending" || status === "delivered" || status === "used" || status === "expired"
         ? status
         : undefined,
   });
 
   return (
     <div>
-      <h1 className="text-honey font-display text-3xl mb-6">Cartes cadeaux</h1>
-      <form className="flex gap-2 mb-4" method="get">
+      <h1 className="text-honey font-display mb-6 text-3xl">Cartes cadeaux</h1>
+      <form className="mb-4 flex gap-2" method="get">
         <input
           name="q"
           defaultValue={q ?? ""}
           placeholder="Rechercher code, email…"
-          className="border border-cookie/30 rounded px-3 py-2 text-sm flex-1"
+          className="border-cookie/30 flex-1 rounded border px-3 py-2 text-sm"
         />
         <select
           name="status"
           defaultValue={status ?? ""}
-          className="border border-cookie/30 rounded px-3 py-2 text-sm"
+          className="border-cookie/30 rounded border px-3 py-2 text-sm"
         >
           <option value="">Tous</option>
           <option value="pending">En attente</option>
@@ -41,10 +38,7 @@ export default async function AdminGiftCardsPage({
           <option value="used">Utilisée</option>
           <option value="expired">Expirée</option>
         </select>
-        <button
-          type="submit"
-          className="bg-honey text-cream px-4 py-2 rounded text-sm"
-        >
+        <button type="submit" className="bg-honey text-cream rounded px-4 py-2 text-sm">
           Filtrer
         </button>
       </form>

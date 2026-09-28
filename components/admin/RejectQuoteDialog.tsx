@@ -36,9 +36,7 @@ export function RejectQuoteDialog({ quoteId }: { quoteId: string }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
       <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
         <h3 className="mb-3 text-lg font-semibold">Refuser le devis</h3>
-        <p className="mb-3 text-sm text-gray-600">
-          Le motif est envoyé au client par email.
-        </p>
+        <p className="mb-3 text-sm text-gray-600">Le motif est envoyé au client par email.</p>
         <textarea
           autoFocus
           value={reason}

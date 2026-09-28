@@ -13,11 +13,15 @@ export function MessageStatusActions({ id, current }: { id: string; current: str
   return (
     <div className="flex flex-wrap gap-2">
       {OPTIONS.map((o) => (
-        <form key={o.value} action={(fd) => start(() => adminUpdateMessageStatus(fd).then(() => {}))}>
+        <form
+          key={o.value}
+          action={(fd) => start(() => adminUpdateMessageStatus(fd).then(() => {}))}
+        >
           <input type="hidden" name="id" value={id} />
           <input type="hidden" name="status" value={o.value} />
           <button
-            type="submit" disabled={pending || current === o.value}
+            type="submit"
+            disabled={pending || current === o.value}
             className={`rounded-full px-3 py-1.5 text-sm ${current === o.value ? "bg-amber-600 text-white" : "border border-amber-300 text-amber-800 hover:bg-amber-50"}`}
           >
             {o.label}

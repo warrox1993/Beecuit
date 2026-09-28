@@ -17,9 +17,7 @@ const MAX_SIZE = {
   video: 100 * 1024 * 1024, // 100 MB
 };
 
-export async function uploadToBlob(
-  formData: FormData,
-): Promise<{ url: string; pathname: string }> {
+export async function uploadToBlob(formData: FormData): Promise<{ url: string; pathname: string }> {
   const session = await auth();
   if (!session?.user || session.user.role !== "admin") {
     throw new Error("Forbidden");

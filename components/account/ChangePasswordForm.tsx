@@ -52,11 +52,7 @@ export function ChangePasswordForm({ locale }: { locale: string }) {
           className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 mt-2 block w-full rounded-md border bg-white px-4 py-3 text-sm focus:ring-2 focus:outline-none"
         />
       </label>
-      <Button
-        type="submit"
-        disabled={pending}
-        variant="outline"
-      >
+      <Button type="submit" disabled={pending} variant="outline">
         {t("resetSubmit")}
       </Button>
     </form>

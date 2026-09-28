@@ -52,17 +52,13 @@ describe("isCoffretAvailable", () => {
   });
 
   it("not available si biscuit isActive=false", async () => {
-    mockQuery([
-      { biscuitId: "a", name: "Spec", needed: 2, stockQuantity: 20, isActive: false },
-    ]);
+    mockQuery([{ biscuitId: "a", name: "Spec", needed: 2, stockQuantity: 20, isActive: false }]);
     const r = await isCoffretAvailable("coffret-id", 1);
     expect(r.available).toBe(false);
   });
 
   it("not available si requestedQty > maxOrderable", async () => {
-    mockQuery([
-      { biscuitId: "a", name: "Spec", needed: 2, stockQuantity: 4, isActive: true },
-    ]);
+    mockQuery([{ biscuitId: "a", name: "Spec", needed: 2, stockQuantity: 4, isActive: true }]);
     const r = await isCoffretAvailable("coffret-id", 5);
     expect(r.available).toBe(false);
   });

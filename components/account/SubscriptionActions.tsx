@@ -44,9 +44,7 @@ export function SubscriptionActions({
             onClick={() =>
               start(async () => {
                 if (
-                  !confirm(
-                    "Pauser l'abonnement ? Aucune box ne sera envoyée jusqu'à la reprise.",
-                  )
+                  !confirm("Pauser l'abonnement ? Aucune box ne sera envoyée jusqu'à la reprise.")
                 )
                   return;
                 await pauseSubscription(s.id);
@@ -90,7 +88,7 @@ export function SubscriptionActions({
       <Button variant="outline" onClick={openPortal} disabled={pending}>
         Gérer ma CB &amp; factures
       </Button>
-      {err && <p className="text-terracotta text-xs basis-full">{err}</p>}
+      {err && <p className="text-terracotta basis-full text-xs">{err}</p>}
     </div>
   );
 }

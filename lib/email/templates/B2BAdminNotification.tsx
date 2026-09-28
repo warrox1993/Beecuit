@@ -25,9 +25,7 @@ export function B2BAdminNotification({
             color: "#4A332A",
           }}
         >
-          <Heading style={{ color: "#E4A11B", fontSize: 24, margin: 0 }}>
-            Nouveau devis B2B
-          </Heading>
+          <Heading style={{ color: "#E4A11B", fontSize: 24, margin: 0 }}>Nouveau devis B2B</Heading>
           <Text>
             <strong>{companyName}</strong> ({contactName}, {email})
           </Text>

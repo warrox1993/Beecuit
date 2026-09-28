@@ -28,7 +28,8 @@ const STRINGS: Record<
     cta: "2FA deaktivieren",
     fallback: "Falls der Button nicht funktioniert, kopiere diesen Link in deinen Browser:",
     expires: "Dieser Link ist 24 Stunden gültig.",
-    ignore: "Solltest du das nicht angefordert haben, ignoriere diese E-Mail — deine 2FA bleibt aktiv.",
+    ignore:
+      "Solltest du das nicht angefordert haben, ignoriere diese E-Mail — deine 2FA bleibt aktiv.",
   },
   en: {
     heading: "Disable two-factor authentication",
@@ -49,7 +50,9 @@ export function Disable2faRequestEmail({
 }) {
   const s = STRINGS[locale];
   return (
-    <div style={{ fontFamily: "Georgia, serif", background: "#fbf6ee", color: "#3d2817", padding: 32 }}>
+    <div
+      style={{ fontFamily: "Georgia, serif", background: "#fbf6ee", color: "#3d2817", padding: 32 }}
+    >
       <div style={{ fontFamily: "Snell Roundhand, cursive", color: "#a8731b", fontSize: 24 }}>
         Au fil des saveurs
       </div>

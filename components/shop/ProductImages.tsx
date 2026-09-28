@@ -43,7 +43,13 @@ export function ProductImages({ images, name }: { images: Img[]; name: string })
               aria-hidden
               className="bg-cream-light/85 text-warm-brown absolute right-3 bottom-3 inline-flex h-9 w-9 items-center justify-center rounded-full opacity-0 shadow-md transition-opacity group-hover:opacity-100"
             >
-              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg
+                viewBox="0 0 24 24"
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
                 <circle cx="11" cy="11" r="7" />
                 <path d="m21 21-4.3-4.3" strokeLinecap="round" />
                 <path d="M11 8 V14 M8 11 H14" strokeLinecap="round" />

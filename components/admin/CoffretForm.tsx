@@ -2,11 +2,7 @@
 import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import {
-  createCoffret,
-  updateCoffret,
-  deleteCoffret,
-} from "@/lib/actions/admin/coffrets.actions";
+import { createCoffret, updateCoffret, deleteCoffret } from "@/lib/actions/admin/coffrets.actions";
 import {
   CoffretCompositionEditor,
   type Biscuit,
@@ -168,19 +164,13 @@ export function CoffretForm({
               max={99}
               className="border-warm-brown/20 mt-1 w-full rounded border bg-white px-3 py-2 text-right font-mono"
               value={discountPercent}
-              onChange={(e) =>
-                setDiscount(Math.max(0, Math.min(99, Number(e.target.value) | 0)))
-              }
+              onChange={(e) => setDiscount(Math.max(0, Math.min(99, Number(e.target.value) | 0)))}
             />
           </label>
         </div>
 
         <label className="flex items-center gap-2 text-sm">
-          <input
-            type="checkbox"
-            checked={isActive}
-            onChange={(e) => setActive(e.target.checked)}
-          />{" "}
+          <input type="checkbox" checked={isActive} onChange={(e) => setActive(e.target.checked)} />{" "}
           Actif
         </label>
         <label className="flex items-center gap-2 text-sm">
@@ -193,23 +183,14 @@ export function CoffretForm({
         </label>
 
         <div className="border-warm-brown/10 mt-4 rounded-lg border bg-white p-4">
-          <CoffretCompositionEditor
-            biscuits={biscuits}
-            value={contents}
-            onChange={setContents}
-          />
+          <CoffretCompositionEditor biscuits={biscuits} value={contents} onChange={setContents} />
         </div>
 
-        <CoffretPricePreview
-          subtotalCents={subtotalCents}
-          discountPercent={discountPercent}
-        />
+        <CoffretPricePreview subtotalCents={subtotalCents} discountPercent={discountPercent} />
       </div>
 
       <div>
-        <h2 className="font-display text-warm-brown text-lg">
-          Traductions (toutes obligatoires)
-        </h2>
+        <h2 className="font-display text-warm-brown text-lg">Traductions (toutes obligatoires)</h2>
         <div className="border-warm-brown/10 mt-2 flex gap-1 border-b">
           {LOCALES.map((loc) => (
             <button

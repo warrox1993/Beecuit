@@ -1,12 +1,4 @@
-import {
-  Html,
-  Head,
-  Body,
-  Container,
-  Heading,
-  Text,
-  Button,
-} from "@react-email/components";
+import { Html, Head, Body, Container, Heading, Text, Button } from "@react-email/components";
 
 export function SubscriptionBoxReminder({
   recipientName,
@@ -32,9 +24,7 @@ export function SubscriptionBoxReminder({
           <Heading style={{ color: "#E4A11B", fontSize: 28, margin: 0 }}>
             Au Fil des Saveurs
           </Heading>
-          <Text style={{ fontSize: 18 }}>
-            {recipientName ? `${recipientName},` : "Bonjour,"}
-          </Text>
+          <Text style={{ fontSize: 18 }}>{recipientName ? `${recipientName},` : "Bonjour,"}</Text>
           <Text>
             Plus que <strong>3 jours</strong> pour composer ta box de{" "}
             <strong>{cycleYearMonth}</strong> ! Au-delà, on composera pour toi.

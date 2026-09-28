@@ -10,7 +10,12 @@ export type OrderItemMetadata =
       packagingTier?: "standard" | "premium";
       snapshot?: {
         discountPercent: number;
-        biscuits: Array<{ biscuitId: string; name: string; quantity: number; unitPriceCents: number }>;
+        biscuits: Array<{
+          biscuitId: string;
+          name: string;
+          quantity: number;
+          unitPriceCents: number;
+        }>;
       };
     }
   | {

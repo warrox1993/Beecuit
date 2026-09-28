@@ -34,7 +34,9 @@ export function B2BCustomerQuote({
             color: "#4A332A",
           }}
         >
-          <Heading style={{ color: "#E4A11B", fontSize: 28, margin: 0 }}>Au Fil des Saveurs</Heading>
+          <Heading style={{ color: "#E4A11B", fontSize: 28, margin: 0 }}>
+            Au Fil des Saveurs
+          </Heading>
           <Text style={{ fontSize: 18 }}>Bonjour {contactName},</Text>
           <Text>Voici votre devis personnalisé&nbsp;:</Text>
           <Hr />

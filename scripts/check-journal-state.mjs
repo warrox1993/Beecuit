@@ -12,7 +12,10 @@ const tables = await sql`
   )
   ORDER BY table_name
 `;
-console.log("Journal tables present:", tables.map(r => r.table_name));
+console.log(
+  "Journal tables present:",
+  tables.map((r) => r.table_name),
+);
 
 try {
   const constraints = await sql`
@@ -20,8 +23,13 @@ try {
     WHERE conname LIKE 'journal_%' OR conname LIKE 'newsletter_subscribers_%'
     ORDER BY conname
   `;
-  console.log("Journal constraints:", constraints.map(r => r.conname));
-} catch (e) { console.log("Constraints query err:", e.message); }
+  console.log(
+    "Journal constraints:",
+    constraints.map((r) => r.conname),
+  );
+} catch (e) {
+  console.log("Constraints query err:", e.message);
+}
 
 try {
   const migrations = await sql`
@@ -29,5 +37,7 @@ try {
     ORDER BY created_at DESC LIMIT 5
   `;
   console.log("Recent applied migrations:");
-  for (const m of migrations) console.log(" -", m.created_at, m.hash.slice(0,12));
-} catch (e) { console.log("Migrations table err:", e.message); }
+  for (const m of migrations) console.log(" -", m.created_at, m.hash.slice(0, 12));
+} catch (e) {
+  console.log("Migrations table err:", e.message);
+}

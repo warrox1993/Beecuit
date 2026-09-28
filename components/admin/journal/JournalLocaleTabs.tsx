@@ -175,9 +175,7 @@ function TranslationForm({
               />
             </label>
             <label className="block">
-              <span className="text-warm-brown/80 text-xs">
-                Étapes (JSON [{`{n, text}`}])
-              </span>
+              <span className="text-warm-brown/80 text-xs">Étapes (JSON [{`{n, text}`}])</span>
               <textarea
                 value={recipeStepsStr}
                 onChange={(e) => setRecipeStepsStr(e.target.value)}

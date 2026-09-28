@@ -9,9 +9,10 @@
  * TODO(prod): replace the default once the final aufildessaveurs.be domain
  * is wired up.
  */
-export const SITE_URL = (
-  process.env.NEXT_PUBLIC_APP_URL ?? "https://beecuit.vercel.app"
-).replace(/\/$/, "");
+export const SITE_URL = (process.env.NEXT_PUBLIC_APP_URL ?? "https://beecuit.vercel.app").replace(
+  /\/$/,
+  "",
+);
 
 export const SITE_NAME = "Au Fil des Saveurs";
 export const SITE_TAGLINE = "Biscuiterie Fine & Gourmet";

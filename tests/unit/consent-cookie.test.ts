@@ -7,7 +7,10 @@ const now = 1_780_000_000_000;
 describe("consent cookie", () => {
   it("makeConsent produit un état versionné horodaté", () => {
     expect(makeConsent({ analytics: true, marketing: false }, now)).toEqual({
-      v: CONSENT_VERSION, analytics: true, marketing: false, ts: now,
+      v: CONSENT_VERSION,
+      analytics: true,
+      marketing: false,
+      ts: now,
     });
   });
 
@@ -26,7 +29,9 @@ describe("consent cookie", () => {
   });
 
   it("renvoie null si mauvaise version", () => {
-    const raw = encodeURIComponent(JSON.stringify({ v: 999, analytics: true, marketing: true, ts: now }));
+    const raw = encodeURIComponent(
+      JSON.stringify({ v: 999, analytics: true, marketing: true, ts: now }),
+    );
     expect(parseConsent(raw)).toBeNull();
   });
 

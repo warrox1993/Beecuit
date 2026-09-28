@@ -17,7 +17,7 @@ export function CoffretPricePreview({
 
   return (
     <div className="border-honey/30 bg-honey/5 rounded-md border p-3 text-sm">
-      <div className="font-display text-warm-brown mb-1 text-xs uppercase tracking-wider">
+      <div className="font-display text-warm-brown mb-1 text-xs tracking-wider uppercase">
         Prévisualisation du prix
       </div>
       {subtotalCents === 0 ? (
@@ -33,9 +33,7 @@ export function CoffretPricePreview({
           <span className="text-honey-dark font-mono text-base font-semibold">
             {fmt(totalCents)}
           </span>
-          <span className="text-warm-brown/60 ml-2 text-xs">
-            (économie {fmt(discountCents)})
-          </span>
+          <span className="text-warm-brown/60 ml-2 text-xs">(économie {fmt(discountCents)})</span>
         </p>
       )}
     </div>

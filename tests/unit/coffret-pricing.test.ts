@@ -76,10 +76,7 @@ describe("computeCoffretPrice", () => {
 
   it("ceil arrondi: 333c * 10% = 34c (not floor 33)", async () => {
     // 333 × 10 / 100 = 33.3 → ceil = 34. Distinguishes ceil from floor.
-    mockContentsThenDiscount(
-      [{ biscuitId: "a", name: "X", quantity: 1, unitPriceCents: 333 }],
-      10,
-    );
+    mockContentsThenDiscount([{ biscuitId: "a", name: "X", quantity: 1, unitPriceCents: 333 }], 10);
     const r = await computeCoffretPrice("c", "fr");
     expect(r.discountCents).toBe(34);
     expect(r.totalCents).toBe(299);

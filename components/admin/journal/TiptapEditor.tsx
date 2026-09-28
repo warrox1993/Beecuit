@@ -37,34 +37,31 @@ export function TiptapEditor({
     if (!editor) return;
     const current = JSON.stringify(editor.getJSON());
     const target = JSON.stringify(initial);
-    if (current !== target)
-      editor.commands.setContent(initial as Content, { emitUpdate: false });
+    if (current !== target) editor.commands.setContent(initial as Content, { emitUpdate: false });
   }, [initial, editor]);
 
-  if (!editor)
-    return <div className="text-warm-brown/50 p-4">Chargement de l&apos;éditeur…</div>;
+  if (!editor) return <div className="text-warm-brown/50 p-4">Chargement de l&apos;éditeur…</div>;
 
   return (
     <div className="border-warm-brown/20 overflow-hidden rounded border bg-white">
       <Toolbar editor={editor} />
       <EditorContent
         editor={editor}
-        className="prose prose-sm max-w-none p-4 min-h-[400px] focus:outline-none [&_.ProseMirror]:focus:outline-none [&_.ProseMirror_h2]:font-display [&_.ProseMirror_h2]:text-warm-brown"
+        className="prose prose-sm [&_.ProseMirror_h2]:font-display [&_.ProseMirror_h2]:text-warm-brown min-h-[400px] max-w-none p-4 focus:outline-none [&_.ProseMirror]:focus:outline-none"
       />
     </div>
   );
 }
 
 function Toolbar({ editor }: { editor: Editor }) {
-  const btnBase =
-    "px-2 py-1 rounded text-sm text-warm-brown hover:bg-honey/10 disabled:opacity-30";
+  const btnBase = "px-2 py-1 rounded text-sm text-warm-brown hover:bg-honey/10 disabled:opacity-30";
   const btnActive = "bg-honey/20 text-honey-dark";
 
   const imageInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className="border-warm-brown/10 flex flex-wrap items-center gap-1 border-b bg-cream/30 p-2">
+    <div className="border-warm-brown/10 bg-cream/30 flex flex-wrap items-center gap-1 border-b p-2">
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
@@ -146,11 +143,7 @@ function Toolbar({ editor }: { editor: Editor }) {
           }
         }}
       />
-      <button
-        type="button"
-        onClick={() => imageInputRef.current?.click()}
-        className={btnBase}
-      >
+      <button type="button" onClick={() => imageInputRef.current?.click()} className={btnBase}>
         🖼️ Img
       </button>
       <button
@@ -212,11 +205,7 @@ function Toolbar({ editor }: { editor: Editor }) {
           }
         }}
       />
-      <button
-        type="button"
-        onClick={() => videoInputRef.current?.click()}
-        className={btnBase}
-      >
+      <button type="button" onClick={() => videoInputRef.current?.click()} className={btnBase}>
         🎬 Upload Vidéo
       </button>
       <button
@@ -287,10 +276,7 @@ async function downsizeAndUploadImage(file: File): Promise<string> {
     );
   });
   const fd = new FormData();
-  fd.append(
-    "file",
-    new File([blob], file.name.replace(/\.\w+$/, ".jpg"), { type: "image/jpeg" }),
-  );
+  fd.append("file", new File([blob], file.name.replace(/\.\w+$/, ".jpg"), { type: "image/jpeg" }));
   const result = await uploadToBlob(fd);
   return result.url;
 }

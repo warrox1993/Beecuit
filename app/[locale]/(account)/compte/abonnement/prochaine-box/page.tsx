@@ -35,12 +35,10 @@ export default async function ProchaineBoxPage({
   if (!box) {
     return (
       <Container className="py-12">
-        <h1 className="text-3xl font-display text-warm-brown mb-4">
-          Prochaine box
-        </h1>
+        <h1 className="font-display text-warm-brown mb-4 text-3xl">Prochaine box</h1>
         <p className="text-warm-brown/70">
-          Aucune box prévue pour le mois prochain. Elle sera créée le 1er du
-          mois en cours par notre système.
+          Aucune box prévue pour le mois prochain. Elle sera créée le 1er du mois en cours par notre
+          système.
         </p>
       </Container>
     );
@@ -69,14 +67,11 @@ export default async function ProchaineBoxPage({
   const boxSize = FORMAT_SIZES[sub.format as keyof typeof FORMAT_SIZES];
 
   return (
-    <Container className="py-12 space-y-6">
-      <h1 className="text-3xl font-display text-warm-brown">
-        Compose ta box de {cycle}
-      </h1>
+    <Container className="space-y-6 py-12">
+      <h1 className="font-display text-warm-brown text-3xl">Compose ta box de {cycle}</h1>
       <p className="text-warm-brown/70 text-sm">
-        Deadline :{" "}
-        {new Date(box.compositionDeadline).toLocaleDateString("fr-BE")} · Box
-        size : {boxSize} sachets · Status : {box.status}
+        Deadline : {new Date(box.compositionDeadline).toLocaleDateString("fr-BE")} · Box size :{" "}
+        {boxSize} sachets · Status : {box.status}
       </p>
       {box.status === "composing" ? (
         <BoxComposer

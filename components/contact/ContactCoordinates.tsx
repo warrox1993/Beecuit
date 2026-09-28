@@ -12,7 +12,9 @@ export async function ContactCoordinates() {
     <ul className="space-y-3">
       {rows.map((r) => (
         <li key={r.label}>
-          <span className="text-honey-dark text-xs font-semibold tracking-wide uppercase">{r.label}</span>
+          <span className="text-honey-dark text-xs font-semibold tracking-wide uppercase">
+            {r.label}
+          </span>
           <p className="text-warm-brown/80 mt-0.5 text-sm">
             <mark className="bg-honey-cream text-honey-dark rounded px-1">{r.value}</mark>
           </p>

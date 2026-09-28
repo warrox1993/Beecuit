@@ -99,13 +99,11 @@ const article1 = {
   category: "atelier",
   isFeatured: true,
   coverImage: "/images/products/avoine.webp",
-  coverAltFr:
-    "Biscuits artisanaux Au Fil des Saveurs disposés sur une planche en bois",
+  coverAltFr: "Biscuits artisanaux Au Fil des Saveurs disposés sur une planche en bois",
   title: "Bienvenue chez Au Fil des Saveurs",
   excerpt:
     "Une biscuiterie artisanale belge née d'une passion pour les recettes d'autrefois, où chaque biscuit raconte une histoire de tradition et de savoir-faire.",
-  seoTitle:
-    "Au Fil des Saveurs — Biscuiterie artisanale belge | Biscuits maison",
+  seoTitle: "Au Fil des Saveurs — Biscuiterie artisanale belge | Biscuits maison",
   seoDescription:
     "Découvrez Au Fil des Saveurs, biscuiterie artisanale belge. Spéculoos liégeois, rochers coco et biscuits avoine, fabriqués à la main selon des recettes d'autrefois.",
   body: doc(
@@ -139,17 +137,23 @@ const article1 = {
     ),
     p([
       b("Le Spéculoos Gros et le Spéculoos Petit"),
-      t(" — notre fierté, dans la pure tradition liégeoise. La pâte repose 24 heures avant la cuisson, le temps que les épices s'expriment pleinement. Le « gros format » est généreux, parfait pour le café ; le « petit » est plus délicat, idéal pour accompagner un thé."),
+      t(
+        " — notre fierté, dans la pure tradition liégeoise. La pâte repose 24 heures avant la cuisson, le temps que les épices s'expriment pleinement. Le « gros format » est généreux, parfait pour le café ; le « petit » est plus délicat, idéal pour accompagner un thé.",
+      ),
     ]),
     product("speculoos-gros-200g"),
     p([
       b("Le Rocher Coco Chocolat et le Rocher Coco Nature"),
-      t(" — un hommage aux goûters d'enfance, avec une noix de coco torréfiée maison et un cœur fondant. La version chocolat est nappée à 70 % de cacao, la version nature laisse parler la coco seule."),
+      t(
+        " — un hommage aux goûters d'enfance, avec une noix de coco torréfiée maison et un cœur fondant. La version chocolat est nappée à 70 % de cacao, la version nature laisse parler la coco seule.",
+      ),
     ]),
     product("rocher-coco-chocolat-180g"),
     p([
       b("Le Biscuit Avoine"),
-      t(" — rustique, généreux, parfumé à la cannelle douce. Un biscuit du matin, croquant en surface et tendre au cœur, qui se marie aussi bien au yaourt qu'à un café noir."),
+      t(
+        " — rustique, généreux, parfumé à la cannelle douce. Un biscuit du matin, croquant en surface et tendre au cœur, qui se marie aussi bien au yaourt qu'à un café noir.",
+      ),
     ]),
     product("biscuit-avoine-200g"),
     h2("Ce que vous trouverez chez nous"),
@@ -162,9 +166,7 @@ const article1 = {
     quote(
       "Le bon biscuit, c'est celui qu'on partage. Et chaque fournée, c'est une promesse que nous renouvelons.",
     ),
-    p(
-      "À très vite,",
-    ),
+    p("À très vite,"),
     p([i("L'équipe d'Au Fil des Saveurs")]),
   ),
 };
@@ -183,8 +185,7 @@ const article2 = {
   title: "Le spéculoos liégeois, racines et tradition",
   excerpt:
     "Du couvent médiéval aux tables d'aujourd'hui, le spéculoos liégeois raconte sept siècles de tradition belge. Plongez dans l'histoire d'un biscuit légendaire.",
-  seoTitle:
-    "Spéculoos liégeois : histoire, recette et tradition belge | Au Fil des Saveurs",
+  seoTitle: "Spéculoos liégeois : histoire, recette et tradition belge | Au Fil des Saveurs",
   seoDescription:
     "Découvrez l'histoire du spéculoos liégeois, biscuit emblématique de Liège. Origines médiévales, ingrédients clés, et secrets d'un savoir-faire belge transmis depuis sept siècles.",
   body: doc(
@@ -199,13 +200,15 @@ const article2 = {
       "Les premières mentions du spéculoos remontent aux abbayes flamandes et liégeoises du XIVe siècle. À l'époque, les moines fabriquaient des biscuits aromatisés aux épices rapportées d'Orient — cannelle, clou de girofle, muscade — pour les distribuer lors des fêtes de la Saint-Nicolas, le 6 décembre.",
     ),
     p(
-      "Le mot \"spéculoos\" vient probablement du latin ",
+      'Le mot "spéculoos" vient probablement du latin ',
       // inline italic via separate text node
     ),
     p([
       t("Le mot « spéculoos » lui-même viendrait, selon les historiens, du latin "),
       i("speculum"),
-      t(" (miroir), en référence aux moules en bois sculptés qui imprimaient à la pâte des figures de saints ou d'animaux. Ces moules, véritables œuvres d'artisanat, faisaient du biscuit un objet à la fois sacré et populaire."),
+      t(
+        " (miroir), en référence aux moules en bois sculptés qui imprimaient à la pâte des figures de saints ou d'animaux. Ces moules, véritables œuvres d'artisanat, faisaient du biscuit un objet à la fois sacré et populaire.",
+      ),
     ]),
     p(
       "Une autre étymologie plausible le rattache à species, le « commerce d'épices » — ce qui colle bien à l'identité gustative de ce biscuit, profondément marqué par les arômes orientaux qui transitaient par les ports flamands.",
@@ -281,13 +284,11 @@ const article3 = {
   isFeatured: false,
   coverImage:
     "https://images.unsplash.com/photo-1665844190955-692de472faeb?fm=jpg&q=75&w=1200&auto=format&fit=crop",
-  coverAltFr:
-    "Verrines de tiramisu au spéculoos saupoudrées de poudre de spéculoos doré",
+  coverAltFr: "Verrines de tiramisu au spéculoos saupoudrées de poudre de spéculoos doré",
   title: "Tiramisu au spéculoos d'Au Fil des Saveurs",
   excerpt:
     "Un tiramisu revisité où le spéculoos liégeois remplace les biscuits cuillère, pour un dessert chaleureux qui marie la douceur du mascarpone aux épices belges.",
-  seoTitle:
-    "Tiramisu au spéculoos : recette facile sans œuf cru | Au Fil des Saveurs",
+  seoTitle: "Tiramisu au spéculoos : recette facile sans œuf cru | Au Fil des Saveurs",
   seoDescription:
     "Recette de tiramisu au spéculoos : 30 min de préparation, sans cuisson. Crème mascarpone onctueuse, spéculoos liégeois imbibés de café. Dessert facile pour 8 verrines.",
   recipe: {
@@ -308,43 +309,35 @@ const article3 = {
     steps: [
       {
         n: 1,
-        text:
-          "Préparer le café espresso très fort et le laisser refroidir. Ajouter l'amaretto si vous le souhaitez. Verser dans une assiette creuse — vous y tremperez les spéculoos.",
+        text: "Préparer le café espresso très fort et le laisser refroidir. Ajouter l'amaretto si vous le souhaitez. Verser dans une assiette creuse — vous y tremperez les spéculoos.",
       },
       {
         n: 2,
-        text:
-          "Séparer les blancs des jaunes d'œufs. Dans un grand saladier, fouetter les jaunes avec 60 g de sucre jusqu'à ce que le mélange blanchisse et double de volume (environ 3 minutes au batteur électrique).",
+        text: "Séparer les blancs des jaunes d'œufs. Dans un grand saladier, fouetter les jaunes avec 60 g de sucre jusqu'à ce que le mélange blanchisse et double de volume (environ 3 minutes au batteur électrique).",
       },
       {
         n: 3,
-        text:
-          "Ajouter le mascarpone bien froid en plusieurs fois, en fouettant doucement entre chaque ajout, jusqu'à obtenir une crème lisse et homogène. Réserver.",
+        text: "Ajouter le mascarpone bien froid en plusieurs fois, en fouettant doucement entre chaque ajout, jusqu'à obtenir une crème lisse et homogène. Réserver.",
       },
       {
         n: 4,
-        text:
-          "Monter les blancs en neige avec la pincée de sel. Quand ils commencent à mousser, ajouter les 30 g de sucre restants et fouetter jusqu'à obtention de blancs fermes et brillants.",
+        text: "Monter les blancs en neige avec la pincée de sel. Quand ils commencent à mousser, ajouter les 30 g de sucre restants et fouetter jusqu'à obtention de blancs fermes et brillants.",
       },
       {
         n: 5,
-        text:
-          "Incorporer délicatement les blancs au mélange mascarpone-jaunes, en soulevant la masse de bas en haut avec une maryse. Ne pas casser les blancs — c'est ce qui donnera la légèreté à la crème.",
+        text: "Incorporer délicatement les blancs au mélange mascarpone-jaunes, en soulevant la masse de bas en haut avec une maryse. Ne pas casser les blancs — c'est ce qui donnera la légèreté à la crème.",
       },
       {
         n: 6,
-        text:
-          "Tremper rapidement chaque spéculoos dans le café (1 seconde de chaque côté — pas plus, sinon ils se désagrègent). Déposer 2 spéculoos imbibés au fond de chaque verrine.",
+        text: "Tremper rapidement chaque spéculoos dans le café (1 seconde de chaque côté — pas plus, sinon ils se désagrègent). Déposer 2 spéculoos imbibés au fond de chaque verrine.",
       },
       {
         n: 7,
-        text:
-          "Recouvrir d'une généreuse couche de crème mascarpone. Si la verrine est grande, alterner spéculoos imbibés et crème en deux couches.",
+        text: "Recouvrir d'une généreuse couche de crème mascarpone. Si la verrine est grande, alterner spéculoos imbibés et crème en deux couches.",
       },
       {
         n: 8,
-        text:
-          "Réfrigérer au minimum 4 heures (idéalement une nuit). Juste avant de servir, émietter les 4 spéculoos restants et saupoudrer chaque verrine. Servir bien frais.",
+        text: "Réfrigérer au minimum 4 heures (idéalement une nuit). Juste avant de servir, émietter les 4 spéculoos restants et saupoudrer chaque verrine. Servir bien frais.",
       },
     ],
   },
@@ -379,10 +372,30 @@ const article3 = {
       "Cette recette se prête à de nombreuses variations. Voici celles qui fonctionnent particulièrement bien :",
     ),
     ul([
-      [b("Version chocolat"), t(" : ajoutez 30 g de cacao en poudre dans la crème mascarpone et remplacez 50 g de spéculoos par des spéculoos enrobés de chocolat noir.")],
-      [b("Version Noël"), t(" : remplacez l'amaretto par 2 cl de rhum brun et ajoutez 1/2 cuillère à café de cannelle dans la crème. Décorez de zestes d'orange confits.")],
-      [b("Version sans alcool"), t(" : omettez simplement l'amaretto. Vous pouvez aussi ajouter une cuillère à soupe d'extrait de vanille dans le café pour compenser la chaleur de l'alcool.")],
-      [b("Version individuelle ultra-rapide"), t(" : utilisez des verres à shot. Comptez 4 mini-spéculoos par verre et une cuillère à soupe de crème. Idéal pour un buffet.")],
+      [
+        b("Version chocolat"),
+        t(
+          " : ajoutez 30 g de cacao en poudre dans la crème mascarpone et remplacez 50 g de spéculoos par des spéculoos enrobés de chocolat noir.",
+        ),
+      ],
+      [
+        b("Version Noël"),
+        t(
+          " : remplacez l'amaretto par 2 cl de rhum brun et ajoutez 1/2 cuillère à café de cannelle dans la crème. Décorez de zestes d'orange confits.",
+        ),
+      ],
+      [
+        b("Version sans alcool"),
+        t(
+          " : omettez simplement l'amaretto. Vous pouvez aussi ajouter une cuillère à soupe d'extrait de vanille dans le café pour compenser la chaleur de l'alcool.",
+        ),
+      ],
+      [
+        b("Version individuelle ultra-rapide"),
+        t(
+          " : utilisez des verres à shot. Comptez 4 mini-spéculoos par verre et une cuillère à soupe de crème. Idéal pour un buffet.",
+        ),
+      ],
     ]),
     h2("Conseils de dégustation"),
     p(
@@ -410,13 +423,11 @@ const article4 = {
   isFeatured: false,
   coverImage:
     "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?fm=jpg&q=75&w=1200&auto=format&fit=crop",
-  coverAltFr:
-    "Coffret cadeau Au Fil des Saveurs garni de biscuits artisanaux pour Pâques",
+  coverAltFr: "Coffret cadeau Au Fil des Saveurs garni de biscuits artisanaux pour Pâques",
   title: "Pâques 2026 : nos coffrets en édition limitée",
   excerpt:
     "Pour célébrer Pâques en douceur, découvrez notre sélection de coffrets gourmands, pensés comme des cadeaux qui durent. Édition limitée, disponible dès maintenant.",
-  seoTitle:
-    "Coffrets Pâques 2026 — Cadeaux gourmands belges | Au Fil des Saveurs",
+  seoTitle: "Coffrets Pâques 2026 — Cadeaux gourmands belges | Au Fil des Saveurs",
   seoDescription:
     "Trois coffrets artisanaux pour Pâques 2026 : Découverte, Gourmand, Spéculoos & Avoine. Biscuits belges fabriqués à la main, livraison soignée. Édition limitée.",
   body: doc(
@@ -466,7 +477,9 @@ const article4 = {
     p([
       t("Rendez-vous sur la page "),
       link("Coffrets", "/fr/coffrets"),
-      t(" pour choisir votre composition. Si vous hésitez entre plusieurs options, n'hésitez pas à nous écrire — nous répondons sous 24 heures et nous adorons aider à composer le cadeau parfait. Pour les commandes en volume (entreprises, événements), nous proposons aussi des devis personnalisés via la page "),
+      t(
+        " pour choisir votre composition. Si vous hésitez entre plusieurs options, n'hésitez pas à nous écrire — nous répondons sous 24 heures et nous adorons aider à composer le cadeau parfait. Pour les commandes en volume (entreprises, événements), nous proposons aussi des devis personnalisés via la page ",
+      ),
       link("Entreprises", "/fr/entreprises"),
       t("."),
     ]),
@@ -476,9 +489,7 @@ const article4 = {
     quote(
       "Le cadeau qui se mange, c'est le cadeau qui se savoure deux fois : à l'instant où on le reçoit, et chaque fois qu'on y goûte.",
     ),
-    p(
-      "Joyeuses Pâques d'avance — et au plaisir de préparer votre coffret.",
-    ),
+    p("Joyeuses Pâques d'avance — et au plaisir de préparer votre coffret."),
   ),
 };
 
@@ -490,13 +501,11 @@ const article5 = {
   category: "recettes",
   isFeatured: false,
   coverImage: "/images/products/avoine.webp",
-  coverAltFr:
-    "Crumble doré aux pommes et biscuits avoine dans un plat en céramique blanche",
+  coverAltFr: "Crumble doré aux pommes et biscuits avoine dans un plat en céramique blanche",
   title: "Crumble aux biscuits avoine et pommes",
   excerpt:
     "Le crumble du dimanche réinventé : nos biscuits avoine grossièrement émiettés remplacent la farine, pour une pâte croustillante et gourmande au cœur fondant.",
-  seoTitle:
-    "Crumble pommes avoine : recette facile aux biscuits maison | Au Fil des Saveurs",
+  seoTitle: "Crumble pommes avoine : recette facile aux biscuits maison | Au Fil des Saveurs",
   seoDescription:
     "Recette de crumble aux pommes et biscuits avoine. 15 min de préparation, 35 min de cuisson, 6 personnes. Pâte croustillante sans farine, cœur de pommes caramélisées.",
   recipe: {
@@ -517,38 +526,31 @@ const article5 = {
     steps: [
       {
         n: 1,
-        text:
-          "Préchauffer le four à 180°C (chaleur tournante). Beurrer légèrement un plat à gratin de 25 cm de diamètre.",
+        text: "Préchauffer le four à 180°C (chaleur tournante). Beurrer légèrement un plat à gratin de 25 cm de diamètre.",
       },
       {
         n: 2,
-        text:
-          "Peler et couper les pommes en cubes de 1,5 cm environ. Les déposer dans le plat. Arroser du jus de citron, saupoudrer de la moitié de la cannelle. Mélanger délicatement.",
+        text: "Peler et couper les pommes en cubes de 1,5 cm environ. Les déposer dans le plat. Arroser du jus de citron, saupoudrer de la moitié de la cannelle. Mélanger délicatement.",
       },
       {
         n: 3,
-        text:
-          "Émietter grossièrement les biscuits avoine à la main dans un saladier — on veut des morceaux irréguliers, pas une poudre fine. C'est ce qui donnera la texture caractéristique du crumble.",
+        text: "Émietter grossièrement les biscuits avoine à la main dans un saladier — on veut des morceaux irréguliers, pas une poudre fine. C'est ce qui donnera la texture caractéristique du crumble.",
       },
       {
         n: 4,
-        text:
-          "Ajouter le beurre coupé en petits cubes, la cassonade brune, la pincée de sel, la cannelle restante et les noix si vous en mettez. Travailler du bout des doigts jusqu'à obtenir une pâte sableuse aux morceaux irréguliers.",
+        text: "Ajouter le beurre coupé en petits cubes, la cassonade brune, la pincée de sel, la cannelle restante et les noix si vous en mettez. Travailler du bout des doigts jusqu'à obtenir une pâte sableuse aux morceaux irréguliers.",
       },
       {
         n: 5,
-        text:
-          "Répartir cette pâte de crumble sur les pommes en couche généreuse, sans tasser. Laisser quelques cavités qui laisseront s'échapper la vapeur des pommes.",
+        text: "Répartir cette pâte de crumble sur les pommes en couche généreuse, sans tasser. Laisser quelques cavités qui laisseront s'échapper la vapeur des pommes.",
       },
       {
         n: 6,
-        text:
-          "Enfourner pour 35 minutes, jusqu'à ce que le dessus soit bien doré et que les pommes bouillonnent sur les bords.",
+        text: "Enfourner pour 35 minutes, jusqu'à ce que le dessus soit bien doré et que les pommes bouillonnent sur les bords.",
       },
       {
         n: 7,
-        text:
-          "Laisser tiédir 10 minutes avant de servir. Le crumble est meilleur tiède, accompagné d'une boule de glace vanille ou d'une cuillère de crème fraîche épaisse.",
+        text: "Laisser tiédir 10 minutes avant de servir. Le crumble est meilleur tiède, accompagné d'une boule de glace vanille ou d'une cuillère de crème fraîche épaisse.",
       },
     ],
   },
@@ -583,10 +585,28 @@ const article5 = {
       "Ce crumble est une base. Une fois la technique maîtrisée, vous pouvez la décliner toute l'année en fonction des fruits de saison :",
     ),
     ul([
-      [b("Automne"), t(" — pommes + poires en cubes, une cuillère à soupe de miel sur les fruits avant de couvrir de crumble.")],
-      [b("Hiver"), t(" — pommes + zestes d'orange + une cuillère à soupe de raisins secs réhydratés au rhum.")],
-      [b("Printemps"), t(" — rhubarbe + fraises (à parts égales, 600 g au total). Ajoutez une cuillère à soupe de sucre roux supplémentaire pour compenser l'acidité de la rhubarbe.")],
-      [b("Été"), t(" — pêches + framboises + une cuillère à café d'extrait de vanille. Servir tiède avec un sorbet citron.")],
+      [
+        b("Automne"),
+        t(
+          " — pommes + poires en cubes, une cuillère à soupe de miel sur les fruits avant de couvrir de crumble.",
+        ),
+      ],
+      [
+        b("Hiver"),
+        t(" — pommes + zestes d'orange + une cuillère à soupe de raisins secs réhydratés au rhum."),
+      ],
+      [
+        b("Printemps"),
+        t(
+          " — rhubarbe + fraises (à parts égales, 600 g au total). Ajoutez une cuillère à soupe de sucre roux supplémentaire pour compenser l'acidité de la rhubarbe.",
+        ),
+      ],
+      [
+        b("Été"),
+        t(
+          " — pêches + framboises + une cuillère à café d'extrait de vanille. Servir tiède avec un sorbet citron.",
+        ),
+      ],
     ]),
     p(
       "Dans chaque variante, gardez les biscuits avoine comme base du crumble : leur cannelle et leur richesse se marient avec tous ces fruits.",

@@ -43,8 +43,12 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
       <Container variant="narrow">
         <div className="text-center">
           <Eyebrow>{t("eyebrow")}</Eyebrow>
-          <Heading as="h1" size="h1" className="mt-3">{t("title")}</Heading>
-          <Prose className="mx-auto mt-5"><p>{t("intro")}</p></Prose>
+          <Heading as="h1" size="h1" className="mt-3">
+            {t("title")}
+          </Heading>
+          <Prose className="mx-auto mt-5">
+            <p>{t("intro")}</p>
+          </Prose>
         </div>
 
         <div className="mt-12 grid gap-10 md:grid-cols-[1fr_320px]">
@@ -58,7 +62,9 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
         </div>
 
         <div className="mt-16">
-          <Heading as="h2" size="h3" className="mb-5 text-center">{t("faqTitle")}</Heading>
+          <Heading as="h2" size="h3" className="mb-5 text-center">
+            {t("faqTitle")}
+          </Heading>
           <ContactFaq />
         </div>
       </Container>

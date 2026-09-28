@@ -1,10 +1,6 @@
 "use client";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
-import {
-  CONSENT_COOKIE,
-  CONSENT_MAX_AGE_SECONDS,
-  type ConsentState,
-} from "@/lib/consent/types";
+import { CONSENT_COOKIE, CONSENT_MAX_AGE_SECONDS, type ConsentState } from "@/lib/consent/types";
 import { makeConsent, parseConsent, serializeConsent } from "@/lib/consent/cookie";
 
 type ConsentContextValue = {
@@ -29,9 +25,7 @@ export function useConsent(): ConsentContextValue {
 
 function readConsentCookie(): ConsentState | null {
   if (typeof document === "undefined") return null;
-  const entry = document.cookie
-    .split("; ")
-    .find((c) => c.startsWith(`${CONSENT_COOKIE}=`));
+  const entry = document.cookie.split("; ").find((c) => c.startsWith(`${CONSENT_COOKIE}=`));
   return entry ? parseConsent(entry.slice(CONSENT_COOKIE.length + 1)) : null;
 }
 

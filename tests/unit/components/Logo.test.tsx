@@ -31,7 +31,7 @@ describe("Logo", () => {
   });
 
   it("accepts a className prop", () => {
-    const { container } = render(<Logo className="h-12 text-honey-dark" />);
+    const { container } = render(<Logo className="text-honey-dark h-12" />);
     expect(container.querySelector("svg")?.getAttribute("class")).toContain("h-12");
   });
 

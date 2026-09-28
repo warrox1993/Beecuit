@@ -82,8 +82,7 @@ const COFFRETS = [
       en: {
         name: "Discovery Box",
         slug: "discovery-box",
-        shortDesc:
-          "A medley of our 5 biscuits to discover all of Au Fil des Saveurs.",
+        shortDesc: "A medley of our 5 biscuits to discover all of Au Fil des Saveurs.",
         longDesc:
           "The ideal box to gift — or to treat yourself for the first time: one of each — large and small speculoos, chocolate and natural coconut rocks, oat biscuit. Presented in an elegant kraft box with natural ribbon, ready to gift. 15% off the retail price.",
       },
@@ -114,16 +113,14 @@ const COFFRETS = [
       nl: {
         name: "Gourmand-Doos",
         slug: "gourmand-doos",
-        shortDesc:
-          "Het grote formaat voor echte liefhebbers: 2× elk koekje, bijna 2 kg genot.",
+        shortDesc: "Het grote formaat voor echte liefhebbers: 2× elk koekje, bijna 2 kg genot.",
         longDesc:
           "Voor passionnels en grote tafelgezelschappen: twee zakken/dozen van elk van onze 5 koekjes. Bijna 2 kg ambachtelijk Luiks genot, gepresenteerd in een dubbel-dikke kraftdoos met lint. Het ideale formaat voor een bedrijfsgeschenk, een verjaardag, of gewoon om niet te snel zonder te zitten. -20% korting op de detailprijs.",
       },
       de: {
         name: "Genießer-Box",
         slug: "geniesser-box",
-        shortDesc:
-          "Das große Format für echte Liebhaber: 2× jeder Keks, fast 2 kg Genuss.",
+        shortDesc: "Das große Format für echte Liebhaber: 2× jeder Keks, fast 2 kg Genuss.",
         longDesc:
           "Für Liebhaber und große Tafelrunden: zwei Beutel/Schachteln von jedem unserer 5 Kekse. Fast 2 kg handwerklicher Lütticher Genuss, in einer doppelt dicken Kraftschachtel mit Band präsentiert. Das ideale Format für ein Firmengeschenk, einen Geburtstag oder einfach um nicht zu schnell aufzubrauchen. -20% Rabatt auf den Einzelpreis.",
       },
@@ -178,8 +175,7 @@ const COFFRETS = [
       en: {
         name: "Speculoos & Oat Box",
         slug: "speculoos-oat-box",
-        shortDesc:
-          "The classic trio: 1 large speculoos + 1 small speculoos + 1 oat biscuit.",
+        shortDesc: "The classic trio: 1 large speculoos + 1 small speculoos + 1 oat biscuit.",
         longDesc:
           "The box for lovers of traditional dry biscuits. Brings together our two speculoos formats (large for coffee, small for tea) and our rustic oat biscuit for breakfast. No coconut, no chocolate — just the fundamentals. Presented in a kraft box with ribbon. 12% off the retail price.",
       },

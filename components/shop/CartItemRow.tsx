@@ -1,10 +1,6 @@
 "use client";
 import { useState, useTransition } from "react";
-import {
-  updateQuantity,
-  removeFromCart,
-  updateGiftMessage,
-} from "@/lib/actions/cart.actions";
+import { updateQuantity, removeFromCart, updateGiftMessage } from "@/lib/actions/cart.actions";
 import { useRouter } from "@/i18n/navigation";
 import { X } from "lucide-react";
 
@@ -52,11 +48,7 @@ export function CartItemRow({
         <div className="bg-cookie/30 h-20 w-20 shrink-0 overflow-hidden rounded-full">
           {primaryImageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={primaryImageUrl}
-              alt={name}
-              className="h-full w-full object-cover"
-            />
+            <img src={primaryImageUrl} alt={name} className="h-full w-full object-cover" />
           ) : (
             <div className="flex h-full w-full items-center justify-center text-2xl opacity-30">
               {isGiftCard ? "🎁" : isCoffret ? "📦" : "🍪"}
@@ -68,14 +60,14 @@ export function CartItemRow({
           <p className="text-warm-brown/60 text-xs">
             {(unitPriceCents / 100).toFixed(2)} €
             {isCoffret && "packagingTier" in metadata && metadata.packagingTier === "premium" && (
-              <span className="ml-2 inline-block bg-honey/20 text-honey-dark px-2 py-0.5 rounded">
+              <span className="bg-honey/20 text-honey-dark ml-2 inline-block rounded px-2 py-0.5">
                 📦 Emballage premium
               </span>
             )}
           </p>
         </div>
         {isCoffret || isGiftCard ? (
-          <span className="text-warm-brown/70 text-sm px-2">×1</span>
+          <span className="text-warm-brown/70 px-2 text-sm">×1</span>
         ) : (
           <select
             value={quantity}
@@ -91,19 +83,14 @@ export function CartItemRow({
             }
             className="border-warm-brown/20 focus:border-honey focus:ring-honey/30 rounded border bg-white px-2 py-1 text-sm focus:ring-2 focus:outline-none"
           >
-            {Array.from(
-              { length: Math.min(stockQuantity, 10) },
-              (_, i) => i + 1,
-            ).map((n) => (
+            {Array.from({ length: Math.min(stockQuantity, 10) }, (_, i) => i + 1).map((n) => (
               <option key={n} value={n}>
                 {n}
               </option>
             ))}
           </select>
         )}
-        <p className="text-honey-dark font-display w-20 text-right text-base">
-          {subtotalEur} €
-        </p>
+        <p className="text-honey-dark font-display w-20 text-right text-base">{subtotalEur} €</p>
         <button
           onClick={() =>
             startTransition(async () => {
@@ -119,11 +106,9 @@ export function CartItemRow({
         </button>
       </div>
       {isCoffret && "giftMessage" in metadata && (
-        <div className="pl-24 pr-12 text-xs space-y-1">
+        <div className="space-y-1 pr-12 pl-24 text-xs">
           {metadata.giftMessage ? (
-            <p className="italic text-warm-brown/80">
-              ✉️ « {metadata.giftMessage} »
-            </p>
+            <p className="text-warm-brown/80 italic">✉️ « {metadata.giftMessage} »</p>
           ) : null}
           <GiftMessageEditor
             cartItemId={cartItemId}
@@ -133,13 +118,13 @@ export function CartItemRow({
         </div>
       )}
       {isGiftCard && metadata.type === "gift_card" && (
-        <div className="pl-24 pr-12 text-xs space-y-1">
+        <div className="space-y-1 pr-12 pl-24 text-xs">
           <p className="text-warm-brown/80">📧 Pour {metadata.recipientEmail}</p>
           <p className="text-warm-brown/60">
             Envoi : {new Date(metadata.deliveryAt).toLocaleDateString("fr-BE")}
           </p>
           {metadata.message && (
-            <p className="italic text-warm-brown/80">✉️ « {metadata.message} »</p>
+            <p className="text-warm-brown/80 italic">✉️ « {metadata.message} »</p>
           )}
         </div>
       )}
@@ -165,7 +150,7 @@ function GiftMessageEditor({
       <button
         type="button"
         onClick={() => setEditing(true)}
-        className="text-warm-brown/60 underline hover:text-honey-dark"
+        className="text-warm-brown/60 hover:text-honey-dark underline"
       >
         {currentMessage ? "Modifier le message" : "Ajouter un message cadeau"}
       </button>
@@ -192,13 +177,13 @@ function GiftMessageEditor({
         onChange={(e) => setV(e.target.value)}
         maxLength={200}
         placeholder="Message cadeau (200 max)"
-        className="border border-cookie/30 rounded px-2 py-1 flex-1 text-xs"
+        className="border-cookie/30 flex-1 rounded border px-2 py-1 text-xs"
         autoFocus
       />
       <button
         type="submit"
         disabled={pending}
-        className="bg-honey text-cream text-xs px-2 py-1 rounded disabled:opacity-50"
+        className="bg-honey text-cream rounded px-2 py-1 text-xs disabled:opacity-50"
       >
         OK
       </button>
@@ -208,7 +193,7 @@ function GiftMessageEditor({
           setV(currentMessage);
           setEditing(false);
         }}
-        className="text-warm-brown/60 text-xs px-1"
+        className="text-warm-brown/60 px-1 text-xs"
       >
         ✕
       </button>

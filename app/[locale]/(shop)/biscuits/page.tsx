@@ -71,13 +71,7 @@ export default async function CatalogPage({
   );
 }
 
-async function CatalogResults({
-  locale,
-  categorie,
-}: {
-  locale: string;
-  categorie?: string;
-}) {
+async function CatalogResults({ locale, categorie }: { locale: string; categorie?: string }) {
   const t = await getTranslations("catalog");
   const [cats, prods] = await Promise.all([
     listActiveCategoriesForLocale(locale as Locale),

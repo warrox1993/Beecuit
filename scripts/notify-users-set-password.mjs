@@ -7,7 +7,10 @@ config({ path: ".env.local" });
 const sql = neon(process.env.DATABASE_URL);
 const resend = new Resend(process.env.AUTH_RESEND_KEY);
 
-const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || "https://beecuit.vercel.app").replace(/\/$/, "");
+const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || "https://beecuit.vercel.app").replace(
+  /\/$/,
+  "",
+);
 
 const users = await sql`
   SELECT id, email, preferred_locale

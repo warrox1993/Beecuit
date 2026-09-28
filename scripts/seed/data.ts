@@ -201,8 +201,7 @@ export const PRODUCTS: Array<{
       },
       en: {
         name: "Small Speculoos 200g",
-        shortDescription:
-          "The mini version: bite-size speculoos, same recipe, same spices.",
+        shortDescription: "The mini version: bite-size speculoos, same recipe, same spices.",
         longDescription:
           "Same ingredients as our large speculoos — brown sugar, farmhouse butter, cinnamon, ginger, nutmeg — but in miniature format, perfect to nibble, to serve with a cup of tea or to crumble over a plain yoghurt. Ideal too for children: thinner, crunchier, the perfect amount for a snack. 200g resealable bag.",
         ingredients:
@@ -234,7 +233,8 @@ export const PRODUCTS: Array<{
     images: [
       {
         url: "/images/products/coco-choc.webp",
-        altText: "Rochers coco enrobés de chocolat noir, six pièces alignées sur planche bois (photo cliente)",
+        altText:
+          "Rochers coco enrobés de chocolat noir, six pièces alignées sur planche bois (photo cliente)",
       },
       {
         url: "https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?fm=jpg&q=75&w=1200&auto=format&fit=crop",
@@ -316,7 +316,8 @@ export const PRODUCTS: Array<{
     images: [
       {
         url: "/images/products/coco-nature.webp",
-        altText: "Rochers coco nature dorés, présentation pâtissière sur plat turquoise (photo cliente)",
+        altText:
+          "Rochers coco nature dorés, présentation pâtissière sur plat turquoise (photo cliente)",
       },
       {
         url: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?fm=jpg&q=75&w=1200&auto=format&fit=crop",
@@ -330,8 +331,7 @@ export const PRODUCTS: Array<{
           "Dômes de coco râpée juste dorés au four — moelleux, parfumés, sans chocolat pour laisser parler la coco.",
         longDescription:
           "La version pure de notre rocher coco : coco râpée fine, blancs d'œufs montés en neige, juste assez de sucre pour caraméliser légèrement la surface, et c'est tout. Cuits jusqu'à ce que la croûte soit dorée et le cœur encore moelleux. Sans chocolat, sans matière grasse ajoutée — le goût de la coco est mis en avant. Boîte de 180g, environ 12 rochers.",
-        ingredients:
-          "Noix de coco râpée, sucre, blancs d'œufs, sel.",
+        ingredients: "Noix de coco râpée, sucre, blancs d'œufs, sel.",
         allergens: ["Œufs"],
         seoTitle: "Rocher Coco nature 180g artisanal — Au Fil des Saveurs",
         seoDescription:
@@ -343,8 +343,7 @@ export const PRODUCTS: Array<{
           "Kokoskoepeltjes net goudbruin gebakken — zacht, geurig, zonder chocolade om de kokos te laten spreken.",
         longDescription:
           "De pure versie van ons kokosrotsje: fijne geraspte kokos, opgeklopt eiwit, net genoeg suiker om het oppervlak licht te karamelliseren, en dat is alles. Gebakken tot de korst goudbruin is en het hart nog zacht. Zonder chocolade, zonder toegevoegd vet — de smaak van de kokos staat centraal. Doos van 180g, ongeveer 12 rotsjes.",
-        ingredients:
-          "Geraspte kokosnoot, suiker, eiwit, zout.",
+        ingredients: "Geraspte kokosnoot, suiker, eiwit, zout.",
         allergens: ["Eieren"],
         seoTitle: "Kokosrotsje naturel 180g ambachtelijk — Au Fil des Saveurs",
         seoDescription:
@@ -356,8 +355,7 @@ export const PRODUCTS: Array<{
           "Kokoskuppeln, gerade goldbraun gebacken — weich, duftend, ohne Schokolade, um die Kokosnuss sprechen zu lassen.",
         longDescription:
           "Die pure Version unserer Kokosmakrone: fein geriebene Kokosnuss, aufgeschlagenes Eiweiß, gerade so viel Zucker, um die Oberfläche leicht zu karamellisieren, und das war's. So lange gebacken, bis die Kruste goldbraun und der Kern noch weich ist. Ohne Schokolade, ohne zugesetztes Fett — der Kokosgeschmack steht im Vordergrund. Schachtel mit 180g, etwa 12 Makronen.",
-        ingredients:
-          "Geriebene Kokosnuss, Zucker, Eiweiß, Salz.",
+        ingredients: "Geriebene Kokosnuss, Zucker, Eiweiß, Salz.",
         allergens: ["Eier"],
         seoTitle: "Kokosmakrone natur 180g handwerklich — Au Fil des Saveurs",
         seoDescription:
@@ -369,8 +367,7 @@ export const PRODUCTS: Array<{
           "Coconut domes baked to a soft gold — tender, fragrant, no chocolate so the coconut speaks for itself.",
         longDescription:
           "The pure version of our coconut rock: finely grated coconut, whipped egg whites, just enough sugar to lightly caramelise the surface, and that's all. Baked until the crust is golden and the core still soft. No chocolate, no added fat — the coconut flavour takes centre stage. 180g box, about 12 rocks.",
-        ingredients:
-          "Grated coconut, sugar, egg whites, salt.",
+        ingredients: "Grated coconut, sugar, egg whites, salt.",
         allergens: ["Eggs"],
         seoTitle: "Coconut Rock natural 180g artisan — Au Fil des Saveurs",
         seoDescription:
@@ -393,7 +390,7 @@ export const PRODUCTS: Array<{
       fat_g: 19.5,
       carbs_g: 60.0,
       protein_g: 8.0,
-      salt_g: 0.40,
+      salt_g: 0.4,
     },
     images: [
       {
@@ -424,7 +421,7 @@ export const PRODUCTS: Array<{
         shortDescription:
           "Grote rustieke koekjes met haverlokken en bruine suiker — dense, lichtjes zachte textuur, perfect bij het ontbijt.",
         longDescription:
-          "Ons haverkoekje is wat in het vak een \"tafelkoekje\" heet: dik, royaal, met een dichte maar in het hart lichtjes zachte textuur. Bereid met volle haverlokken, bruine basterdsuiker voor de gekarameliseerde toets, boerderijboter en een snufje kaneel. Geen kunstmatige aroma's: enkel de basisingrediënten, in de juiste verhoudingen. Heerlijk bij het ontbijt gedoopt in een koffie verkeerd, of om 16 uur bij een thee. Hersluitbare zak van 200g.",
+          'Ons haverkoekje is wat in het vak een "tafelkoekje" heet: dik, royaal, met een dichte maar in het hart lichtjes zachte textuur. Bereid met volle haverlokken, bruine basterdsuiker voor de gekarameliseerde toets, boerderijboter en een snufje kaneel. Geen kunstmatige aroma\'s: enkel de basisingrediënten, in de juiste verhoudingen. Heerlijk bij het ontbijt gedoopt in een koffie verkeerd, of om 16 uur bij een thee. Hersluitbare zak van 200g.',
         ingredients:
           "Haverlokken, tarwebloem, bruine basterdsuiker, boter (melk), eieren, kaneel, rijsmiddel, zout.",
         allergens: ["Gluten", "Haver", "Melk", "Eieren"],
@@ -437,7 +434,7 @@ export const PRODUCTS: Array<{
         shortDescription:
           "Große rustikale Kekse mit Haferflocken und braunem Zucker — dichte, leicht weiche Textur, perfekt zum Frühstück.",
         longDescription:
-          "Unser Haferkeks ist das, was in der Branche ein \"Tischkeks\" genannt wird: dick, großzügig, mit einer dichten, aber im Kern leicht weichen Textur. Zubereitet mit Vollkorn-Haferflocken, braunem Zucker für die karamellisierte Note, Bauernbutter und einer Prise Zimt. Keine künstlichen Aromen: nur die Grundzutaten in den richtigen Verhältnissen. Hervorragend zum Frühstück, in einen Milchkaffee getunkt, oder um 16 Uhr zum Tee. Wiederverschließbarer Beutel mit 200g.",
+          'Unser Haferkeks ist das, was in der Branche ein "Tischkeks" genannt wird: dick, großzügig, mit einer dichten, aber im Kern leicht weichen Textur. Zubereitet mit Vollkorn-Haferflocken, braunem Zucker für die karamellisierte Note, Bauernbutter und einer Prise Zimt. Keine künstlichen Aromen: nur die Grundzutaten in den richtigen Verhältnissen. Hervorragend zum Frühstück, in einen Milchkaffee getunkt, oder um 16 Uhr zum Tee. Wiederverschließbarer Beutel mit 200g.',
         ingredients:
           "Haferflocken, Weizenmehl, brauner Zucker, Butter (Milch), Eier, Zimt, Backtriebmittel, Salz.",
         allergens: ["Gluten", "Hafer", "Milch", "Eier"],
@@ -450,7 +447,7 @@ export const PRODUCTS: Array<{
         shortDescription:
           "Big rustic oat biscuits with brown sugar — dense, slightly chewy texture, perfect for breakfast.",
         longDescription:
-          "Our oat biscuit is what the trade calls a \"table biscuit\": thick, generous, with a dense but slightly chewy core. Made with whole rolled oats, brown sugar for the caramel note, farmhouse butter and a pinch of cinnamon. No artificial flavours: just the basics, in the right proportions. Excellent for breakfast dipped in a café au lait, or at four o'clock with a cup of tea. 200g resealable bag.",
+          'Our oat biscuit is what the trade calls a "table biscuit": thick, generous, with a dense but slightly chewy core. Made with whole rolled oats, brown sugar for the caramel note, farmhouse butter and a pinch of cinnamon. No artificial flavours: just the basics, in the right proportions. Excellent for breakfast dipped in a café au lait, or at four o\'clock with a cup of tea. 200g resealable bag.',
         ingredients:
           "Rolled oats, wheat flour, brown sugar, butter (milk), eggs, cinnamon, raising agent, salt.",
         allergens: ["Gluten", "Oats", "Milk", "Eggs"],

@@ -35,12 +35,10 @@ export default function GlobalError({
         }}
       >
         <div style={{ maxWidth: "28rem", textAlign: "center" }}>
-          <h1 style={{ fontSize: "1.6rem", marginBottom: "0.75rem" }}>
-            Une erreur est survenue
-          </h1>
+          <h1 style={{ fontSize: "1.6rem", marginBottom: "0.75rem" }}>Une erreur est survenue</h1>
           <p style={{ opacity: 0.75, lineHeight: 1.6, marginBottom: "1.75rem" }}>
-            Quelque chose s&apos;est mal passé de notre côté. Vous pouvez
-            réessayer ou revenir à l&apos;accueil.
+            Quelque chose s&apos;est mal passé de notre côté. Vous pouvez réessayer ou revenir à
+            l&apos;accueil.
           </p>
           <div
             style={{

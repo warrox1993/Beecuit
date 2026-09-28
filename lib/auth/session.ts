@@ -33,10 +33,7 @@ function getCookieName(): string {
  * The cookie name + token format match what NextAuth's DrizzleAdapter writes
  * in its own flows, so `auth()` reads them transparently.
  */
-export async function createDbSession(
-  userId: string,
-  metadata?: SessionMetadata,
-): Promise<void> {
+export async function createDbSession(userId: string, metadata?: SessionMetadata): Promise<void> {
   const sessionToken = generateRawToken();
   const expires = new Date(Date.now() + SESSION_TTL_SECONDS * 1000);
 

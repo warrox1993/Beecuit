@@ -66,9 +66,7 @@ export async function purgeUser(userId: string): Promise<void> {
     // cartItems cascade from carts, but delete explicitly to be explicit
     await tx
       .delete(cartItems)
-      .where(
-        sql`${cartItems.cartId} IN (SELECT id FROM carts WHERE user_id = ${userId})`,
-      );
+      .where(sql`${cartItems.cartId} IN (SELECT id FROM carts WHERE user_id = ${userId})`);
     await tx.delete(carts).where(eq(carts.userId, userId));
     await tx.delete(addresses).where(eq(addresses.userId, userId));
     await tx.delete(accounts).where(eq(accounts.userId, userId));
@@ -77,12 +75,8 @@ export async function purgeUser(userId: string): Promise<void> {
     await tx.delete(twoFactorRecoveryCodes).where(eq(twoFactorRecoveryCodes.userId, userId));
 
     if (existing.email) {
-      await tx
-        .delete(newsletterSubscribers)
-        .where(eq(newsletterSubscribers.email, existing.email));
-      await tx
-        .delete(verificationTokens)
-        .where(eq(verificationTokens.identifier, existing.email));
+      await tx.delete(newsletterSubscribers).where(eq(newsletterSubscribers.email, existing.email));
+      await tx.delete(verificationTokens).where(eq(verificationTokens.identifier, existing.email));
       // auth_rate_limit_hits has no userId FK; rows are keyed by composite
       // identifier strings like "email:foo@bar.com" or "ip:1.2.3.4".
       await tx.execute(

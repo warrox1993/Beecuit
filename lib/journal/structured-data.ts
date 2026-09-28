@@ -64,9 +64,7 @@ export function recipeJsonLd(article: StructuredArticle, t: StructuredTranslatio
     description: t.excerpt,
     prepTime: toIsoDuration(article.recipePrepMin),
     cookTime: toIsoDuration(article.recipeCookMin),
-    totalTime: toIsoDuration(
-      (article.recipePrepMin ?? 0) + (article.recipeCookMin ?? 0),
-    ),
+    totalTime: toIsoDuration((article.recipePrepMin ?? 0) + (article.recipeCookMin ?? 0)),
     recipeYield: t.recipeYieldLabel,
     recipeIngredient: t.recipeIngredients.map((i) =>
       `${i.qty}${i.unit ? ` ${i.unit}` : ""} ${i.name}`.trim(),

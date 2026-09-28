@@ -2,14 +2,17 @@ import * as React from "react";
 
 type Locale = "fr" | "nl" | "de" | "en";
 
-const STRINGS: Record<Locale, {
-  heading: string;
-  body: string;
-  cta: string;
-  fallback: string;
-  expires: string;
-  ignore: string;
-}> = {
+const STRINGS: Record<
+  Locale,
+  {
+    heading: string;
+    body: string;
+    cta: string;
+    fallback: string;
+    expires: string;
+    ignore: string;
+  }
+> = {
   fr: {
     heading: "Confirme ta nouvelle adresse email",
     body: "Tu as demandé à changer l'adresse email de ton compte Au Fil des Saveurs vers celle-ci. Clique pour confirmer.",
@@ -32,7 +35,8 @@ const STRINGS: Record<Locale, {
     cta: "Neue Adresse bestätigen",
     fallback: "Falls der Button nicht funktioniert, kopiere diese Adresse in deinen Browser:",
     expires: "Dieser Link ist 24 Stunden gültig.",
-    ignore: "Solltest du diese Änderung nicht angefordert haben, ignoriere diese E-Mail — es wird nichts geändert.",
+    ignore:
+      "Solltest du diese Änderung nicht angefordert haben, ignoriere diese E-Mail — es wird nichts geändert.",
   },
   en: {
     heading: "Confirm your new email address",
@@ -53,7 +57,9 @@ export function EmailChangeVerifyEmail({
 }) {
   const s = STRINGS[locale];
   return (
-    <div style={{ fontFamily: "Georgia, serif", background: "#fbf6ee", color: "#3d2817", padding: 32 }}>
+    <div
+      style={{ fontFamily: "Georgia, serif", background: "#fbf6ee", color: "#3d2817", padding: 32 }}
+    >
       <div style={{ fontFamily: "Snell Roundhand, cursive", color: "#a8731b", fontSize: 24 }}>
         Au fil des saveurs
       </div>

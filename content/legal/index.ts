@@ -21,7 +21,12 @@ export type LegalPageKey = "cgv" | "mentions-legales" | "confidentialite" | "coo
 const DOCS: Record<LegalPageKey, Record<string, LegalDocument>> = {
   "mentions-legales": { fr: mentionsFr, nl: mentionsNl, de: mentionsDe, en: mentionsEn },
   cgv: { fr: cgvFr, nl: cgvNl, de: cgvDe, en: cgvEn },
-  confidentialite: { fr: confidentialiteFr, nl: confidentialiteNl, de: confidentialiteDe, en: confidentialiteEn },
+  confidentialite: {
+    fr: confidentialiteFr,
+    nl: confidentialiteNl,
+    de: confidentialiteDe,
+    en: confidentialiteEn,
+  },
   cookies: { fr: cookiesFr, nl: cookiesNl, de: cookiesDe, en: cookiesEn },
 };
 

@@ -73,9 +73,7 @@ export function NewsletterFormRefined({
       className="w-full"
       noValidate
     >
-      <div
-        className={`relative flex items-center border-b transition-colors ${borderClass}`}
-      >
+      <div className={`relative flex items-center border-b transition-colors ${borderClass}`}>
         <label htmlFor="newsletter-refined-email" className="sr-only">
           {placeholder}
         </label>
@@ -132,10 +130,7 @@ export function NewsletterFormRefined({
           )}
         </button>
       </div>
-      <label
-        htmlFor={optInId}
-        className="text-warm-brown/80 mt-3 flex items-start gap-2 text-sm"
-      >
+      <label htmlFor={optInId} className="text-warm-brown/80 mt-3 flex items-start gap-2 text-sm">
         <input
           id={optInId}
           type="checkbox"
@@ -145,9 +140,7 @@ export function NewsletterFormRefined({
         />
         <span>
           {t("optInLabel")}
-          <span className="text-warm-brown/60 mt-0.5 block text-xs">
-            {t("optInHelp")}
-          </span>
+          <span className="text-warm-brown/60 mt-0.5 block text-xs">{t("optInHelp")}</span>
         </span>
       </label>
       {showError && (

@@ -3,13 +3,7 @@ import { useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { resendEmailVerification } from "@/lib/actions/auth.actions";
 
-export function EmailNotVerifiedBanner({
-  locale,
-  sent,
-}: {
-  locale: string;
-  sent: boolean;
-}) {
+export function EmailNotVerifiedBanner({ locale, sent }: { locale: string; sent: boolean }) {
   const t = useTranslations("auth");
   const [pending, start] = useTransition();
   return (

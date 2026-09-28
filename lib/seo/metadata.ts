@@ -1,11 +1,6 @@
 import type { Metadata } from "next";
 import { buildAlternates } from "./alternates";
-import {
-  OG_LOCALE_MAP,
-  SITE_NAME,
-  SITE_URL,
-  type SupportedLocale,
-} from "./site";
+import { OG_LOCALE_MAP, SITE_NAME, SITE_URL, type SupportedLocale } from "./site";
 
 type BuildPageMetadataInput = {
   /** Page-specific title — the SITE_NAME suffix is appended automatically. */
@@ -49,9 +44,7 @@ export function buildPageMetadata({
 }: BuildPageMetadataInput): Metadata {
   const safeLocale = (locale as SupportedLocale) || "fr";
   const fullTitle =
-    appendSiteName && !title.includes(SITE_NAME)
-      ? `${title} | ${SITE_NAME}`
-      : title;
+    appendSiteName && !title.includes(SITE_NAME) ? `${title} | ${SITE_NAME}` : title;
 
   const alternates = buildAlternates(locale, path);
 

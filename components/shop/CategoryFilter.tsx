@@ -50,11 +50,7 @@ export function CategoryFilter({
             <Link
               key={c.slug}
               href={{ pathname: base, query: { categorie: c.slug } }}
-              className={cn(
-                pillBase,
-                "w-fit",
-                activeSlug === c.slug ? pillActive : pillInactive,
-              )}
+              className={cn(pillBase, "w-fit", activeSlug === c.slug ? pillActive : pillInactive)}
             >
               {c.name}
             </Link>

@@ -19,6 +19,10 @@ jobs:
       AUTH_RESEND_KEY: "re_placeholder_ci_key"
       AUTH_EMAIL_FROM: "BeeCuit <onboarding@resend.dev>"
       NEXT_PUBLIC_APP_URL: "http://localhost:3000"
+      # Valeur factice (aucune vraie clé) : le client Stripe est instancié à
+      # l'import, pendant la collecte des pages de `next build`, et refuse une
+      # clé vide. Aucun appel Stripe n'est fait pendant la CI.
+      STRIPE_SECRET_KEY: "sk_ci_placeholder"
 
     steps:
       - uses: actions/checkout@v4
@@ -44,8 +48,10 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
+      # Tous les tests unitaires, sauf ceux qui exigent une vraie base Neon
+      # (tests/integration et tests/unit/db.test.ts).
       - name: Unit tests (without DB)
-        run: pnpm vitest run tests/unit/sanity.test.ts
+        run: pnpm vitest run --exclude "tests/integration/**" --exclude tests/unit/db.test.ts
 
       - name: Build
         run: pnpm build

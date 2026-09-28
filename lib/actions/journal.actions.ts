@@ -48,9 +48,7 @@ export async function createArticle(formData: FormData) {
   const raw = Object.fromEntries(formData.entries());
   const parsed = createSchema.safeParse(raw);
   if (!parsed.success) {
-    throw new Error(
-      "Champs invalides : " + JSON.stringify(parsed.error.flatten().fieldErrors),
-    );
+    throw new Error("Champs invalides : " + JSON.stringify(parsed.error.flatten().fieldErrors));
   }
 
   const slug = await uniqueSlug(toSlug(parsed.data.titleFr));
@@ -343,10 +341,7 @@ export async function setFeatured(id: string) {
       .update(journalArticles)
       .set({ isFeatured: false })
       .where(eq(journalArticles.isFeatured, true));
-    await tx
-      .update(journalArticles)
-      .set({ isFeatured: true })
-      .where(eq(journalArticles.id, id));
+    await tx.update(journalArticles).set({ isFeatured: true }).where(eq(journalArticles.id, id));
   });
   for (const locale of ["fr", "nl", "en", "de"] as const) {
     revalidatePath(`/${locale}`);

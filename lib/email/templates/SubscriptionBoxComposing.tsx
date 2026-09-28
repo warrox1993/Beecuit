@@ -1,12 +1,4 @@
-import {
-  Html,
-  Head,
-  Body,
-  Container,
-  Heading,
-  Text,
-  Button,
-} from "@react-email/components";
+import { Html, Head, Body, Container, Heading, Text, Button } from "@react-email/components";
 
 export function SubscriptionBoxComposing({
   recipientName,
@@ -41,10 +33,9 @@ export function SubscriptionBoxComposing({
             C&apos;est le moment de composer ta box de <strong>{cycleYearMonth}</strong> !
           </Text>
           <Text>
-            Tu as jusqu&apos;au{" "}
-            <strong>{deadline.toLocaleDateString("fr-BE")}</strong> pour choisir
-            tes biscuits. Sans choix de ta part, on composera une box surprise
-            à partir de nos best-sellers.
+            Tu as jusqu&apos;au <strong>{deadline.toLocaleDateString("fr-BE")}</strong> pour choisir
+            tes biscuits. Sans choix de ta part, on composera une box surprise à partir de nos
+            best-sellers.
           </Text>
           <Button
             href={`${appBaseUrl}/fr/compte/abonnement/prochaine-box`}

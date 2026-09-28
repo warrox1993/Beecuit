@@ -62,9 +62,7 @@ export async function RecipeBlock({
           {article.recipeDifficulty && (
             <>
               <dt className="text-warm-brown/60">{t("difficulty")}</dt>
-              <dd className="text-warm-brown font-medium capitalize">
-                {article.recipeDifficulty}
-              </dd>
+              <dd className="text-warm-brown font-medium capitalize">{article.recipeDifficulty}</dd>
             </>
           )}
         </dl>

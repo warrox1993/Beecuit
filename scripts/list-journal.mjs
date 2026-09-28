@@ -13,7 +13,17 @@ const articles = await sql`
 console.log("Journal articles in DB:\n");
 for (const a of articles) {
   console.log(" • " + a.title);
-  console.log("   slug: " + a.slug + " | " + a.category + " | " + a.reading_minutes + " min" + (a.is_featured ? " | ★ FEATURED" : "") + (a.has_recipe ? " | 📖 recipe" : ""));
+  console.log(
+    "   slug: " +
+      a.slug +
+      " | " +
+      a.category +
+      " | " +
+      a.reading_minutes +
+      " min" +
+      (a.is_featured ? " | ★ FEATURED" : "") +
+      (a.has_recipe ? " | 📖 recipe" : ""),
+  );
   console.log("   " + a.excerpt.slice(0, 120) + "...");
   console.log();
 }

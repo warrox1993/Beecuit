@@ -1,12 +1,4 @@
-import {
-  Html,
-  Head,
-  Body,
-  Container,
-  Heading,
-  Text,
-  Button,
-} from "@react-email/components";
+import { Html, Head, Body, Container, Heading, Text, Button } from "@react-email/components";
 
 export function SubscriptionWelcome({
   recipientName,
@@ -38,12 +30,12 @@ export function SubscriptionWelcome({
             {recipientName ? `Bonjour ${recipientName},` : "Bonjour,"}
           </Text>
           <Text>
-            Ton abonnement Au Fil des Saveurs <strong>{formatLabel}</strong> ({engagementLabel}){" "}
-            est confirmé !
+            Ton abonnement Au Fil des Saveurs <strong>{formatLabel}</strong> ({engagementLabel}) est
+            confirmé !
           </Text>
           <Text>
-            Ta première box sera facturée et expédiée le 1er du mois prochain. En
-            attendant, tu peux composer ta box dès le début du mois.
+            Ta première box sera facturée et expédiée le 1er du mois prochain. En attendant, tu peux
+            composer ta box dès le début du mois.
           </Text>
           <Button
             href={`${appBaseUrl}/fr/compte/abonnement`}

@@ -74,17 +74,12 @@ export async function CoffretsTeaser() {
                   <h3 className="text-warm-brown font-display text-[1.05rem] leading-snug">
                     {c.name}
                   </h3>
-                  <p
-                    className="text-warm-brown/70 mt-2 max-h-0 overflow-hidden text-[0.8rem] leading-snug opacity-0 transition-all duration-400 ease-out group-hover:max-h-20 group-hover:opacity-100 motion-reduce:max-h-20 motion-reduce:opacity-100"
-                  >
+                  <p className="text-warm-brown/70 mt-2 max-h-0 overflow-hidden text-[0.8rem] leading-snug opacity-0 transition-all duration-400 ease-out group-hover:max-h-20 group-hover:opacity-100 motion-reduce:max-h-20 motion-reduce:opacity-100">
                     {c.teaser}
                   </p>
                 </div>
                 {/* Bottom rope */}
-                <RopeDivider
-                  variant="scallop"
-                  className="text-cream-gold/50 -mt-1 px-4 pb-3"
-                />
+                <RopeDivider variant="scallop" className="text-cream-gold/50 -mt-1 px-4 pb-3" />
               </article>
             ))}
           </div>

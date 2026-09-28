@@ -12,11 +12,7 @@ import { RelatedProducts } from "@/components/journal/RelatedProducts";
 import { JournalAlsoRead } from "@/components/journal/JournalAlsoRead";
 import { JournalTableOfContents } from "@/components/journal/JournalTableOfContents";
 import { RecipeBlock } from "@/components/journal/RecipeBlock";
-import {
-  articleJsonLd,
-  recipeJsonLd,
-  breadcrumbJsonLd,
-} from "@/lib/journal/structured-data";
+import { articleJsonLd, recipeJsonLd, breadcrumbJsonLd } from "@/lib/journal/structured-data";
 import { serializeJsonLd } from "@/lib/seo/json-ld";
 import { verifyPreviewToken } from "@/lib/journal/preview-token";
 import { env } from "@/lib/env";
@@ -94,11 +90,7 @@ export default async function JournalDetailPage({
   const t = await getTranslations("journal");
   const body = translation.bodyJson as ProseMirrorNode;
   const isRecipe = result.article.category === "recettes";
-  const alsoReadRaw = await getAlsoRead(
-    result.article.id,
-    result.article.category,
-    locale,
-  );
+  const alsoReadRaw = await getAlsoRead(result.article.id, result.article.category, locale);
   const alsoRead = alsoReadRaw.map((r) => ({ ...r.a, translation: r.t }));
 
   const articleUrl = `${env.NEXT_PUBLIC_APP_URL}/${locale}/journal/${slug}`;
@@ -110,17 +102,13 @@ export default async function JournalDetailPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: serializeJsonLd(
-            articleJsonLd(result.article, translation, locale),
-          ),
+          __html: serializeJsonLd(articleJsonLd(result.article, translation, locale)),
         }}
       />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: serializeJsonLd(
-            breadcrumbJsonLd(result.article, translation.title, locale),
-          ),
+          __html: serializeJsonLd(breadcrumbJsonLd(result.article, translation.title, locale)),
         }}
       />
       {isRecipe &&
@@ -144,15 +132,9 @@ export default async function JournalDetailPage({
           <JournalTableOfContents body={body} />
         </aside>
         <div className="prose prose-warm-brown mx-auto max-w-prose">
-          {isRecipe &&
-            translation.recipeIngredients &&
-            translation.recipeYieldLabel && (
-              <RecipeBlock
-                article={result.article}
-                translation={translation}
-                locale={locale}
-              />
-            )}
+          {isRecipe && translation.recipeIngredients && translation.recipeYieldLabel && (
+            <RecipeBlock article={result.article} translation={translation} locale={locale} />
+          )}
           {renderArticleBody(body)}
           {isRecipe && translation.recipeSteps && (
             <RecipeBlock.Steps steps={translation.recipeSteps} locale={locale} />

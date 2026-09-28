@@ -4,7 +4,7 @@ export function CoffretCardSkeleton() {
   return (
     <article className="bg-cream-light border-warm-brown/8 overflow-hidden rounded-2xl border shadow-[0_8px_24px_-16px_rgba(44,24,16,0.22)]">
       <Skeleton className="aspect-[4/5] w-full rounded-none" />
-      <div className="p-5 space-y-3">
+      <div className="space-y-3 p-5">
         <Skeleton className="h-5 w-2/3" />
         <Skeleton className="h-4 w-full" />
         <Skeleton className="h-4 w-4/5" />

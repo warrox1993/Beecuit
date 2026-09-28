@@ -46,8 +46,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  if (createdGiftCardId)
-    await db.delete(giftCards).where(eq(giftCards.id, createdGiftCardId));
+  if (createdGiftCardId) await db.delete(giftCards).where(eq(giftCards.id, createdGiftCardId));
   await db.delete(orderItems).where(eq(orderItems.id, itemId));
   await db.delete(orders).where(eq(orders.id, orderId));
 });
@@ -55,10 +54,7 @@ afterAll(async () => {
 describe("createGiftCardsForOrder", () => {
   it("creates one gift_cards row per gift_card order_item with code + balance", async () => {
     await createGiftCardsForOrder(orderId, "buyer@test.com");
-    const cards = await db
-      .select()
-      .from(giftCards)
-      .where(eq(giftCards.purchaseOrderId, orderId));
+    const cards = await db.select().from(giftCards).where(eq(giftCards.purchaseOrderId, orderId));
     expect(cards).toHaveLength(1);
     createdGiftCardId = cards[0]!.id;
     expect(cards[0]!.code).toMatch(/^BC-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}$/);
@@ -72,10 +68,7 @@ describe("createGiftCardsForOrder", () => {
 
   it("is idempotent (calling twice doesn't double-insert)", async () => {
     await createGiftCardsForOrder(orderId, "buyer@test.com");
-    const cards = await db
-      .select()
-      .from(giftCards)
-      .where(eq(giftCards.purchaseOrderId, orderId));
+    const cards = await db.select().from(giftCards).where(eq(giftCards.purchaseOrderId, orderId));
     expect(cards).toHaveLength(1);
   });
 });

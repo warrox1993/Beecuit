@@ -47,13 +47,9 @@ export function buildSlugAlternates(
     if (s) languages[l] = `/${l}${prefix}/${s}`;
   }
   const currentSlug =
-    slugByLocale[(locale as SupportedLocale)] ??
-    Object.values(slugByLocale)[0] ??
-    "";
+    slugByLocale[locale as SupportedLocale] ?? Object.values(slugByLocale)[0] ?? "";
   const canonical = `/${locale}${prefix}/${currentSlug}`;
-  languages["x-default"] = slugByLocale.fr
-    ? `/fr${prefix}/${slugByLocale.fr}`
-    : canonical;
+  languages["x-default"] = slugByLocale.fr ? `/fr${prefix}/${slugByLocale.fr}` : canonical;
 
   return { canonical, languages };
 }

@@ -16,7 +16,9 @@ const ToastProvider = dynamic(() =>
   import("@/components/motion/ToastProvider").then((m) => ({ default: m.ToastProvider })),
 );
 const CookieConsentBanner = dynamic(() =>
-  import("@/components/consent/CookieConsentBanner").then((m) => ({ default: m.CookieConsentBanner })),
+  import("@/components/consent/CookieConsentBanner").then((m) => ({
+    default: m.CookieConsentBanner,
+  })),
 );
 const ConsentScripts = dynamic(() =>
   import("@/components/consent/ConsentScripts").then((m) => ({ default: m.ConsentScripts })),

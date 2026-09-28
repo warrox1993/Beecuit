@@ -1,13 +1,21 @@
 import { pgTable, text, timestamp, pgEnum, index } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
-export const contactReason = pgEnum("contact_reason", ["order", "b2b", "press", "delivery", "other"]);
+export const contactReason = pgEnum("contact_reason", [
+  "order",
+  "b2b",
+  "press",
+  "delivery",
+  "other",
+]);
 export const contactStatus = pgEnum("contact_status", ["new", "read", "archived"]);
 
 export const contactMessages = pgTable(
   "contact_messages",
   {
-    id: text("id").primaryKey().default(sql`gen_random_uuid()`),
+    id: text("id")
+      .primaryKey()
+      .default(sql`gen_random_uuid()`),
     name: text("name").notNull(),
     email: text("email").notNull(),
     reason: contactReason("reason").notNull(),

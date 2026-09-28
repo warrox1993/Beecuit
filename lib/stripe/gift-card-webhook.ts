@@ -31,10 +31,7 @@ export async function createGiftCardsForOrder(
   purchaserUserId?: string | null,
 ): Promise<void> {
   // Idempotent: if any gift cards were already created for this order, skip.
-  const existing = await db
-    .select()
-    .from(giftCards)
-    .where(eq(giftCards.purchaseOrderId, orderId));
+  const existing = await db.select().from(giftCards).where(eq(giftCards.purchaseOrderId, orderId));
   if (existing.length > 0) return;
 
   const items = await db.select().from(orderItems).where(eq(orderItems.orderId, orderId));
@@ -103,8 +100,5 @@ export async function applyGiftCardRedemption(orderId: string): Promise<void> {
     })
     .returning();
 
-  await db
-    .update(orders)
-    .set({ giftCardRedemptionId: red!.id })
-    .where(eq(orders.id, orderId));
+  await db.update(orders).set({ giftCardRedemptionId: red!.id }).where(eq(orders.id, orderId));
 }

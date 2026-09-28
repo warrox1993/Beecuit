@@ -37,7 +37,8 @@ export function PasswordStrengthMeter({ password, email }: { password: string; e
       </div>
       <p className="text-warm-brown/70 text-xs">
         {t(labelKey as Parameters<typeof t>[0])}
-        {suggestionKeys.length > 0 && ` — ${suggestionKeys.map((k) => t(k as Parameters<typeof t>[0])).join(", ")}`}
+        {suggestionKeys.length > 0 &&
+          ` — ${suggestionKeys.map((k) => t(k as Parameters<typeof t>[0])).join(", ")}`}
       </p>
       {breached && <p className="text-terracotta text-xs">{t("strengthBreached")}</p>}
     </div>

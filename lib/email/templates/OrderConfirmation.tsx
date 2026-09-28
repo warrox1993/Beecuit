@@ -1,13 +1,4 @@
-import {
-  Html,
-  Head,
-  Body,
-  Container,
-  Section,
-  Heading,
-  Text,
-  Hr,
-} from "@react-email/components";
+import { Html, Head, Body, Container, Section, Heading, Text, Hr } from "@react-email/components";
 
 type CoffretLineMetadata = {
   type?: "coffret";
@@ -77,10 +68,7 @@ export function OrderConfirmation({
                       </Text>
                       <ul style={{ margin: "2px 0 0 32px", padding: 0 }}>
                         {l.metadata.snapshot.biscuits.map((b) => (
-                          <li
-                            key={b.biscuitId}
-                            style={{ fontSize: 11, color: "#5C4A38" }}
-                          >
+                          <li key={b.biscuitId} style={{ fontSize: 11, color: "#5C4A38" }}>
                             {b.name} ×{b.quantity}
                           </li>
                         ))}

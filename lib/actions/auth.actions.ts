@@ -7,7 +7,13 @@ import { revalidatePath } from "next/cache";
 import { eq, and, gt, isNull, ne } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/lib/db";
-import { users, verificationTokens, passwordResetTokens, sessions, twoFactorRecoveryCodes } from "@/lib/db/schema";
+import {
+  users,
+  verificationTokens,
+  passwordResetTokens,
+  sessions,
+  twoFactorRecoveryCodes,
+} from "@/lib/db/schema";
 import { hashPassword, verifyPassword } from "@/lib/auth/password";
 import { generateRawToken, hashToken } from "@/lib/auth/tokens";
 import { createDbSession, destroyCurrentSession, sessionHandle } from "@/lib/auth/session";
@@ -61,9 +67,7 @@ const APP_LOCALES = ["fr", "nl", "de", "en"] as const;
 type AppLocale = (typeof APP_LOCALES)[number];
 
 function asLocale(input: string | null | undefined): AppLocale {
-  return (APP_LOCALES as readonly string[]).includes(input ?? "")
-    ? (input as AppLocale)
-    : "fr";
+  return (APP_LOCALES as readonly string[]).includes(input ?? "") ? (input as AppLocale) : "fr";
 }
 
 const registerSchema = z
@@ -308,7 +312,8 @@ export async function resetPassword(formData: FormData) {
     locale,
   });
   if (!parsed.success) {
-    const code = parsed.error.issues[0]?.path[0] === "confirmPassword" ? "password-mismatch" : "invalid";
+    const code =
+      parsed.error.issues[0]?.path[0] === "confirmPassword" ? "password-mismatch" : "invalid";
     const rawToken = (formData.get("token") as string | null) ?? "";
     redirect(`/${locale}/reset-password/${rawToken}?error=${code}`);
   }
@@ -338,10 +343,7 @@ export async function resetPassword(formData: FormData) {
   const passwordHash = await hashPassword(newPassword);
 
   await db.transaction(async (tx) => {
-    await tx
-      .update(users)
-      .set({ passwordHash })
-      .where(eq(users.id, row.userId));
+    await tx.update(users).set({ passwordHash }).where(eq(users.id, row.userId));
     await tx.delete(passwordResetTokens).where(eq(passwordResetTokens.userId, row.userId));
     await tx.delete(sessions).where(eq(sessions.userId, row.userId));
   });
@@ -367,9 +369,7 @@ export async function resetPassword(formData: FormData) {
   redirect(`/${locale}/sign-in?reset=ok`);
 }
 
-export type VerifyEmailResult =
-  | { ok: true; redirectTo: string }
-  | { ok: false; error: "expired" };
+export type VerifyEmailResult = { ok: true; redirectTo: string } | { ok: false; error: "expired" };
 
 export async function verifyEmail(rawToken: string, locale: string): Promise<VerifyEmailResult> {
   const safeLocale = asLocale(locale);
@@ -387,9 +387,7 @@ export async function verifyEmail(rawToken: string, locale: string): Promise<Ver
       .update(users)
       .set({ emailVerified: new Date() })
       .where(eq(users.email, row.identifier));
-    await tx
-      .delete(verificationTokens)
-      .where(eq(verificationTokens.identifier, row.identifier));
+    await tx.delete(verificationTokens).where(eq(verificationTokens.identifier, row.identifier));
   });
   return { ok: true, redirectTo: `/${safeLocale}/compte?verified=ok` };
 }
@@ -449,7 +447,8 @@ export async function changePassword(formData: FormData) {
     locale,
   });
   if (!parsed.success) {
-    const code = parsed.error.issues[0]?.path[0] === "confirmPassword" ? "password-mismatch" : "invalid";
+    const code =
+      parsed.error.issues[0]?.path[0] === "confirmPassword" ? "password-mismatch" : "invalid";
     redirect(`/${locale}/compte/profil?error=${code}`);
   }
   const { currentPassword, newPassword } = parsed.data;
@@ -633,12 +632,7 @@ export async function confirmEmailChange(
   const [conflict] = await db
     .select({ id: users.id })
     .from(users)
-    .where(
-      and(
-        eq(users.email, row.pendingEmail),
-        isNull(users.purgedAt),
-      ),
-    )
+    .where(and(eq(users.email, row.pendingEmail), isNull(users.purgedAt)))
     .limit(1);
   if (conflict && conflict.id !== row.id) {
     await db
@@ -916,7 +910,11 @@ export async function generateTwoFactorSetup(): Promise<TwoFactorSetup> {
   if (!session?.user?.id) return { ok: false, error: "unauthorized" };
 
   const [user] = await db
-    .select({ email: users.email, passwordHash: users.passwordHash, enabledAt: users.twoFactorEnabledAt })
+    .select({
+      email: users.email,
+      passwordHash: users.passwordHash,
+      enabledAt: users.twoFactorEnabledAt,
+    })
     .from(users)
     .where(eq(users.id, session.user.id))
     .limit(1);
@@ -950,7 +948,12 @@ export async function enableTwoFactor(formData: FormData): Promise<EnableTwoFact
   if (!parsed.success) return { ok: false, error: "invalid" };
 
   const [user] = await db
-    .select({ secret: users.twoFactorSecret, enabledAt: users.twoFactorEnabledAt, preferredLocale: users.preferredLocale, email: users.email })
+    .select({
+      secret: users.twoFactorSecret,
+      enabledAt: users.twoFactorEnabledAt,
+      preferredLocale: users.preferredLocale,
+      email: users.email,
+    })
     .from(users)
     .where(eq(users.id, session.user.id))
     .limit(1);
@@ -962,11 +965,16 @@ export async function enableTwoFactor(formData: FormData): Promise<EnableTwoFact
 
   const { plain, hashes } = generateRecoveryCodes();
   await db.transaction(async (tx) => {
-    await tx.update(users).set({ twoFactorEnabledAt: new Date() }).where(eq(users.id, session.user!.id));
-    await tx.delete(twoFactorRecoveryCodes).where(eq(twoFactorRecoveryCodes.userId, session.user!.id));
-    await tx.insert(twoFactorRecoveryCodes).values(
-      hashes.map((codeHash) => ({ userId: session.user!.id, codeHash })),
-    );
+    await tx
+      .update(users)
+      .set({ twoFactorEnabledAt: new Date() })
+      .where(eq(users.id, session.user!.id));
+    await tx
+      .delete(twoFactorRecoveryCodes)
+      .where(eq(twoFactorRecoveryCodes.userId, session.user!.id));
+    await tx
+      .insert(twoFactorRecoveryCodes)
+      .values(hashes.map((codeHash) => ({ userId: session.user!.id, codeHash })));
   });
 
   await sendEmail({
@@ -1010,7 +1018,9 @@ export async function disableTwoFactor(formData: FormData): Promise<Disable2faRe
         twoFactorDisableExpiresAt: null,
       })
       .where(eq(users.id, session.user!.id));
-    await tx.delete(twoFactorRecoveryCodes).where(eq(twoFactorRecoveryCodes.userId, session.user!.id));
+    await tx
+      .delete(twoFactorRecoveryCodes)
+      .where(eq(twoFactorRecoveryCodes.userId, session.user!.id));
   });
   return { ok: true };
 }
@@ -1034,10 +1044,12 @@ export async function regenerateRecoveryCodes(formData: FormData): Promise<Regen
 
   const { plain, hashes } = generateRecoveryCodes();
   await db.transaction(async (tx) => {
-    await tx.delete(twoFactorRecoveryCodes).where(eq(twoFactorRecoveryCodes.userId, session.user!.id));
-    await tx.insert(twoFactorRecoveryCodes).values(
-      hashes.map((codeHash) => ({ userId: session.user!.id, codeHash })),
-    );
+    await tx
+      .delete(twoFactorRecoveryCodes)
+      .where(eq(twoFactorRecoveryCodes.userId, session.user!.id));
+    await tx
+      .insert(twoFactorRecoveryCodes)
+      .values(hashes.map((codeHash) => ({ userId: session.user!.id, codeHash })));
   });
   return { ok: true, recoveryCodes: plain };
 }
@@ -1069,7 +1081,13 @@ export async function verifyTwoFactorChallenge(formData: FormData) {
   if (!limit.ok) redirect(`/${locale}/sign-in/2fa?error=rate-limit&locale=${locale}`);
 
   const [user] = await db
-    .select({ id: users.id, secret: users.twoFactorSecret, enabledAt: users.twoFactorEnabledAt, deletedAt: users.deletedAt, purgedAt: users.purgedAt })
+    .select({
+      id: users.id,
+      secret: users.twoFactorSecret,
+      enabledAt: users.twoFactorEnabledAt,
+      deletedAt: users.deletedAt,
+      purgedAt: users.purgedAt,
+    })
     .from(users)
     .where(eq(users.id, pending!.userId))
     .limit(1);
@@ -1103,7 +1121,11 @@ export async function requestDisable2faEmail(formData: FormData) {
   if (!limit.ok) redirect(`/${locale}/sign-in/2fa?sent=1&locale=${locale}`);
 
   const [user] = await db
-    .select({ email: users.email, preferredLocale: users.preferredLocale, enabledAt: users.twoFactorEnabledAt })
+    .select({
+      email: users.email,
+      preferredLocale: users.preferredLocale,
+      enabledAt: users.twoFactorEnabledAt,
+    })
     .from(users)
     .where(eq(users.id, pending!.userId))
     .limit(1);
@@ -1130,7 +1152,9 @@ export async function requestDisable2faEmail(formData: FormData) {
   redirect(`/${locale}/sign-in/2fa?sent=1&locale=${locale}`);
 }
 
-export type ConfirmDisable2faResult = { ok: true; redirectTo: string } | { ok: false; error: string };
+export type ConfirmDisable2faResult =
+  | { ok: true; redirectTo: string }
+  | { ok: false; error: string };
 
 export async function confirmDisable2fa(
   rawToken: string,

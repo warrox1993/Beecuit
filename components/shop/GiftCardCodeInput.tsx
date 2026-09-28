@@ -22,7 +22,7 @@ export function GiftCardCodeInput({
     return (
       <div
         role="status"
-        className="flex items-center justify-between bg-honey/10 border border-honey/30 rounded-lg p-3 text-sm"
+        className="bg-honey/10 border-honey/30 flex items-center justify-between rounded-lg border p-3 text-sm"
       >
         <span className="text-warm-brown">
           <span aria-hidden>✓ </span>
@@ -32,7 +32,7 @@ export function GiftCardCodeInput({
         <button
           type="button"
           onClick={onRemoved}
-          className="text-warm-brown/75 underline text-xs rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-honey-dark/40"
+          className="text-warm-brown/75 focus-visible:ring-honey-dark/40 rounded text-xs underline focus-visible:ring-2 focus-visible:outline-none"
         >
           Retirer
         </button>
@@ -42,10 +42,9 @@ export function GiftCardCodeInput({
 
   return (
     <div className="space-y-2">
-      <label htmlFor={inputId} className="block text-sm font-semibold text-warm-brown">
+      <label htmlFor={inputId} className="text-warm-brown block text-sm font-semibold">
         <span aria-hidden>🎁 </span>
-        Carte cadeau{" "}
-        <span className="font-normal text-warm-brown/75">(optionnel)</span>
+        Carte cadeau <span className="text-warm-brown/75 font-normal">(optionnel)</span>
       </label>
       <div className="flex gap-2">
         <input
@@ -56,7 +55,7 @@ export function GiftCardCodeInput({
           onChange={(e) => setCode(e.target.value.toUpperCase())}
           aria-invalid={err ? true : undefined}
           aria-describedby={err ? errorId : undefined}
-          className="flex-1 border border-cookie/30 rounded-lg px-3 py-2 font-mono text-sm focus-visible:border-honey-dark focus-visible:ring-2 focus-visible:ring-honey-dark/30 focus-visible:outline-none"
+          className="border-cookie/30 focus-visible:border-honey-dark focus-visible:ring-honey-dark/30 flex-1 rounded-lg border px-3 py-2 font-mono text-sm focus-visible:ring-2 focus-visible:outline-none"
         />
         <button
           type="button"
@@ -70,7 +69,7 @@ export function GiftCardCodeInput({
               else onApplied(code, r.amountAvailableCents);
             });
           }}
-          className="bg-honey text-cream px-4 py-2 rounded-lg text-sm disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-honey-dark/50"
+          className="bg-honey text-cream focus-visible:ring-honey-dark/50 rounded-lg px-4 py-2 text-sm focus-visible:ring-2 focus-visible:outline-none disabled:opacity-50"
         >
           {pending ? "..." : "Appliquer"}
         </button>

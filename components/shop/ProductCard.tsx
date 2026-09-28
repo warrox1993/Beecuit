@@ -85,7 +85,7 @@ export function ProductCard(p: Props) {
           </p>
         </div>
         {/* Price cartouche */}
-        <span className="text-honey-dark border-honey-dark/30 group-hover:border-honey-dark/70 group-hover:bg-honey-dark/5 inline-flex shrink-0 items-baseline rounded-full border px-3 py-1 font-display text-[0.95rem] transition-colors">
+        <span className="text-honey-dark border-honey-dark/30 group-hover:border-honey-dark/70 group-hover:bg-honey-dark/5 font-display inline-flex shrink-0 items-baseline rounded-full border px-3 py-1 text-[0.95rem] transition-colors">
           {priceEur}&nbsp;€
         </span>
       </div>

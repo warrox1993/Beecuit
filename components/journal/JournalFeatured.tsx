@@ -41,7 +41,7 @@ export async function JournalFeatured({ locale }: { locale: string }) {
       </Link>
       <div>
         <div className="font-script text-honey-dark text-2xl">{t("eyebrow")}</div>
-        <div className="text-warm-brown/60 mt-2 text-sm uppercase tracking-wider">
+        <div className="text-warm-brown/60 mt-2 text-sm tracking-wider uppercase">
           {categoryLabel} · {featured.readingMinutes} min
         </div>
         <h2 className="text-warm-brown font-display mt-4 line-clamp-2 text-4xl">
