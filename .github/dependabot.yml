@@ -21,6 +21,12 @@ updates:
     groups:
       mineures-et-correctifs:
         update-types: [minor, patch]
+    ignore:
+      # next-auth : aucune nouvelle bêta (décision du propriétaire, 28/09/2026,
+      # voir SECURITY.md). Seules les bêtas de la série 5 sont ignorées : la
+      # version stable 5.0.0 sera proposée dès sa publication.
+      - dependency-name: next-auth
+        versions: ["> 5.0.0-beta.31, < 5.0.0"]
 
   - package-ecosystem: github-actions
     directory: /
