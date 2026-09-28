@@ -3,17 +3,10 @@ import { config } from "dotenv";
 import { readFileSync, readdirSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { join } from "node:path";
+import { splitSqlStatements } from "./lib/split-sql.mjs";
 config({ path: ".env.local" });
 
 const sql = neon(process.env.DATABASE_URL);
-
-function splitSqlStatements(content) {
-  const noBreakpoints = content.replace(/-->\s*statement-breakpoint/g, "");
-  return noBreakpoints
-    .split(/;\s*(?=\n|$)/)
-    .map((s) => s.trim())
-    .filter((s) => s.length > 0 && !s.match(/^(--[^\n]*|\s)+$/m));
-}
 
 const IDEMPOTENT_ERRORS = [
   "already exists",

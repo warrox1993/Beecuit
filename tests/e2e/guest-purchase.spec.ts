@@ -20,7 +20,7 @@ test.skip("guest can browse, add to cart, and reach Stripe checkout", async ({ p
   await page.getByPlaceholder("postalCode").fill("4000");
   await page.getByPlaceholder("city").fill("Liège");
   await page.getByRole("button", { name: /Payer avec Stripe/ }).click();
-  await expect(page).toHaveURL(/checkout\.stripe\.com/, { timeout: 15000 });
+  await expect(page).toHaveURL(/^https:\/\/checkout\.stripe\.com\//, { timeout: 15000 });
 });
 
 test("guest can browse the catalog and add to cart (no Stripe)", async ({ page }) => {
